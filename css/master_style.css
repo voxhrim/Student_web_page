@@ -1,0 +1,48 @@
+/* БАЗОВЫЙ СТИЛЬ */
+@import "files/basic_style.css";
+
+/* КОМПОНОВКА СТРАНИЦЫ*/
+@import "files/layout_1col.css";
+/* @import "files/layout_2col_left.css";  */
+/*@import "files/layout_2col_right.css";*/
+
+/* ЦВЕТОВАЯ СХЕМА */
+/* @import "files/color_08_orange.css";  */
+
+
+.content-container {
+    display: flex;
+    align-items: center;
+  }
+
+.secblock-img {
+    width: 100%;
+}
+
+.firblock {
+    width: 70%;
+}
+
+/* Адаптация под экраны меньше 1000px */
+@media (max-width: 1100px) {
+    .content-container {
+        display: block; /* Убираем flex для вертикального отображения */
+    }
+
+    .content-container img {
+        margin-top: 20px; /* Добавляем отступ сверху для изображения */
+    }
+
+    .secblock {
+        text-align: center;
+    }
+
+    .secblock-img {
+        width: 60%;
+    }
+
+    .firblock {
+        width: 100%;
+    }
+}
+
