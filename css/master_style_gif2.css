@@ -33,7 +33,7 @@ body {
     background-repeat: repeat;
     color: var(--text-primary);
     font-family: var(--font-sans);
-    line-height: 1.6;
+    line-height: 1.0;
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
