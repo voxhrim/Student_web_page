@@ -1,214 +1,463 @@
-	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-
-
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ru">
 <head>
     <meta charset="UTF-8"> 
-    <title>Резюме - Назарюк Владимир Юрьевич - Оптимизация аппаратурных затрат в логических схемах устройств управления</title>
-    <link rel="shortcut icon" href="images/master.jpg" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="css/master_style_gif.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портал магистра - Назарюк В.Ю.</title>
+    <link rel="shortcut icon" href="resorse/images/master.jpg" type="image/x-icon">
+    <!-- Единый файл стилей -->
+    <link rel="stylesheet" type="text/css" href="master_style_gif.css">
 </head>
-
 
 <body>
 
-<img class="background-image" src="resorse/images/AnimeChar.png" alt="">
+    <!-- Фоновый арт (loading="lazy" - для оптимизации (загрузка при видисоти типа) -->
+    <img class="background-image" data-src="resorse/images/AnimeChar.png" alt="" loading="lazy">
 
-<body lang="ru">
+    <!-- Верхний блок ссылок ДонНТУ -->
+    <div id="topblock">
+        <div id="donntu">
+            <a href="http://donntu.ru" target="_blank">ДонНТУ</a>
+            <a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">Портал магистров</a>
+        </div>
+    </div> 
 
-	<div id="topblock">
-		<div id="donntu">
-			<a href="http://donntu.ru" target="_blank">ДонНТУ</a>
-			<a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">Портал магистров</a>
-		</div>
-	</div> <!-- topblock --> 
+    <!-- Единая шапка сайта -->
+    <div id="header">
+        <div id="photomag">
+            <a href="resorse/images/ivanov_big.jpg" target="_blank">
+                <img src="resorse/images/photo.jpg" width="180" height="240" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
+            </a>
+        </div>
+        <div id="headertext">
+            <h1 class="hdr">Назарюк Владимир Юрьевич</h1>
+            <h3 class="hdr"><a href="https://donntu.ru/fmt" target="_blank">Факультет металлургии и теплоэнергетики</a></h3>
+            <h3 class="hdr"><a href="https://kmtm.fmt.donntu.ru/" target="_blank">Кафедра металлургических технологий и материаловедения</a></h3>
+            <h3 class="hdr">Направление: 22.03.02 &laquo;Металлургия&raquo;</h3>
+            <h3 class="hdr">Профиль: &laquo;металлургия черных металлов&raquo;</h3>
+            <h3 class="hdr">Тема выпускной квалификационной работы магистра: &laquo;Исследование влияния технологических параметров выплавки хромистых чугунов в индукционных печах на качество литых изделий&raquo;</h3>
+            <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
+        </div>
+        <div id="headergif">
+            <img src="resorse/images/gif/Chips.gif" alt="" width="100">
+        </div>
+    </div>
 
-	<div id="header">
-		<div id="photomag">
-			<a href="resorse/images/ivanov_big.jpg">
-				<img src="resorse/images/photo.jpg" width="300" height="400" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю." />
-			</a>
-		</div>
-		<div id="headertext">
-			<h1 class="hdr">Назарюк Владимир Юрьевич</h1>
-			<h3 class="hdr"><a href="https://donntu.ru/fmt">Факультет металлургии и теплоэнергетики </a></h3>
-			<h3 class="hdr"><a href="https://kmtm.fmt.donntu.ru/">Кафедра металлургических технологий и материаловедения</a></h3>
-			<h3 class="hdr">Направление: 22.03.02 &laquo;Металлургия&raquo;</h3>
-			<h3 class="hdr">Профиль:&laquo;металлургия черных металлов&raquo;</h3>
-			<h3 class="hdr">Тема выпускной квалификационной работы магистра:&laquo; Исследование влияния технологических параметров выплавки хромистых чугунов в индукционных печах на качество литых изделий &raquo;</h3>
-			<h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика
-			</h3>
+    <!-- Декоративные баннеры-гифки -->
+    <div class="gif-row">
+        <img src="resorse/images/gif/WEB.gif" alt="">
+        <img src="resorse/images/gif/CatAey.gif" alt="">
+    </div>
+
+    <!-- Главный блок с вкладками SPA -->
+    <div id="middleblock">
+
+        <!-- Верхнее меню навигации (SPA хеши) -->
+        <div id="menu">
+            <a class="button tab-link colorfix" href="#about">О себе</a>
+            <a class="button tab-link color" href="#referat">Реферат</a>
+            <a class="button tab-link color" href="#scientific">Научные труды</a>
+            <a class="button tab-link color" href="#individual">Индивидуальный раздел</a>
+        </div>
+
+        <!-- Контейнер основного текста -->
+        <div id="maintext">
+
+            <!-- ======================================================== -->
+            <!-- ВКЛАДКА 1: О СЕБЕ / РЕЗЮМЕ                                -->
+            <!-- ======================================================== -->
+            <section id="about" class="tab-content active">
+                <hr>
+                <h3>Магистр рассказывает о себе, длительность ролика 1 минута. <img src="resorse/images/gif/anime4.gif" alt="" width="60"></h3>
+                <p>Обязательно отобразить ключевые элементы:<br>
+                    <u>Причина выбора своей специальности:</u> объяснить почему именно эта специальность была выбрана при поступлении.<br>
+                    <u>Охарактеризовать процесс обучения:</u> описать участие в олимпиадах, конференциях, спортивных соревнованиях, волонтерстве... все то, что считаете важным.<br>
+                    <u>Учебные предметы:</u> назвать 2-3 дисциплины, которые дали востребованные навыки или понравились по качеству преподавания. Если были любимые преподаватели, укажите.<br>
+                    <u>Карьерные планы:</u> желаемое направление или сферу деятельности.
+                </p>
+
+                <hr>
+                <h1>Краткое резюме магистра</h1>
+                <hr>
+
+                <table id="resume">
+                    <tr class="even">
+                        <td class="c1">ФИО</td>
+                        <td class="c2">Назарюк Владимир Юрьевич</td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Дата рождения</td>
+                        <td class="c2">30 Марта 2004 г.</td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">Место рождения</td>
+                        <td class="c2">г. Донецк</td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Школа(ы)</td>
+                        <td class="c2">Школа #7 г.Харцызск</td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">ВУЗ</td>
+                        <td class="c2">
+                            Бакалавриат: ДонНТУ 2021 - 2025 гг.<br>
+                            Магистратура: ДонНТУ 2025 - 2027 гг.
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Средний балл</td>
+                        <td class="c2">100.0</td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">Знание языков</td>
+                        <td class="c2">Русский - родной, Украинский - свободно, Английский - свободно</td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Увлечения</td>
+                        <td class="c2">Спортивный туризм (велосипедный и пеший), чтение художественной литературы, легкая атлетика.</td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">Общие навыки</td>
+                        <td class="c2">
+                            <ol>
+                                <li>Чтение и ведение документации.</li>
+                                <li>Изображение чертежей.</li>
+                                <li>Продвинутые навыки владения ПК.</li>
+                                <li>Продвинутые навыки владения нейросетями.</li>
+                                <li>И вообще я много чего умею.</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Профессиональные навыки</td>
+                        <td class="c2">
+                            <ol>
+                                <li>Создание и работа с EXCEL базами данных.</li>
+                                <li>Проведение исследовательских работ и лабораторных испытаний.</li>
+                                <li>Написание дипломных и курсовых работ.</li>
+                                <li>Проведение моделирования металлургических процессов.</li>
+                                <li>Проведение расчетов параметров оборудования МЗ.</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">Надпрофессиональные навыки</td>
+                        <td class="c2">
+                            <ol>
+                                <li>Коммуникативная грамотность.</li>
+                                <li>Информационная грамотность.</li>
+                                <li>Цифровая и компьютерная грамотность.</li>
+                                <li>Уверенное выступление перед любой аудиторией.</li>
+                                <li>Подготовка и проведение эффективных презентаций.</li>
+                                <li>Работа в команде.</li>
+                                <li>Обучаемость и адаптивность.</li>
+                                <li>Аналитическое мышление.</li>
+                                <li>Работа с обратной связью.</li>
+                                <li>Креативное мышление.</li>
+                                <li>Целеустремленность и умение доводить начатое до конца.</li>
+                            </ol>
+                        </td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Личные достижения</td>
+                        <td class="c2">Любые личные достижения магистра – учебные (победитель олимпиад, конкурсов и так далее), научные (публикации, выступления на конференциях, участие в исследовательских проектах), спортивные (призовые места в соревнованиях, разряды, звания), волонтерская деятельность, победы в творческих конкурсах, организация мероприятий...</td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">Дополнительные сведения</td>
+                        <td class="c2">Наличие водительских прав, спортивные звания, волонтёрство, участие в СВО.</td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Опыт работы</td>
+                        <td class="c2">Если имеете опыт работы (например, при прохождении практики), то указывается предприятие, должность и сроки работы. Если есть реализованные проекты, то добавить кликабельные ссылки.</td>
+                    </tr>
+                    <tr class="even">
+                        <td class="c1">Планы на будущее</td>
+                        <td class="c2">Что писать НЕ стоит: Размытые цели: «Стать лучше», «Много зарабатывать», «Найти интересную работу». Это очевидно и ни о чем не говорит. Ваши планы должны быть конкретными, реалистичными и соответствующими направлению магистратуры и потенциальному месту работы. Это показывает, что вы — вдумчивый, целеустремленный, интересный специалист.</td>
+                    </tr>
+                    <tr class="odd">
+                        <td class="c1">Контактная информация</td>
+                        <td class="c2">
+                            <a href="#" target="_blank">VK</a><br>
+                            <a href="#" target="_blank">Telegram</a><br>
+                            E-mail: <a href="mailto:ivanov@yandex.ru">ivanov@yandex.ru</a>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- ======================================================== -->
+            <!-- ВКЛАДКА 2: РЕФЕРАТ                                        -->
+            <!-- ======================================================== -->
+            <section id="referat" class="tab-content">
+                <h1>Реферат по теме выпускной работы</h1>
+                <hr>
+                <p class="comment">
+                    Данный реферат используется в качестве примера с разрешения его автора, магистра ДонНТУ <a style="color: blue; font-size: 13pt;" href="http://masters.donntu.ru/2011/fknt/tatolov/" target="_blank">Евгения Татолова</a>.<br>
+                    Оригинал: <a style="color: blue; font-size: 13pt;" href="http://masters.donntu.ru/2011/fknt/tatolov/diss/" target="_blank">http://masters.donntu.ru/2011/fknt/tatolov/diss/</a>
+                </p>
+
+                <h2>Содержание</h2>
+                <ul class="content">
+                    <li class="ct1"><a href="#p0">Введение</a></li>
+                    <li class="ct1"><a href="#p1">1. Актуальность темы</a></li>
+                    <li class="ct1"><a href="#p2">2. Цель и задачи исследования, планируемые результаты</a></li>
+                    <li class="ct1"><a href="#p3">3. Обзор исследований и разработок</a></li>
+                    <li class="ct2"><a href="#p31">3.1 Обзор международных источников</a></li>
+                    <li class="ct2"><a href="#p32">3.2 Обзор национальных источников</a></li>
+                    <li class="ct2"><a href="#p33">3.3 Обзор локальных источников</a></li>
+                    <li class="ct1"><a href="#p4">4. Подход к унификации синтеза автоматов Мура в базисе FPGA</a></li>
+                    <li class="ct1"><a href="#p5">Выводы</a></li>
+                    <li class="ct1"><a href="#ref">Список источников</a></li>
+                </ul>
+
+                <a name="p0"></a>
+                <h2>Введение</h2>
+                <p>Цифровые системы находят широкое применение и являются базовыми компонентами компьютерной техники, автоматики, робототехники, производства, транспорта. Создание сверхбольших интегральных схем (СБИС), построение систем-на-кристалле (SoC – System-on-Chip), развитие технологий программируемых пользователем вентильных матриц (FPGAs – Field-Programmable Gate Arrays) и сложных программируемых логических устройств (CPLDs – Complex Programmable Logic Devices) изменили базис реализации цифровых систем и выдвинули повышенные требования к процессу их разработки, что привело к широкому распространению систем автоматизированного проектирования (САПР) и языков описания аппаратуры (HDLs – Hardware Description Languages).</p>
+
+                <p>Модель конечного автомата, предложенная Э. Муром в 1956 году и названная в его честь (автомат Мура), как синхронная последовательностная схема, является частью многих цифровых систем и применяется при построении устройств управления. Высокая сложность интегральных схем и теоретический базис автоматных вычислений делает возможной реализацию комплексных алгоритмов обработки информации. Однако, непосредственная реализация алгоритмов может приводить к неэффективному использованию ресурсов кристалла и увеличению стоимости проекта.</p>
+
+                <a name="p1"></a>
+                <h2>1. Актуальность темы</h2>
+                <p>Известен ряд методов аппаратурной оптимизации автомата Мура: минимизация количества состояний и их специфическое кодирование, использование особенностей целевого базиса и алгоритма функционирования, многоуровневая реализация логической схемы. Указанные методы обладают определенной эффективностью, но, для получения наиболее экономичной реализации автомата, должны применяться совместно.</p>
+
+                <a name="p2"></a>
+                <h2>2. Цель и задачи исследования, планируемые результаты</h2>
+                <p>Целью исследования является разработка подхода к унификации синтеза автоматов Мура, направленного на уменьшение аппаратурных затрат в целевой FPGA-микросхеме.</p>
+                <p>Основные задачи исследования:</p>
+                <ol>
+                    <li>Анализ методов минимизации количества состояний в полностью определенных и частичных автоматах Мура.</li>
+                    <li>Оценка способов уменьшения аппаратурных затрат путем кодирования состояний автоматов Мура.</li>
+                    <li>Поиск и выявление характеристик существующих методов построения логических схем автоматов Мура и оценка возможностей их применения в базисе FPGA.</li>
+                    <li>Объединение функционально различных направлений оптимизации автоматов Мура по аппаратурным затратам в унифицированный подход к синтезу и формирование рекомендаций по его использованию.</li>
+                    <li>Разработка альтернативных вариантов основных этапов унифицированного процесса синтеза автоматов Мура и оценка их эффективности.</li>
+                </ol>
+
+                <a name="p3"></a>
+                <h2>3. Обзор исследований и разработок</h2>
+                <p>Поскольку автоматы Мура являются важной частью цифровых систем, то проблемы их синтеза, анализа, минимизации и реализации были широко исследованы как зарубежными, так и отечественными специалистами.</p>
+
+                <a name="p4"></a>
+                <h2>4. Подход к унификации синтеза автоматов Мура в базисе FPGA</h2>
+                <p>В работе предлагается подход к унификации синтеза автоматов Мура, объединяющий указанные возможности оптимизации и направленный на базис микросхем FPGA (рис. 1). Сущность этого подхода заключается в последовательном применении алгоритмического, комбинаторного и схемотехнического этапов и использовании FPGA-ориентированных инструментальных средств: САПР и HDLs.</p>
+
+                <div class="img">
+                    <img data-src="images/unification_process.png" width="682" height="589" alt="Подход к унификации синтеза автоматов Мура" loading="lazy">
+                    <p class="imgcaption">Рисунок 1 – Подход к унификации синтеза автоматов Мура</p>
+                </div>
+
+                <div class="img">
+                    <img data-src="images/synthesis_results.png" width="545" height="377" alt="Результаты экспериментальных исследований" loading="lazy">
+                    <p class="imgcaption">Рисунок 2 – Результаты экспериментальных исследований</p>
+                </div>
+
+                <a name="p5"></a>
+                <h2>Выводы</h2>
+                <p>Магистерская работа посвящена актуальной научной задаче объединения основных методов аппаратурной минимизации автоматов Мура.</p>
+
+                <a name="ref"></a>
+                <h2>Список источников</h2>
+                <ol>
+                    <li>Moore E.F. Gedanken-experiments on sequential machines // Automata studies, Annals of mathematical studies. – 1956. – vol. 34. – pp. 129-153.</li>
+                    <li>Гилл А. Введение в теорию конечных автоматов. – М.: Наука, 1966. – 272 с.</li>
+                    <li>Миллер Р. Теория переключательных схем. – М.: Наука, 1971. – Том 2. – 304 с.</li>
+                    <li>Хопкрофт Д. Введение в теорию автоматов, языков и вычислений. – М.: Издательский дом «Вильямс», 2002. – 528 с.</li>
+                    <li>Грушвицкий Р.И. Проектирование систем на микросхемах программируемой логики. – СПб.: БХВ-Петербург, 2002. – 608 с.</li>
+                </ol>
+            </section>
+
+            <!-- ======================================================== -->
+            <!-- ВКЛАДКА 3: НАУЧНЫЕ ТРУДЫ + ЛЕНИВАЯ ЗАГРУЗКА PDF          -->
+            <!-- ======================================================== -->
+            <section id="scientific" class="tab-content">
+                <h1>Библиотека материалов по теме выпускной работы</h1>
+                <hr>
+                
+                <p style="background-color:#D8BFD8; color: blue; padding: 10px; border: 1px solid #999;">
+                    <b style="color: red; font-size: 16px;">!</b> Список литературы приводится для примера и содержит материалы и статьи.
+                </p>
+
+                <h2>Собственные публикации и доклады</h2>
+                <ol>
+        
+                    <li class="lib">
+                        <a href="javascript:void(0)" onclick="loadDocFrame('04.pdf')" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+                            Диакритические знаки в современных русском и итальянском языках (04.pdf)
+                        </a>
+                        <p><span class="cat">Авторы:</span> Блинова Ольга Алексеевна</p>
+                        <p><span class="cat">Описание:</span> В статье рассказывается про диакритические знаки в русском языке.</p>
+                        <p><span class="cat">Действие:</span> 
+                            <button class="button color" onclick="loadDocFrame('04.pdf')" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+                            <a href="04.pdf" target="_blank" download style="margin-left: 10px;">[Скачать 04.pdf]</a>
+                        </p>
+                    </li>
+
+                    <li class="lib">
+                        <a href="javascript:void(0)" onclick="loadDocFrame('02.pdf')" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+                            К вопросу о представлении многоязычных текстов с диакритическими знаками (02.pdf)
+                        </a>
+                        <p><span class="cat">Авторы:</span> Д.Е. Кондратьев, О.В. Тихонова</p>
+                        <p><span class="cat">Описание:</span> Статья описывает вопросы представления многоязычных текстов с диакритическими знаками.</p>
+                        <p><span class="cat">Действие:</span> 
+                            <button class="button color" onclick="loadDocFrame('02.pdf')" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+                            <a href="02.pdf" target="_blank" download style="margin-left: 10px;">[Скачать 02.pdf]</a>
+                        </p>
+                    </li>
+
+                    <li class="lib">
+                        <span style="color: #0000CD; font-weight: 700; font-size: 18px;">Анализ методов распознавания эмоций по фотоизображениям</span>
+                        <p><span class="cat">Авторы:</span> А.П. Семенова, М.А. Белинская, В.Н. Павлыш</p>
+                        <p><span class="cat">Описание:</span> В работе рассмотрен метод обнаружения лица на изображении и категоризации эмоций.</p>
+                    </li>
+
+                    <li class="lib">
+                        <span style="color: #0000CD; font-weight: 700; font-size: 18px;">Обзор универсального средства работы с базами данных для фреймворка Flask</span>
+                        <p><span class="cat">Авторы:</span> М.А. Белинская, Т.Н. Кравец</p>
+                        <p><span class="cat">Описание:</span> Рассматриваются веб-фреймворк Flask и библиотека SQLAlchemy.</p>
+                    </li>
+                </ol>
+
+                <!-- Интерактивный встроенный просмотрщик PDF/документов с ленивой загрузкой -->
+                <div id="pdf-viewer-section" class="article-view-box" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 id="pdf-viewer-title" style="margin: 0; color: #000080;">Просмотр документа</h3>
+                        <button class="button color" onclick="closeDocFrame()">Закрыть просмотр</button>
+                    </div>
+                    <iframe id="doc-frame" class="article-frame" data-src="" src="about:blank"></iframe>
+                </div>
+            </section>
+
+            <!-- ======================================================== -->
+            <!-- ВКЛАДКА 4: ИНДИВИДУАЛЬНЫЙ РАЗДЕЛ                           -->
+            <!-- ======================================================== -->
+            <section id="individual" class="tab-content">
+                <h1>Тема индивидуального раздела</h1>
+                <hr>
+                <p style="background-color:#D8BFD8; color: blue; width: 70%; padding: 10px;">
+                    Просим обратить пристальное внимание на то, что тематика индивидуального раздела согласовывается с преподавателем не позднее конца октября.
+                </p>
+                <p style="color: blue;">Данный раздел содержит информацию о достижениях и увлечениях, раскрывает вашу личность за пределами учебы и работы. Если вы приняли участие в уникальном профессиональном мероприятии, конкурсе, олимпиаде, стажировке, имеете опыт профессиональной работы – напишите об этом здесь!</p>
+                <p style="color: blue;">Вы увлекаетесь альпинизмом и совершили несколько восхождений; у вас есть свой блог, посвященный рок-музыке; вы изучаете иностранный язык или программирование микроконтроллеров...</p>
+                <p style="color: darkslateblue;">Или, может быть, вы любите путешествовать? Спортивный туризм, пешие и велосипедные походы? Напишите об этом!</p>
+                <p style="color: purple;">Полное раздолье для творчества именно здесь! Проверьте, а нет ли у магистров прошлых лет схожих увлечений. В конце раздела приведите ссылки на них, чтобы можно было оценить все богатство увлечений.</p>
+                <p style="color: navy;">При использовании внешних источников обязательно корректно укажите все необходимые ссылки на них.</p>
+                <hr color="#FF0000" width="50%" align="left" size="5">
+                <p style="color:#191970; font-weight: bold; text-align: center;">Всем удачи в процессе создания сайта и отличных оценок!</p>
+            </section>
+
+        </div> <!-- /#maintext -->
+
+        <!-- Нижние декоративные анимации -->
+        <div class="gif-row">
+            <img data-src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
+            <img data-src="resorse/images/gif/anime2.gif" alt="" loading="lazy">
+            <img data-src="resorse/images/gif/anime1.gif" alt="" loading="lazy">
+        </div>
+
+        <div class="gif-center">
+            <img data-src="resorse/images/gif/Nums.gif" alt="" width="1000" loading="lazy">
+        </div>
+
+    </div> <!-- /#middleblock -->
+
+    <!-- Нижнее дублирующее меню -->
+    <div id="menub">
+        <a class="button tab-link colorfix" href="#about">О себе</a>
+        <a class="button tab-link color" href="#referat">Реферат</a>
+        <a class="button tab-link color" href="#scientific">Научные труды</a>
+        <a class="button tab-link color" href="#individual">Индивидуальный раздел</a>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- JAVASCRIPT									              -->
+    <!-- ======================================================== -->
+    <script type="text/javascript">
+        // Функция переключения вкладок по хешу
+        function switchTab(hash) {
+            // Целевой ID вкладки (по умолчанию 'about')
+            const targetId = (hash && hash !== '#') ? hash.replace('#', '') : 'about';
+            const targetSection = document.getElementById(targetId);
+
+            // Если вкладка с таким ID не существует, открываем главную
+            if (!targetSection) {
+                if (targetId !== 'about') switchTab('#about');
+                return;
+            }
+
+            // 1. Скрываем все вкладки
+            const allSections = document.querySelectorAll('.tab-content');
+            allSections.forEach(sec => sec.classList.remove('active'));
+
+            // 2. Снимаем активный класс со всех кнопок в обоих меню
+            const allLinks = document.querySelectorAll('.tab-link');
+            allLinks.forEach(link => {
+                link.classList.remove('colorfix');
+                link.classList.add('color');
+            });
+
+            // 3. Активируем нужную вкладку
+            targetSection.classList.add('active');
+
+            // 4. Подсвечиваем активные кнопки
+            const activeLinks = document.querySelectorAll(`.tab-link[href="#${targetId}"]`);
+            activeLinks.forEach(link => {
+                link.classList.add('colorfix');
+                link.classList.remove('color');
+            });
+
+            // 5. LAZY подгрузка изображений только в открывшейся вкладке
+            const lazyImages = targetSection.querySelectorAll('img[data-src]');
+            lazyImages.forEach(img => {
+                if (!img.src || img.src === window.location.href) {
+                    img.src = img.getAttribute('data-src');
+                }
+            });
+
+            // Прокрутка наверх контента при переключении
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Функция открытия PDF во встроенном фрейме с отложенной загрузкой
+        function loadDocFrame(fileName) {
+            const viewerSection = document.getElementById('pdf-viewer-section');
+            const frame = document.getElementById('doc-frame');
+            const title = document.getElementById('pdf-viewer-title');
+			const basePath = 'resorse/pdf/';
 			
-				<div id="headergif">
-				<img src="resorse/images/gif/Chips.gif" alt="" width="100" >
-				</div>
+            if (viewerSection && frame) {
+                viewerSection.style.display = 'block';
+                frame.src = basePath + fileName;
+                if (title) title.innerText = 'Просмотр документа: ' + fileName;
+                viewerSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-		</div>
-	</div> <!-- header -->
+        // Функция закрытия просмотрщика PDF
+        function closeDocFrame() {
+            const viewerSection = document.getElementById('pdf-viewer-section');
+            const frame = document.getElementById('doc-frame');
+            if (viewerSection && frame) {
+                frame.src = 'about:blank';
+                viewerSection.style.display = 'none';
+            }
+        }
 
-	
-			<div class="gif-row">
-				<img src="resorse/images/gif/WEB.gif" alt="">
-				<img src="resorse/images/gif/CatAey.gif" alt="">
-			</div>
-			
-	<div id="middleblock">
-		<div id="menu">
-			<a class="button colorfix">О себе</a>
-			<a class="button color" href="pages/referat/ref.html">Реферат</a>
-			<a class="button color" href="pages/scientific_works/scntdc_wrks.html">Научные труды</a>
-			<a class="button color" href="pages/individual/indiv.html">Индивидуальный раздел</a>
-			<a class="button color" href="pages/indexAIgen.html">AI gen!</a>
-		</div>
+        // Слушатель изменения адреса в браузере (клик по меню, кнопки Вперед/Назад)
+        window.addEventListener('hashchange', function() {
+            switchTab(window.location.hash);
+        });
 
-			<div id="maintext">
-				<hr>
-				<h3>Магистр рассказывает о себе, длительность ролика 1 минута. <img src="resorse/images/gif/anime4.gif" alt="" width="60"> </h3>
-<p> Обязательно отобразить ключевые элементы:<br>
+        // Инициализация при первичной загрузке страницы
+        window.addEventListener('DOMContentLoaded', function() {
+            // Подгружаем фоновые декорации
+            const bg = document.querySelector('.background-image');
+            if (bg && bg.getAttribute('data-src')) {
+                bg.src = bg.getAttribute('data-src');
+            }
 
-<u>Причина выбора своей специальности:</u> объяснить почему именно эта специальность была выбрана при поступлении.
-<br>
-<u>Охарактеризовать процесс обучения:</u> описать участие в олимпиадах, конференциях, спортивных соревнованиях, волонтерстве... 
-все то, что считаете важным. <br>
-<u>Учебные предметы: </u> назвать 2-3 дисциплины, которые дали востребованные навыки или понравились по качеству преподавания. Если были  любимые преподаватели, укажите.
-<br>
-<u>Карьерные планы:</u> желаемое направление или сферу деятельности.<br>
-
-</p>
-
-
-
-				<hr>
-				<h1>Краткое резюме магистра</h1>
-				<hr>
-				<table id="resume">
-					<tr class=even>
-						<td class=c1>ФИО
-						<td class=c2>Назарюк Владимир Юрьевич
-					<tr class=odd>
-						<td class=c1>Дата рождения
-						<td class=c2>30 Марта 2004 г.
-					<tr class=odd>
-						<td class=c1>Место рождения
-						<td class=c2>г. Донецк
-					<tr class=odd>
-						<td class=c1>Школа(ы)
-						<td class=c2>Школа #7 г.Харцызск
-					<tr class=odd>
-						<td class=c1>ВУЗ
-						<td class=c2> 
-                                                         Бакалавриат: ДонНТУ 2021 - 2025 гг. <br>
-                                                             Магистратура: ДонНТУ 2025 - 2027 гг.
-                                                             
-					<tr class=odd>
-						<td class=c1>Средний балл
-						<td class=c2>100.0
-					<tr class=odd>
-						<td class=c1>Знание языков
-						<td class=c2> Русский - родной, Украинский - свободно, Английскйи - свободно
-
-					<tr class=odd>
-						<td class=c1>Увлечения
-						<td class=c2>Спортивный туризм (велосипедный и пеший), чтение художественной литературы, легкая атлетика. 
-					<tr class=odd>
-						<td class=c1>Общие навыки
-						<td class=c2>
-					<ol>
-						<li>Чтение и ведение документации.</li>
-						<li>Изображение чертежей.</li>
-						<li>Продвинутые навыки владения ПК</li>
-						<li>Продвинутые навыки владения нейросетями.</li>
-						<li>И вообще я много чего умею.</li>
-					</ol>
-					<tr class=odd>
-						<td class=c1>Профессиональные навыки
-						<td class=c2>
-							<ol>
-								<li>Создание и работа с EXLE базами данных.</li>
-								<li>Проведение исследовательских работ и лабораторных испытаний.</li>
-								<li>Написание дипломных и курсовых работ.</li>
-								<li>Проведение моделлирование металлургическох процессов.</li>
-								<li>Проведение расчетов параметров оборудования МЗ.</li>
-
-							</ol>
-					<tr class=odd>
-						<td class=c1>Надпрофессиональные навыки
-						<td class=c2>
-							<ol>
-								<li>Коммуникативная граммотность.</li>
-								<li>Информационная граммотность.</li>
-								<li>Цифровая и компьютерная граммотность.</li>
-								<li>Уверенное выступление перед любой аудиторией.</li>
-								<li>Подготовка и проведение эффективных презентаций.</li>
-								<li>Работа в команде.</li>
-								<li>Обучаемость и адаптивность.</li>
-								<li>Аналитическое мышление.</li>
-								<li>Работа с обратной связью.</li>
-								<li>Креативное мышление.</li>
-								<li>Целеустремленность и умение доводить начатое до конца.</li>
-
-							</ol>
-							<!--
-					<tr class=odd>
-						<td class=c1>Дополнительные курсы, стажировки, гранты
-						<td class=c2><ol><li>Онлайн-курсы. Укажите название курса, платформу/организацию (OpenEdu, Stepik, Нетология) и дату завершения (месяц и год). 
-<ul><li>Пример. <a href="images/stepik.jfif">«Основы Python для анализа данных» | Stepik | Октябрь 2024.</a></li></ul>
-<li>Стажировки. Укажите должность, компанию, период и ключевые задачи/достижения. 
-<ul><li>Пример: ООО «Туризм 3D» | Стажер-аналитик | Июль – Август 2023.
-Участвовал в проекте по анализу базы клиентов: обрабатывал данные с помощью SQL. Подготовил отчет с рекомендациями.</li></ul>
-<li>Гранты/конкурсы/стипендии. Укажите название гранта/конкурса/стипендии, кто выдал (фонд, университет), дату.
-<ul><li>Примеры:
-Победитель хакатона «Наша земля».   Сентябрь 2023.
-В составе команды из 4 человек разработал прототип мобильного приложения для … Заняли 2-е место среди 50 команд.</li>
-<li>Именная стипендия им. И.И. Иванова | ДонНТУ | 2022/2023 учебный год. Назначена за академические успехи и научную деятельность в области искусственного интеллекта.</li></ul>
-<li>Участие в научных конференциях с перечислением (желательно кликабельные ссылки на опубликованные статьи, сборники конференций...).
-
-							-->	
-					<tr class=odd>
-						<td class=c1>Личные достижения
-						<td class=c2>Любые личные достижения магистра – учебные (победитель олимпиад, конкурсов и так далее), научные(публикации, выступления на конференциях,
- участие в исследовательских проектах) , спортивные(призовые места в соревнованиях, разряды, звания), волонтерская деятельность, победы в творческих конкурсах, организация мероприятий...
-					<tr class=odd>
-						<td class=c1>Дополнительные сведения
-						<td class=c2>Наличие водительских прав, спортивные звания, волонтёрство, участие в СВО.
-					<tr class=odd>
-						<td class=c1>Опыт работы
-						<td class=c2>Если  имеете опыт работы (например, при прохождении практики), то указывается предприятие, должность и сроки работы. Если есть реализованные проекты, то добавить кликабельные ссылки.
-					<tr class=odd>
-						<td class=c1>Планы на будущее
-						<td class=c2>Что писать НЕ стоит:Размытые цели: «Стать лучше», «Много зарабатывать», «Найти интересную работу». Это очевидно и ни о чем не говорит. 
-Ваши планы должны быть конкретными, реалистичными и соответствующими направлению магистратуры и потенциальному месту работы. Это показывает, что вы — вдумчивый,целеустремленный, интересный специалист.
-					<tr class=odd>
-						<td class=c1>Контактная информация
-						<td class=c2><a href="#" target="_blank">VK</a><br>
-					                 <a href="#" target="_blank">Telegram</a><br>
-					             E-mail:   <a href="ivanov@yandex.ru" target="_blank">ivanov@yandex.ru</a><br>
-					</td>
-
-				</table>
-			</div> <!-- maintext -->
-
-			<div class="gif-row">
-				<img src="resorse/images/gif/anime3.gif" alt="">
-				<img src="resorse/images/gif/anime2.gif" alt="">
-				<img src="resorse/images/gif/anime1.gif" alt="">
-			</div>
-
-			<div class="gif-center">
-				<img src="resorse/images/gif/Nums.gif" alt="" width="1000">
-			</div>
-			
-	</div> <!-- middleblock -->
-
-	<div id="menub">
-			<a class="button colorfix">О себе</a>
-			<a class="button color" href="pages/referat/ref.html">Реферат</a>
-			<a class="button color" href="pages/scientific_works/scntdc_wrks.html">Научные труды</a>
-			<a class="button color" href="pages/individual/indiv.html">Индивидуальный раздел</a>
-			<a class="button color" href="pages/indexAIgen.html">AI gen!</a>
-	</div>
+            // Переключаем вкладку в соответствии с текущим URL
+            switchTab(window.location.hash);
+        });
+    </script>
 
 </body>
 </html>
-

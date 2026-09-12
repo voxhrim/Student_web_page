@@ -1,14 +1,21 @@
 /* =========================================================
-   Личный сайт в стиле старого интернета
-   Гифки находятся в папке GIF 
+   Личный сайт магистра ДонНТУ в стиле Web 1.0 / Ретро-интернет
+   Единая таблица стилей со встроенным SPA-переключением
    ========================================================= */
 
+/* ---------------- Механика SPA вкладок ---------------- */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
 
 /* ---------------- Основной фон ---------------- */
-
 body {
     background-color: #02061f;
-    background-image: url("../resorse/images/gif/background.gif");
+    background-image: url("resorse/images/gif/background.gif");
     background-repeat: repeat;
     margin: 0;
     font-family: "Times New Roman", serif;
@@ -20,10 +27,10 @@ body {
     bottom: 0px;
     width: 400px;
     z-index: -1;
+    pointer-events: none;
 }
 
 /* ---------------- Верхняя панель ---------------- */
-
 #topblock {
     min-height: 50px;
     background: #050b2e;
@@ -54,15 +61,13 @@ body {
     background: #252d70;
 }
 
-
 /* ---------------- Шапка ---------------- */
-
 #header {
     display: flex;
     background-color: #d8d8d8;
-    background-image: url("../resorse/images/gif/metal.gif");
+    background-image: url("resorse/images/gif/metal.gif");
     background-repeat: repeat;
-	background-size: cover;
+    background-size: cover;
     border: 4px ridge #d0d0d0;
     padding: 15px;
     gap: 20px;
@@ -70,7 +75,6 @@ body {
     width: 90%;
     max-width: 1100px;
     box-sizing: border-box;
-    display: flex;
     align-items: center;
     flex-wrap: nowrap;
 }
@@ -91,7 +95,6 @@ body {
     flex-direction: column;
     gap: 5px;
     flex: 1;
-    
 }
 
 #header h1 {
@@ -120,9 +123,20 @@ body {
     color: #cc0000;
 }
 
+#headergif {
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 5px;
+}
+
+#headergif img {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+}
 
 /* ---------------- Основной блок ---------------- */
-
 #middleblock {
     width: 90%;
     max-width: 1100px;
@@ -132,9 +146,7 @@ body {
     box-sizing: border-box;
 }
 
-
 /* ---------------- Меню ---------------- */
-
 #menu {
     text-align: center;
     padding: 12px;
@@ -168,18 +180,16 @@ body {
 }
 
 .colorfix {
-    color: #ffff00;
-    background: #222266;
-    border: 3px inset #555599;
+    color: #ffff00 !important;
+    background: #222266 !important;
+    border: 3px inset #555599 !important;
     cursor: default;
 }
 
-
 /* ---------------- Основной текст ---------------- */
-
 #maintext {
     background-color: #f5f5f5;
-    background-image: url("../resorse/images/gif/paper.png");
+    background-image: url("resorse/images/gif/paper.png");
     background-repeat: repeat;
     padding: 18px;
     min-height: 400px;
@@ -188,14 +198,12 @@ body {
 #maintext hr {
     border: 0;
     height: 10px;
-    background-image: url("../resorse/images/gif/divider.gif");
+    background-image: url("resorse/images/gif/divider.gif");
     background-repeat: repeat-x;
     margin: 18px 0;
 }
 
-
 /* ---------------- Заголовки ---------------- */
-
 h1 {
     font-family: "Times New Roman", serif;
     font-size: 28px;
@@ -219,9 +227,7 @@ h1 {
     margin: 15px;
 }
 
-
 /* ---------------- Текст и ссылки ---------------- */
-
 p {
     font-family: "Times New Roman", serif;
     font-size: 18px;
@@ -244,9 +250,7 @@ img {
     border: 0;
 }
 
-
 /* ---------------- Списки ---------------- */
-
 ul, ul li, ol, ol li {
     font-family: "Times New Roman", serif;
     font-size: 18px;
@@ -274,6 +278,7 @@ ul li a:hover, ol li a:hover {
 li.ct1,
 li.ct2 {
     border-bottom: 1px dotted #777;
+    margin-bottom: 5px;
 }
 
 li.ct2 {
@@ -284,9 +289,7 @@ ol li {
     line-height: 1.6;
 }
 
-
 /* ---------------- Картинки ---------------- */
-
 .img {
     margin: 15px 0;
     text-align: center;
@@ -299,9 +302,7 @@ ol li {
     padding: 3px 15px;
 }
 
-
 /* ------------------ GIF ------------------ */
-
 .gif-center {
     text-align: center;
     margin: 15px 0;
@@ -319,7 +320,6 @@ ol li {
     margin: 10px;
 }
 
-/* Несколько гифок в одной строке */
 .gif-row {
     display: flex;
     justify-content: center;
@@ -335,23 +335,7 @@ ol li {
     height: auto;
 }
 
-/* Гифка справа в шапке */
-
-#headergif {
-    margin-left: auto;
-    flex-shrink: 0;
-    padding: 5px;
-}
-
-#headergif img {
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-}
-
 /* ---------------- Заметка ---------------- */
-
 .comment {
     background: #ffffcc;
     color: #202020;
@@ -377,9 +361,7 @@ ol li {
     font-style: italic;
 }
 
-
-/* ---------------- Таблица ---------------- */
-
+/* ---------------- Таблица Резюме ---------------- */
 table#resume {
     width: 100%;
     margin: 0 auto;
@@ -435,9 +417,7 @@ table#resume td ol {
     padding-left: 25px;
 }
 
-
 /* ---------------- Нижнее меню ---------------- */
-
 #menub {
     width: 90%;
     max-width: 1100px;
@@ -449,29 +429,10 @@ table#resume td ol {
     text-align: center;
 }
 
-.mitemb {
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 15px;
-    color: #00ffff;
-    text-decoration: none;
-    padding: 7px 12px;
-    margin: 3px;
-    background: #222266;
-    border: 2px outset #555599;
-}
-
-.mitemb:hover {
-    color: #ffff00;
-    background: #444499;
-}
-
-
 /* ---------------- Список литературы ---------------- */
-
 .lib {
     padding-bottom: 10px;
-    margin: 10pt 20pt 20pt 50pt;
+    margin: 10pt 20pt 20pt 30pt;
     border-bottom: 1px solid #808080;
 }
 
@@ -483,10 +444,6 @@ table#resume td ol {
 .lib .cat {
     color: #000080;
     font-weight: bold;
-}
-
-.lib_ol {
-    padding: 0 15px;
 }
 
 .topblock {
@@ -514,55 +471,47 @@ table#resume td ol {
     background: #444499;
 }
 
-.dash-list {
-    line-height: 1.8;
+/* ---------------- Встроенный просмотрщик статей / PDF ---------------- */
+.article-view-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border: 2px inset #999;
 }
 
-
-/* ---------------- Список материалов ---------------- */
-
-.list {
-    padding-bottom: 10px;
-    margin: 5pt 20pt 10pt 50pt;
-    border-bottom: 1px solid #808080;
+.article-frame {
+    width: 100%;
+    height: 700px;
+    border: 1px solid #777;
+    background: #fff;
 }
 
-.list p {
-    text-indent: 0;
-    margin: 4pt 0 0;
-}
-
-.list .cat {
-    color: #000080;
-    font-weight: bold;
-}
-
-
-/* ---------------- Видео ---------------- */
-
-.video {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-/* ---------------- Экран телефона ---------------- */
-
-@media screen and (max-width: 500px) {
+/* ---------------- Адаптив ---------------- */
+@media screen and (max-width: 768px) {
     #header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
     }
 
-    #header img {
-        width: 140px;
-        height: auto;
+    #headertext {
+        text-align: center;
+    }
+
+    #header h1 {
+        text-align: center;
+    }
+
+    #headergif {
+        margin: 10px auto 0;
     }
 
     table#resume td.c1,
     table#resume td.c2 {
-        width: auto;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
     }
 
     #middleblock,
