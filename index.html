@@ -11,371 +11,465 @@
 
 <body>
 
-    <!-- Фоновый арт (loading="lazy" - для оптимизации (загрузка при видисоти типа) -->
+
+    <!-- Фоновый арт -->
     <img class="background-image" data-src="resorse/images/AnimeChar.png" alt="" loading="lazy">
 
-    <!-- Верхний блок ссылок ДонНТУ -->
+    <!-- Верхний блок ссылок ДонНТУ (Панель задач Windows) -->
     <div id="topblock">
+        <div class="taskbar-start">
+            <span class="win-logo-icon">🪟</span> <strong>Пуск</strong>
+        </div>
         <div id="donntu">
-            <a href="http://donntu.ru" target="_blank">ДонНТУ</a>
-            <a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">Портал магистров</a>
+            <a href="http://donntu.ru" target="_blank">🌐 ДонНТУ</a>
+            <a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">🎓 Портал магистров</a>
         </div>
     </div> 
 
-    <!-- Единая шапка сайта -->
-    <div id="header">
-        <div id="photomag">
-            <a href="resorse/images/mugshot.webp" target="_blank">
-                <img src="resorse/images/mugshot.webp" width="300" height="400" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
-            </a>
+
+	<!-- Отдельное окно для змейки в свободной области справа -->
+	<div id="desktop-snake-window" class="win-window">
+		<div class="win-title-bar">
+			<div class="win-title-text">
+				<span class="win-icon">🎮</span> Snake_Arcade.exe
+			</div>
+			<div class="win-controls">
+				<button class="win-btn" type="button">_</button>
+				<button class="win-btn" type="button">□</button>
+				<button class="win-btn close" type="button">✕</button>
+			</div>
+		</div>
+		<div class="win-window-body" style="background: #c0c0c0; padding: 0; height: 160px; position: relative;">
+			<div id="window-snake-container" style="position: absolute; width: 100%; height: 100%;">
+				<canvas id="snakeCanvasWindow"></canvas>
+			</div>
+		</div>
+	</div>
+
+    <!-- Единая шапка сайта: классическое окно Windows 2000 -->
+    <div id="header" class="win-window">
+        
+        
+
+        <div class="win-title-bar">
+            <div class="win-title-text">
+                <span class="win-icon">📁</span> C:\DonNTU\Masters\Nazaryuk_V_Yu.exe
+            </div>
+            <div class="win-controls">
+                <button class="win-btn" type="button" aria-label="Свернуть">_</button>
+                <button class="win-btn" type="button" aria-label="Развернуть">□</button>
+                <button class="win-btn close" type="button" aria-label="Закрыть">✕</button>
+            </div>
         </div>
-        <div id="headertext">
-            <h1 class="hdr">Назарюк Владимир Юрьевич</h1>
-            <h3 class="hdr"><a href="https://donntu.ru/fmt" target="_blank">Факультет металлургии и теплоэнергетики</a></h3>
-            <h3 class="hdr"><a href="https://kmtm.fmt.donntu.ru/" target="_blank">Кафедра металлургических технологий и материаловедения</a></h3>
-            <h3 class="hdr">Направление: 22.03.02 &laquo;Металлургия&raquo;</h3>
-            <h3 class="hdr">Профиль: &laquo;металлургия черных металлов&raquo;</h3>
-            <h3 class="hdr">Тема выпускной квалификационной работы магистра: &laquo;Исследование влияния технологических параметров выплавки хромистых чугунов в индукционных печах на качество литых изделий&raquo;</h3>
-            <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
-        </div>
-        <div id="headergif">
-            <img src="resorse/images/gif/Chips.gif" alt="" width="100">
+
+        <div class="win-window-body header-body">
+            <div id="photomag">
+                <a href="resorse/images/mugshot.webp" target="_blank">
+                    <img src="resorse/images/mugshot.webp" width="300" height="400" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
+                </a>
+            </div>
+            <div id="headertext">
+                <h1 class="hdr">Назарюк Владимир Юрьевич</h1>
+                <h3 class="hdr"><a href="https://donntu.ru/fmt" target="_blank">Факультет металлургии и теплоэнергетики</a></h3>
+                <h3 class="hdr"><a href="https://kmtm.fmt.donntu.ru/" target="_blank">Кафедра металлургических технологий и материаловедения</a></h3>
+                <h3 class="hdr">Направление: 22.03.02 &laquo;Металлургия&raquo;</h3>
+                <h3 class="hdr">Профиль: &laquo;металлургия черных металлов&raquo;</h3>
+                <h3 class="hdr">Тема выпускной квалификационной работы магистра: &laquo;Исследование влияния технологических параметров выплавки хромистых чугунов в индукционных печах на качество литых изделий&raquo;</h3>
+                <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
+            </div>
+            <div id="headergif">
+                <img src="resorse/images/gif/Chips.gif" alt="" width="100">
+            </div>
         </div>
     </div>
 
     <!-- Декоративные баннеры-гифки -->
-    <div class="gif-row">
-        <img src="resorse/images/gif/WEB.gif" alt="">
-        <img src="resorse/images/gif/CatAey.gif" alt="">
-    </div>
+    <!-- <div class="gif-row"> -->
+        <!-- <img src="resorse/images/gif/WEB.gif" alt=""> -->
+        <!-- <img src="resorse/images/gif/CatAey.gif" alt=""> -->
+    <!-- </div> -->
 
-    <!-- Главный блок с вкладками SPA -->
-    <div id="middleblock">
+    <!-- Главный блок с вкладками SPA (Окно документа WordPad) -->
+    <div id="middleblock" class="win-window window-relative">
 
-        <!-- Верхнее меню навигации (SPA хеши) -->
-        <div id="menu">
-            <a class="button tab-link colorfix" href="#about">О себе</a>
-            <a class="button tab-link color" href="#referat">Реферат</a>
-            <a class="button tab-link color" href="#scientific">Научные труды</a>
-            <a class="button tab-link color" href="#individual">Индивидуальный раздел</a>
+        <!-- Сидящий на верхнем краю окна персонаж -->
+        <div class="anime-sitter" title="Добро пожаловать!">
+            <img src="resorse/images/gif/anime5.gif" alt="Сидящий персонаж">
         </div>
 
-        <!-- Контейнер основного текста -->
-        <div id="maintext">
+        <!-- Полоса заголовка окна -->
+        <div class="win-title-bar">
+            <div class="win-title-text">
+                <span class="win-icon">📄</span> Master_Portfolio_2026.doc — Microsoft WordPad
+            </div>
+            <div class="win-controls">
+                <button class="win-btn" type="button">_</button>
+                <button class="win-btn" type="button">□</button>
+                <button class="win-btn close" type="button">✕</button>
+            </div>
+        </div>
+<!-- Тело окна WordPad с серым фоном -->
+        <div class="win-window-body" style="padding: 6px; background: #c0c0c0;">
+		
+			<div class="win-sunken-panel" style="background: #c0c0c0;">
 
-            <!-- ======================================================== -->
-            <!-- ВКЛАДКА 1: О СЕБЕ / РЕЗЮМЕ                                -->
-            <!-- ======================================================== -->
-            <section id="about" class="tab-content active">
-                <hr>
-                <h3>Магистр рассказывает о себе, длительность ролика 1 минута. <img src="resorse/images/gif/anime4.gif" alt="" width="60"></h3>
-                <p>Обязательно отобразить ключевые элементы:<br>
-                    <u>Причина выбора своей специальности:</u> объяснить почему именно эта специальность была выбрана при поступлении.<br>
-                    <u>Охарактеризовать процесс обучения:</u> описать участие в олимпиадах, конференциях, спортивных соревнованиях, волонтерстве... все то, что считаете важным.<br>
-                    <u>Учебные предметы:</u> назвать 2-3 дисциплины, которые дали востребованные навыки или понравились по качеству преподавания. Если были любимые преподаватели, укажите.<br>
-                    <u>Карьерные планы:</u> желаемое направление или сферу деятельности.
-                </p>
+            <!-- Верхнее меню навигации (SPA хеши) -->
+            <div id="menu">
+                <a class="button tab-link colorfix" href="#about">💾 О себе</a>
+                <a class="button tab-link color" href="#referat">📑 Реферат</a>
+                <a class="button tab-link color" href="#scientific">📚 Научные труды</a>
+                <a class="button tab-link color" href="#individual">🚲 Индивидуальный раздел</a>
+            </div>
 
-                <hr>
-                <h1>Краткое резюме магистра</h1>
-                <hr>
+            <!-- Контейнер основного текста внутри окна -->
+            <div id="maintext" class="win-sunken-panel">
 
-                <table id="resume">
-                    <tr class="even">
-                        <td class="c1">ФИО</td>
-                        <td class="c2">Назарюк Владимир Юрьевич</td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Дата рождения</td>
-                        <td class="c2">30 Марта 2004 г.</td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Место рождения</td>
-                        <td class="c2">г. Донецк</td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Школа(ы)</td>
-                        <td class="c2">Школа #7 г.Харцызск</td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">ВУЗ</td>
-                        <td class="c2">
-                            Бакалавриат: ДонНТУ 2021 - 2025 гг.<br>
-                            Магистратура: ДонНТУ 2025 - 2027 гг.
-                        </td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Средний балл</td>
-                        <td class="c2">4.91</td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Знание языков</td>
-                        <td class="c2">Русский - родной, Украинский - свободно, Английский - свободно</td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Увлечения</td>
-                        <td class="c2">Спортивный туризм (велосипедный и пеший), чтение художественной литературы, легкая атлетика.</td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Общие навыки</td>
-                        <td class="c2">
-                            <ol>
-                                <li>Чтение и ведение документации.</li>
-                                <li>Изображение чертежей.</li>
-                                <li>Продвинутые навыки владения ПК.</li>
-                                <li>Продвинутые навыки владения нейросетями.</li>
-                                <li>И вообще я много чего умею.</li>
-                            </ol>
-                        </td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Профессиональные навыки</td>
-                        <td class="c2">
-                            <ol>
-                                <li>Создание и работа с EXCEL базами данных.</li>
-                                <li>Проведение исследовательских работ и лабораторных испытаний.</li>
-                                <li>Написание дипломных и курсовых работ.</li>
-                                <li>Проведение моделирования металлургических процессов.</li>
-                                <li>Проведение расчетов параметров оборудования МЗ.</li>
-                            </ol>
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Надпрофессиональные навыки</td>
-                        <td class="c2">
-                            <ol>
-                                <li>Коммуникативная грамотность.</li>
-                                <li>Информационная грамотность.</li>
-                                <li>Цифровая и компьютерная грамотность.</li>
-                                <li>Уверенное выступление перед любой аудиторией.</li>
-                                <li>Подготовка и проведение эффективных презентаций.</li>
-                                <li>Работа в команде.</li>
-                                <li>Обучаемость и адаптивность.</li>
-                                <li>Аналитическое мышление.</li>
-                                <li>Работа с обратной связью.</li>
-                                <li>Креативное мышление.</li>
-                                <li>Целеустремленность и умение доводить начатое до конца.</li>
-                            </ol>
-                        </td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Личные достижения</td>
-                        <td class="c2">Публикации в журналах и научная работа  - - - - как-то надо об этом написать нормально - - - - </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Планы на будущее</td>
-                        <td class="c2">Хочу прогрессировать в карьере научного сотрудника, развивать науку в России и всем мире.</td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Контактная информация</td>
-                        <td class="c2">
-                            <a href="https://t.me/Voxhrim" target="_blank">Telegram</a><br>
-							<a href="https://discord.com/users/521297931039408139" target="_blank">Discord</a><br>
-							<a href="https://github.com/voxhrim" target="_blank">Github</a><br>
-                            E-mail: <a href="mailto:nazariuk.donntu@gmail.com?subject=Вопрос с сайта">nazariuk.donntu@gmail.com</a>
-                        </td>
-                    </tr>
-                </table>
-            </section>
-
-            <!-- ======================================================== -->
-            <!-- ВКЛАДКА 2: РЕФЕРАТ                                        -->
-            <!-- ======================================================== -->
-            <section id="referat" class="tab-content">
-                <h1>Реферат по теме выпускной работы</h1>
-                <hr>
-
-                <!-- Ниже можно оставить текстовый вариант реферата или убрать его при необходимости -->
-                <p class="comment">
-                    Сейчас тат бак. работа, маг. пока нету
-                </p>
-
-                <!-- Панель управления и встроенный просмотрщик PDF -->
-                <div class="article-view-box" style="margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="margin: 0; color: #000080;">Документ: Реферат магистра</h3>
-                        <a href="resorse/pdf/referat.pdf" target="_blank" download class="button color" style="font-size: 13px; text-decoration: none;">
-                            Скачать PDF
-                        </a>
+                <!-- ======================================================== -->
+                <!-- ВКЛАДКА 1: О СЕБЕ / РЕЗЮМЕ                                -->
+                <!-- ======================================================== -->
+                <section id="about" class="tab-content active">
+                    
+                    <!-- Уникальный маскот для раздела "О себе" -->
+                    <div class="anime-mascot-box">
+                        <div class="mascot-bubble">Рад знакомству! Это мое резюме!</div>
+                        <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
                     </div>
-                    <!-- data-src указывает на файл, который загрузится при открытии вкладки -->
-                    <iframe id="referat-frame" class="article-frame" data-src="resorse/pdf/referat.pdf" src="about:blank"></iframe>
-                </div>
-            </section>
 
-            <!-- ======================================================== -->
-            <!-- ВКЛАДКА 3: НАУЧНЫЕ ТРУДЫ						          -->
-            <!-- ======================================================== -->
-            <section id="scientific" class="tab-content">
-                <h1>Библиотека материалов по теме выпускной работы</h1>
-                <hr>
-                
-                <p style="background-color:#D8BFD8; color: blue; padding: 10px; border: 1px solid #999;">
-                    <b style="color: red; font-size: 16px;">!</b> Список не полный.
-                </p>
+                    <hr>
+                    <h3>Магистр рассказывает о себе, длительность ролика 1 минута. <img src="resorse/images/gif/anime4.gif" alt="" width="50" style="vertical-align: middle;"></h3>
+                    <p>Обязательно отобразить ключевые элементы:<br>
+                        <u>Причина выбора своей специальности:</u> объяснить почему именно эта специальность была выбрана при поступлении.<br>
+                        <u>Охарактеризовать процесс обучения:</u> описать участие в олимпиадах, конференциях, спортивных соревнованиях, волонтерстве... все то, что считаете важным.<br>
+                        <u>Учебные предметы:</u> назвать 2-3 дисциплины, которые дали востребованные навыки или понравились по качеству преподавания. Если были любимые преподаватели, укажите.<br>
+                        <u>Карьерные планы:</u> желаемое направление или сферу деятельности.
+                    </p>
 
-                <h2>Собственные публикации и доклады</h2>
-                <ol>
-        
-                    <li class="lib">
-                        <a href="javascript:void(0)" onclick="loadDocFrame('04.pdf')" style="color: #0000CD; font-weight: 700; font-size: 18px;">
-                             Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2024. – С. 14-15.
-                        </a>
-                        <p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
-                        <p><span class="cat">Описание:</span> Резцльтаты испытания отлитых образцев из высокохромистого чугуна.</p>
-                        <p><span class="cat">Действие:</span> 
-                            <button class="button color" onclick="loadDocFrame('04.pdf')" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
-                            <a href="04.pdf" target="_blank" download style="margin-left: 10px;">[Скачать 04.pdf]</a>
-                        </p>
-                    </li>
+                    <hr>
+                    <h1>Краткое резюме магистра</h1>
+                    <hr>
 
-                    <li class="lib">
-                        <a href="javascript:void(0)" onclick="loadDocFrame('02.pdf')" style="color: #0000CD; font-weight: 700; font-size: 18px;">
-                            Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2025. – С. 14-15.
-)
-                        </a>
-                        <p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
-                        <p><span class="cat">Описание:</span> Резцльтаты испытания отлитых образцев из высокохромистого чугуна.</p>
-                        <p><span class="cat">Действие:</span> 
-                            <button class="button color" onclick="loadDocFrame('02.pdf')" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
-                            <a href="02.pdf" target="_blank" download style="margin-left: 10px;">[Скачать 02.pdf]</a>
-                        </p>
-                    </li>
+                    <table id="resume">
+                        <tr class="even">
+                            <td class="c1">ФИО</td>
+                            <td class="c2">Назарюк Владимир Юрьевич</td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Дата рождения</td>
+                            <td class="c2">30 Марта 2004 г.</td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Место рождения</td>
+                            <td class="c2">г. Донецк</td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Школа(ы)</td>
+                            <td class="c2">Школа #7 г.Харцызск</td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">ВУЗ</td>
+                            <td class="c2">
+                                Бакалавриат: ДонНТУ 2021 - 2025 гг.<br>
+                                Магистратура: ДонНТУ 2025 - 2027 гг.
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Средний балл</td>
+                            <td class="c2">4.91</td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Знание языков</td>
+                            <td class="c2">Русский - родной, Украинский - свободно, Английский - свободно</td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Увлечения</td>
+                            <td class="c2">Спортивный туризм (велосипедный и пеший), чтение художественной литературы, легкая атлетика.</td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Общие навыки</td>
+                            <td class="c2">
+                                <ol>
+                                    <li>Чтение и ведение документации.</li>
+                                    <li>Изображение чертежей.</li>
+                                    <li>Продвинутые навыки владения ПК.</li>
+                                    <li>Продвинутые навыки владения нейросетями.</li>
+                                    <li>И вообще я много чего умею.</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Профессиональные навыки</td>
+                            <td class="c2">
+                                <ol>
+                                    <li>Создание и работа с EXCEL базами данных.</li>
+                                    <li>Проведение исследовательских работ и лабораторных испытаний.</li>
+                                    <li>Написание дипломных и курсовых работ.</li>
+                                    <li>Проведение моделирования металлургических процессов.</li>
+                                    <li>Проведение расчетов параметров оборудования МЗ.</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Надпрофессиональные навыки</td>
+                            <td class="c2">
+                                <ol>
+                                    <li>Коммуникативная грамотность.</li>
+                                    <li>Информационная грамотность.</li>
+                                    <li>Цифровая и компьютерная грамотность.</li>
+                                    <li>Уверенное выступление перед любой аудиторией.</li>
+                                    <li>Подготовка и проведение эффективных презентаций.</li>
+                                    <li>Работа в команде.</li>
+                                    <li>Обучаемость и адаптивность.</li>
+                                    <li>Аналитическое мышление.</li>
+                                    <li>Работа с обратной связью.</li>
+                                    <li>Креативное мышление.</li>
+                                    <li>Целеустремленность и умение доводить начатое до конца.</li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Личные достижения</td>
+                            <td class="c2">Публикации в журналах и научная работа  - - - - как-то надо об этом написать нормально - - - - </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Планы на будущее</td>
+                            <td class="c2">Хочу прогрессировать в карьере научного сотрудника, развивать науку в России и всем мире.</td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Контактная информация</td>
+                            <td class="c2">
+                                <a href="https://t.me/Voxhrim" target="_blank">Telegram</a><br>
+                                <a href="https://discord.com/users/521297931039408139" target="_blank">Discord</a><br>
+                                <a href="https://github.com/voxhrim" target="_blank">Github</a><br>
+                                E-mail: <a href="mailto:nazariuk.donntu@gmail.com?subject=Вопрос с сайта">nazariuk.donntu@gmail.com</a>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
 
-                <!-- Интерактивный встроенный просмотрщик PDF/документов с ленивой загрузкой -->
-                <div id="pdf-viewer-section" class="article-view-box" style="display: none;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 id="pdf-viewer-title" style="margin: 0; color: #000080;">Просмотр документа</h3>
-                        <button class="button color" onclick="closeDocFrame()">Закрыть просмотр</button>
+                <!-- ======================================================== -->
+                <!-- ВКЛАДКА 2: РЕФЕРАТ                                        -->
+                <!-- ======================================================== -->
+                <section id="referat" class="tab-content">
+                    
+                    <!-- Уникальный маскот для раздела "Реферат" -->
+                    <div class="anime-mascot-box">
+                        <div class="mascot-bubble">Это реферат моей магистерской работы</div>
+                        <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
                     </div>
-                    <iframe id="doc-frame" class="article-frame" data-src="" src="about:blank"></iframe>
-                </div>
-            </section>
-<!-- ======================================================== -->
-            <!-- ВКЛАДКА 4: ИНДИВИДУАЛЬНЫЙ РАЗДЕЛ                           -->
-            <!-- ======================================================== -->
-            <section id="individual" class="tab-content">
-                <h1>Индивидуальный раздел: В седле</h1>
-                <hr>
 
-                <p class="comment">
-                    &laquo;Жизнь — как вождение велосипеда: чтобы сохранить равновесие, ты должен двигаться.&raquo; (Альберт Эйнштейн)
-                </p>
+                    <h1>Реферат по теме выпускной работы</h1>
+                    <hr>
 
-                <h2>В неучебное время я занимаюсь туризмом, а в особенности люблю - велосипедный туризм</h2>
-                <p>
-                    Для инженера крайне важно находить время для перезагрузки, находить баланс между работой и отдыхом. Моим главным источником вдохновения и обьектом мечтаний ялвяется <strong>спортивный велосипедный туризм</strong>.
-                </p>
-                <p>
-                    Велотуризм объединяет в себе всё лучшее: непрерывную физическую активность, автономность, знакомство с дикой природой и проверку техники на прочность.
-					Путешествие на велосипеде дарит ни с чем не сравнимое ощущение свободы:
-					скорость достаточно высока, чтобы преодолевать десятки и сотни километров в день,
-					но в то же время ты не отделен от окружающего мира стеклом автомобиля.
-					Ты чувствуешь каждый подъем, встречный ветер, запах соснового леса и ночную прохладу степи.
-                </p>
+                    <p class="comment">
+                        Сейчас тут бак. работа, маг. пока нету
+                    </p>
 
-                <h2>Основные направления и формат походов</h2>
-                <p>
-                    В поездках я отдаю предпочтение формату автономных путешествий:
-                </p>
-                <ul>
-                    <li><strong>ПВД (Походы выходного дня):</strong> радиальные и линейные выезды на дистанции 80-150 км по родному краю. В современных условиях такие походы проходят без ночевок.</li>
-                    <li><strong>Многодневный байкпакинг:</strong> походы с палаткой или гамачной системой, походной кухней и запасами еды, где всё необходимое крепится прямо на раму и руль велосипеда. 
-					Такие походы позволяют почувствовать весь вкус путещесвия по своей родине</li>
-                </ul>
+                    <!-- Панель управления и встроенный просмотрщик PDF -->
+                    <div class="article-view-box win-sunken-panel" style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h3 style="margin: 0; color: #000080;">Документ: Реферат магистра</h3>
+                            <a href="resorse/pdf/referat.pdf" target="_blank" download class="button color" style="font-size: 13px; text-decoration: none;">
+                                💾 Скачать PDF
+                            </a>
+                        </div>
+                        <iframe id="referat-frame" class="article-frame" data-src="resorse/pdf/referat.pdf" src="about:blank"></iframe>
+                    </div>
+                </section>
 
-                <h2>Почему велосипед?</h2>
-                <ol>
-                    <li><strong>Выносливость и самодисциплина.</strong> Многочасовое кручение педалей в гору воспитывает упорство, которое здорово помогает доводить до конца сложные инженерные задачи и научные исследования.</li>
-                    <li><strong>Умение ориентироваться и планировать.</strong> Составление трека по топографическим картам, расчет высотного профиля и запасов воды — отличный практический навык.</li>
-                    <li><strong>Техническая грамотность.</strong> В полевых условиях нужно уметь быстро исправить восьмерку, отрегулировать трансмиссию или заклеить пробитую камеру подручными средствами.</li>
-                </ol>
-				
-				<div class="img">
-					<img src="resorse/images/bike.webp" alt="Описание">
-					<p class="imgcaption">Рисунок 1 - Мой велсоипед во время ПВД (Зуевка - июнь 2026)</p>
-				</div>
-				
-                <hr>
-				
-				<h2>Велосипедная культура в нашем университете</h2>
-                <p>
-                    На <a href="https://masters.donntu.ru/" target="_blank">портале магистров ДонНТУ</a> многие выпускники посвящали разделы велосипедам и активному туризму. Вот некотрые выпускники, чьи работы мне понравились:
-                </p>
+                <!-- ======================================================== -->
+                <!-- ВКЛАДКА 3: НАУЧНЫЕ ТРУДЫ                                  -->
+                <!-- ======================================================== -->
+                <section id="scientific" class="tab-content">
+                    
+                    <!-- Уникальный маскот для раздела "Научные труды" -->
+                    <div class="anime-mascot-box">
+                        <div class="mascot-bubble">Наука — это круто! Можешь почитать мои работы!</div>
+                        <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
+                    </div>
 
-                <table id="resume">
-                    <tr class="odd">
-                        <td class="c1">Туризм и ПВД</td>
-                        <td class="c2">
-                            <a href="https://masters.donntu.ru/2009/ggeo/silin/ind/index.htm" target="_blank">Силин А. В.</a> (2009, ГГФ), 
-                            <a href="https://masters.donntu.ru/2022/ief/butyatina/ind/index.htm" target="_blank">Бутятина Д. В.</a> (2022, ИЭФ), 
-                            <a href="https://masters.donntu.ru/2014/fkita/zinyar/ind/index.htm" target="_blank">Зиняр А. Ю.</a> (2014, ФКИТА), 
-                            <a href="https://masters.donntu.ru/2019/feht/butsyak/ind/index.htm" target="_blank">Буцяк В. С.</a> (2019, ФЭХТ), 
-                            <a href="https://masters.donntu.ru/2009/fem/kuzmina/ind/index.htm" target="_blank">Кузьмина М. С.</a> (2009, ФЭМ), 
-                            <a href="https://masters.donntu.ru/2011/fimm/pharaon/library/article10.htm" target="_blank">Фараон А. В.</a> (2011, ФИММ), 
-                            <a href="https://masters.donntu.ru/2009/mech/stolyarov/index.htm" target="_blank">Столяров М. А.</a> (2009, МехФ), 
-                            <a href="https://masters.donntu.ru/2018/etf/razumov/index.htm" target="_blank">Разумов К. О.</a> (2018, ЭТФ), 
-                            <a href="https://masters.donntu.ru/2011/etf/suchorukov/ind/index.htm" target="_blank">Сухоруков А. И.</a> (2011, ЭТФ), 
-                            <a href="https://masters.donntu.ru/2008/fvti/vypritskaya/index.htm" target="_blank">Выприцкая Е. В.</a> (2008, ФВТИ), 
-                            <a href="https://masters.donntu.ru/2010/igg/krasnikov/ind/index.htm" target="_blank">Красников А. С.</a> (2010, ИГГ), 
-                            <a href="https://masters.donntu.ru/2008/fema/chelpanov/ind/index.htm" target="_blank">Челпанов М. А.</a> (2008, ФЭМА), 
-                            <a href="https://masters.donntu.ru/2016/frt/batskalova/ind/index.htm" target="_blank">Бацкалова В. В.</a> (2016, ФРТ), 
-                            <a href="https://masters.donntu.ru/2012/fkita/budishevskiy/ind/index.htm" target="_blank">Будишевский И. С.</a> (2012, ФКИТА)
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Спорт и кросс-кантри</td>
-                        <td class="c2">
-                            <a href="https://masters.donntu.ru/2011/fimm/kurpyakov/ind/index.htm" target="_blank">Курпяков Р. В.</a> (2011, ФИММ), 
-                            <a href="https://masters.donntu.ru/2011/fknt/murzin/ind/index.htm" target="_blank">Мурзин Б. П.</a> (2011, ФКНТ), 
-                            <a href="https://masters.donntu.ru/2013/fknt/shumskiy/ind/index.htm" target="_blank">Шумский А. А.</a> (2013, ФКНТ), 
-                            <a href="https://masters.donntu.ru/2015/fimm/golenkov/ind/index.htm" target="_blank">Голенков Е. В.</a> (2015, ФИММ)
-                        </td>
-                    </tr>
-                    <tr class="odd">
-                        <td class="c1">Матчасть и апгрейд</td>
-                        <td class="c2">
-                            <a href="https://masters.donntu.ru/2008/fvti/korochenkov/ind/velo.htm" target="_blank">Короченков Д. А.</a> (2008, ФВТИ), 
-                            <a href="https://masters.donntu.ru/2009/fvti/evdokimov/ind/index.htm" target="_blank">Евдокимов И. А.</a> (2009, ФВТИ), 
-                            <a href="https://masters.donntu.ru/2015/fknt/krayniy/ind/index.htm" target="_blank">Крайний А. В.</a> (2015, ФКНТ), 
-                            <a href="https://masters.donntu.ru/2022/fkita/shakhovoy/ind/index.htm" target="_blank">Шаховой М. В.</a> (2022, ФКИТА)
-                        </td>
-                    </tr>
-                    <tr class="even">
-                        <td class="c1">Личный опыт и город</td>
-                        <td class="c2">
-                            <a href="https://masters.donntu.ru/2005/fvti/lukyanov/index.htm" target="_blank">Лукьянов С. В.</a> (2005, ФВТИ), 
-                            <a href="https://masters.donntu.ru/2011/fkita/lyubchak/ind/index.htm" target="_blank">Любчак В. В.</a> (2011, ФКИТА), 
-                            <a href="https://masters.donntu.ru/2011/fknt/titarenko/cvr.htm" target="_blank">Титаренко А. В.</a> (2011, ФКНТ), 
-                            <a href="https://masters.donntu.ru/2010/fkita/tsibulka/ind/index.htm" target="_blank">Цыбулька Д. В.</a> (2010, ФКИТА), 
-                            <a href="https://masters.donntu.ru/2014/fimm/barkov/ind/index.htm" target="_blank">Барков А. В.</a> (2014, ФИММ), 
-                            <a href="https://masters.donntu.ru/2014/fknt/brynza/ind/index.htm" target="_blank">Брынза В. С.</a> (2014, ФКНТ)
-                        </td>
-                    </tr>
-                </table>
+                    <h1>Библиотека материалов по теме выпускной работы</h1>
+                    <hr>
+                    
+                    <p style="background-color:#ffffcc; color: #800000; padding: 10px; border: 2px solid #808080;">
+                        <b style="color: red; font-size: 16px;">!</b> Список не полный.
+                    </p>
 
+                    <h2>Собственные публикации и доклады</h2>
+                    <ol>
+                        <li class="lib">
+                            <a href="#" onclick="loadDocFrame('04.pdf'); return false;" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+                                 Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2024. – С. 14-15.
+                            </a>
+                            <p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
+                            <p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
+                            <p><span class="cat">Действие:</span> 
+                                <button class="button color" onclick="loadDocFrame('04.pdf')" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+                                <a href="04.pdf" target="_blank" download style="margin-left: 10px;">[Скачать 04.pdf]</a>
+                            </p>
+                        </li>
 
-                <h2>Тематические ссылки и полезные ресурсы</h2>
-                <ul class="content">
-                    <li class="ct1">
-                        <a href="https://velomania.ru/" target="_blank">Клуб &laquo;Веломания&raquo;</a> — один из старейших русскоязычных порталов о велокультуре, походах и обслуживании велосипедов.
-                    </li>
-                    <li class="ct1">
-                        <a href="https://nakarte.me/" target="_blank">Сервис Nakarte.me</a> — основной инструмент для планирования туристических маршрутов по топографическим картам и спутниковым снимкам.
-                    </li>
-                    <li class="ct1">
-                        <a href="http://masters.donntu.ru" target="_blank">Портал магистров ДонНТУ</a> — раздел индивидуальных тем выпускников прошлых лет.
-                    </li>
-                </ul>
-            </section>
+                        <li class="lib">
+                            <a href="#" onclick="loadDocFrame('02.pdf'); return false;" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+                                Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2025. – С. 14-15.
+                            </a>
+                            <p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
+                            <p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
+                            <p><span class="cat">Действие:</span> 
+                                <button class="button color" onclick="loadDocFrame('02.pdf')" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+                                <a href="02.pdf" target="_blank" download style="margin-left: 10px;">[Скачать 02.pdf]</a>
+                            </p>
+                        </li>
+                    </ol>
 
-        </div> <!-- /#maintext -->
+                    <!-- Встроенный просмотрщик PDF -->
+                    <div id="pdf-viewer-section" class="article-view-box win-sunken-panel" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <h3 id="pdf-viewer-title" style="margin: 0; color: #000080;">Просмотр документа</h3>
+                            <button class="button color" onclick="closeDocFrame()">Закрыть просмотр</button>
+                        </div>
+                        <iframe id="doc-frame" class="article-frame" data-src="" src="about:blank"></iframe>
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- ВКЛАДКА 4: ИНДИВИДУАЛЬНЫЙ РАЗДЕЛ                           -->
+                <!-- ======================================================== -->
+                <section id="individual" class="tab-content">
+                    
+                    <!-- Уникальный маскот для раздела "Индивидуальный раздел" -->
+                    <div class="anime-mascot-box">
+                        <div class="mascot-bubble">Крути педали, пока не дали! Погнали в ПВД!</div>
+                        <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
+                    </div>
+
+                    <h1>Индивидуальный раздел: В седле</h1>
+                    <hr>
+
+                    <p class="comment">
+                        &laquo;Жизнь — как вождение велосипеда: чтобы сохранить равновесие, ты должен двигаться.&raquo; (Альберт Эйнштейн)
+                    </p>
+
+                    <h2>В неучебное время я занимаюсь туризмом, а в особенности люблю - велосипедный туризм</h2>
+                    <p>
+                        Для инженера крайне важно находить время для перезагрузки, находить баланс между работой и отдыхом. Моим главным источником вдохновения и объектом мечтаний является <strong>спортивный велосипедный туризм</strong>.
+                    </p>
+                    <p>
+                        Велотуризм объединяет в себе всё лучшее: непрерывную физическую активность, автономность, знакомство с дикой природой и проверку техники на прочность.
+                        Путешествие на велосипеде дарит ни с чем не сравнимое ощущение свободы:
+                        скорость достаточно высока, чтобы преодолевать десятки и сотни километров в день,
+                        но в то же время ты не отделен от окружающего мира стеклом автомобиля.
+                        Ты чувствуешь каждый подъем, встречный ветер, запах соснового леса и ночную прохладу степи.
+                    </p>
+
+                    <h2>Основные направления и формат походов</h2>
+                    <p>
+                        В поездках я отдаю предпочтение формату автономных путешествий:
+                    </p>
+                    <ul>
+                        <li><strong>ПВД (Походы выходного дня):</strong> радиальные и линейные выезды на дистанции 80-150 км по родному краю. В современных условиях такие походы проходят без ночевок.</li>
+                        <li><strong>Многодневный байкпакинг:</strong> походы с палаткой или гамачной системой, походной кухней и запасами еды, где всё необходимое крепится прямо на раму и руль велосипеда. 
+                        Такие походы позволяют почувствовать весь вкус путешествия по своей родине</li>
+                    </ul>
+
+                    <h2>Почему велосипед?</h2>
+                    <ol>
+                        <li><strong>Выносливость и самодисциплина.</strong> Многочасовое кручение педалей в гору воспитывает упорство, которое здорово помогает доводить до конца сложные инженерные задачи и научные исследования.</li>
+                        <li><strong>Умение ориентироваться и планировать.</strong> Составление трека по топографическим картам, расчет высотного профиля и запасов воды — отличный практический навык.</li>
+                        <li><strong>Техническая грамотность.</strong> В полевых условиях нужно уметь быстро исправить восьмерку, отрегулировать трансмиссию или заклеить пробитую камеру подручными средствами.</li>
+                    </ol>
+                    
+                    <div class="img win-sunken-panel" style="padding: 10px; background: #e0e0e0;">
+                        <img src="resorse/images/bike.webp" alt="Описание">
+                        <p class="imgcaption">Рисунок 1 - Мой велосипед во время ПВД (Зуевка - июнь 2026)</p>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h2>Велосипедная культура в нашем университете</h2>
+                    <p>
+                        На <a href="http://masters.donntu.ru/" target="_blank">портале магистров ДонНТУ</a> многие выпускники посвящали разделы велосипедам и активному туризму. Вот некоторые выпускники, чьи работы мне понравились:
+                    </p>
+
+                    <table id="resume">
+                        <tr class="odd">
+                            <td class="c1">Туризм и ПВД</td>
+                            <td class="c2">
+                                <a href="https://masters.donntu.ru/2009/ggeo/silin/ind/index.htm" target="_blank">Силин А. В.</a> (2009, ГГФ), 
+                                <a href="https://masters.donntu.ru/2022/ief/butyatina/ind/index.htm" target="_blank">Бутятина Д. В.</a> (2022, ИЭФ), 
+                                <a href="https://masters.donntu.ru/2014/fkita/zinyar/ind/index.htm" target="_blank">Зиняр А. Ю.</a> (2014, ФКИТА), 
+                                <a href="https://masters.donntu.ru/2019/feht/butsyak/ind/index.htm" target="_blank">Буцяк В. С.</a> (2019, ФЭХТ), 
+                                <a href="https://masters.donntu.ru/2009/fem/kuzmina/ind/index.htm" target="_blank">Кузьмина М. С.</a> (2009, ФЭМ), 
+                                <a href="https://masters.donntu.ru/2011/fimm/pharaon/library/article10.htm" target="_blank">Фараон А. В.</a> (2011, ФИММ), 
+                                <a href="https://masters.donntu.ru/2009/mech/stolyarov/index.htm" target="_blank">Столяров М. А.</a> (2009, МехФ), 
+                                <a href="https://masters.donntu.ru/2018/etf/razumov/index.htm" target="_blank">Разумов К. О.</a> (2018, ЭТФ), 
+                                <a href="https://masters.donntu.ru/2011/etf/suchorukov/ind/index.htm" target="_blank">Сухоруков А. И.</a> (2011, ЭТФ), 
+                                <a href="https://masters.donntu.ru/2008/fvti/vypritskaya/index.htm" target="_blank">Выприцкая Е. В.</a> (2008, ФВТИ), 
+                                <a href="https://masters.donntu.ru/2010/igg/krasnikov/ind/index.htm" target="_blank">Красников А. С.</a> (2010, ИГГ), 
+                                <a href="https://masters.donntu.ru/2008/fema/chelpanov/ind/index.htm" target="_blank">Челпанов М. А.</a> (2008, ФЭМА), 
+                                <a href="https://masters.donntu.ru/2016/frt/batskalova/ind/index.htm" target="_blank">Бацкалова В. В.</a> (2016, ФРТ), 
+                                <a href="https://masters.donntu.ru/2012/fkita/budishevskiy/ind/index.htm" target="_blank">Будишевский И. С.</a> (2012, ФКИТА)
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Спорт и кросс-кантри</td>
+                            <td class="c2">
+                                <a href="https://masters.donntu.ru/2011/fimm/kurpyakov/ind/index.htm" target="_blank">Курпяков Р. В.</a> (2011, ФИММ), 
+                                <a href="https://masters.donntu.ru/2011/fknt/murzin/ind/index.htm" target="_blank">Мурзин Б. П.</a> (2011, ФКНТ), 
+                                <a href="https://masters.donntu.ru/2013/fknt/shumskiy/ind/index.htm" target="_blank">Шумский А. А.</a> (2013, ФКНТ), 
+                                <a href="https://masters.donntu.ru/2015/fimm/golenkov/ind/index.htm" target="_blank">Голенков Е. В.</a> (2015, ФИММ)
+                            </td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="c1">Матчасть и апгрейд</td>
+                            <td class="c2">
+                                <a href="https://masters.donntu.ru/2008/fvti/korochenkov/ind/velo.htm" target="_blank">Короченков Д. А.</a> (2008, ФВТИ), 
+                                <a href="https://masters.donntu.ru/2009/fvti/evdokimov/ind/index.htm" target="_blank">Евдокимов И. А.</a> (2009, ФВТИ), 
+                                <a href="https://masters.donntu.ru/2015/fknt/krayniy/ind/index.htm" target="_blank">Крайний А. В.</a> (2015, ФКНТ), 
+                                <a href="https://masters.donntu.ru/2022/fkita/shakhovoy/ind/index.htm" target="_blank">Шаховой М. В.</a> (2022, ФКИТА)
+                            </td>
+                        </tr>
+                        <tr class="even">
+                            <td class="c1">Личный опыт и город</td>
+                            <td class="c2">
+                                <a href="https://masters.donntu.ru/2005/fvti/lukyanov/index.htm" target="_blank">Лукьянов С. В.</a> (2005, ФВТИ), 
+                                <a href="https://masters.donntu.ru/2011/fkita/lyubchak/ind/index.htm" target="_blank">Любчак В. В.</a> (2011, ФКИТА), 
+                                <a href="https://masters.donntu.ru/2011/fknt/titarenko/cvr.htm" target="_blank">Титаренко А. В.</a> (2011, ФКНТ), 
+                                <a href="https://masters.donntu.ru/2010/fkita/tsibulka/ind/index.htm" target="_blank">Цыбулька Д. В.</a> (2010, ФКИТА), 
+                                <a href="https://masters.donntu.ru/2014/fimm/barkov/ind/index.htm" target="_blank">Барков А. В.</a> (2014, ФИММ), 
+                                <a href="https://masters.donntu.ru/2014/fknt/brynza/ind/index.htm" target="_blank">Брынза В. С.</a> (2014, ФКНТ)
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h2>Тематические ссылки</h2>
+                    <ul class="content">
+                        <li class="ct1">
+                            <a href="https://nakarte.me/" target="_blank">Сервис Nakarte.me</a> — основной инструмент для планирования туристических маршрутов по топографическим картам и спутниковым снимкам.
+                        </li>
+                        <li class="ct1">
+                            <a href="http://masters.donntu.ru" target="_blank">Портал магистров ДонНТУ</a> — раздел индивидуальных тем выпускников прошлых лет.
+                        </li>
+                    </ul>
+                </section>
+
+            </div> <!-- /#maintext -->
+
+        </div> <!-- /Здесь закрывается .win-window-body -->
+
+        <!-- Статус-бар Windows внизу окна -->
+        <div class="win-statusbar">
+            <div class="status-cell">Готово (Документов: 4)</div>
+            <div class="status-cell">В сети / ДонНТУ LAN</div>
+            <div class="status-cell fit">100%</div>
+        </div>
 
         <!-- Нижние декоративные анимации -->
         <div class="gif-row">
+            <img src="resorse/images/gif/CatAey.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
-			<img src="resorse/images/gif/Key.gif" alt="" loading="lazy">
+            <img src="resorse/images/gif/Key.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/anime2.gif" alt="" loading="lazy">
+            <img src="resorse/images/gif/WEB.gif" alt="" loading="lazy">
         </div>
 
         <div class="gif-center">
@@ -384,19 +478,282 @@
 
     </div> <!-- /#middleblock -->
 
-    <!-- Нижнее дублирующее меню -->
-    <div id="menub">
-        <a class="button tab-link colorfix" href="#about">О себе</a>
-        <a class="button tab-link color" href="#referat">Реферат</a>
-        <a class="button tab-link color" href="#scientific">Научные труды</a>
-        <a class="button tab-link color" href="#individual">Индивидуальный раздел</a>
+
+    <!-- Окно контактов (каскадное нависающее окно) -->
+    <div id="contacts-window" class="win-window">
+        <div class="win-title-bar">
+            <div class="win-title-text">
+                <span class="win-icon">📇</span> Contacts_Book.exe
+            </div>
+            <div class="win-controls">
+                <button class="win-btn" type="button">_</button>
+                <button class="win-btn" type="button">□</button>
+                <button class="win-btn close" type="button">✕</button>
+            </div>
+        </div>
+
+        <div class="win-window-body contacts-body win-sunken-panel" style="background: #c0c0c0;">
+            <p style="margin: 0 0 5px 0; font-family: Tahoma, sans-serif; font-size: 12px; font-weight: bold; text-indent: 0; text-align: left;">
+                Свяжитесь со мной напрямую:
+            </p>
+
+			<!-- E-mail -->
+            <div class="contact-item">
+                <a class="contact-icon-link" href="mailto:nazariuk.donntu@gmail.com?subject=Вопрос с сайта" title="Написать письмо">
+                    <img class="contact-icon" src="resorse/images/icons/email.png" alt="Email">
+                </a>
+                <span class="contact-text"><strong>E-mail:</strong> nazariuk.donntu@gmail.com</span>
+            </div>
+
+            <!-- Telegram -->
+            <div class="contact-item">
+                <a class="contact-icon-link" href="https://t.me/Voxhrim" target="_blank" title="Открыть Telegram">
+                    <img class="contact-icon" src="resorse/images/icons/tg.png" alt="Telegram">
+                </a>
+                <span class="contact-text"><strong>Telegram:</strong> @Voxhrim</span>
+            </div>
+
+            <!-- Discord -->
+            <div class="contact-item">
+                <a class="contact-icon-link" href="https://discord.com/users/521297931039408139" target="_blank" title="Открыть профиль Discord">
+                    <img class="contact-icon" src="resorse/images/icons/discord.png" alt="Discord">
+                </a>
+                <span class="contact-text"><strong>Discord:</strong> 521297931039408139</span>
+            </div>
+
+            <!-- GitHub -->
+            <div class="contact-item">
+                <a class="contact-icon-link" href="https://github.com/voxhrim" target="_blank" title="Открыть GitHub">
+                    <img class="contact-icon" src="resorse/images/icons/github.png" alt="GitHub">
+                </a>
+                <span class="contact-text"><strong>GitHub:</strong> voxhrim</span>
+            </div>
+
+            
+        </div>
+
+        <div class="win-statusbar">
+            <div class="status-cell">Элементов: 4</div>
+            <div class="status-cell fit">Ready</div>
+        </div>
     </div>
 
-<!-- ======================================================== -->
-<!-- JAVASCRIPT                                               -->
-<!-- ======================================================== -->
 <script type="text/javascript">
-    // Функция переключения вкладок с плавной анимацией и фиксацией экрана
+	document.addEventListener("DOMContentLoaded", function() {
+		const canvas = document.getElementById("snakeCanvasWindow");
+		if (!canvas) return;
+		const ctx = canvas.getContext("2d");
+		const container = canvas.parentElement;
+
+		const gridSize = 16; // Масштаб кубиков 
+		let cols = 0;
+		let rows = 0;
+
+		function resizeCanvas() {
+			canvas.width = container.clientWidth;
+			canvas.height = container.clientHeight;
+			cols = Math.floor(canvas.width / gridSize);
+			rows = Math.floor(canvas.height / gridSize);
+		}
+		window.addEventListener('resize', resizeCanvas);
+		resizeCanvas();
+
+		let snake = [];
+		let food = { x: 0, y: 0 };
+		let dx = 1;
+		let dy = 0;
+		
+		let isDying = false;
+		let deathTimer = 0;
+		let blinkState = true;
+
+		function resetGame() {
+			isDying = false;
+			deathTimer = 0;
+			// Безопасный старт по центру блока шапки
+			const startX = Math.floor(cols / 2);
+			const startY = Math.floor(rows / 2);
+			snake = [
+				{ x: startX, y: startY },
+				{ x: startX - 1, y: startY },
+				{ x: startX - 2, y: startY }
+			];
+			dx = 1;
+			dy = 0;
+			spawnFood();
+		}
+
+		function spawnFood() {
+			let safe = false;
+			while (!safe && cols > 0 && rows > 0) {
+				food.x = Math.floor(Math.random() * cols);
+				food.y = Math.floor(Math.random() * rows);
+				safe = true;
+				for (let part of snake) {
+					if (part.x === food.x && part.y === food.y) {
+						safe = false;
+						break;
+					}
+				}
+			}
+		}
+
+		// Искусственный интеллект для поиска еды внутри ограниченного блока
+		function autoNavigate() {
+			if (cols <= 0 || rows <= 0 || snake.length === 0) return;
+			const head = snake[0];
+			let possibleDirs = [
+				{ x: 0, y: -1 },
+				{ x: 0, y: 1 },
+				{ x: -1, y: 0 },
+				{ x: 1, y: 0 }
+			];
+
+			let validDirs = possibleDirs.filter(d => {
+				if (d.x === -dx && d.y === -dy) return false;
+				let nx = head.x + d.x;
+				let ny = head.y + d.y;
+				// Проверка столкновения со стенами блока шапки
+				if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) return false;
+				// Проверка столкновения с собой
+				for (let part of snake) {
+					if (part.x === nx && part.y === ny) return false;
+				}
+				return true;
+			});
+
+			if (validDirs.length > 0) {
+				validDirs.sort((a, b) => {
+					let distA = Math.abs((head.x + a.x) - food.x) + Math.abs((head.y + a.y) - food.y);
+					let distB = Math.abs((head.x + b.x) - food.x) + Math.abs((head.y + b.y) - food.y);
+					return distA - distB;
+				});
+				dx = validDirs[0].x;
+				dy = validDirs[0].y;
+			}
+		}
+
+		function update() {
+			if (cols <= 0 || rows <= 0) return;
+
+			if (isDying) {
+				deathTimer++;
+				blinkState = !blinkState;
+				if (deathTimer > 25) {
+					resetGame();
+				}
+				return;
+			}
+
+			autoNavigate();
+
+			let head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+			// Столкновение со стеной блока шапки
+			let hitWall = (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows);
+			let hitSelf = false;
+			
+			for (let part of snake) {
+				if (part.x === head.x && part.y === head.y) {
+					hitSelf = true;
+					break;
+				}
+			}
+
+			// Условие смерти: если врезалась в стену ИЛИ длина >= 12 и врезалась в себя
+			if (hitWall || (snake.length >= 12 && hitSelf)) {
+				isDying = true;
+				deathTimer = 0;
+				return;
+			}
+
+			if (hitSelf) {
+				return; 
+			}
+
+			snake.unshift(head);
+
+			if (head.x === food.x && head.y === food.y) {
+				spawnFood();
+			} else {
+				snake.pop();
+			}
+		}
+
+		function draw() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			if (cols <= 0 || rows <= 0) return;
+
+			if (isDying) {
+				if (blinkState) {
+					ctx.fillStyle = "#ff0000";
+					for (let part of snake) {
+						ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 1, gridSize - 1);
+					}
+				}
+				return;
+			}
+
+			// Отрисовка фрукта
+			ctx.fillStyle = "#aa0000";
+			ctx.fillRect(food.x * gridSize + 2, food.y * gridSize + 2, gridSize - 4, gridSize - 4);
+			ctx.fillStyle = "#ff5555";
+			ctx.fillRect(food.x * gridSize + 4, food.y * gridSize + 4, 3, 3);
+
+			// Отрисовка змейки
+			for (let i = 0; i < snake.length; i++) {
+				let part = snake[i];
+				
+				// Тело змейки
+				ctx.fillStyle = (i === 0) ? "#005500" : "#008000";
+				ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 1, gridSize - 1);
+
+				// Светлая граница сверху и слева
+				ctx.fillStyle = "#00aa00";
+				ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 1, 2);
+				ctx.fillRect(part.x * gridSize, part.y * gridSize, 2, gridSize - 1);
+			}
+		}
+
+		// Запуск игры с небольшой задержкой для корректного чтения размеров блока
+		setTimeout(() => {
+			resizeCanvas();
+			resetGame();
+			setInterval(() => {
+				update();
+				draw();
+			}, 130);
+		}, 100);
+	});
+</script>
+
+<script type="text/javascript">
+	// Настройки путей к звукам и громкости
+	const CLICK_SRC = 'resorse/sounds/Akvariume.mp3';
+	const STOP_SRC = 'resorse/sounds/ErorreSong.mp3';
+	
+	const CLICK_VOLUME = 0.2;
+	const SYSTEM_VOLUME = 0.4; // Громкость для системных звуков
+
+	// Универсальная функция для воспроизведения любого звука
+	function playSound(src, volume = CLICK_VOLUME) {
+		const sound = new Audio(src);
+		sound.volume = volume;
+		sound.play().catch(() => {});
+	}
+
+	// Обработка кликов по всему сайту
+	document.addEventListener('pointerdown', function(e) {
+		// 1. Проверяем клик по системным / функциональным кнопкам (свернуть, закрыть, Пуск и т.д.)
+		if (e.target.closest('.win-btn, .taskbar-start')) {
+			playSound(STOP_SRC, SYSTEM_VOLUME);
+		}
+		// 2. Обычные кнопки вкладок и ссылки ДонНТУ
+		else if (e.target.closest('.button, button, #donntu a')) {
+			playSound(CLICK_SRC, CLICK_VOLUME);
+		}
+	});
+
     function switchTab(hash) {
         const targetId = (hash && hash !== '#') ? hash.replace('#', '') : 'about';
         const targetSection = document.getElementById(targetId);
@@ -407,64 +764,51 @@
         }
 
         const currentActive = document.querySelector('.tab-content.active');
-
-        // Если кликнули по уже открытой вкладке — ничего не делаем
         if (currentActive === targetSection) return;
 
-        // 1. Моментально переключаем подсветку кнопок в меню
+        // Синхронно обновляем подсветку во всех меню
         const allLinks = document.querySelectorAll('.tab-link');
         allLinks.forEach(link => {
             link.classList.remove('colorfix');
             link.classList.add('color');
         });
+        
         const activeLinks = document.querySelectorAll(`.tab-link[href="#${targetId}"]`);
         activeLinks.forEach(link => {
             link.classList.add('colorfix');
             link.classList.remove('color');
         });
 
-        // 2. Внутренняя функция включения и появления нового раздела
-        const showNewTab = () => {
-            const allSections = document.querySelectorAll('.tab-content');
-            allSections.forEach(sec => {
-                sec.classList.remove('active', 'tab-leaving');
-            });
+        // Мгновенное переключение вкладок
+        const allSections = document.querySelectorAll('.tab-content');
+        allSections.forEach(sec => {
+            sec.classList.remove('active', 'tab-leaving');
+        });
 
-            targetSection.classList.add('active');
+        targetSection.classList.add('active');
 
-            // Ленивая подгрузка картинок только в открывшейся вкладке
-            const lazyImages = targetSection.querySelectorAll('img[data-src]');
-            lazyImages.forEach(img => {
-                if (!img.src || img.src === window.location.href) {
-                    img.src = img.getAttribute('data-src');
-                }
-            });
-
-            // Автоматическое открытие PDF при входе во вкладку «Реферат»
-            const referatFrame = document.getElementById('referat-frame');
-            if (referatFrame) {
-                if (targetId === 'referat') {
-                    const pdfUrl = referatFrame.getAttribute('data-src');
-                    if (pdfUrl && !referatFrame.src.endsWith(pdfUrl)) {
-                        referatFrame.src = pdfUrl;
-                    }
-                } else {
-                    // Очищаем фрейм при уходе с вкладки, чтобы не тратить оперативную память
-                    referatFrame.src = 'about:blank';
-                }
+        // Ленивая загрузка картинок во вкладке
+        const lazyImages = targetSection.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => {
+            if (!img.src || img.src === window.location.href) {
+                img.src = img.getAttribute('data-src');
             }
-        };
+        });
 
-        // 3. Если вкладка уже была открыта — запускаем анимацию растворения и сдвига
-        if (currentActive) {
-            currentActive.classList.add('tab-leaving');
-            setTimeout(showNewTab, 200); // Ожидание окончания fade-out анимации
-        } else {
-            showNewTab();
+        // Управление PDF-фреймом реферата
+        const referatFrame = document.getElementById('referat-frame');
+        if (referatFrame) {
+            if (targetId === 'referat') {
+                const pdfUrl = referatFrame.getAttribute('data-src');
+                if (pdfUrl && !referatFrame.src.endsWith(pdfUrl)) {
+                    referatFrame.src = pdfUrl;
+                }
+            } else {
+                referatFrame.src = 'about:blank';
+            }
         }
     }
 
-    // Функция открытия PDF во встроенном фрейме вкладки «Научные труды»
     function loadDocFrame(fileName) {
         const viewerSection = document.getElementById('pdf-viewer-section');
         const frame = document.getElementById('doc-frame');
@@ -479,7 +823,6 @@
         }
     }
 
-    // Функция закрытия просмотрщика PDF во вкладке «Научные труды»
     function closeDocFrame() {
         const viewerSection = document.getElementById('pdf-viewer-section');
         const frame = document.getElementById('doc-frame');
@@ -489,35 +832,29 @@
         }
     }
 
-    // Слушатель изменения адреса в браузере (кнопки «Назад» / «Вперед»)
     window.addEventListener('hashchange', function() {
         switchTab(window.location.hash);
     });
 
-    // Инициализация при первичной загрузке страницы
     window.addEventListener('DOMContentLoaded', function() {
-        // Подгружаем фоновые декорации
+        // Проигрываем приветственный звук при первом открытии сайта
+        playSound(STARTUP_SRC, SYSTEM_VOLUME);
+
         const bg = document.querySelector('.background-image');
         if (bg && bg.getAttribute('data-src')) {
             bg.src = bg.getAttribute('data-src');
         }
 
-        // Перехватываем клики по кнопкам вкладок, чтобы страница не прыгала к якорям
         const tabButtons = document.querySelectorAll('.tab-link');
         tabButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetHash = this.getAttribute('href');
-                
-                // Обновляем URL в адресной строке без перемещения скролла
                 history.pushState(null, '', targetHash);
-                
-                // Запускаем переключение разделов
                 switchTab(targetHash);
             });
         });
 
-        // Открываем начальную вкладку по текущему адресу
         switchTab(window.location.hash);
     });
 </script>

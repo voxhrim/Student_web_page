@@ -1,205 +1,353 @@
 /* =========================================================
-   Личный сайт магистра ДонНТУ в стиле Web 1.0 / Ретро-интернет
+   Личный сайт магистра ДонНТУ в стиле Windows 2000 / Ретро-аниме
    Единая таблица стилей со встроенным SPA-переключением
    ========================================================= */
 
-/* ---------------- Механика SPA вкладок и анимация ---------------- */
+/* ---------------- Механика SPA вкладок ---------------- */
 .tab-content {
     display: none;
-    opacity: 0;
+    opacity: 1;
     width: 100%;
+    position: relative;
 }
 
-/* Активная вкладка */
+/* Активная вкладка (мгновенное переключение без зависаний) */
 .tab-content.active {
     display: block;
-    animation: slideFadeIn 0.28s ease-out forwards;
 }
 
 /* Вкладка в момент смены */
 .tab-content.tab-leaving {
-    display: block;
-    animation: slideFadeOut 0.2s ease-in forwards;
+    display: none;
 }
 
-@keyframes slideFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateX(35px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideFadeOut {
-    0% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(-35px);
-    }
-}
-
-/* ---------------- Основной фон ---------------- */
+/* ---------------- Основной фон: Чистый Classic Windows Teal ---------------- */
 body {
-    background-color: #02061f;
-    background-image: url("resorse/images/gif/background.gif");
-    background-repeat: repeat;
-    background-size: clamp(300px, 30vw, 500px) auto;
+    background-color: #008080;
     margin: 0;
-    font-family: "Times New Roman", serif;
-    overflow-x: hidden; /* Предотвращает горизонтальный скролл */
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+    overflow-x: hidden;
 }
 
-/* ---------------- Фоновый персонаж ---------------- */
-/* Масштабируется синхронно с шириной и высотой окна */
-.background-image {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: clamp(170px, 20vw, 360px);
-    max-height: 85vh;
-    object-fit: contain;
-    object-position: bottom right;
-    z-index: -1;
-    pointer-events: none;
-    transition: width 0.2s ease, max-height 0.2s ease;
+
+
+
+
+/* =========================================================
+   Игровое поле змейки вокруг/внутри окна шапки
+   ========================================================= */
+body {
+    background-color: #008080;
+    margin: 0;
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+    overflow-x: hidden;
+    position: relative; /* Обязательно для привязки absolute-элементов */
 }
 
-/* ---------------- Верхняя панель ---------------- */
-#topblock {
-    min-height: clamp(40px, 4.5vh, 52px);
-    background: #050b2e;
-    border-bottom: 3px ridge #777;
+#desktop-snake-window {
+    position: absolute;
+    top: 70px;          /* Чуть ниже панели задач */
+    right: 40px;        /* Справа на странице */
+    width: 300px;       /* Ширина окна со змейкой */
+    z-index: 5;
+}
+
+/* На мобильных устройствах скрывается окно, чтобы не ломать верстку */
+@media screen and (max-width: 1200px) {
+    #desktop-snake-window {
+        display: none !important;
+    }
+}
+
+
+/* /* ---------------- Фоновый персонаж ---------------- */ */
+ .background-image { */
+     position: fixed; */
+     right: 0; */
+     bottom: 0; */
+     width: clamp(170px, 20vw, 360px); */
+     max-height: 85vh; */
+     object-fit: contain; */
+     object-position: bottom right; */
+     z-index: 1; */
+    pointer-events: none; */
+     transition: width 0.2s ease, max-height 0.2s ease; */
+ } */
+
+/* ---------------- Стили окон Windows 98/2000 ---------------- */
+.win-window {
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #dfdfdf #404040 #404040 #dfdfdf;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.45);
+    box-sizing: border-box;
+}
+
+.win-title-bar {
+    height: 24px;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    padding: 2px 3px 2px 5px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding: 0 clamp(10px, 1.5vw, 20px);
+    justify-content: space-between;
+    user-select: none;
+}
+
+.win-title-text {
+    color: #ffffff;
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.win-icon {
+    font-size: 13px;
+}
+
+.win-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.win-btn {
+    width: 17px;
+    height: 15px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 12px;
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+    font-family: "MS Sans Serif", Tahoma, sans-serif;
+}
+
+.win-btn:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+    padding-top: 1px;
+    padding-left: 1px;
+}
+
+/* Вдавленные внутрь панели (Sunken 3D Border) */
+.win-sunken-panel {
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080 !important;
+}
+
+/* Строка состояния внизу окна */
+.win-statusbar {
+    background: #c0c0c0;
+    display: flex;
+    gap: 4px;
+    padding: 3px 4px;
     box-sizing: border-box;
+}
+
+.status-cell {
+    border: 1px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: #222;
+    flex: 1;
+}
+
+.status-cell.fit {
+    flex: 0 0 60px;
+    text-align: center;
+}
+
+/* ---------------- Сидящий аниме-персонаж на краю окна ---------------- */
+.window-relative {
+    position: relative;
+}
+
+.anime-sitter {
+    position: absolute;
+    top: -70px;
+    right: 50px; 
+    z-index: 20;
+    pointer-events: none;
+}
+
+.anime-sitter img {
+    width: 140px !important;
+    max-width: none !important;
+    height: auto !important;
+    filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
+}
+
+/* ---------------- анимация маскота ---------------- */
+.anime-mascot-box {
+    position: absolute;
+    top: 5px;
+    right: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    animation: mascotHover 2.4s ease-in-out infinite alternate;
+    transform-origin: top center;
+}
+
+.mascot-bubble {
+    background: #ffffcc;
+    border: 1px solid #000000;
+    padding: 6px 10px;
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #000000;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.35);
+    max-width: 150px;
+    text-align: center;
+    margin-bottom: 6px;
+    position: relative;
+    white-space: normal;
+    animation: bubbleBob 2.4s ease-in-out infinite alternate;
+}
+
+.mascot-img {
+    width: 68px;
+    height: auto;
+    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.45));
+    animation: mascotSway 2.4s ease-in-out infinite alternate;
+    transform-origin: 50% 15%;
+}
+
+@keyframes mascotHover {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-16px); }
+}
+
+@keyframes mascotSway {
+    0% { transform: rotate(-4deg) scale(0.98); }
+    50% { transform: rotate(1deg) scale(1); }
+    100% { transform: rotate(5deg) scale(1.02); }
+}
+
+@keyframes bubbleBob {
+    0% { transform: translateY(0px) rotate(1deg); }
+    100% { transform: translateY(-3px) rotate(-1deg); }
+}
+
+/* ---------------- Верхняя панель (Таскбар ДонНТУ) ---------------- */
+#topblock {
+   min-height: 32px;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%); /* Синий градиент Windows */
+    border-bottom: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 8px;
+    box-sizing: border-box;
+}
+
+
+.taskbar-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    padding: 2px 8px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    cursor: pointer;
+}
+
+.taskbar-start:active {
+    border-color: #404040 #ffffff #ffffff #404040;
 }
 
 #donntu {
     display: flex;
-    gap: clamp(5px, 0.8vw, 10px);
+    gap: 6px;
 }
 
 #donntu a {
-    font-family: Arial, sans-serif;
-    font-size: clamp(12px, 1vw, 15px);
-    color: #00ffff;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    color: #000000;
     text-decoration: none;
-    padding: clamp(4px, 0.6vw, 7px) clamp(8px, 1vw, 14px);
-    background: #11184d;
-    border: 2px outset #444;
+    padding: 3px 10px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
 }
 
 #donntu a:hover {
-    color: #ffff00;
-    background: #252d70;
+    background: #d8d8d8;
 }
 
-/* ---------------- Шапка (Строго по центру) ---------------- */
+#donntu a:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+}
+
+/* ---------------- Шапка сайта ---------------- */
 #header {
-    display: flex;
-    background-image: 
-        repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.035) 0px,
-            rgba(255, 255, 255, 0.035) 1px,
-            transparent 1px,
-            transparent 2px,
-            rgba(0, 0, 0, 0.03) 2px,
-            rgba(0, 0, 0, 0.03) 3px,
-            transparent 3px,
-            transparent 4px
-        ),
-        linear-gradient(
-            115deg,
-            transparent 25%,
-            rgba(255, 255, 255, 0.6) 40%,
-            rgba(255, 255, 255, 0.99) 50%,
-            rgba(255, 255, 255, 0.2) 60%,
-            transparent 75%
-        ),
-        linear-gradient(
-            to bottom,
-            #e4e4e4 0%,
-            #c8c8c8 20%,
-            #dfdfdf 50%,
-            #b2b2b2 75%,
-            #cccccc 100%
-        );
-
-    background-size: 100% 100%, 350% 100%, 100% 100%;
-    background-repeat: repeat, no-repeat, no-repeat;
-    animation: brushedMetalShine 7s ease-in-out infinite;
-
-    border: 4px ridge #d0d0d0;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.25);
-
-    padding: clamp(10px, 1.5vw, 18px);
-    gap: clamp(10px, 1.8vw, 20px);
-    
-    /* 75vw по центру — гарантирует свободные поля с обеих сторон под арт */
+    position: relative;
+    z-index: 2;
     width: min(75vw, 1100px);
-    margin: 12px auto;
-    box-sizing: border-box;
+    margin: 15px auto 10px auto;
+    transform: translateX(-30px); /* Чуть-чуть левее центра */
+}
+
+.header-body {
+    display: flex;
+    padding: 10px;
+    gap: 15px;
     align-items: center;
     flex-wrap: nowrap;
-}
-
-@keyframes brushedMetalShine {
-    0% {
-        background-position: 0 0, 100% 0, 0 0;
-    }
-    50% {
-        background-position: 0 0, 0% 0, 0 0;
-    }
-    100% {
-        background-position: 0 0, 100% 0, 0 0;
-    }
+    background: #c0c0c0;
 }
 
 #photomag {
     flex-shrink: 0;
-    border: 4px ridge #444;
-    background: black;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    background: #000;
     line-height: 0;
 }
 
-/* Фото в шапке масштабируется синхронно с экраном */
 #photomag img {
     display: block;
-    width: clamp(140px, 18vw, 280px);
+    width: clamp(130px, 16vw, 240px);
     height: auto;
 }
 
 #headertext {
     display: flex;
     flex-direction: column;
-    gap: clamp(3px, 0.5vw, 6px);
+    gap: 4px;
     flex: 1;
 }
 
 #header h1 {
     text-align: left;
     font-family: "Times New Roman", serif;
-    font-size: clamp(19px, 2.1vw, 28px);
+    font-size: clamp(18px, 2vw, 25px);
     color: #000080;
-    margin: 0 0 6px;
-    text-shadow: 1px 1px white;
+    margin: 0 0 4px;
 }
 
 #header h3 {
-    font-family: "Times New Roman", serif;
-    font-size: clamp(13px, 1.25vw, 18px);
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: clamp(12px, 1.1vw, 14px);
     font-weight: normal;
-    color: #202020;
+    color: #000000;
     margin: 0;
 }
 
@@ -212,122 +360,128 @@ body {
     color: #cc0000;
 }
 
-/* Гифка в шапке */
 #headergif {
     margin-left: auto;
     flex-shrink: 0;
-    padding: 5px;
+    padding: 3px;
 }
 
 #headergif img {
-    width: clamp(45px, 6.5vw, 95px);
+    width: clamp(45px, 6vw, 85px);
     height: auto;
 }
 
-/* ---------------- Основной блок (Строго по центру) ---------------- */
+/* ---------------- Основной блок ---------------- */
 #middleblock {
+   position: relative;
+    z-index: 3; /* Ставим выше шапки (у нее z-index: 2) */
     width: min(75vw, 1100px);
-    margin: 0 auto 20px auto;
-    background: #eeeeee;
-    border: 4px ridge #d0d0d0;
-    box-sizing: border-box;
+    margin: -75px auto 36px auto; /* Отрицательный верхний отступ натягивает второе окно на первое */
+    transform: translateX(80px);  /* Чуть-чуть правее центра */
 }
 
-/* ---------------- Меню ---------------- */
+/* ---------------- Меню / Кнопки окон Windows ---------------- */
 #menu {
-    text-align: center;
-    padding: clamp(8px, 1vw, 14px);
-    background: #11184d;
-    border-bottom: 3px ridge #777;
+    text-align: left;
+    padding: 5px 8px;
+    background: #c0c0c0;
+    border-bottom: 2px solid #808080;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .button {
     display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: clamp(12px, 1.1vw, 16px);
-    font-weight: bold;
-    color: #ffffff;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000000;
     text-decoration: none;
-    padding: clamp(5px, 0.6vw, 9px) clamp(10px, 1.2vw, 18px);
-    margin: 3px;
-    background: #333399;
-    border: 3px outset #6666cc;
+    padding: 4px 12px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
     cursor: pointer;
 }
 
 .color:hover {
-    color: #ffff00;
-    background: #5555bb;
-    border-style: inset;
+    background: #d8d8d8;
 }
 
 .color:active {
-    border-style: inset;
-    background: #222266;
+    border-color: #404040 #ffffff #ffffff #404040;
+    padding-top: 5px;
+    padding-left: 13px;
+    padding-bottom: 3px;
+    padding-right: 11px;
 }
 
 .colorfix {
-    color: #ffff00 !important;
-    background: #222266 !important;
-    border: 3px inset #555599 !important;
+    color: #000000 !important;
+    background-color: #dfdfdf !important;
+    background-image: radial-gradient(#9c9c9c 15%, transparent 16%) !important;
+    background-size: 3px 3px !important;
+    border: 2px solid !important;
+    border-color: #404040 #ffffff #ffffff #404040 !important;
+    font-weight: bold;
     cursor: default;
 }
 
-/* ---------------- Основной текст ---------------- */
+/* ---------------- Основной текст (Лист документа) ---------------- */
 #maintext {
-    position: relative;
-    background-color: #f5f5f5;
+   position: relative;
+    background-color: #ffffff;
     background-image: url("resorse/images/paper.webp");
     background-repeat: repeat;
-	background-size: 600px auto;
+    background-size: 600px auto;
     padding: clamp(12px, 1.8vw, 24px);
     min-height: 450px;
     word-wrap: break-word;
-    /* Обрезает вылет выезжающего текста за пределы блока и держит фон на месте */
-    overflow: hidden; 
+    overflow: visible;
+    margin: 0;
+    border: none;
 }
 
 #maintext hr {
     border: 0;
-    height: 10px;
+    height: 8px;
     background-image: url("resorse/images/gif/divider.gif");
     background-repeat: repeat-x;
-    margin: clamp(10px, 1.5vw, 18px) 0;
+    margin: 14px 0;
 }
 
-/* ---------------- Заголовки ---------------- */
 h1 {
     font-family: "Times New Roman", serif;
-    font-size: clamp(20px, 2.2vw, 28px);
+    font-size: clamp(20px, 2.2vw, 26px);
     color: #000080;
     text-align: center;
-    margin: 15px 0;
+    margin: 12px 0;
 }
 
 #maintext h2, .lib_h2 {
     font-family: "Times New Roman", serif;
-    font-size: clamp(18px, 1.8vw, 23px);
+    font-size: clamp(17px, 1.7vw, 21px);
     color: #000080;
-    margin: 20px 15px 10px;
-    text-indent: 20px;
+    margin: 18px 10px 8px;
+    text-indent: 15px;
 }
 
 #maintext h3 {
     font-family: "Times New Roman", serif;
-    font-size: clamp(15px, 1.4vw, 19px);
+    font-size: clamp(14px, 1.3vw, 17px);
     color: #800000;
-    margin: 15px;
+    margin: 12px;
 }
 
-/* ---------------- Текст и ссылки ---------------- */
 p {
     font-family: "Times New Roman", serif;
-    font-size: clamp(15px, 1.3vw, 18px);
-    line-height: 1.6;
-    margin: 10px 15px;
-    text-indent: 35px;
+    font-size: clamp(15px, 1.25vw, 17px);
+    line-height: 1.55;
+    margin: 10px 12px;
+    text-indent: 30px;
     text-align: justify;
-    color: #202020;
+    color: #000000;
 }
 
 a {
@@ -343,20 +497,19 @@ img {
     max-width: 100%;
 }
 
-/* ---------------- Списки ---------------- */
 ul, ul li, ol, ol li {
     font-family: "Times New Roman", serif;
-    font-size: clamp(14px, 1.25vw, 18px);
-    color: #202020;
+    font-size: clamp(14px, 1.2vw, 17px);
+    color: #111111;
 }
 
 ul, ol {
-    padding-left: clamp(25px, 3.5vw, 50px);
+    padding-left: clamp(20px, 3vw, 40px);
 }
 
 ul.content {
     list-style-type: none;
-    padding-left: clamp(15px, 2.5vw, 40px);
+    padding-left: clamp(12px, 2vw, 30px);
 }
 
 ul li a, ol li a {
@@ -368,21 +521,19 @@ ul li a:hover, ol li a:hover {
     color: #cc0000;
 }
 
-li.ct1,
-li.ct2 {
-    border-bottom: 1px dotted #777;
+li.ct1, li.ct2 {
+    border-bottom: 1px dotted #888;
     margin-bottom: 5px;
 }
 
 li.ct2 {
-    margin-left: 25px;
+    margin-left: 20px;
 }
 
 ol li {
-    line-height: 1.6;
+    line-height: 1.55;
 }
 
-/* ---------------- Картинки и статьи ---------------- */
 .img {
     margin: 15px 0;
     text-align: center;
@@ -391,25 +542,26 @@ ol li {
 .img img {
     max-width: 90%;
     height: auto;
+    border: 1px solid #808080;
 }
 
 .imgcaption {
-    font: italic clamp(13px, 1.1vw, 17px) "Times New Roman", serif;
+    font: italic clamp(12px, 1vw, 15px) "Times New Roman", serif;
     text-indent: 0;
     text-align: center;
-    padding: 3px 15px;
+    padding: 4px 10px;
+    color: #333;
 }
 
-/* ------------------ GIF (Адаптивные размеры) ------------------ */
 .gif-center {
     text-align: center;
-    margin: 15px auto;
+    margin: 12px auto;
     width: 90%;
 }
 
 .gif-center img {
     width: 100%;
-    max-width: 800px;
+    max-width: 780px;
     height: auto;
 }
 
@@ -419,83 +571,64 @@ ol li {
     align-items: center;
     flex-wrap: wrap;
     gap: clamp(10px, 1.8vw, 25px);
-    margin: 12px 0;
+    margin: 10px 0;
 }
 
-/* Все гифки в рядах меняют размер синхронно с экраном */
 .gif-row img {
-    width: clamp(80px, 12vw, 170px);
+    width: clamp(75px, 11vw, 160px);
     height: auto;
     object-fit: contain;
 }
 
-/* ---------------- Заметка ---------------- */
 .comment {
-    background: #ffffcc;
+    background: #ffffdf;
     color: #202020;
-    font-size: clamp(14px, 1.2vw, 18px);
-    margin: 20px auto;
-    padding: 12px 15px;
+    font-size: clamp(13px, 1.1vw, 16px);
+    margin: 15px auto;
+    padding: 10px 14px;
     text-indent: 0;
-    border: 3px ridge #999;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
     max-width: 90%;
-    line-height: 1.5;
+    line-height: 1.45;
     font-weight: bold;
 }
 
-.cntr {
-    text-align: center;
-}
-
-.bld {
-    font-weight: bold;
-}
-
-.itl {
-    font-style: italic;
-}
-
-/* ---------------- Таблица Резюме ---------------- */
 table#resume {
     width: 100%;
     margin: 0 auto;
     border-collapse: collapse;
-    font-size: clamp(13px, 1.15vw, 17px);
-    background: transparent;
+    font-size: clamp(13px, 1.1vw, 16px);
 }
 
 table#resume tr td {
-    padding: clamp(6px, 0.9vw, 12px) clamp(8px, 1vw, 15px);
-    border: 2px solid #666;
+    padding: clamp(5px, 0.8vw, 10px) clamp(8px, 1vw, 14px);
+    border: 1px solid #808080;
     vertical-align: top;
 }
 
-/* Левая колонка (заголовки полей) — полупрозрачный сиреневый */
 table#resume td.c1 {
     width: 30%;
     text-align: right;
     font-weight: bold;
     color: #000080;
-    background-color: rgba(216, 216, 255, 0.75);
+    background-color: #e4e4f0;
 }
 
-/* Правая колонка: нечетные строки — плотная белая дымка */
 table#resume tr.odd td.c2 {
-    background-color: rgba(255, 255, 255, 0.72);
+    background-color: #ffffff;
 }
 
-/* Правая колонка: четные строки — чуть темнее для эффекта зебры */
 table#resume tr.even td.c2 {
-    background-color: rgba(240, 240, 235, 0.72);
+    background-color: #f6f6f6;
 }
 
-/* Подсветка строки при наведении курсора */
 table#resume tr:hover td.c1 {
-    background-color: rgba(255, 255, 180, 0.85);
+    background-color: #ffffcc;
 }
 
 table#resume tr:hover td.c2 {
-    background-color: rgba(255, 255, 210, 0.85);
+    background-color: #ffffee;
 }
 
 table#resume td a {
@@ -509,30 +642,25 @@ table#resume td a:hover {
 
 table#resume td ol {
     margin: 0;
-    padding-left: 20px;
+    padding-left: 18px;
 }
 
-/* ---------------- Нижнее меню (Строго по центру) ---------------- */
 #menub {
     width: min(75vw, 1100px);
     margin: 0 auto 25px auto;
-    padding: clamp(8px, 1vw, 14px);
-    box-sizing: border-box;
-    background: #11184d;
-    border: 4px ridge #777;
+    padding: 8px 12px;
     text-align: center;
 }
 
-/* ---------------- Список литературы ---------------- */
 .lib {
-    padding-bottom: 10px;
-    margin: 10px 15px 15px 20px;
-    border-bottom: 1px solid #808080;
+    padding-bottom: 8px;
+    margin: 10px 15px 12px 20px;
+    border-bottom: 1px dotted #808080;
 }
 
 .lib p {
     text-indent: 0;
-    margin: 4px 0 0;
+    margin: 3px 0 0;
 }
 
 .lib .cat {
@@ -540,114 +668,218 @@ table#resume td ol {
     font-weight: bold;
 }
 
-/* ---------------- Встроенный просмотрщик статей / PDF ---------------- */
 .article-view-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #ffffff;
-    border: 2px inset #999;
+    margin-top: 15px;
+    padding: 10px;
+    background: #c0c0c0;
 }
 
 .article-frame {
     width: 100%;
-    height: clamp(400px, 65vh, 750px);
-    border: 1px solid #777;
+    height: clamp(380px, 65vh, 720px);
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    background: #ffffff;
+}
+
+/* =========================================================
+   Экран входа в стиле Windows 2000 / XP
+   ========================================================= */
+#win-login-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #008080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+}
+
+.login-window {
+    width: 400px;
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #dfdfdf #404040 #404040 #dfdfdf;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.login-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.login-header-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.login-text-info {
+    font-size: 12px;
+    color: #000;
+    line-height: 1.4;
+}
+
+.login-inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #ffffff;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.login-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.login-field span {
+    font-weight: bold;
+    color: #000;
+}
+
+.login-field input {
+    width: 210px;
+    padding: 3px 5px;
+    border: 1px solid #7f9db9;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
     background: #fff;
 }
 
-
-/* =========================================================
-   АДАПТИВНАЯ ВЕРСТКА
-   ========================================================= */
-
-/* ТЕЛЕФОНЫ: ВЕРТИКАЛЬНЫЙ РЕЖИМ (PORTRAIT) */
-@media screen and (max-width: 768px) and (orientation: portrait),
-       screen and (max-width: 600px) {
-    
-    /* Персонаж полностью скрывается в портретном виде */
-    .background-image {
-        display: none !important;
-    }
-
-    /* Блоки раскрываются на всю ширину мобильного экрана */
-    #header,
-    #middleblock,
-    #menub {
-        width: 95% !important;
-    }
-
-    #header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 12px;
-    }
-
-    #photomag img {
-        width: clamp(160px, 50vw, 240px);
-    }
-
-    #headertext {
-        text-align: center;
-    }
-
-    #header h1 {
-        text-align: center;
-    }
-
-    #headergif {
-        margin: 5px auto 0;
-    }
-
-    .button {
-        display: block;
-        width: 92%;
-        margin: 6px auto;
-        box-sizing: border-box;
-    }
-
-    table#resume td.c1,
-    table#resume td.c2 {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: left;
-    }
-
-    table#resume td.c1 {
-        background: #c3c3ff;
-    }
-
-    p {
-        margin: 10px 5px;
-        text-indent: 15px;
-    }
+.login-footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+    margin-top: 5px;
 }
 
-/* ТЕЛЕФОНЫ И ПЛАНШЕТЫ: ГОРИЗОНТАЛЬНЫЙ РЕЖИМ (LANDSCAPE) */
-@media screen and (max-height: 550px) and (orientation: landscape) {
-    /* Персонаж виден и масштабируется по высоте невысокого горизонтального экрана */
-    .background-image {
-        display: block !important;
-        width: auto;
-        height: 94vh;
-        max-width: 25vw;
-    }
+.login-btn {
+    min-width: 75px;
+    padding: 4px 10px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
 
-    #header,
-    #middleblock,
-    #menub {
-        width: 72vw !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
+.login-btn:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+    padding-top: 5px;
+    padding-left: 11px;
+}
 
-    #photomag img {
-        width: 130px;
-    }
+/* =========================================================
+   Окно контактов и элементы
+   ========================================================= */
+#contacts-window {
+    position: relative;
+    z-index: 4;
+    width: min(50vw, 650px);
+    margin: -15px auto 30px auto;
+    transform: translateX(-350px);
+}
 
-    .button {
-        font-size: 13px;
-        padding: 4px 8px;
+.contacts-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Карточка контакта — обычный блок, не ссылка */
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px;
+    background: #ffffff;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080; /* Эффект вдавленного поля */
+    color: #000000;
+    font-family: Tahoma, sans-serif;
+    font-size: 13px;
+    user-select: text; /* Текст внутри можно выделять */
+}
+
+/* Кликабельная иконка слева */
+.contact-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #404040 #404040 #ffffff; /* Кнопочный 3Д-бордер */
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.contact-icon-link:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+    padding-top: 4px;
+    padding-left: 4px;
+}
+
+.contact-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+.contact-text {
+    flex: 1;
+    word-break: break-all;
+}
+
+/* =========================================================
+   АДАПТИВНОСТЬ
+   ========================================================= */
+@media screen and (max-width: 768px) and (orientation: portrait),
+       screen and (max-width: 600px) {
+    .background-image, .anime-sitter { display: none !important; }
+    .anime-mascot-box {
+        position: static;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto 15px auto;
+        padding: 6px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px dashed #808080;
+        animation: none;
+        max-width: 95%;
     }
+    .mascot-bubble { max-width: none; margin-bottom: 0; text-align: left; }
+    .mascot-bubble::after, .mascot-bubble::before { display: none; }
+    .mascot-img { width: 45px; }
+    #header, #middleblock, #menub { width: 96% !important; }
+    .header-body { flex-direction: column; align-items: center; text-align: center; padding: 10px; }
+    #photomag img { width: clamp(150px, 48vw, 220px); }
+    #headertext, #header h1 { text-align: center; }
+    #headergif { margin: 4px auto 0; }
+    .button { display: block; width: 95%; margin: 4px auto; text-align: center; }
+    table#resume td.c1, table#resume td.c2 { display: block; width: 100%; box-sizing: border-box; text-align: left; }
+    table#resume td.c1 { background: #d8d8f0; }
+    p { margin: 8px 4px; text-indent: 15px; }
 }
