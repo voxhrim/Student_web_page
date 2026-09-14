@@ -74,13 +74,16 @@
         </div>
 
         <div class="win-window-body header-body">
-            <div id="photomag">
-                <a href="resorse/images/1111.jpg" target="_blank">
-                    <img src="resorse/images/1111.jpg" width="400" height="225" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
-                </a>
+            <div id="photomag" style="cursor: pointer;" onclick="toggleMugshotBubble(event)">
+                <img src="resorse/images/mugshot.webp" width="400" height="225" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
+                
+                <!-- Всплывающий анимированный баббл -->
+                <div id="mugshot-bubble" style="display: none;" class="mascot-bubble">
+                    Это я!
+                </div>
             </div>
             <div id="headertext">
-                <h1 class="hdr">Назарюк Владимир Юрьевич</h1>
+                <h1 class="hdr" style="font-size: 42px;">Назарюк Владимир Юрьевич</h1>
                 <h3 class="hdr"><a href="https://donntu.ru/fmt" target="_blank">Факультет металлургии и теплоэнергетики</a></h3>
                 <h3 class="hdr"><a href="https://kmtm.fmt.donntu.ru/" target="_blank">Кафедра металлургических технологий и материаловедения</a></h3>
                 <h3 class="hdr">Направление: 22.03.02 &laquo;Металлургия&raquo;</h3>
@@ -89,9 +92,9 @@
                 <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
 
             </div>
-            <div id="headergif">
-                <img src="resorse/images/gif/Chips.gif" alt="" width="100">
-            </div>
+            <!-- <div id="headergif"> -->
+                <!-- <img src="resorse/images/gif/Chips.gif" alt="" width="100"> -->
+            <!-- </div> -->
         </div>
     </div>
 
@@ -148,12 +151,13 @@
                     </div>
 
                     <hr>
-                    <h3>Магистр рассказывает о себе, длительность ролика 1 минута. <img src="resorse/images/gif/anime4.gif" alt="" width="50" style="vertical-align: middle;"></h3>
+                    <h2>Обо мне</h2>
                     <p>Обязательно отобразить ключевые элементы:<br>
-                        <u>Причина выбора своей специальности:</u> объяснить почему именно эта специальность была выбрана при поступлении.<br>
-                        <u>Охарактеризовать процесс обучения:</u> описать участие в олимпиадах, конференциях, спортивных соревнованиях, волонтерстве... все то, что считаете важным.<br>
-                        <u>Учебные предметы:</u> назвать 2-3 дисциплины, которые дали востребованные навыки или понравились по качеству преподавания. Если были любимые преподаватели, укажите.<br>
-                        <u>Карьерные планы:</u> желаемое направление или сферу деятельности.
+                        Я выбрал эту специальность потому, что в старшей школе увлекся кузнечным делом. Мне понравилось как выглядить горячий метал. Я пришел в ДонНТУ (лучших технический вуз
+						моего региона) и нашел там специальность связанную с металлом - металлургия черных металов.<br>
+						Обучение в университете проходило по множеству дисцеплин, всесторонне раскрывая возможности моей специальности. От азов доменного производства, заканчивая современными 
+						технологиями, например адьютивные технологии и подготовка материалов для них.
+                        После окончания учебы в магистратуре планирую поступить в аспирантуру. Хочу заниматься научной деятельностью и работать в университете.
                     </p>
 
                     <hr>
@@ -190,7 +194,7 @@
                         </tr>
                         <tr class="even">
                             <td class="c1">Знание языков</td>
-                            <td class="c2">Русский - родной, Украинский - свободно, Английский - свободно</td>
+                            <td class="c2">Русский - родной, Украинский, Английский.</td>
                         </tr>
                         <tr class="odd">
                             <td class="c1">Увлечения</td>
@@ -204,7 +208,7 @@
                                     <li>Изображение чертежей.</li>
                                     <li>Продвинутые навыки владения ПК.</li>
                                     <li>Продвинутые навыки владения нейросетями.</li>
-                                    <li>И вообще я много чего умею.</li>
+                                    <li>И вообще я много чего умею - - - доделать - - -.</li>
                                 </ol>
                             </td>
                         </tr>
@@ -212,7 +216,7 @@
                             <td class="c1">Профессиональные навыки</td>
                             <td class="c2">
                                 <ol>
-                                    <li>Создание и работа с EXCEL базами данных.</li>
+                                    <li>Создание и работа с exel базами данных.</li>
                                     <li>Проведение исследовательских работ и лабораторных испытаний.</li>
                                     <li>Написание дипломных и курсовых работ.</li>
                                     <li>Проведение моделирования металлургических процессов.</li>
@@ -466,7 +470,7 @@
 
             </div> <!-- /#maintext -->
 
-        </div> <!-- /Здесь закрывается .win-window-body -->
+        </div> <!-- /.win-window-body -->
 
         <!-- Статус-бар Windows внизу окна -->
         <div class="win-statusbar">
@@ -479,8 +483,13 @@
         <div class="gif-row">
             <img src="resorse/images/gif/CatAey.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
-            <img src="resorse/images/gif/anime2.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/WEB.gif" alt="" loading="lazy">
+						<!-- Пасхалка: Кнопка запуска классического Doom -->
+				<div id="doom-launch-btn-container" style="text-align: center; margin: 20px 0;">
+					<button class="button color" onclick="openDoomEasterEgg()" style="font-weight: bold; color: #800000;">
+						🕹️ Запустить DOOM.exe (E1M1)
+					</button>
+				</div>
         </div>
 
         <div class="gif-center">
@@ -548,6 +557,26 @@
             <div class="status-cell fit">Ready</div>
         </div>
     </div>
+
+	<!-- Окно пасхалки DOOM -->
+		<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; width: 750px;">
+    <div class="win-title-bar">
+        <div class="win-title-text">
+            <span class="win-icon">💣</span> DOOM_E1M1.exe — Pro HUD & Raycaster
+        </div>
+        <div class="win-controls">
+            <button class="win-btn" type="button" onclick="closeDoomEasterEgg()">_</button>
+            <button class="win-btn" type="button" onclick="closeDoomEasterEgg()">□</button>
+            <button class="win-btn close" type="button" onclick="closeDoomEasterEgg()">✕</button>
+        </div>
+    </div>
+    <div class="win-window-body" style="background: #000; padding: 6px; text-align: center;">
+        <canvas id="doomCanvas" width="720" height="460" style="display: block; margin: 0 auto; image-rendering: pixelated; border: 2px solid #404040;"></canvas>
+        <div style="font-family: Tahoma, sans-serif; font-size: 11px; color: #c0c0c0; margin-top: 6px; text-align: left; padding: 2px;">
+            Управление: Стрелки ВЛЕВО/ВПРАВО — поворот, ВВЕРХ/ВНИЗ — шаг вперед/назад, ПРОБЕЛ — огонь.
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
@@ -736,6 +765,401 @@
 			}, 130);
 		}, 100);
 	});
+	
+	
+</script>
+
+ <!-- скрипт дума -->
+
+<script>
+  let doomInterval = null;
+
+    function openDoomEasterEgg() {
+        const win = document.getElementById('doom-window');
+        win.style.display = 'block';
+        startDoomGame();
+    }
+
+    function closeDoomEasterEgg() {
+        const win = document.getElementById('doom-window');
+        win.style.display = 'none';
+        if (doomInterval) clearInterval(doomInterval);
+    }
+
+    function startDoomGame() {
+    const canvas = document.getElementById('doomCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const screenWidth = 720;
+    const screenHeight = 460;
+    const viewportHeight = 350;
+
+    // ==========================================
+    // НАСТРОЙКИ ОСВЕЩЕНИЯ (можете изменять их!)
+    // ==========================================
+    const LIGHT_STEP = 0.15;       // Шаг ступенчатого затухания света (юнитов/блоков)
+    const MAX_LIGHT_DIST = 7;    // Дистанция, на которой наступает полная тьма
+    const MIN_BRIGHTNESS = 0.1;   // Минимальный уровень яркости в темных углах (от 0 до 1)
+
+    let player = {
+        x: 1.5,
+        y: 1.5,
+        angle: 0,
+        health: 100,
+        ammo: 50
+    };
+
+    const map = [
+        [1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,0,1,1,1,0,1],
+        [1,0,1,0,0,0,0,1,0,1],
+        [1,0,0,0,1,1,0,0,0,1],
+        [1,1,1,0,1,1,0,1,1,1],
+        [1,0,0,0,0,0,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1]
+    ];
+
+    let enemies = [
+        { x: 4.5, y: 1.5, active: true },
+        { x: 7.5, y: 4.5, active: true },
+        { x: 3.5, y: 6.5, active: true }
+    ];
+
+    let bullets = [];
+    let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, ' ': false };
+    let gunAnim = 0;
+    let flash = false;
+    let faceAnimTimer = 0;
+    let gazeTimer = 0;
+    let gazeDirection = 0;
+
+    window.addEventListener('keydown', (e) => {
+        if (keys.hasOwnProperty(e.key) || e.key === ' ') {
+            keys[e.key] = true;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+                if (document.getElementById('doom-window').style.display === 'block') {
+                    e.preventDefault();
+                }
+            }
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        if (keys.hasOwnProperty(e.key) || e.key === ' ') {
+            keys[e.key] = false;
+        }
+    });
+
+    if (doomInterval) clearInterval(doomInterval);
+
+    // Функция ступенчатого расчета света по дистанции
+    function getLightLevel(distance) {
+        const steppedDist = Math.floor(distance / LIGHT_STEP) * LIGHT_STEP;
+        let factor = 1.0 - (steppedDist / MAX_LIGHT_DIST);
+        if (factor < MIN_BRIGHTNESS) factor = MIN_BRIGHTNESS;
+        if (factor > 1.0) factor = 1.0;
+        return factor;
+    }
+
+    doomInterval = setInterval(() => {
+        if (keys['ArrowLeft']) player.angle -= 0.05;
+        if (keys['ArrowRight']) player.angle += 0.05;
+
+        let moveSpeed = 0.05;
+        let dx = Math.cos(player.angle) * moveSpeed;
+        let dy = Math.sin(player.angle) * moveSpeed;
+
+        let nextX = player.x;
+        let nextY = player.y;
+
+        if (keys['ArrowUp']) { nextX += dx; nextY += dy; }
+        if (keys['ArrowDown']) { nextX -= dx; nextY -= dy; }
+
+        let forwardMargin = 0.1;
+        let backwardMargin = 0.3;
+
+        if (map[Math.floor(player.y)][Math.floor(nextX + (dx > 0 ? forwardMargin : -backwardMargin))] === 0) {
+            player.x = nextX;
+        }
+        if (map[Math.floor(nextY + (dy > 0 ? forwardMargin : -backwardMargin))][Math.floor(player.x)] === 0) {
+            player.y = nextY;
+        }
+
+        // Стрельба
+        if (keys[' '] && gunAnim === 0 && player.ammo > 0) {
+            gunAnim = 6;
+            flash = true;
+            player.ammo--;
+            faceAnimTimer = 12;
+            bullets.push({
+                x: player.x,
+                y: player.y,
+                dirX: Math.cos(player.angle),
+                dirY: Math.sin(player.angle),
+                life: 18
+            });
+        } else {
+            if (gunAnim > 0) gunAnim--;
+            else flash = false;
+        }
+
+        if (faceAnimTimer > 0) faceAnimTimer--;
+
+        gazeTimer++;
+        if (gazeTimer > 50) {
+            gazeTimer = 0;
+            gazeDirection = Math.floor(Math.random() * 3) - 1;
+        }
+
+        // Полет пуль
+        for (let i = bullets.length - 1; i >= 0; i--) {
+            let b = bullets[i];
+            b.x += b.dirX * 0.4;
+            b.y += b.dirY * 0.4;
+            b.life--;
+
+            let mapX = Math.floor(b.x);
+            let mapY = Math.floor(b.y);
+            if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length || map[mapY][mapX] > 0 || b.life <= 0) {
+                bullets.splice(i, 1);
+                continue;
+            }
+
+            enemies.forEach(en => {
+                if (en.active && Math.hypot(en.x - b.x, en.y - b.y) < 0.4) {
+                    en.active = false;
+                    bullets.splice(i, 1);
+                    setTimeout(() => { en.active = true; }, 4000);
+                }
+            });
+        }
+
+        // Отрисовка пола и потолка
+        ctx.fillStyle = "#0a0a0a";
+        ctx.fillRect(0, 0, screenWidth, viewportHeight / 2);
+        ctx.fillStyle = "#1e1e1e";
+        ctx.fillRect(0, viewportHeight / 2, screenWidth, viewportHeight / 2);
+
+        let fov = Math.PI / 3;
+        let halfFov = fov / 2;
+        let zBuffer = [];
+
+        // Рендеринг стен со светом
+        for (let x = 0; x < screenWidth; x++) {
+            let cameraX = 2 * x / screenWidth - 1;
+            let rayAngle = player.angle + Math.atan(cameraX * Math.tan(halfFov));
+
+            let rayDist = 0;
+            let hit = false;
+            let wallType = 1;
+
+            let cos = Math.cos(rayAngle);
+            let sin = Math.sin(rayAngle);
+
+            while (!hit && rayDist < 16) {
+                rayDist += 0.02;
+                let testX = Math.floor(player.x + cos * rayDist);
+                let testY = Math.floor(player.y + sin * rayDist);
+
+                if (testX < 0 || testX >= map[0].length || testY < 0 || testY >= map.length) {
+                    hit = true;
+                    rayDist = 16;
+                } else if (map[testY][testX] > 0) {
+                    hit = true;
+                    wallType = testX % 2;
+                }
+            }
+
+            let correctedDist = rayDist * Math.cos(rayAngle - player.angle);
+            zBuffer[x] = correctedDist;
+
+            let light = getLightLevel(correctedDist);
+            let baseRed = (wallType === 0) ? 170 : 210;
+            let r = Math.floor(baseRed * light);
+            let g = Math.floor(8 * light);
+            let b = Math.floor(8 * light);
+
+            let wallHeight = Math.min(viewportHeight, Math.floor(280 / (correctedDist + 0.0001)));
+            let drawStart = Math.floor((viewportHeight - wallHeight) / 2);
+            
+            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+            ctx.fillRect(x, drawStart, 1, wallHeight);
+        }
+
+        // Рендеринг монстров (теперь полностью подчиняются законам освещения!)
+        enemies.forEach(en => {
+            if (!en.active) return;
+            let spriteAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+            while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
+            while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
+
+            if (Math.abs(spriteAngle) < fov + 0.2) {
+                let dist = Math.hypot(en.x - player.x, en.y - player.y);
+                if (dist > 0.3) {
+                    let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
+                    let size = Math.min(320, Math.floor(240 / dist));
+                    let startX = Math.floor(screenX - size / 2);
+                    let endX = Math.floor(screenX + size / 2);
+
+                    let light = getLightLevel(dist); // Рассчитываем свет для монстра
+                    let demonRed = Math.floor(180 * light);
+                    let armorGray = Math.floor(60 * light);
+
+                    for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
+                        if (zBuffer[sx] > dist) {
+                            let sy = Math.floor((viewportHeight - size) / 2);
+                            // Тело демона темнеет вдали
+                            ctx.fillStyle = `rgb(${demonRed}, 0, 0)`;
+                            ctx.fillRect(sx, sy + size * 0.2, 1, size * 0.6);
+                            if (sx % 4 === 0) {
+                                ctx.fillStyle = `rgb(${armorGray}, ${armorGray}, ${armorGray})`;
+                                ctx.fillRect(sx, sy + size * 0.35, 1, size * 0.3);
+                            }
+                        }
+                    }
+
+                    // Голова и рога тоже темнеют от расстояния
+                    let headSize = Math.max(8, Math.floor(size / 2.5));
+                    if (screenX >= 0 && screenX < screenWidth && zBuffer[Math.floor(screenX)] > dist) {
+                        let hx = screenX - headSize / 2;
+                        let hy = (viewportHeight / 2) - headSize / 1.5;
+
+                        let hornCol = Math.floor(220 * light);
+                        ctx.fillStyle = `rgb(${hornCol}, ${Math.floor(180 * light)}, 0)`;
+                        ctx.fillRect(hx - headSize * 0.3, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
+                        ctx.fillRect(hx + headSize * 0.9, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
+
+                        ctx.fillStyle = `rgb(${Math.floor(230 * light)}, ${Math.floor(60 * light)}, 0)`;
+                        ctx.fillRect(hx, hy, headSize, headSize * 0.8);
+
+                        // Глаза остаются ярко-желтыми, прорезая темноту
+                        ctx.fillStyle = "#ffff00";
+                        ctx.fillRect(hx + headSize * 0.15, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
+                        ctx.fillRect(hx + headSize * 0.65, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
+
+                        ctx.fillStyle = "#000000";
+                        ctx.fillRect(hx + headSize * 0.25, hy + headSize * 0.6, headSize * 0.5, headSize * 0.15);
+                    }
+                }
+            }
+        });
+
+        // Плазменные пули
+        bullets.forEach(b => {
+            let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
+            while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
+            while (bulletAngle > Math.PI) bulletAngle -= Math.PI * 2;
+
+            if (Math.abs(bulletAngle) < fov) {
+                let dist = Math.hypot(b.x - player.x, b.y - player.y);
+                let screenX = Math.floor((screenWidth / 2) + (bulletAngle / fov) * screenWidth);
+                let bSize = Math.max(4, Math.floor(20 / dist));
+
+                if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > dist) {
+                    ctx.fillStyle = "#00ffff";
+                    ctx.beginPath();
+                    ctx.arc(screenX, viewportHeight / 2, bSize, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath();
+                    ctx.arc(screenX, viewportHeight / 2, bSize / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        });
+
+        // Оружие игрока
+        let gunYOffset = gunAnim * 3;
+        let gunBaseX = screenWidth / 2;
+        
+        ctx.fillStyle = "#151515";
+        ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 36, 45);
+        ctx.fillStyle = "#3a3a3a";
+        ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 6, 45);
+
+        ctx.fillStyle = "#222222";
+        ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 24, 35);
+        ctx.fillStyle = "#4a4a4a";
+        ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 4, 35);
+
+        ctx.fillStyle = "#111111";
+        ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 12, 30);
+        ctx.fillStyle = "#666666";
+        ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 2, 30);
+
+        if (flash) {
+            ctx.fillStyle = "#ff3300";
+            ctx.beginPath();
+            ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 22, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffcc00";
+            ctx.beginPath();
+            ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 12, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 6, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Прицел
+        ctx.fillStyle = "rgba(0, 255, 0, 0.7)";
+        ctx.fillRect(screenWidth / 2 - 2, viewportHeight / 2 - 1, 4, 2);
+        ctx.fillRect(screenWidth / 2 - 1, viewportHeight / 2 - 2, 2, 4);
+
+        // HUD и лицо
+        ctx.fillStyle = "#333333";
+        ctx.fillRect(0, viewportHeight, screenWidth, screenHeight - viewportHeight);
+        ctx.fillStyle = "#0c0c0c";
+        ctx.fillRect(6, viewportHeight + 6, screenWidth - 12, screenHeight - viewportHeight - 12);
+
+        ctx.font = "bold 22px 'Courier New', monospace";
+        ctx.fillStyle = "#cc0000";
+        ctx.fillText(player.health + "%", 40, viewportHeight + 60);
+        ctx.fillStyle = "#ffcc00";
+        ctx.fillText(player.ammo, 580, viewportHeight + 60);
+
+        ctx.font = "bold 10px 'Courier New', monospace";
+        ctx.fillStyle = "#888";
+        ctx.fillText("HEALTH", 35, viewportHeight + 25);
+        ctx.fillText("AMMO", 585, viewportHeight + 25);
+
+        let faceBoxX = screenWidth / 2 - 36;
+        let faceBoxY = viewportHeight + 12;
+        
+        ctx.fillStyle = "#1a1a1a";
+        ctx.fillRect(faceBoxX, faceBoxY, 72, 78);
+        ctx.strokeStyle = "#555";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(faceBoxX, faceBoxY, 72, 78);
+
+        ctx.fillStyle = "#2d4c2d";
+        ctx.fillRect(faceBoxX + 10, faceBoxY + 8, 52, 62);
+        ctx.fillStyle = "#b8860b";
+        ctx.fillRect(faceBoxX + 14, faceBoxY + 16, 44, 20);
+
+        ctx.fillStyle = "#f5d0b1";
+        ctx.fillRect(faceBoxX + 20, faceBoxY + 28, 32, 34);
+
+        ctx.fillStyle = "#000";
+        let eyeOffsetX = 0;
+        if (faceAnimTimer > 0) {
+            ctx.fillRect(faceBoxX + 24, faceBoxY + 38, 5, 5);
+            ctx.fillRect(faceBoxX + 43, faceBoxY + 38, 5, 5);
+            ctx.fillRect(faceBoxX + 28, faceBoxY + 52, 16, 3);
+        } else {
+            if (gazeDirection === -1) eyeOffsetX = -3;
+            else if (gazeDirection === 1) eyeOffsetX = 3;
+
+            ctx.fillRect(faceBoxX + 26 + eyeOffsetX, faceBoxY + 38, 4, 4);
+            ctx.fillRect(faceBoxX + 42 + eyeOffsetX, faceBoxY + 38, 4, 4);
+            ctx.fillRect(faceBoxX + 30, faceBoxY + 52, 12, 2);
+        }
+
+    }, 1000 / 35);
+}
 </script>
 
 <script type="text/javascript">
@@ -764,6 +1188,24 @@
 			playSound(CLICK_SRC, CLICK_VOLUME);
 		}
 	});
+
+	function toggleMugshotBubble(event) {
+        event.stopPropagation();
+        
+        const bubble = document.getElementById('mugshot-bubble');
+        if (!bubble) return;
+
+        if (bubble.style.display === 'none' || !bubble.style.display) {
+            bubble.style.display = 'block';
+            
+            // Автоматически скрываем через 3 секунды
+            setTimeout(() => {
+                bubble.style.display = 'none';
+            }, 6000);
+        } else {
+            bubble.style.display = 'none';
+        }
+    }
 
     function switchTab(hash) {
         const targetId = (hash && hash !== '#') ? hash.replace('#', '') : 'about';

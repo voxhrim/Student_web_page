@@ -239,12 +239,12 @@ body {
 
 @keyframes bubbleBob {
     0% { transform: translateY(0px) rotate(1deg); }
-    100% { transform: translateY(-3px) rotate(-1deg); }
+    100% { transform: translateY(-6px) rotate(-3deg); }
 }
 
 /* ---------------- Верхняя панель (Таскбар ДонНТУ) ---------------- */
 #topblock {
-   min-height: 32px;
+    min-height: 32px;
     background: linear-gradient(90deg, #000080 0%, #1084d0 100%); /* Синий градиент Windows */
     border-bottom: 2px solid;
     border-color: #ffffff #404040 #404040 #ffffff;
@@ -302,8 +302,8 @@ body {
     position: relative;
     z-index: 2;
     width: min(68vw, 1980px);
-    margin: 30px auto 40px auto;
-     transform: translateX(-30px); /* отступ от центра */
+    margin: 10px auto 40px auto;
+     transform: translateX(-80px); /* отступ от центра */
 }
 
 .header-body {
@@ -318,12 +318,22 @@ body {
 
 #photomag {
     flex-shrink: 0;
+	position: relative; /* Чтобы баббл привязывался к рамке фото */
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     background: #000;
     line-height: 0;
     width: clamp(380px, 32vw, 560px); /* Размер контейнера */
     aspect-ratio: 16 / 9;            /*  пропорции 16/9  */
+}
+
+#mugshot-bubble {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 50;
+    margin: 0;
+    animation: bubbleBob 1.4s ease-in-out infinite alternate !important;
 }
 
 #photomag img {
@@ -383,7 +393,7 @@ body {
     z-index: 3;
     width: min(68vw, 980px);
     margin: -75px auto 36px auto;
-    transform: translateX(80px);
+    transform: translateX(40px);
 }
 
 /* ---------------- Меню / Кнопки окон Windows ---------------- */
@@ -584,6 +594,18 @@ ol li {
     width: clamp(75px, 11vw, 160px);
     height: auto;
     object-fit: contain;
+}
+ /* адаптация гифок */
+@media screen and (max-width: 1200px) {
+    .gif-row img {
+        width: clamp(100px, 25vw, 150px) !important;
+        max-width: none !important;
+    }
+    
+    .gif-center img {
+        width: 100% !important;
+        max-width: 350px !important;
+    }
 }
 
 .comment {
@@ -959,7 +981,7 @@ table#resume td ol {
 
     }
     #headertext, #header h1 { 
-        text-align: center; 
+        text-align: left; 
     }
     #headergif { 
         margin: 4px auto 0; 
@@ -987,3 +1009,9 @@ table#resume td ol {
         margin: 8px 4px; 
         text-indent: 15px; 
     }
+
+	@media screen and (max-width: 700px) {
+		#doom-launch-btn-container {
+			display: none !important;
+		}
+	}
