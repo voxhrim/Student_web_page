@@ -4,9 +4,20 @@
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портал магистра - Назарюк В.Ю.</title>
-    <link rel="shortcut icon" href="resorse/images/master.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="resorse/images/icons/master.webp" type="image/x-icon">
     <!-- Единый файл стилей -->
-    <link rel="stylesheet" type="text/css" href="master_style_gif.css">
+    <link rel="stylesheet" type="text/css" href="master_style_gif.css?v=2">
+
+    <!-- Временная проверка: стили прямо в HTML -->
+    <style>
+        .win-window {
+            background: #c0c0c0 !important;
+            border: 1px solid !important;
+            border-color: #ffffff #404040 #404040 #ffffff !important;
+            box-shadow: 0 0 0 1px #000000, 4px 4px 0px rgba(0, 0, 0, 0.7) !important;
+            box-sizing: border-box !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -64,8 +75,8 @@
 
         <div class="win-window-body header-body">
             <div id="photomag">
-                <a href="resorse/images/mugshot.webp" target="_blank">
-                    <img src="resorse/images/mugshot.webp" width="300" height="400" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
+                <a href="resorse/images/1111.jpg" target="_blank">
+                    <img src="resorse/images/1111.jpg" width="400" height="225" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
                 </a>
             </div>
             <div id="headertext">
@@ -76,6 +87,7 @@
                 <h3 class="hdr">Профиль: &laquo;металлургия черных металлов&raquo;</h3>
                 <h3 class="hdr">Тема выпускной квалификационной работы магистра: &laquo;Исследование влияния технологических параметров выплавки хромистых чугунов в индукционных печах на качество литых изделий&raquo;</h3>
                 <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
+
             </div>
             <div id="headergif">
                 <img src="resorse/images/gif/Chips.gif" alt="" width="100">
@@ -467,7 +479,6 @@
         <div class="gif-row">
             <img src="resorse/images/gif/CatAey.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
-            <img src="resorse/images/gif/Key.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/anime2.gif" alt="" loading="lazy">
             <img src="resorse/images/gif/WEB.gif" alt="" loading="lazy">
         </div>
@@ -500,7 +511,7 @@
 			<!-- E-mail -->
             <div class="contact-item">
                 <a class="contact-icon-link" href="mailto:nazariuk.donntu@gmail.com?subject=Вопрос с сайта" title="Написать письмо">
-                    <img class="contact-icon" src="resorse/images/icons/email.png" alt="Email">
+                    <img class="contact-icon" src="resorse/images/icons/email.webp" alt="Email">
                 </a>
                 <span class="contact-text"><strong>E-mail:</strong> nazariuk.donntu@gmail.com</span>
             </div>
@@ -508,7 +519,7 @@
             <!-- Telegram -->
             <div class="contact-item">
                 <a class="contact-icon-link" href="https://t.me/Voxhrim" target="_blank" title="Открыть Telegram">
-                    <img class="contact-icon" src="resorse/images/icons/tg.png" alt="Telegram">
+                    <img class="contact-icon" src="resorse/images/icons/tg.webp" alt="Telegram">
                 </a>
                 <span class="contact-text"><strong>Telegram:</strong> @Voxhrim</span>
             </div>
@@ -516,7 +527,7 @@
             <!-- Discord -->
             <div class="contact-item">
                 <a class="contact-icon-link" href="https://discord.com/users/521297931039408139" target="_blank" title="Открыть профиль Discord">
-                    <img class="contact-icon" src="resorse/images/icons/discord.png" alt="Discord">
+                    <img class="contact-icon" src="resorse/images/icons/discord.webp" alt="Discord">
                 </a>
                 <span class="contact-text"><strong>Discord:</strong> 521297931039408139</span>
             </div>
@@ -524,7 +535,7 @@
             <!-- GitHub -->
             <div class="contact-item">
                 <a class="contact-icon-link" href="https://github.com/voxhrim" target="_blank" title="Открыть GitHub">
-                    <img class="contact-icon" src="resorse/images/icons/github.png" alt="GitHub">
+                    <img class="contact-icon" src="resorse/images/icons/github.webp" alt="GitHub">
                 </a>
                 <span class="contact-text"><strong>GitHub:</strong> voxhrim</span>
             </div>
@@ -837,9 +848,6 @@
     });
 
     window.addEventListener('DOMContentLoaded', function() {
-        // Проигрываем приветственный звук при первом открытии сайта
-        playSound(STARTUP_SRC, SYSTEM_VOLUME);
-
         const bg = document.querySelector('.background-image');
         if (bg && bg.getAttribute('data-src')) {
             bg.src = bg.getAttribute('data-src');
