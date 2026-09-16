@@ -179,10 +179,12 @@ body {
     pointer-events: none;
 }
 
-.anime-sitter img {
+.anime-sitter img,
+.anime-sitter video {
     width: 140px !important;
     max-width: none !important;
     height: auto !important;
+    display: block;
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
 }
 
@@ -405,6 +407,7 @@ body {
     width: min(68vw, 980px);
     margin: -75px auto 36px auto;
     transform: translateX(40px);
+	height: fit-content;
 }
 
 /* ---------------- Меню / Кнопки окон Windows ---------------- */
@@ -611,6 +614,7 @@ ol li {
     text-align: left;
     margin: 15px auto;
     width: 90%;
+	height: auto;
 }
 
 .gif-left img {
@@ -856,11 +860,14 @@ table#resume td ol {
    Окно контактов и элементы
    ========================================================= */
 #contacts-window {
-    position: relative;
+    position: absolute;
     z-index: 4;
     width: min(46vw, 580px);
-    margin: -15px auto 30px auto;
-    transform: translateX(-320px);
+    left: 50%;
+    /* Сдвигаем влево относительно центра экрана и поднимаем на нужный уровень */
+    transform: translateX(-580px); /* отрегулируйте число под ваш макет */
+	transform: translateY(-180px);
+    margin: 0;
 }
 
 .contacts-body {
@@ -916,12 +923,131 @@ table#resume td ol {
     word-break: break-all;
 }
 
+
+/* =========================================================
+   Окно погоды Windows 2000
+   ========================================================= */
+#weather-window {
+    position: relative;
+    z-index: 4;
+    width: min(46vw, 580px);
+    margin: 20px auto 40px auto; /* Аккуратный отступ от предыдущих окон */
+    transform: translateX(-320px); /* Можно сдвинуть чуть правее для каскадного ретро-эффекта */
+}
+
+@media screen and (max-width: 1150px) {
+    #weather-window {
+        width: 96% !important;
+        margin: 0 auto 25px auto !important;
+        transform: none !important;
+    }
+}
+
+/* Оформление значений температуры */
+.w-temp-box {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* Размер цифр (+16, +61) */
+.w-temp-val {
+    font-size: 34px;
+    font-weight: bold;
+    color: #000;
+    line-height: 1;
+}
+
+/* Размер наклонной черты (/) */
+.w-temp-divider {
+    font-size: 28px;
+    color: #777;
+    margin: 0 4px;
+}
+
+/* 1. Главная иконка погоды (спрайт масштабирован до 400x500px, ячейка 55x55px) */
+#w-icon,
+.w-forecast-icon,
+.w-wind-arrow,
+.w-unit-c,
+.w-unit-f,
+.w-unit-mini-c,
+.w-unit-mini-f {
+    background-image: url("resorse/images/wheather_ico.webp");
+    background-repeat: no-repeat;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* 1. Главная иконка погоды: крупная, без полей, по центру */
+#w-icon {
+    width: 60px;
+    height: 52px;
+    background-size: 720px 900px !important; /* масштаб 0.9 */
+    vertical-align: middle;
+    margin-right: 12px;
+}
+
+/* 2. Карточки прогноза на 3 дня */
+.w-forecast-icon {
+    width: 44px;
+    height: 38px;
+    background-size: 520px 650px !important; /* масштаб 0.65 */
+    margin: 2px auto;
+}
+
+/* 3. Стрелка ветра */
+.w-wind-arrow {
+    width: 20px;
+    height: 20px;
+    background-size: 400px 500px !important;
+    background-position: -40px -426px !important;
+    vertical-align: -4px;
+    margin-right: 5px;
+    transform-origin: center center;
+    transition: transform 0.4s ease;
+}
+
+/* 4. Значки °C и °F из спрайта (строка 4: колонки 4 и 5) */
+.w-unit-c {
+    width: 20px;
+    height: 20px;
+    background-size: 440px 550px !important;
+    background-position: -309px -330px !important;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+.w-unit-f {
+    width: 20px;
+    height: 20px;
+    background-size: 440px 550px !important;
+    background-position: -375px -330px !important;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+/* 5. Значки °C и °F для прогноза */
+.w-unit-mini-c {
+    width: 14px;
+    height: 14px;
+    background-size: 300px 375px !important;
+    background-position: -210px -225px !important;
+    vertical-align: -1px;
+}
+
+.w-unit-mini-f {
+    width: 14px;
+    height: 14px;
+    background-size: 300px 375px !important;
+    background-position: -255px -225px !important;
+    vertical-align: -1px;
+}
+
 /* =========================================================
    АДАПТИВНОСТЬ
    ========================================================= */
-/* =========================================================
-   АДАПТИВНОСТЬ
-   ========================================================= */
+
 
 /* Экраны ноутбуков / планшетов / 4/3 (от 901px до 1200px) */
 @media screen and (max-width: 1200px) and (min-width: 901px) {

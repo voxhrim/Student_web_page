@@ -101,9 +101,18 @@
     <div id="middleblock" class="win-window window-relative">
 
         <!-- Сидящий на верхнем краю окна персонаж -->
-        <div class="anime-sitter" title="Добро пожаловать!">
-            <img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж">
-        </div>
+		
+		<div class="anime-sitter" title="Добро пожаловать!">
+			<img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж">
+		</div>
+		
+		<!-- Фрагмент ниже для сжатого формата - если короче будет место поджимать -->
+		
+        <!-- <div class="anime-sitter" title="Добро пожаловать!"> -->
+			<!-- <video autoplay loop muted playsinline> -->
+				<!-- <source src="resorse/images/gif/1anime5.webm" type="video/webm"> -->
+			<!-- </video> -->
+		<!-- </div> -->
 
         <!-- Полоса заголовка окна -->
         <div class="win-title-bar">
@@ -116,7 +125,7 @@
                 <button class="win-btn close" type="button">✕</button>
             </div>
         </div>
-<!-- Тело окна WordPad с серым фоном -->
+			<!-- Тело окна WordPad с серым фоном -->
         <div class="win-window-body" style="padding: 6px; background: #c0c0c0;">
 		
 			<div class="win-sunken-panel" style="background: #c0c0c0;">
@@ -473,7 +482,7 @@
 					</button>
 				</div>
 				
-            <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
+            <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy" style="transform: translateY(-30px);">
 		
         </div>
 
@@ -485,7 +494,7 @@
     <div id="contacts-window" class="win-window">
         <div class="win-title-bar">
             <div class="win-title-text">
-                <span class="win-icon">📇</span> Contacts_Book.exe
+                <span class="win-icon"></span> Contacts_Book.exe
             </div>
             <div class="win-controls">
                 <button class="win-btn" type="button">_</button>
@@ -540,6 +549,93 @@
         </div>
     </div>
 
+	<!-- Окно погоды с прогнозом и направлением ветра -->
+<div id="weather-window" class="win-window">
+    <div class="win-title-bar">
+        <div class="win-title-text">
+            <span class="win-icon"></span> Weather_Station.exe — Погода онлайн
+        </div>
+        <div class="win-controls">
+            <button class="win-btn" type="button">_</button>
+            <button class="win-btn" type="button">□</button>
+            <button class="win-btn close" type="button">✕</button>
+        </div>
+    </div>
+
+    <div class="win-window-body weather-body win-sunken-panel" style="background: #c0c0c0; padding: 10px;">
+        <h2 style="font-size: 14px; color: #000080; margin: 0 0 8px 0; text-align: left; font-family: Tahoma, sans-serif; text-indent: 0;">
+            Погода в ДонНТУ:
+        </h2>
+
+				<div id="weather-content" class="win-sunken-panel" style="background: #ffffff; padding: 10px; font-family: Tahoma, sans-serif; font-size: 12px;">
+				   <!-- Верхняя строка: крупная иконка + равноправные °C и °F с графическими значками -->
+						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+							<div style="display: flex; align-items: center;">
+								<!-- Иконка погоды -->
+								<div id="w-icon"></div>
+								
+								<!-- Значения температуры -->
+								<div class="w-temp-box">
+									<span id="w-temp-c" class="w-temp-val">--</span>
+									<span class="w-unit-c" title="°C"></span>
+
+									<span class="w-temp-divider">/</span>
+
+									<span id="w-temp-f" class="w-temp-val">--</span>
+									<span class="w-unit-f" title="°F"></span>
+								</div>
+							</div>
+							
+							<div style="text-align: right; color: #333;">
+								<div id="w-desc" style="font-weight: bold; font-size: 13px;">Загрузка метеосводки...</div>
+								<small id="w-city">Донецк, Ворошиловский р-н</small>
+							</div>
+						</div>
+
+            <!-- Таблица подробных метеоданных -->
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; border-top: 1px dotted #808080;">
+                <tr>
+                    <td style="padding: 3px 0; color: #555;">Ветер:</td>
+                    <td style="padding: 3px 0; text-align: right; font-weight: bold;">
+                        <span id="w-wind-icon" class="w-wind-arrow"></span>
+                        <span id="w-wind">-- м/с (--)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px 0; color: #555;">Влажность воздуха:</td>
+                    <td id="w-humidity" style="padding: 3px 0; text-align: right; font-weight: bold;">-- %</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px 0; color: #555;">Атмосферное давление:</td>
+                    <td id="w-pressure" style="padding: 3px 0; text-align: right; font-weight: bold;">-- мм рт. ст.</td>
+                </tr>
+            </table>
+
+            <!-- Прогноз на 3 дня -->
+            <div style="margin-top: 10px; border-top: 1px dotted #808080; padding-top: 8px;">
+                <div style="font-weight: bold; margin-bottom: 6px; color: #000080; font-size: 11px;">
+                    Прогноз на 3 дня:
+                </div>
+                <div id="w-forecast-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                    <div class="win-sunken-panel" style="background: #f5f5f5; padding: 4px; text-align: center;">
+                        <small style="color: #666;">Загрузка...</small>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 11px; color: #666; margin: 8px 0 0 0; text-indent: 0; text-align: right;">
+                *API Open-meteo.com
+            </p>
+        </div>
+    </div>
+
+    <div class="win-statusbar">
+        <div class="status-cell" id="w-status">Подключение к метеосерверу...</div>
+        <div class="status-cell fit">Auto-Sync</div>
+    </div>
+</div>
+
+
 	<!-- Окно пасхалки DOOM -->
 	<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; width: 750px;">
 		<div class="win-title-bar">
@@ -560,6 +656,212 @@
         </div>
     </div>
 </div>
+
+<!-- скрипт погоды -->
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=48.0159&longitude=37.8028&current=temperature_2m,relative_humidity_2m,surface_pressure,wind_speed_10m,wind_direction_10m,is_day,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&wind_speed_unit=ms&timezone=auto";
+
+    function getWindDirection(deg) {
+        const sectors = ["С", "ССВ", "СВ", "ВСВ", "В", "ВЮВ", "ЮВ", "ЮЮВ", "Ю", "ЮЮЗ", "ЮЗ", "ЗЮЗ", "З", "ЗСЗ", "СЗ", "ССЗ"];
+        const index = Math.round((deg % 360) / 22.5);
+        return sectors[index % 16];
+    }
+
+    // Пиксельные центры ячеек спрайта 800x1000px:
+    // X = 100 + col * 120
+    // Y = [108, 235, 362, 492, 618, 745, 872]
+    function getSpritePos(col, row) {
+        const xOrig = 100 + col * 120;
+        const yOrig = [108, 235, 362, 492, 618, 745, 872][row];
+
+        // 1. Для главной #w-icon (60x52px, спрайт 720x900px, k = 0.9)
+        const mainX = Math.round(xOrig * 0.9 - 30);
+        const mainY = Math.round(yOrig * 0.9 - 26);
+
+        // 2. Для прогноза .w-forecast-icon (44x38px, спрайт 520x650px, k = 0.65)
+        const foreX = Math.round(xOrig * 0.65 - 22);
+        const foreY = Math.round(yOrig * 0.65 - 19);
+
+        return {
+            posMain: `-${mainX}px -${mainY}px`,
+            posForecast: `-${foreX}px -${foreY}px`
+        };
+    }
+
+    function getWeatherDesc(code, isDay = 1) {
+        code = Number(code);
+
+        // 0: Ясно (строка 4: кол 0 день / кол 1 ночь)
+        if (code === 0) {
+            const coords = isDay ? getSpritePos(0, 4) : getSpritePos(1, 4);
+            return { text: isDay ? "Ясно" : "Ясно, ночь", ...coords };
+        }
+        // 1, 2: Переменная облачность (строка 0: кол 1 день / кол 2 ночь)
+        if (code === 1 || code === 2) {
+            const coords = isDay ? getSpritePos(1, 0) : getSpritePos(2, 0);
+            return { text: isDay ? "Облачно с проясн." : "Переменная обл.", ...coords };
+        }
+        // 3: Сплошная облачность (строка 0: кол 0)
+        if (code === 3) {
+            return { text: "Пасмурно", ...getSpritePos(0, 0) };
+        }
+        // 45, 48: Туман (строка 4: кол 3)
+        if (code === 45 || code === 48) {
+            return { text: "Туман / Мгла", ...getSpritePos(3, 4) };
+        }
+        // 51..55: Морось (строка 1: кол 3)
+        if (code >= 51 && code <= 55) {
+            return { text: "Моросящий дождь", ...getSpritePos(3, 1) };
+        }
+        // 61, 63: Дождь (строка 0: кол 3)
+        if (code === 61 || code === 63) {
+            return { text: "Дождь", ...getSpritePos(3, 0) };
+        }
+        // 65, 80..82: Сильный ливень (строка 1: кол 0)
+        if (code === 65 || (code >= 80 && code <= 82)) {
+            return { text: "Сильный ливень", ...getSpritePos(0, 1) };
+        }
+        // 71, 77: Небольшой снег (строка 3: кол 1 день / кол 2 ночь)
+        if (code === 71 || code === 77) {
+            const coords = isDay ? getSpritePos(1, 3) : getSpritePos(2, 3);
+            return { text: "Небольшой снег", ...coords };
+        }
+        // 73, 75, 85, 86: Снегопад (строка 3: кол 0)
+        if (code === 73 || code === 75 || code === 85 || code === 86) {
+            return { text: "Снегопад", ...getSpritePos(0, 3) };
+        }
+        // >= 95: Гроза (строка 2: кол 4 день / кол 5 ночь)
+        if (code >= 95) {
+            const coords = isDay ? getSpritePos(4, 2) : getSpritePos(5, 2);
+            return { text: "Гроза", ...coords };
+        }
+
+        return { text: "Пасмурно", ...getSpritePos(0, 0) };
+    }
+
+    function toFahrenheit(celsius) {
+        return Math.round((celsius * 9 / 5) + 32);
+    }
+
+    fetch(url)
+        .then(res => {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+        })
+        .then(data => {
+            if (!data || !data.current) return;
+            const cur = data.current;
+            const code = cur.weathercode !== undefined ? cur.weathercode : cur.weather_code;
+            const isDay = cur.is_day !== undefined ? cur.is_day : 1;
+            const weather = getWeatherDesc(code, isDay);
+
+            // 1. Температура и главная иконка
+            const tempC = Math.round(cur.temperature_2m);
+            const tempF = toFahrenheit(cur.temperature_2m);
+
+            const tempCEl = document.getElementById("w-temp-c");
+            const tempFEl = document.getElementById("w-temp-f");
+            const descEl = document.getElementById("w-desc");
+            const iconEl = document.getElementById("w-icon");
+
+            if (tempCEl) tempCEl.innerText = (tempC > 0 ? "+" : "") + tempC;
+            if (tempFEl) tempFEl.innerText = (tempF > 0 ? "+" : "") + tempF;
+            if (descEl) descEl.innerText = weather.text;
+            if (iconEl) iconEl.style.backgroundPosition = weather.posMain;
+
+            // 2. Ветер + поворот стрелки
+            const windEl = document.getElementById("w-wind");
+            const windIcon = document.getElementById("w-wind-icon");
+            if (windEl && cur.wind_direction_10m !== undefined) {
+                const windDirStr = getWindDirection(cur.wind_direction_10m);
+                windEl.innerText = `${cur.wind_speed_10m} м/с (${windDirStr})`;
+
+                if (windIcon) {
+                    windIcon.style.transform = `rotate(${cur.wind_direction_10m}deg)`;
+                    windIcon.title = `Направление ветра: ${cur.wind_direction_10m}° (${windDirStr})`;
+                }
+            }
+
+            // 3. Влажность и давление
+            const humEl = document.getElementById("w-humidity");
+            const pressEl = document.getElementById("w-pressure");
+            if (humEl) humEl.innerText = cur.relative_humidity_2m + "%";
+            if (pressEl) {
+                const pressureMm = Math.round(cur.surface_pressure * 0.750062);
+                pressEl.innerText = pressureMm + " мм рт. ст.";
+            }
+
+            // 4. Прогноз на 3 дня
+            const forecastBox = document.getElementById("w-forecast-container");
+            if (forecastBox && data.daily && data.daily.time) {
+                forecastBox.innerHTML = "";
+                const daysOfWeek = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+                const dailyCodes = data.daily.weathercode || data.daily.weather_code;
+
+                for (let i = 1; i <= 3; i++) {
+                    if (!data.daily.time[i]) break;
+
+                    const dateParts = data.daily.time[i].split("-");
+                    const dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+                    const dayTitle = (i === 1) ? "Завтра" : daysOfWeek[dateObj.getDay()];
+                    const dateFormatted = `${dateParts[2]}.${dateParts[1]}`;
+                    
+                    const fWeather = getWeatherDesc(dailyCodes[i], 1);
+
+                    const maxC = Math.round(data.daily.temperature_2m_max[i]);
+                    const minC = Math.round(data.daily.temperature_2m_min[i]);
+                    const maxF = toFahrenheit(data.daily.temperature_2m_max[i]);
+                    const minF = toFahrenheit(data.daily.temperature_2m_min[i]);
+
+                    const signMax = maxC > 0 ? "+" : "";
+                    const signMin = minC > 0 ? "+" : "";
+                    const signMaxF = maxF > 0 ? "+" : "";
+                    const signMinF = minF > 0 ? "+" : "";
+
+                    const col = document.createElement("div");
+                    col.className = "win-sunken-panel";
+                    col.style.cssText = "background: #e4e4e4; padding: 6px 2px; text-align: center; border: 1px solid #808080;";
+                    col.innerHTML = `
+                        <div style="font-weight: bold; font-size: 11px; color: #000080;">
+                            ${dayTitle} <span style="font-size: 9px; color: #555;">(${dateFormatted})</span>
+                        </div>
+                        <div style="height: 38px; display: flex; align-items: center; justify-content: center; margin: 2px 0;">
+                            <div class="w-forecast-icon" style="background-position: ${fWeather.posForecast};"></div>
+                        </div>
+                        <div style="font-size: 10px; color: #222; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px;">
+                            ${fWeather.text}
+                        </div>
+                        <div style="font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 2px;">
+                            <span>${signMax}${maxC}</span><span class="w-unit-mini-c"></span>
+                            <span style="font-weight: normal; color: #555; margin: 0 1px;">/</span>
+                            <span>${signMin}${minC}</span><span class="w-unit-mini-c"></span>
+                        </div>
+                        <div style="font-size: 10px; color: #555; display: flex; align-items: center; justify-content: center; gap: 2px; margin-top: 1px;">
+                            <span>${signMaxF}${maxF}</span><span class="w-unit-mini-f"></span>
+                            <span style="margin: 0 1px;">/</span>
+                            <span>${signMinF}${minF}</span><span class="w-unit-mini-f"></span>
+                        </div>
+                    `;
+                    forecastBox.appendChild(col);
+                }
+            }
+
+            // 5. Статус-бар
+            const statusEl = document.getElementById("w-status");
+            if (statusEl) {
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                statusEl.innerText = `Сводка обновлена в ${time} (Метео-сервер ОК)`;
+            }
+        })
+        .catch(err => {
+            console.error("Ошибка:", err);
+            const statusEl = document.getElementById("w-status");
+            if (statusEl) statusEl.innerText = "Автономный режим (нет связи)";
+        });
+});
+</script>
 
 <!-- скрипт змейки -->
 <script type="text/javascript">
