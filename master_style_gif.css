@@ -47,7 +47,8 @@ body {
     position: absolute;
     top: 90px;          /* Чуть ниже панели задач */
     right: 40px;        /* Справа на странице */
-    width: 300px;       /* Ширина окна со змейкой */
+    width: 290px;       /* Ширина окна со змейкой */
+	height: 220px;
     z-index: 5;
 }
 
@@ -147,7 +148,7 @@ body {
     background: #c0c0c0;
     display: flex;
     gap: 4px;
-    padding: 3px 4px;
+    padding: 4px 0px;
     box-sizing: border-box;
 }
 
@@ -303,27 +304,27 @@ body {
     z-index: 2;
     width: min(68vw, 1980px);
     margin: 10px auto 40px auto;
-     transform: translateX(-80px); /* отступ от центра */
+    transform: translateX(-80px); /* отступ от центра */
 }
 
 .header-body {
     display: flex;
-    padding: 15px 12px 25px 12px; /* Увеличили нижний внутренний отступ (padding-bottom) примерно на 3-4 строки */
+    padding: 15px 12px 25px 12px; /* нижний внутренний отступ (padding-bottom) примерно на 3-4 строки */
     gap: 15px;
     align-items: flex-start;
     flex-wrap: nowrap;
     background: #c0c0c0;
-    min-height: 290px; /* Добавили минимальную высоту под размер картинки 16/9 и текст */
+    min-height: 290px; /* установил минимальную высоту под размер картинки 16/9 и текст */
 }
 
 #photomag {
     flex-shrink: 0;
-	position: relative; /* Чтобы баббл привязывался к рамке фото */
+	position: relative; 
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     background: #000;
     line-height: 0;
-    width: clamp(380px, 32vw, 560px); /* Размер контейнера */
+    width: clamp(380px, 32vw, 560px); /* Размер контейнера под фотку */
     aspect-ratio: 16 / 9;            /*  пропорции 16/9  */
 }
 
@@ -375,17 +376,27 @@ body {
     color: #cc0000;
 }
 
-#headergif {
-    margin-left: auto;
-    flex-shrink: 0;
-    padding: 0px;
-	align-self: center;
-}
+/* #headergif { */
+    /* margin-left: auto; */
+    /* flex-shrink: 0; */
+    /* padding: 0px; */
+	/* align-self: center; */
+/* } */
 
-#headergif img {
-    width: clamp(45px, 6vw, 85px);
-    height: auto;
-}
+/* #headergif img { */
+    /* width: clamp(45px, 6vw, 85px); */
+    /* height: auto; */
+/* }#headergif { */
+    /* margin-left: auto; */
+    /* flex-shrink: 0; */
+    /* padding: 0px; */
+	/* align-self: center; */
+/* } */
+
+/* #headergif img { */
+    /* width: clamp(45px, 6vw, 85px); */
+    /* height: auto; */
+/* } */
 
 /* ---------------- Основной блок ---------------- */
 #middleblock {
@@ -410,7 +421,7 @@ body {
 .button {
     display: inline-block;
     font-family: Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: normal;
     color: #000000;
     text-decoration: none;
@@ -420,6 +431,33 @@ body {
     border-color: #ffffff #404040 #404040 #ffffff;
     cursor: pointer;
 }
+
+.button_doom {
+    display: inline-block;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000000;
+    text-decoration: none;
+    padding: 4px 12px;
+    background: #DEC4C3;
+    border: 3px solid;
+    border-color: #F7E4DC #404040 #404040 #F7E4DC;
+    cursor: pointer;
+}
+
+.color_doom:hover {
+    background: #EBD5D2;
+}
+
+.color_doom:active {
+    border-color: #404040 #F7E4DC #F7E4DC #404040;
+    padding-top: 5px;
+    padding-left: 13px;
+    padding-bottom: 3px;
+    padding-right: 11px;
+}
+
 
 .color:hover {
     background: #d8d8d8;
@@ -569,15 +607,15 @@ ol li {
     color: #333;
 }
 
-.gif-center {
-    text-align: center;
-    margin: 12px auto;
+.gif-left {
+    text-align: left;
+    margin: 15px auto;
     width: 90%;
 }
 
-.gif-center img {
+.gif-left img {
     width: 100%;
-    max-width: 780px;
+    max-width: 250px;
     height: auto;
 }
 
@@ -591,7 +629,7 @@ ol li {
 }
 
 .gif-row img {
-    width: clamp(75px, 11vw, 160px);
+    width: clamp(95px, 11vw, 190px);
     height: auto;
     object-fit: contain;
 }
@@ -623,14 +661,14 @@ ol li {
 }
 
 table#resume {
-    width: 100%;
+    width: 95%;
     margin: 0 auto;
     border-collapse: collapse;
     font-size: clamp(13px, 1.1vw, 16px);
 }
 
 table#resume tr td {
-    padding: clamp(5px, 0.8vw, 10px) clamp(8px, 1vw, 14px);
+    padding: clamp(2px, 0.8vw, 7px) clamp(5px, 1vw, 10px);
     border: 1px solid #808080;
     vertical-align: top;
 }
@@ -908,7 +946,7 @@ table#resume td ol {
 }
 
 
-/* Скрываем фиксированную змейку справа и переносим её вниз при ширине экрана меньше 1150px (включая 4/3 и планшеты) */
+/* Скрываем фиксированную змейку справа и переносим при ширине экрана меньше 1150px (включая 4/3 и планшеты) */
 @media screen and (max-width: 1150px) {
     .background-image, .anime-sitter { 
         display: none !important; 
@@ -948,13 +986,13 @@ table#resume td ol {
     #middleblock { margin-top: 0 !important; margin-bottom: 20px !important; }
     #contacts-window { margin-bottom: 20px !important; }
 
-    /* Змейка аккуратно встает в поток внизу страницы */
+    /* Змейка */
     #desktop-snake-window {
         position: relative !important;
-        top: auto !important;
+        top: 4px !important;
         right: auto !important;
         width: 96% !important;
-        margin: 0 auto 30px auto !important;
+        margin: 0 auto 18px auto !important;
         display: block !important;
     }
 

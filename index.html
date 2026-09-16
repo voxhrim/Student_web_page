@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портал магистра - Назарюк В.Ю.</title>
     <link rel="shortcut icon" href="resorse/images/icons/master.webp" type="image/x-icon">
-    <!-- Единый файл стилей -->
     <link rel="stylesheet" type="text/css" href="master_style_gif.css?v=2">
 
     <!--  стили окна, почему-то в ксс не прописываются -->
@@ -42,7 +41,7 @@
 	<div id="desktop-snake-window" class="win-window">
 		<div class="win-title-bar">
 			<div class="win-title-text">
-				<span class="win-icon">🎮</span> Snake_Arcade.exe
+				<span class="win-icon"></span> Snake_Arcade.exe
 			</div>
 			<div class="win-controls">
 				<button class="win-btn" type="button">_</button>
@@ -98,24 +97,18 @@
         </div>
     </div>
 
-    <!-- Декоративные баннеры-гифки -->
-    <!-- <div class="gif-row"> -->
-        <!-- <img src="resorse/images/gif/WEB.gif" alt=""> -->
-        <!-- <img src="resorse/images/gif/CatAey.gif" alt=""> -->
-    <!-- </div> -->
-
     <!-- Главный блок с вкладками SPA (Окно документа WordPad) -->
     <div id="middleblock" class="win-window window-relative">
 
         <!-- Сидящий на верхнем краю окна персонаж -->
         <div class="anime-sitter" title="Добро пожаловать!">
-            <img src="resorse/images/gif/anime5.gif" alt="Сидящий персонаж">
+            <img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж">
         </div>
 
         <!-- Полоса заголовка окна -->
         <div class="win-title-bar">
             <div class="win-title-text">
-                <span class="win-icon">📄</span> Master_Portfolio_2026.doc — Microsoft WordPad
+                <span class="win-icon">📄</span> Master_Portfolio.doc — Microsoft WordPad
             </div>
             <div class="win-controls">
                 <button class="win-btn" type="button">_</button>
@@ -130,10 +123,10 @@
 
             <!-- Верхнее меню навигации (SPA хеши) -->
             <div id="menu">
-                <a class="button tab-link colorfix" href="#about">💾 О себе</a>
-                <a class="button tab-link color" href="#referat">📑 Реферат</a>
-                <a class="button tab-link color" href="#scientific">📚 Научные труды</a>
-                <a class="button tab-link color" href="#individual">🚲 Индивидуальный раздел</a>
+                <a class="button tab-link colorfix" href="#about">[О себе]</a>
+                <a class="button tab-link color" href="#referat">[Реферат]</a>
+                <a class="button tab-link color" href="#scientific">[Научные труды]</a>
+                <a class="button tab-link color" href="#individual">[Индивидуальный раздел]</a>
             </div>
 
             <!-- Контейнер основного текста внутри окна -->
@@ -152,7 +145,7 @@
 
                     <hr>
                     <h2>Обо мне</h2>
-                    <p>Обязательно отобразить ключевые элементы:<br>
+                    <p>
                         Я выбрал эту специальность потому, что в старшей школе увлекся кузнечным делом. Мне понравилось как выглядить горячий метал. Я пришел в ДонНТУ (лучших технический вуз
 						моего региона) и нашел там специальность связанную с металлом - металлургия черных металов.<br>
 						Обучение в университете проходило по множеству дисцеплин, всесторонне раскрывая возможности моей специальности. От азов доменного производства, заканчивая современными 
@@ -471,21 +464,19 @@
         </div>
 
         <!-- Нижние декоративные анимации -->
-        <div class="gif-row">
-            <img src="resorse/images/gif/CatAey.gif" alt="" loading="lazy">
-            <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
-            <img src="resorse/images/gif/WEB.gif" alt="" loading="lazy">
-						<!-- Пасхалка: Кнопка запуска классического Doom -->
-				<div id="doom-launch-btn-container" style="text-align: center; margin: 20px 0;">
-					<button class="button color" onclick="openDoomEasterEgg()" style="font-weight: bold; color: #800000;">
-						🕹️ Запустить DOOM.exe (E1M1)
+        <div class="gif-left">
+		
+				<!-- Кнопка запуска Doom -->
+				<div id="doom-launch-btn-container" style="text-align: right; margin: 20px 0;">
+					<button class="button_doom color_doom" onclick="openDoomEasterEgg()" style="font-weight: bold; color: #800000;">
+						[Запустить DOOM.exe]
 					</button>
 				</div>
+				
+            <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy">
+		
         </div>
 
-        <div class="gif-center">
-            <img data-src="resorse/images/gif/Nums.gif" alt="" width="1000" loading="lazy">
-        </div>
 
     </div> <!-- /#middleblock -->
 
@@ -505,7 +496,7 @@
 
         <div class="win-window-body contacts-body win-sunken-panel" style="background: #c0c0c0;">
             <p style="margin: 0 0 5px 0; font-family: Tahoma, sans-serif; font-size: 12px; font-weight: bold; text-indent: 0; text-align: left;">
-                Свяжитесь со мной напрямую:
+                Свяжитесь со мной:
             </p>
 
 			<!-- E-mail -->
@@ -550,21 +541,22 @@
     </div>
 
 	<!-- Окно пасхалки DOOM -->
-		<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; width: 750px;">
-    <div class="win-title-bar">
-        <div class="win-title-text">
-            <span class="win-icon">💣</span> DOOM_E1M1.exe — Pro HUD & Raycaster
-        </div>
-        <div class="win-controls">
-            <button class="win-btn" type="button" onclick="closeDoomEasterEgg()">_</button>
-            <button class="win-btn" type="button" onclick="closeDoomEasterEgg()">□</button>
-            <button class="win-btn close" type="button" onclick="closeDoomEasterEgg()">✕</button>
-        </div>
-    </div>
+	<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; width: 750px;">
+		<div class="win-title-bar">
+			<div class="win-title-text">
+				<span class="win-icon"></span> DOOM_E1M1.exe
+			</div>
+			<div class="win-controls">
+				<button class="win-btn" type="button" onclick="closeDoomEasterEgg()">_</button>
+				<button class="win-btn" type="button" onclick="closeDoomEasterEgg()">□</button>
+				<button class="win-btn close" type="button" onclick="closeDoomEasterEgg()">✕</button>
+			</div>
+		</div>
+		
     <div class="win-window-body" style="background: #000; padding: 6px; text-align: center;">
         <canvas id="doomCanvas" width="720" height="460" style="display: block; margin: 0 auto; image-rendering: pixelated; border: 2px solid #404040;"></canvas>
-        <div style="font-family: Tahoma, sans-serif; font-size: 11px; color: #c0c0c0; margin-top: 6px; text-align: left; padding: 2px;">
-            Управление: Стрелки ВЛЕВО/ВПРАВО — поворот, ВВЕРХ/ВНИЗ — шаг вперед/назад, ПРОБЕЛ — огонь.
+        <div style="font-family: Tahoma, sans-serif; font-size: 14px; color: #B53B3B; margin-top: 6px; text-align: center; padding: 2px;">
+            Управление: Стрелки - шаг, ПРОБЕЛ — огонь.
         </div>
     </div>
 </div>
@@ -676,7 +668,7 @@
 				}
 				return;
 			}
-
+						
 			autoNavigate();
 
 			let head = { x: snake[0].x + dx, y: snake[0].y + dy };
@@ -1171,11 +1163,11 @@
 
 	// Обработка кликов по всему сайту
 	document.addEventListener('pointerdown', function(e) {
-		// 1. Проверяем клик по системным / функциональным кнопкам (свернуть, закрыть, Пуск и т.д.)
+		// 1. Проверяем клик по системным / функциональным кнопкам 
 		if (e.target.closest('.win-btn, .taskbar-start')) {
 			playSound(STOP_SRC, SYSTEM_VOLUME);
 		}
-		// 2. Обычные кнопки вкладок и ссылки ДонНТУ
+		// 2. Обычные кнопки вкладок
 		else if (e.target.closest('.button, button, #donntu a')) {
 			playSound(CLICK_SRC, CLICK_VOLUME);
 		}
