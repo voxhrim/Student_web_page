@@ -1327,6 +1327,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
   doomAudio.init();
 
+  // ==========================================
+  // МЕНЕДЖЕР ТЕКСТУР
+  // ==========================================
+  const TEXTURE_PATH = 'resorse/images/textures/';
+  const wallTextures = {
+      1: new Image(),
+      2: new Image(),
+      3: new Image(),
+      4: new Image()
+  };
+  // Загружаем текстуры (названия файлов должны совпадать)
+  wallTextures[1].src = TEXTURE_PATH + 'wall1.webp';
+  wallTextures[2].src = TEXTURE_PATH + 'wall2.webp';
+  wallTextures[3].src = TEXTURE_PATH + 'wall3.webp';
+  wallTextures[4].src = TEXTURE_PATH + 'wall4.webp';
+
   function openDoomEasterEgg() {
       const win = document.getElementById('doom-window');
       if (!win) return;
@@ -1353,14 +1369,24 @@ document.addEventListener("DOMContentLoaded", function() {
       const canvas = document.getElementById('doomCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
+      // Отключаем сглаживание для четкого пиксель-арта
+      ctx.imageSmoothingEnabled = false; 
 
       const screenWidth = 720;
       const screenHeight = 460;
       const viewportHeight = 350;
+	  
+	  const fov = Math.PI / 3;      // Добавлено: поле зрения
+      const halfFov = fov / 2;      // Добавлено: половина поля зрения
+      const zBuffer = new Array(screenWidth); // Добавлено: буфер глубины
 
-      const LIGHT_STEP = 0.15;
-      const MAX_LIGHT_DIST = 13;
-      const MIN_BRIGHTNESS = 0.05;
+      <!-- const LIGHT_STEP = 0.15; -->
+      <!-- const MAX_LIGHT_DIST = 13; -->
+      <!-- const MIN_BRIGHTNESS = 0.05; -->
+	  
+	  const LIGHT_STEP = 0.15;
+      const MAX_LIGHT_DIST = 10;   // Уменьшаем дальность видимости во тьме для мрачности
+      const MIN_BRIGHTNESS = 0.01; // Почти абсолютная темнота вдалеке
 
       const map = [
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -1508,11 +1534,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
       if (doomInterval) clearInterval(doomInterval);
 
-      function getLightLevel(distance) {
-          const steppedDist = Math.floor(distance / LIGHT_STEP) * LIGHT_STEP;
-          let factor = 1.0 - (steppedDist / MAX_LIGHT_DIST);
+      // Обновленная система расчета освещенности
+		function getLightLevel(distance, isFlash) {
+          // Нелинейный (квадратичный) спад света — тьма сгущается быстрее и атмосфернее
+          let factor = 1.0 - Math.pow(distance / MAX_LIGHT_DIST, 1.6);
           if (factor < MIN_BRIGHTNESS) factor = MIN_BRIGHTNESS;
-          if (factor > 1.0) factor = 1.0;
+
+          // Вспышка: мощный слепящий импульс для всей видимости, особенно вблизи
+          if (isFlash) {
+              let flashPower = Math.max(0, 1.3 - (distance * 0.15));
+              factor += flashPower; // Нагнетаем яркость поверх темноты
+          }
+
+          if (factor > 2.5) factor = 2.5; // Разрешаем сильный пересвет при выстреле
           return factor;
       }
 
@@ -1831,127 +1865,183 @@ document.addEventListener("DOMContentLoaded", function() {
               screenShake--;
           }
 
-          ctx.fillStyle = "#0c0a0a";
-          ctx.fillRect(0, 0, screenWidth, viewportHeight / 2);
-          ctx.fillStyle = "#1b1919";
-          ctx.fillRect(0, viewportHeight / 2, screenWidth, viewportHeight / 2);
+			// ==========================================
+			// ОТРИСОВКА ПОЛА И ПОТОЛКА (ГРАДИЕНТНАЯ)
+			// ==========================================
+			for (let y = viewportHeight / 2; y < viewportHeight; y++) {
+				// Вычисляем дистанцию для текущей горизонтальной линии
+				let rowDistance = 175 / (y - viewportHeight / 2 + 0.001); 
+				
+				// Считаем свет для текущей строки пола по ее дистанции
+				let rowLight = getLightLevel(rowDistance, flash && !isDead);
+				let floorLight = Math.pow(rowLight, 1.8); 
 
-          let fov = Math.PI / 3;
-          let halfFov = fov / 2;
-          let zBuffer = [];
+				let baseF = 35; // Пол темный изначально
+				let fR = Math.floor(baseF * floorLight);
+				let fG = Math.floor((baseF * 0.9) * floorLight);
+				let fB = Math.floor((baseF * 0.9) * floorLight);
 
+				let baseC = 15; // Потолок почти черный
+				let cR = Math.floor(baseC * floorLight);
+				let cG = Math.floor((baseC * 0.8) * floorLight);
+				let cB = Math.floor((baseC * 0.8) * floorLight);
+
+				// Вспышка на полу
+				if (flash && !isDead && rowLight > 1.0) {
+					let flashAdd = Math.min(40, (rowLight - 1.0) * 50); 
+					fR += flashAdd; fG += flashAdd * 0.8;
+					cR += flashAdd; cG += flashAdd * 0.8;
+				}
+
+				// Рисуем линию пола
+				ctx.fillStyle = `rgb(${fR}, ${fG}, ${fB})`;
+				ctx.fillRect(0, y, screenWidth, 1);
+
+				// Рисуем линию потолка (зеркально)
+				let ceilY = viewportHeight - y - 1;
+				ctx.fillStyle = `rgb(${cR}, ${cG}, ${cB})`;
+				ctx.fillRect(0, ceilY, screenWidth, 1);
+			}
+
+          // ==========================================
+          // ОТРИСОВКА СТЕН (DDA RAYCASTING + ТЕКСТУРЫ)
+          // ==========================================
           for (let x = 0; x < screenWidth; x++) {
               let cameraX = 2 * x / screenWidth - 1;
               let rayAngle = player.angle + Math.atan(cameraX * Math.tan(halfFov));
 
-              let rayDist = 0;
+              let rayDirX = Math.cos(rayAngle);
+              let rayDirY = Math.sin(rayAngle);
+
+              let mapX = Math.floor(player.x);
+              let mapY = Math.floor(player.y);
+
+              // Длина луча от одной границы клетки до следующей
+              let deltaDistX = Math.abs(1 / (rayDirX === 0 ? 1e-10 : rayDirX));
+              let deltaDistY = Math.abs(1 / (rayDirY === 0 ? 1e-10 : rayDirY));
+
+              let stepX, stepY;
+              let sideDistX, sideDistY;
+
+              if (rayDirX < 0) {
+                  stepX = -1;
+                  sideDistX = (player.x - mapX) * deltaDistX;
+              } else {
+                  stepX = 1;
+                  sideDistX = (mapX + 1.0 - player.x) * deltaDistX;
+              }
+
+              if (rayDirY < 0) {
+                  stepY = -1;
+                  sideDistY = (player.y - mapY) * deltaDistY;
+              } else {
+                  stepY = 1;
+                  sideDistY = (mapY + 1.0 - player.y) * deltaDistY;
+              }
+
               let hit = false;
+              let hitSide = 0; // 0 — стена X (вертикальная), 1 — стена Y (горизонтальная)
               let wallType = 1;
-              let hitSide = 0;
-              let wallHitCoord = 0;
 
-              let cos = Math.cos(rayAngle);
-              let sin = Math.sin(rayAngle);
+              // DDA: шагаем строго по линиям сетки тайлов карты
+              while (!hit) {
+                  if (sideDistX < sideDistY) {
+                      sideDistX += deltaDistX;
+                      mapX += stepX;
+                      hitSide = 0;
+                  } else {
+                      sideDistY += deltaDistY;
+                      mapY += stepY;
+                      hitSide = 1;
+                  }
 
-              while (!hit && rayDist < 30) {
-                  rayDist += 0.02;
-                  let currX = player.x + cos * rayDist;
-                  let currY = player.y + sin * rayDist;
-                  let testX = Math.floor(currX);
-                  let testY = Math.floor(currY);
-
-                  if (testX < 0 || testX >= map[0].length || testY < 0 || testY >= map.length) {
+                  if (mapX < 0 || mapX >= map[0].length || mapY < 0 || mapY >= map.length) {
                       hit = true;
-                      rayDist = 30;
                       wallType = 1;
-                  } else if (map[testY][testX] > 0) {
+                      break;
+                  }
+
+                  if (map[mapY][mapX] > 0) {
                       hit = true;
-                      wallType = map[testY][testX];
-                      let fracX = currX - testX;
-                      let fracY = currY - testY;
-                      hitSide = (Math.min(fracX, 1 - fracX) < Math.min(fracY, 1 - fracY)) ? 1 : 0;
-                      wallHitCoord = hitSide === 1 ? fracY : fracX;
+                      wallType = map[mapY][mapX];
                   }
               }
+
+              // Точная непрерывная дистанция без квантования шагами
+              let rayDist = (hitSide === 0) ? (sideDistX - deltaDistX) : (sideDistY - deltaDistY);
 
               let correctedDist = rayDist * Math.cos(rayAngle - player.angle);
+              if (correctedDist < 0.1) correctedDist = 0.1;
               zBuffer[x] = correctedDist;
 
-              let light = getLightLevel(correctedDist);
-              let sideShade = (hitSide === 1) ? 0.78 : 1.0;
+              // Точный расчет координаты текстуры вдоль плоскости стены (0.0 .. 1.0)
+              let wallHitCoord = 0;
+              if (hitSide === 0) {
+                  wallHitCoord = player.y + rayDist * rayDirY;
+                  wallHitCoord -= Math.floor(wallHitCoord);
+                  if (rayDirX > 0) wallHitCoord = 1.0 - wallHitCoord; // устранение зеркальности
+              } else {
+                  wallHitCoord = player.x + rayDist * rayDirX;
+                  wallHitCoord -= Math.floor(wallHitCoord);
+                  if (rayDirY < 0) wallHitCoord = 1.0 - wallHitCoord; // устранение зеркальности
+              }
+
+              let light = getLightLevel(correctedDist, flash && !isDead);
+              let sideShade = (hitSide === 0) ? 0.75 : 1.0; // затенение боковых граней
               let effLight = light * sideShade;
 
-              let wallHeight = Math.min(viewportHeight, Math.floor(280 / (correctedDist + 0.0001)));
+              let wallHeight = Math.floor(450 / correctedDist);
               let drawStart = Math.floor((viewportHeight - wallHeight) / 2);
 
-              let r = 0, g = 0, b = 0;
-              let texX = Math.floor(wallHitCoord * 16);
+              let tex = wallTextures[wallType] || wallTextures[1];
 
-              if (wallType === 1) {
-                  let brickStripe = (texX % 8 === 0) ? 0.65 : 1.0;
-                  r = Math.floor(190 * effLight * brickStripe);
-                  g = Math.floor(25 * effLight * brickStripe);
-                  b = Math.floor(20 * effLight);
-              } else if (wallType === 2) {
-                  let isLed = (texX >= 6 && texX <= 10);
-                  r = Math.floor((isLed ? 40 : 125) * effLight);
-                  g = Math.floor((isLed ? 210 : 130) * effLight);
-                  b = Math.floor((isLed ? 70 : 135) * effLight);
-              } else if (wallType === 3) {
-                  let stripe = (texX % 4 === 0) ? 1.3 : 0.85;
-                  r = Math.floor(25 * effLight * stripe);
-                  g = Math.floor(55 * effLight * stripe);
-                  b = Math.floor(170 * effLight * stripe);
-              } else if (wallType === 4) {
-                  let isHazard = (texX % 6 < 3);
-                  r = Math.floor((isHazard ? 210 : 35) * effLight);
-                  g = Math.floor((isHazard ? 180 : 35) * effLight);
-                  b = Math.floor(25 * effLight);
-              }
+              if (tex && tex.complete && tex.naturalWidth > 0) {
+                  let texX = Math.floor(wallHitCoord * 64);
+                  if (texX < 0) texX = 0;
+                  if (texX > 63) texX = 63;
 
-              ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-              ctx.fillRect(x, drawStart, 1, wallHeight);
-          }
+                  ctx.drawImage(tex, texX, 0, 1, 64, x, drawStart, 1, wallHeight);
 
-          items.forEach(it => {
-              let itAngle = Math.atan2(it.y - player.y, it.x - player.x) - player.angle;
-              while (itAngle < -Math.PI) itAngle += Math.PI * 2;
-              while (itAngle > Math.PI) itAngle -= Math.PI * 2;
-
-              if (Math.abs(itAngle) < fov + 0.2) {
-                  let dist = Math.hypot(it.x - player.x, it.y - player.y);
-                  if (dist > 0.15) {
-                      let screenX = Math.floor((screenWidth / 2) + (itAngle / fov) * screenWidth);
-                      let size = Math.min(160, Math.floor(130 / dist));
-                      let startX = Math.floor(screenX - size / 2);
-                      let endX = Math.floor(screenX + size / 2);
-
-                      for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
-                          if (zBuffer[sx] > dist) {
-                              let sy = Math.floor((viewportHeight / 2) + size * 0.4);
-
-                              if (it.type === 'medkit') {
-                                  ctx.fillStyle = "#ffffff";
-                                  ctx.fillRect(sx, sy, 1, size * 0.5);
-                                  let relX = (sx - startX) / size;
-                                  if ((relX >= 0.42 && relX <= 0.58) || (relX >= 0.25 && relX <= 0.75)) {
-                                      ctx.fillStyle = "#dd0000";
-                                      ctx.fillRect(sx, sy + size * 0.15, 1, size * 0.2);
-                                  }
-                              } else {
-                                  ctx.fillStyle = "#4a5320";
-                                  ctx.fillRect(sx, sy, 1, size * 0.45);
-                                  let relX = (sx - startX) / size;
-                                  if (relX >= 0.35 && relX <= 0.65) {
-                                      ctx.fillStyle = "#d4af37";
-                                      ctx.fillRect(sx, sy + size * 0.1, 1, size * 0.2);
-                                  }
-                              }
-                          }
+                  let sTop = Math.max(0, drawStart);
+                  let sBottom = Math.min(viewportHeight, drawStart + wallHeight);
+                  if (sBottom > sTop) {
+                      if (effLight < 1.0) {
+                          // Тени и мрак
+                          ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - effLight})`;
+                          ctx.fillRect(x, sTop, 1, sBottom - sTop);
+                      } else if (effLight > 1.0) {
+                          // Вспышка: мощная огненно-желтая подсветка стен
+                          let flashIntensity = Math.min(0.75, (effLight - 1.0) * 0.8);
+                          ctx.fillStyle = `rgba(255, 170, 50, ${flashIntensity})`;
+                          ctx.fillRect(x, sTop, 1, sBottom - sTop);
                       }
                   }
+              } else {
+                  // Запасная заливка цветом
+                  let r = 0, g = 0, b = 0;
+                  let tX = Math.floor(wallHitCoord * 16);
+                  if (wallType === 1) {
+                      r = Math.floor(190 * effLight);
+                      g = Math.floor(25 * effLight);
+                      b = Math.floor(20 * effLight);
+                  } else if (wallType === 2) {
+                      r = Math.floor(125 * effLight);
+                      g = Math.floor(130 * effLight);
+                      b = Math.floor(135 * effLight);
+                  } else if (wallType === 3) {
+                      r = Math.floor(25 * effLight);
+                      g = Math.floor(55 * effLight);
+                      b = Math.floor(170 * effLight);
+                  } else if (wallType === 4) {
+                      let isHazard = (tX % 6 < 3);
+                      r = Math.floor((isHazard ? 210 : 35) * effLight);
+                      g = Math.floor((isHazard ? 180 : 35) * effLight);
+                      b = Math.floor(25 * effLight);
+                  }
+                  ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                  ctx.fillRect(x, drawStart, 1, wallHeight);
               }
-          });
+          }
 
           // Отрисовка спрайтов монстров
           enemies.forEach(en => {
@@ -1968,7 +2058,7 @@ document.addEventListener("DOMContentLoaded", function() {
                       let startX = Math.floor(screenX - size / 2);
                       let endX = Math.floor(screenX + size / 2);
 
-                      let light = getLightLevel(dist);
+                      let light = getLightLevel(dist, flash && !isDead);
                       let demonRed = Math.floor(180 * light);
                       let goreDark = Math.floor(90 * light);
                       let armorGray = Math.floor(60 * light);
@@ -2286,7 +2376,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }, 1000 / 35);
   }
 </script>
-
 
 
 <!-- другие скрипты -->
