@@ -26,15 +26,38 @@
     <img class="background-image" data-src="resorse/images/AnimeChar.png" alt="" loading="lazy">
 
     <!-- Верхний блок ссылок ДонНТУ (Панель задач Windows) -->
-    <div id="topblock">
-        <div class="taskbar-start">
-            <span class="win-logo-icon">🪟</span> <strong>Пуск</strong>
-        </div>
-        <div id="donntu">
-            <a href="http://donntu.ru" target="_blank">🌐 ДонНТУ</a>
-            <a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">🎓 Портал магистров</a>
-        </div>
-    </div> 
+	<div id="topblock">
+		<div class="taskbar-start">
+			<span class="win-logo-icon">🪟</span> <strong>Пуск</strong>
+		</div>
+
+		<div style="display: flex; align-items: center; gap: 8px;">
+			<!-- Наш ретро-селектор -->
+			<div class="win-lang-picker">
+				<span class="lang-icon">🌐</span>
+				<label for="custom-language-select" class="lang-label">Язык:</label>
+				<select id="custom-language-select" class="win-select" onchange="applyGoogleTranslate(this.value)">
+					<option value="ru">RU (Русский)</option>
+					<option value="en">EN (English)</option>
+					<option value="uk">UK (Українська)</option>
+					<option value="de">DE (Deutsch)</option>
+					<option value="zh-CN">ZH (中文)</option>
+				</select>
+			</div>
+
+			<div id="donntu">
+				<a href="http://donntu.ru" target="_blank">🌐 ДонНТУ</a>
+				<a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">🎓 Портал магистров</a>
+			</div>
+		</div>
+	</div>
+
+<!-- Невидимый для глаз, но полностью рабочий для скриптов контейнер Google -->
+<div id="google_translate_element" class="google-hidden-engine"></div>
+
+<!-- Невидимый контейнер для стандартного скрипта Google Translate -->
+<div id="google_translate_element" style="display: none;"></div>
+
 
 
 	<!-- Отдельное окно для змейки в свободной области справа -->
@@ -177,11 +200,11 @@
                         </tr>
                         <tr class="even">
                             <td class="c1">Место рождения</td>
-                            <td class="c2">г. Донецк</td>
+                            <td class="c2">г. Донецк, Украина</td>
                         </tr>
                         <tr class="odd">
                             <td class="c1">Школа(ы)</td>
-                            <td class="c2">Школа #7 г.Харцызск</td>
+                            <td class="c2">МБОУ СШ №7 г.Харцызск</td>
                         </tr>
                         <tr class="even">
                             <td class="c1">ВУЗ</td>
@@ -192,25 +215,24 @@
                         </tr>
                         <tr class="odd">
                             <td class="c1">Средний балл</td>
-                            <td class="c2">4.91</td>
+                            <td class="c2">4.9</td>
                         </tr>
                         <tr class="even">
                             <td class="c1">Знание языков</td>
-                            <td class="c2">Русский - родной, Украинский, Английский.</td>
+                            <td class="c2">Русский - родной, Украинский - B1, Английский - B1.</td>
                         </tr>
                         <tr class="odd">
                             <td class="c1">Увлечения</td>
-                            <td class="c2">Спортивный туризм (велосипедный и пеший), чтение художественной литературы, легкая атлетика.</td>
+                            <td class="c2">Спортивный туризм (велосипедный и пеший), легкая атлетика, ориентирование.</td>
                         </tr>
                         <tr class="even">
                             <td class="c1">Общие навыки</td>
                             <td class="c2">
                                 <ol>
-                                    <li>Чтение и ведение документации.</li>
-                                    <li>Изображение чертежей.</li>
+                                    <li>Чтение и ведение документации, чертежей.</li>
                                     <li>Продвинутые навыки владения ПК.</li>
                                     <li>Продвинутые навыки владения нейросетями.</li>
-                                    <li>И вообще я много чего умею - - - доделать - - -.</li>
+                                    <li>- - - - -И что тут вообще писать?.</li>
                                 </ol>
                             </td>
                         </tr>
@@ -223,6 +245,7 @@
                                     <li>Написание дипломных и курсовых работ.</li>
                                     <li>Проведение моделирования металлургических процессов.</li>
                                     <li>Проведение расчетов параметров оборудования МЗ.</li>
+									<li>Программирование малых проектов на любых языках.</li>
                                 </ol>
                             </td>
                         </tr>
@@ -231,22 +254,23 @@
                             <td class="c2">
                                 <ol>
                                     <li>Коммуникативная грамотность.</li>
-                                    <li>Информационная грамотность.</li>
-                                    <li>Цифровая и компьютерная грамотность.</li>
-                                    <li>Уверенное выступление перед любой аудиторией.</li>
-                                    <li>Подготовка и проведение эффективных презентаций.</li>
+                                    <li>Уверенное выступление перед аудиторией.</li>
                                     <li>Работа в команде.</li>
                                     <li>Обучаемость и адаптивность.</li>
                                     <li>Аналитическое мышление.</li>
                                     <li>Работа с обратной связью.</li>
                                     <li>Креативное мышление.</li>
-                                    <li>Целеустремленность и умение доводить начатое до конца.</li>
                                 </ol>
                             </td>
                         </tr>
                         <tr class="odd">
                             <td class="c1">Личные достижения</td>
-                            <td class="c2">Публикации в журналах и научная работа  - - - - как-то надо об этом написать нормально - - - - </td>
+                            <td class="c2">
+							<ol>
+								<li>Участие в Межрегиональная олимпиада по направлению «Металлургия» 2026 и занятое 3-е место среди студентов высших образовательных учреждений;</li>
+								<li>4 опубликованных в журналах работы (половину мне в партфолио еще не записали, так что пока ждем. Ну а так там 1 доклад и 1 конференция - это уже есть на сайте ACE).</li>
+							 </ol>
+						</td>
                         </tr>
                         <tr class="even">
                             <td class="c1">Планы на будущее</td>
@@ -863,6 +887,61 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<!-- скрипт Google Translate -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'ru',
+            includedLanguages: 'ru,en,uk,de,zh-CN',
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+
+    // Программное переключение оригинального комбобокса Google Translate
+    function applyGoogleTranslate(langCode) {
+        if (!langCode) return;
+
+        // Ищем скрытый select, созданный Google Translate
+        const googleCombo = document.querySelector('.goog-te-combo');
+        
+        if (googleCombo) {
+            googleCombo.value = langCode;
+            // Инициируем реальные события смены значения
+            googleCombo.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+            // Если библиотека еще подгружается с сервера, повторяем попытку через 300мс
+            setTimeout(() => applyGoogleTranslate(langCode), 300);
+        }
+    }
+
+    // Синхронизация селектора при загрузке (если в куках уже был выбран язык)
+    document.addEventListener("DOMContentLoaded", function() {
+        // Проверяем куку googtrans (например, /ru/en)
+        const match = document.cookie.match(/(?:^|; )googtrans=([^;]*)/);
+        if (match) {
+            const parts = decodeURIComponent(match[1]).split('/');
+            const lang = parts[2];
+            const customSelect = document.getElementById('custom-language-select');
+            if (customSelect && lang) {
+                customSelect.value = lang;
+            }
+        }
+		// Наблюдатель за попытками Google сдвинуть страницу вниз
+		const fixGoogleOffset = () => {
+			if (document.body.style.top && document.body.style.top !== '0px') {
+				document.body.style.top = '0px';
+			}
+			if (document.body.style.position === 'relative') {
+				document.body.style.position = 'static';
+			}
+		};
+
+		const observer = new MutationObserver(fixGoogleOffset);
+		observer.observe(document.body, { attributes: true, attributeFilter: ['style', 'class'] });
+	});
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <!-- скрипт змейки -->
 <script type="text/javascript">
 	document.addEventListener("DOMContentLoaded", function() {
@@ -1055,397 +1134,1160 @@ document.addEventListener("DOMContentLoaded", function() {
 	
 </script>
 
- <!-- скрипт дума -->
+<!-- скрипт дума -->
 <script>
   let doomInterval = null;
 
-    function openDoomEasterEgg() {
-        const win = document.getElementById('doom-window');
-        win.style.display = 'block';
-        startDoomGame();
-    }
+  // ==========================================
+  // АУДИОМЕНЕДЖЕР DOOM
+  // ==========================================
+  const SOUND_PATH = 'resorse/sounds/';
+  const SOUND_EXT = '.mp3';
 
-    function closeDoomEasterEgg() {
-        const win = document.getElementById('doom-window');
-        win.style.display = 'none';
-        if (doomInterval) clearInterval(doomInterval);
-    }
+  const doomAudio = {
+      shotPool: [],
+      deathSounds: [],
+      growlPool: [],
+      hurtSound: null,
+      itemSound: null,
+      biteSound: null,
+      
+      stepDeckA: null,
+      stepDeckB: null,
+      stepActiveDeck: 'A',
+      stepTimer: null,
+      stepDuration: 1.084,
 
-    function startDoomGame() {
-    const canvas = document.getElementById('doomCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+      sequenceTracks: [],
+      sequenceDurations: [],
+      sequenceIndex: 0,
+      isPlaying: false,
+      loopTimer: null,
+      currentPlayingTrack: null,
 
-    const screenWidth = 720;
-    const screenHeight = 460;
-    const viewportHeight = 350;
+      init() {
+          this.stepDeckA = new Audio(`${SOUND_PATH}doom_stp${SOUND_EXT}`);
+          this.stepDeckB = new Audio(`${SOUND_PATH}doom_stp${SOUND_EXT}`);
+          [this.stepDeckA, this.stepDeckB].forEach(a => {
+              a.volume = 0.25;
+              a.preload = 'auto';
+              a.addEventListener('loadedmetadata', () => {
+                  if (a.duration) this.stepDuration = a.duration;
+              });
+          });
 
-    // ==========================================
-    // НАСТРОЙКИ ОСВЕЩЕНИЯ (можете изменять их!)
-    // ==========================================
-    const LIGHT_STEP = 0.15;       // Шаг ступенчатого затухания света (юнитов/блоков)
-    const MAX_LIGHT_DIST = 7;    // Дистанция, на которой наступает полная тьма
-    const MIN_BRIGHTNESS = 0.1;   // Минимальный уровень яркости в темных углах (от 0 до 1)
+          for (let i = 0; i < 5; i++) {
+              const a = new Audio(`${SOUND_PATH}doom_sht${SOUND_EXT}`);
+              a.volume = 0.35;
+              this.shotPool.push(a);
+          }
 
-    let player = {
-        x: 1.5,
-        y: 1.5,
-        angle: 0,
-        health: 100,
-        ammo: 50
-    };
+          const d1 = new Audio(`${SOUND_PATH}doom_dd1${SOUND_EXT}`);
+          const d2 = new Audio(`${SOUND_PATH}doom_dd2${SOUND_EXT}`);
+          d1.volume = 0.4;
+          d2.volume = 0.4;
+          this.deathSounds = [d1, d2];
 
-    const map = [
-        [1,1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,0,0,0,0,0,1],
-        [1,0,1,1,0,1,1,1,0,1],
-        [1,0,1,0,0,0,0,1,0,1],
-        [1,0,0,0,1,1,0,0,0,1],
-        [1,1,1,0,1,1,0,1,1,1],
-        [1,0,0,0,0,0,0,0,0,1],
-        [1,1,1,1,1,1,1,1,1,1]
-    ];
+          for (let i = 0; i < 3; i++) {
+              const g = new Audio(`${SOUND_PATH}doom_atk${SOUND_EXT}`);
+              g.volume = 0.3;
+              this.growlPool.push(g);
+          }
 
-    let enemies = [
-        { x: 4.5, y: 1.5, active: true },
-        { x: 7.5, y: 4.5, active: true },
-        { x: 3.5, y: 6.5, active: true }
-    ];
+          this.hurtSound = new Audio(`${SOUND_PATH}doom_oit${SOUND_EXT}`);
+          this.hurtSound.volume = 1.0;
+          this.itemSound = new Audio(`${SOUND_PATH}doom_it2${SOUND_EXT}`);
+          this.itemSound.volume = 0.95;
+          this.biteSound = new Audio(`${SOUND_PATH}doom_atk${SOUND_EXT}`);
+          this.biteSound.volume = 0.25;
 
-    let bullets = [];
-    let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, ' ': false };
-    let gunAnim = 0;
-    let flash = false;
-    let faceAnimTimer = 0;
-    let gazeTimer = 0;
-    let gazeDirection = 0;
+          const trackMap = [
+              'doom_loop1', 'doom_loop1',
+              'doom_loop2',
+              'doom_loop3', 'doom_loop3', 'doom_loop3', 'doom_loop3',
+              'doom_loop4', 'doom_loop4', 'doom_loop4', 'doom_loop4'
+          ];
 
-    window.addEventListener('keydown', (e) => {
-        if (keys.hasOwnProperty(e.key) || e.key === ' ') {
-            keys[e.key] = true;
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
-                if (document.getElementById('doom-window').style.display === 'block') {
-                    e.preventDefault();
-                }
-            }
-        }
-    });
+          trackMap.forEach((name, idx) => {
+              const audio = new Audio(`${SOUND_PATH}${name}${SOUND_EXT}`);
+              audio.volume = 0.4;
+              audio.preload = 'auto';
+              audio.addEventListener('loadedmetadata', () => {
+                  this.sequenceDurations[idx] = audio.duration;
+              });
+              this.sequenceTracks.push(audio);
+          });
+      },
 
-    window.addEventListener('keyup', (e) => {
-        if (keys.hasOwnProperty(e.key) || e.key === ' ') {
-            keys[e.key] = false;
-        }
-    });
+      playStep() {
+          if (!this.isPlaying) return;
+          const track = this.sequenceTracks[this.sequenceIndex];
+          this.currentPlayingTrack = track;
+          track.currentTime = 0;
+          track.play().catch(() => {});
 
-    if (doomInterval) clearInterval(doomInterval);
+          const dur = track.duration || this.sequenceDurations[this.sequenceIndex] || 2.0;
+          const delayMs = Math.max(100, Math.floor((dur - 0.035) * 1000));
 
-    // Функция ступенчатого расчета света по дистанции
-    function getLightLevel(distance) {
-        const steppedDist = Math.floor(distance / LIGHT_STEP) * LIGHT_STEP;
-        let factor = 1.0 - (steppedDist / MAX_LIGHT_DIST);
-        if (factor < MIN_BRIGHTNESS) factor = MIN_BRIGHTNESS;
-        if (factor > 1.0) factor = 1.0;
-        return factor;
-    }
+          this.loopTimer = setTimeout(() => {
+              if (!this.isPlaying) return;
+              if (this.sequenceIndex < 10) this.sequenceIndex++;
+              else this.sequenceIndex = 3;
+              this.playStep();
+          }, delayMs);
+      },
 
-    doomInterval = setInterval(() => {
-        if (keys['ArrowLeft']) player.angle -= 0.05;
-        if (keys['ArrowRight']) player.angle += 0.05;
+      startMusic() {
+          this.stopMusic();
+          this.isPlaying = true;
+          this.sequenceIndex = 0;
+          this.playStep();
+      },
 
-        let moveSpeed = 0.05;
-        let dx = Math.cos(player.angle) * moveSpeed;
-        let dy = Math.sin(player.angle) * moveSpeed;
+      stopMusic() {
+          this.isPlaying = false;
+          this.stopSteps();
+          if (this.loopTimer) {
+              clearTimeout(this.loopTimer);
+              this.loopTimer = null;
+          }
+          this.sequenceTracks.forEach(track => {
+              track.pause();
+              track.currentTime = 0;
+          });
+          this.currentPlayingTrack = null;
+      },
 
-        let nextX = player.x;
-        let nextY = player.y;
+      startSteps() {
+          if (this.stepTimer) return;
+          this.triggerStepSound();
+          const stepIntervalMs = Math.max(150, Math.floor((this.stepDuration - 0.03) * 1000));
+          this.stepTimer = setInterval(() => {
+              this.triggerStepSound();
+          }, stepIntervalMs);
+      },
 
-        if (keys['ArrowUp']) { nextX += dx; nextY += dy; }
-        if (keys['ArrowDown']) { nextX -= dx; nextY -= dy; }
+      triggerStepSound() {
+          const deck = (this.stepActiveDeck === 'A') ? this.stepDeckA : this.stepDeckB;
+          this.stepActiveDeck = (this.stepActiveDeck === 'A') ? 'B' : 'A';
+          deck.currentTime = 0;
+          deck.play().catch(() => {});
+      },
 
-        let forwardMargin = 0.1;
-        let backwardMargin = 0.3;
+      stopSteps() {
+          if (this.stepTimer) {
+              clearInterval(this.stepTimer);
+              this.stepTimer = null;
+          }
+          if (this.stepDeckA) { this.stepDeckA.pause(); this.stepDeckA.currentTime = 0; }
+          if (this.stepDeckB) { this.stepDeckB.pause(); this.stepDeckB.currentTime = 0; }
+      },
 
-        if (map[Math.floor(player.y)][Math.floor(nextX + (dx > 0 ? forwardMargin : -backwardMargin))] === 0) {
-            player.x = nextX;
-        }
-        if (map[Math.floor(nextY + (dy > 0 ? forwardMargin : -backwardMargin))][Math.floor(player.x)] === 0) {
-            player.y = nextY;
-        }
+      playShot() {
+          const available = this.shotPool.find(a => a.paused || a.ended) || this.shotPool[0];
+          available.currentTime = 0;
+          available.play().catch(() => {});
+      },
 
-        // Стрельба
-        if (keys[' '] && gunAnim === 0 && player.ammo > 0) {
-            gunAnim = 6;
-            flash = true;
-            player.ammo--;
-            faceAnimTimer = 12;
-            bullets.push({
-                x: player.x,
-                y: player.y,
-                dirX: Math.cos(player.angle),
-                dirY: Math.sin(player.angle),
-                life: 18
-            });
-        } else {
-            if (gunAnim > 0) gunAnim--;
-            else flash = false;
-        }
+      playMonsterDeath() {
+          const randomIndex = Math.floor(Math.random() * this.deathSounds.length);
+          const sound = this.deathSounds[randomIndex];
+          sound.currentTime = 0;
+          sound.play().catch(() => {});
+      },
 
-        if (faceAnimTimer > 0) faceAnimTimer--;
+      playGrowl(volume = 0.3) {
+          const available = this.growlPool.find(a => a.paused || a.ended) || this.growlPool[0];
+          available.volume = Math.max(0.05, Math.min(0.5, volume));
+          available.currentTime = 0;
+          available.play().catch(() => {});
+      },
 
-        gazeTimer++;
-        if (gazeTimer > 50) {
-            gazeTimer = 0;
-            gazeDirection = Math.floor(Math.random() * 3) - 1;
-        }
+      playHurt() {
+          if (this.hurtSound) {
+              this.hurtSound.currentTime = 0;
+              this.hurtSound.play().catch(() => {});
+          }
+      },
 
-        // Полет пуль
-        for (let i = bullets.length - 1; i >= 0; i--) {
-            let b = bullets[i];
-            b.x += b.dirX * 0.4;
-            b.y += b.dirY * 0.4;
-            b.life--;
+      playItem() {
+          if (this.itemSound) {
+              this.itemSound.currentTime = 0;
+              this.itemSound.play().catch(() => {});
+          }
+      },
 
-            let mapX = Math.floor(b.x);
-            let mapY = Math.floor(b.y);
-            if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length || map[mapY][mapX] > 0 || b.life <= 0) {
-                bullets.splice(i, 1);
-                continue;
-            }
+      playBite() {
+          if (this.biteSound) {
+              this.biteSound.currentTime = 0;
+              this.biteSound.play().catch(() => {});
+          }
+      }
+  };
 
-            enemies.forEach(en => {
-                if (en.active && Math.hypot(en.x - b.x, en.y - b.y) < 0.4) {
-                    en.active = false;
-                    bullets.splice(i, 1);
-                    setTimeout(() => { en.active = true; }, 4000);
-                }
-            });
-        }
+  doomAudio.init();
 
-        // Отрисовка пола и потолка
-        ctx.fillStyle = "#0a0a0a";
-        ctx.fillRect(0, 0, screenWidth, viewportHeight / 2);
-        ctx.fillStyle = "#1e1e1e";
-        ctx.fillRect(0, viewportHeight / 2, screenWidth, viewportHeight / 2);
+  function openDoomEasterEgg() {
+      const win = document.getElementById('doom-window');
+      if (!win) return;
+      win.style.display = 'block';
+      doomAudio.startMusic();
+      startDoomGame();
+  }
 
-        let fov = Math.PI / 3;
-        let halfFov = fov / 2;
-        let zBuffer = [];
+  function closeDoomEasterEgg(e) {
+      if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+      }
+      const win = document.getElementById('doom-window');
+      if (win) win.style.display = 'none';
+      doomAudio.stopMusic();
+      if (doomInterval) {
+          clearInterval(doomInterval);
+          doomInterval = null;
+      }
+  }
 
-        // Рендеринг стен со светом
-        for (let x = 0; x < screenWidth; x++) {
-            let cameraX = 2 * x / screenWidth - 1;
-            let rayAngle = player.angle + Math.atan(cameraX * Math.tan(halfFov));
+  function startDoomGame() {
+      const canvas = document.getElementById('doomCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
 
-            let rayDist = 0;
-            let hit = false;
-            let wallType = 1;
+      const screenWidth = 720;
+      const screenHeight = 460;
+      const viewportHeight = 350;
 
-            let cos = Math.cos(rayAngle);
-            let sin = Math.sin(rayAngle);
+      const LIGHT_STEP = 0.15;
+      const MAX_LIGHT_DIST = 13;
+      const MIN_BRIGHTNESS = 0.05;
 
-            while (!hit && rayDist < 16) {
-                rayDist += 0.02;
-                let testX = Math.floor(player.x + cos * rayDist);
-                let testY = Math.floor(player.y + sin * rayDist);
+      const map = [
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [1,0,0,0,0,0,0,1,4,4,4,4,4,4,4,1,0,0,0,0,0,0,0,1],
+          [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,1,1,1,1,0,1],
+          [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,0,0,0,1,0,1],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,0,1,0,0,0,1,0,1],
+          [1,0,0,0,0,0,0,1,4,0,4,0,4,0,4,1,0,1,0,0,0,1,0,1],
+          [1,0,0,0,0,0,0,1,4,4,4,0,4,4,4,1,0,1,1,0,1,1,0,1],
+          [1,1,1,0,0,1,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
+          [1,2,2,0,0,2,2,2,2,2,2,0,2,2,2,2,1,1,1,1,1,1,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,1,1,1,1,1],
+          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,0,0,1,3,3,3,3,1],
+          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,1,0,1,3,0,0,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,3,0,3,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,3,0,1],
+          [1,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,1,1,1,3,0,3,0,1],
+          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,3,0,1],
+          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,3,3,3,0,1],
+          [1,0,1,3,3,3,3,3,3,3,3,3,3,1,0,1,1,0,1,1,1,1,0,1],
+          [1,0,1,3,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,1],
+          [1,0,1,3,0,3,0,0,0,0,3,0,3,1,1,1,1,1,1,1,1,1,0,1],
+          [1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,0,1,3,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      ];
 
-                if (testX < 0 || testX >= map[0].length || testY < 0 || testY >= map.length) {
-                    hit = true;
-                    rayDist = 16;
-                } else if (map[testY][testX] > 0) {
-                    hit = true;
-                    wallType = testX % 2;
-                }
-            }
+      function getRandomFloorTile() {
+          let emptyTiles = [];
+          for (let y = 0; y < map.length; y++) {
+              for (let x = 0; x < map[0].length; x++) {
+                  if (map[y][x] === 0) {
+                      emptyTiles.push({ x: x + 0.5, y: y + 0.5 });
+                  }
+              }
+          }
+          return emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+      }
 
-            let correctedDist = rayDist * Math.cos(rayAngle - player.angle);
-            zBuffer[x] = correctedDist;
+      function hasLineOfSight(x0, y0, x1, y1) {
+          let dx = x1 - x0;
+          let dy = y1 - y0;
+          let dist = Math.hypot(dx, dy);
+          let steps = Math.ceil(dist / 0.2);
+          for (let i = 1; i < steps; i++) {
+              let t = i / steps;
+              let cx = Math.floor(x0 + dx * t);
+              let cy = Math.floor(y0 + dy * t);
+              if (map[cy] && map[cy][cx] > 0) return false;
+          }
+          return true;
+      }
 
-            let light = getLightLevel(correctedDist);
-            let baseRed = (wallType === 0) ? 170 : 210;
-            let r = Math.floor(baseRed * light);
-            let g = Math.floor(8 * light);
-            let b = Math.floor(8 * light);
+      let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets;
+      let isDead = false;
+      let deathTimer = 0;
+      let growlCooldown = 0;
+      let backStalkWarning = false;
+      let playerInvulnTimer = 0;
+      let itemSpawnTimer = 0;
 
-            let wallHeight = Math.min(viewportHeight, Math.floor(280 / (correctedDist + 0.0001)));
-            let drawStart = Math.floor((viewportHeight - wallHeight) / 2);
-            
-            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-            ctx.fillRect(x, drawStart, 1, wallHeight);
-        }
+      let hpFlashTimer = 0;
+      let ammoFlashTimer = 0;
 
-        // Рендеринг монстров (теперь полностью подчиняются законам освещения!)
-        enemies.forEach(en => {
-            if (!en.active) return;
-            let spriteAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
-            while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
-            while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
+      const DEATH_DELAY_FRAMES = 120;
+      const ENEMY_COUNT = 8;
 
-            if (Math.abs(spriteAngle) < fov + 0.2) {
-                let dist = Math.hypot(en.x - player.x, en.y - player.y);
-                if (dist > 0.3) {
-                    let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
-                    let size = Math.min(320, Math.floor(240 / dist));
-                    let startX = Math.floor(screenX - size / 2);
-                    let endX = Math.floor(screenX + size / 2);
+      function resetDoomState() {
+          player = {
+              x: 1.5,
+              y: 1.5,
+              angle: 0,
+              health: 100,
+              ammo: 35
+          };
+          kills = 0;
+          damageFlash = 0;
+          screenShake = 0;
+          bloodSplats = [];
+          bullets = [];
+          isDead = false;
+          deathTimer = 0;
+          growlCooldown = 0;
+          backStalkWarning = false;
+          playerInvulnTimer = 0;
+          itemSpawnTimer = 0;
+          hpFlashTimer = 0;
+          ammoFlashTimer = 0;
 
-                    let light = getLightLevel(dist); // Рассчитываем свет для монстра
-                    let demonRed = Math.floor(180 * light);
-                    let armorGray = Math.floor(60 * light);
+          enemies = [];
+          for (let i = 0; i < ENEMY_COUNT; i++) {
+              let tile, dist = 0;
+              do {
+                  tile = getRandomFloorTile();
+                  dist = Math.hypot(tile.x - player.x, tile.y - player.y);
+              } while (dist < 5);
 
-                    for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
-                        if (zBuffer[sx] > dist) {
-                            let sy = Math.floor((viewportHeight - size) / 2);
-                            // Тело демона темнеет вдали
-                            ctx.fillStyle = `rgb(${demonRed}, 0, 0)`;
-                            ctx.fillRect(sx, sy + size * 0.2, 1, size * 0.6);
-                            if (sx % 4 === 0) {
-                                ctx.fillStyle = `rgb(${armorGray}, ${armorGray}, ${armorGray})`;
-                                ctx.fillRect(sx, sy + size * 0.35, 1, size * 0.3);
-                            }
-                        }
-                    }
+              enemies.push({
+                  x: tile.x,
+                  y: tile.y,
+                  state: 'alive',
+                  deathTimer: 0,
+                  attackCooldown: 0,
+                  awake: false
+              });
+          }
 
-                    // Голова и рога тоже темнеют от расстояния
-                    let headSize = Math.max(8, Math.floor(size / 2.5));
-                    if (screenX >= 0 && screenX < screenWidth && zBuffer[Math.floor(screenX)] > dist) {
-                        let hx = screenX - headSize / 2;
-                        let hy = (viewportHeight / 2) - headSize / 1.5;
+          items = [];
+          for (let i = 0; i < 2; i++) {
+              let pMed = getRandomFloorTile();
+              items.push({ type: 'medkit', x: pMed.x, y: pMed.y });
+              let pAmmo = getRandomFloorTile();
+              items.push({ type: 'ammo', x: pAmmo.x, y: pAmmo.y });
+          }
+      }
 
-                        let hornCol = Math.floor(220 * light);
-                        ctx.fillStyle = `rgb(${hornCol}, ${Math.floor(180 * light)}, 0)`;
-                        ctx.fillRect(hx - headSize * 0.3, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
-                        ctx.fillRect(hx + headSize * 0.9, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
+      resetDoomState();
 
-                        ctx.fillStyle = `rgb(${Math.floor(230 * light)}, ${Math.floor(60 * light)}, 0)`;
-                        ctx.fillRect(hx, hy, headSize, headSize * 0.8);
+      let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, ' ': false };
+      let gunAnim = 0;
+      let bobPhase = 0;
+      let gunDropOffset = 0;
+      let flash = false;
+      let faceAnimTimer = 0;
+      let gazeTimer = 0;
+      let gazeDirection = 0;
 
-                        // Глаза остаются ярко-желтыми, прорезая темноту
-                        ctx.fillStyle = "#ffff00";
-                        ctx.fillRect(hx + headSize * 0.15, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
-                        ctx.fillRect(hx + headSize * 0.65, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
+      window.addEventListener('keydown', (e) => {
+          if (keys.hasOwnProperty(e.key) || e.key === ' ') {
+              keys[e.key] = true;
+              if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+                  if (document.getElementById('doom-window').style.display === 'block') {
+                      e.preventDefault();
+                  }
+              }
+          }
+      });
 
-                        ctx.fillStyle = "#000000";
-                        ctx.fillRect(hx + headSize * 0.25, hy + headSize * 0.6, headSize * 0.5, headSize * 0.15);
-                    }
-                }
-            }
-        });
+      window.addEventListener('keyup', (e) => {
+          if (keys.hasOwnProperty(e.key) || e.key === ' ') {
+              keys[e.key] = false;
+          }
+      });
 
-        // Плазменные пули
-        bullets.forEach(b => {
-            let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
-            while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
-            while (bulletAngle > Math.PI) bulletAngle -= Math.PI * 2;
+      if (doomInterval) clearInterval(doomInterval);
 
-            if (Math.abs(bulletAngle) < fov) {
-                let dist = Math.hypot(b.x - player.x, b.y - player.y);
-                let screenX = Math.floor((screenWidth / 2) + (bulletAngle / fov) * screenWidth);
-                let bSize = Math.max(4, Math.floor(20 / dist));
+      function getLightLevel(distance) {
+          const steppedDist = Math.floor(distance / LIGHT_STEP) * LIGHT_STEP;
+          let factor = 1.0 - (steppedDist / MAX_LIGHT_DIST);
+          if (factor < MIN_BRIGHTNESS) factor = MIN_BRIGHTNESS;
+          if (factor > 1.0) factor = 1.0;
+          return factor;
+      }
 
-                if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > dist) {
-                    ctx.fillStyle = "#00ffff";
-                    ctx.beginPath();
-                    ctx.arc(screenX, viewportHeight / 2, bSize, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = "#ffffff";
-                    ctx.beginPath();
-                    ctx.arc(screenX, viewportHeight / 2, bSize / 2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-        });
+      function spawnBlood() {
+          for (let i = 0; i < 28; i++) {
+              bloodSplats.push({
+                  x: screenWidth / 2 + (Math.random() - 0.5) * 140,
+                  y: viewportHeight / 2 + (Math.random() - 0.5) * 80,
+                  vx: (Math.random() - 0.5) * 16,
+                  vy: (Math.random() - 0.5) * 14 - 3,
+                  size: Math.random() * 7 + 3,
+                  life: 18,
+                  maxLife: 18
+              });
+          }
+      }
 
-        // Оружие игрока
-        let gunYOffset = gunAnim * 3;
-        let gunBaseX = screenWidth / 2;
-        
-        ctx.fillStyle = "#151515";
-        ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 36, 45);
-        ctx.fillStyle = "#3a3a3a";
-        ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 6, 45);
+      doomInterval = setInterval(() => {
+          if (playerInvulnTimer > 0) playerInvulnTimer--;
+          if (hpFlashTimer > 0) hpFlashTimer--;
+          if (ammoFlashTimer > 0) ammoFlashTimer--;
 
-        ctx.fillStyle = "#222222";
-        ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 24, 35);
-        ctx.fillStyle = "#4a4a4a";
-        ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 4, 35);
+          itemSpawnTimer++;
+          if (itemSpawnTimer > 240) {
+              itemSpawnTimer = 0;
+              if (items.length < 6) {
+                  let spawnTile = getRandomFloorTile();
+                  let spawnType = (player.health < 60 || Math.random() > 0.5) ? 'medkit' : 'ammo';
+                  items.push({ type: spawnType, x: spawnTile.x, y: spawnTile.y });
+              }
+          }
 
-        ctx.fillStyle = "#111111";
-        ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 12, 30);
-        ctx.fillStyle = "#666666";
-        ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 2, 30);
+          if (player.health <= 0 && !isDead) {
+              isDead = true;
+              deathTimer = DEATH_DELAY_FRAMES;
+              damageFlash = 25;
+              screenShake = 16;
+              doomAudio.stopSteps();
+              doomAudio.playHurt();
+              spawnBlood();
+          }
 
-        if (flash) {
-            ctx.fillStyle = "#ff3300";
-            ctx.beginPath();
-            ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 22, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "#ffcc00";
-            ctx.beginPath();
-            ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 12, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "#ffffff";
-            ctx.beginPath();
-            ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 6, 0, Math.PI * 2);
-            ctx.fill();
-        }
+          if (isDead) {
+              deathTimer--;
+              if (gunDropOffset < 150) gunDropOffset += 5;
+              if (deathTimer <= 0) {
+                  gunDropOffset = 0;
+                  resetDoomState();
+              }
+          }
 
-        // Прицел
-        ctx.fillStyle = "rgba(0, 255, 0, 0.7)";
-        ctx.fillRect(screenWidth / 2 - 2, viewportHeight / 2 - 1, 4, 2);
-        ctx.fillRect(screenWidth / 2 - 1, viewportHeight / 2 - 2, 2, 4);
+          if (!isDead) {
+              let rotSpeed = 0.065;
+              let moveSpeed = 0.055;
 
-        // HUD и лицо
-        ctx.fillStyle = "#333333";
-        ctx.fillRect(0, viewportHeight, screenWidth, screenHeight - viewportHeight);
-        ctx.fillStyle = "#0c0c0c";
-        ctx.fillRect(6, viewportHeight + 6, screenWidth - 12, screenHeight - viewportHeight - 12);
+              if (keys['ArrowLeft']) player.angle -= rotSpeed;
+              if (keys['ArrowRight']) player.angle += rotSpeed;
 
-        ctx.font = "bold 22px 'Courier New', monospace";
-        ctx.fillStyle = "#cc0000";
-        ctx.fillText(player.health + "%", 40, viewportHeight + 60);
-        ctx.fillStyle = "#ffcc00";
-        ctx.fillText(player.ammo, 580, viewportHeight + 60);
+              let dx = Math.cos(player.angle) * moveSpeed;
+              let dy = Math.sin(player.angle) * moveSpeed;
 
-        ctx.font = "bold 10px 'Courier New', monospace";
-        ctx.fillStyle = "#888";
-        ctx.fillText("HEALTH", 35, viewportHeight + 25);
-        ctx.fillText("AMMO", 585, viewportHeight + 25);
+              let nextX = player.x;
+              let nextY = player.y;
+              let isMoving = false;
 
-        let faceBoxX = screenWidth / 2 - 36;
-        let faceBoxY = viewportHeight + 12;
-        
-        ctx.fillStyle = "#1a1a1a";
-        ctx.fillRect(faceBoxX, faceBoxY, 72, 78);
-        ctx.strokeStyle = "#555";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(faceBoxX, faceBoxY, 72, 78);
+              if (keys['ArrowUp']) { nextX += dx; nextY += dy; isMoving = true; }
+              if (keys['ArrowDown']) { nextX -= dx; nextY -= dy; isMoving = true; }
 
-        ctx.fillStyle = "#2d4c2d";
-        ctx.fillRect(faceBoxX + 10, faceBoxY + 8, 52, 62);
-        ctx.fillStyle = "#b8860b";
-        ctx.fillRect(faceBoxX + 14, faceBoxY + 16, 44, 20);
+              if (isMoving) {
+                  bobPhase += 0.25;
+                  doomAudio.startSteps();
+              } else {
+                  bobPhase = 0;
+                  doomAudio.stopSteps();
+              }
 
-        ctx.fillStyle = "#f5d0b1";
-        ctx.fillRect(faceBoxX + 20, faceBoxY + 28, 32, 34);
+              const margin = 0.2;
+              let moveStepX = nextX - player.x;
+              let moveStepY = nextY - player.y;
+              let checkX = nextX + (moveStepX > 0 ? margin : (moveStepX < 0 ? -margin : 0));
+              let checkY = nextY + (moveStepY > 0 ? margin : (moveStepY < 0 ? -margin : 0));
 
-        ctx.fillStyle = "#000";
-        let eyeOffsetX = 0;
-        if (faceAnimTimer > 0) {
-            ctx.fillRect(faceBoxX + 24, faceBoxY + 38, 5, 5);
-            ctx.fillRect(faceBoxX + 43, faceBoxY + 38, 5, 5);
-            ctx.fillRect(faceBoxX + 28, faceBoxY + 52, 16, 3);
-        } else {
-            if (gazeDirection === -1) eyeOffsetX = -3;
-            else if (gazeDirection === 1) eyeOffsetX = 3;
+              let canMoveX = (map[Math.floor(player.y)][Math.floor(checkX)] === 0);
+              if (canMoveX) {
+                  for (let en of enemies) {
+                      if (en.state === 'alive' && Math.hypot(nextX - en.x, player.y - en.y) < 0.4) {
+                          canMoveX = false;
+                          break;
+                      }
+                  }
+              }
+              if (canMoveX) player.x = nextX;
 
-            ctx.fillRect(faceBoxX + 26 + eyeOffsetX, faceBoxY + 38, 4, 4);
-            ctx.fillRect(faceBoxX + 42 + eyeOffsetX, faceBoxY + 38, 4, 4);
-            ctx.fillRect(faceBoxX + 30, faceBoxY + 52, 12, 2);
-        }
+              let canMoveY = (map[Math.floor(checkY)][Math.floor(player.x)] === 0);
+              if (canMoveY) {
+                  for (let en of enemies) {
+                      if (en.state === 'alive' && Math.hypot(player.x - en.x, nextY - en.y) < 0.4) {
+                          canMoveY = false;
+                          break;
+                      }
+                  }
+              }
+              if (canMoveY) player.y = nextY;
+          }
 
-    }, 1000 / 35);
-}
+          for (let i = 0; i < enemies.length; i++) {
+              for (let j = i + 1; j < enemies.length; j++) {
+                  let e1 = enemies[i];
+                  let e2 = enemies[j];
+                  if (e1.state === 'alive' && e2.state === 'alive') {
+                      let distBetween = Math.hypot(e1.x - e2.x, e1.y - e2.y);
+                      if (distBetween < 0.45 && distBetween > 0.001) {
+                          let push = (0.45 - distBetween) * 0.035;
+                          let px = ((e1.x - e2.x) / distBetween) * push;
+                          let py = ((e1.y - e2.y) / distBetween) * push;
+
+                          if (map[Math.floor(e1.y)][Math.floor(e1.x + px)] === 0) e1.x += px;
+                          if (map[Math.floor(e1.y + py)][Math.floor(e1.x)] === 0) e1.y += py;
+                          if (map[Math.floor(e2.y)][Math.floor(e2.x - px)] === 0) e2.x -= px;
+                          if (map[Math.floor(e2.y - py)][Math.floor(e2.x)] === 0) e2.y -= py;
+                      }
+                  }
+              }
+          }
+
+          if (growlCooldown > 0) growlCooldown--;
+          let nearestDistance = 999;
+          backStalkWarning = false;
+
+          // ==========================================
+          // ЛОГИКА И ДВИЖЕНИЕ МОНСТРОВ
+          // ==========================================
+          enemies.forEach(en => {
+              if (en.attackCooldown > 0) en.attackCooldown--;
+
+              if (en.state === 'alive') {
+                  let distToPlayer = Math.hypot(player.x - en.x, player.y - en.y);
+                  let canSeePlayer = hasLineOfSight(en.x, en.y, player.x, player.y);
+
+                  if (!en.awake && distToPlayer < 8.0) {
+                      en.awake = true;
+                  }
+
+                  if (en.awake && distToPlayer < nearestDistance) nearestDistance = distToPlayer;
+
+                  let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+                  while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
+                  while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
+
+                  if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3)) {
+                      backStalkWarning = true;
+                  }
+
+                  if (!isDead && en.awake) {
+                      if (distToPlayer <= 0.48 && canSeePlayer) {
+                          if (en.attackCooldown <= 0 && playerInvulnTimer <= 0) {
+                              en.attackCooldown = 35;
+                              playerInvulnTimer = 30;
+                              player.health = Math.max(0, player.health - 20);
+                              damageFlash = 12;
+                              screenShake = 10;
+                              faceAnimTimer = 18;
+                              spawnBlood();
+                              doomAudio.playBite();
+                              doomAudio.playHurt();
+                          }
+                      } else {
+                          let eSpeed = 0.020;
+                          let dirX = (player.x - en.x) / distToPlayer;
+                          let dirY = (player.y - en.y) / distToPlayer;
+
+                          if (!canSeePlayer) {
+                              let margin = 0.25;
+                              let canX = (map[Math.floor(en.y)][Math.floor(en.x + Math.sign(dirX) * margin)] === 0);
+                              let canY = (map[Math.floor(en.y + Math.sign(dirY) * margin)][Math.floor(en.x)] === 0);
+
+                              if (!canX && canY) {
+                                  dirX = 0;
+                                  dirY = Math.sign(dirY) || 1;
+                              } else if (canX && !canY) {
+                                  dirX = Math.sign(dirX) || 1;
+                                  dirY = 0;
+                              } else if (!canX && !canY) {
+                                  dirX = (map[Math.floor(en.y)][Math.floor(en.x + 0.3)] === 0) ? 1 : -1;
+                                  dirY = 0;
+                              }
+                          }
+
+                          let moveX = dirX * eSpeed;
+                          let moveY = dirY * eSpeed;
+                          let eMargin = 0.22;
+
+                          let testEX = en.x + moveX + (moveX > 0 ? eMargin : -eMargin);
+                          let testEY = en.y + moveY + (moveY > 0 ? eMargin : -eMargin);
+
+                          if (map[Math.floor(en.y)][Math.floor(testEX)] === 0) en.x += moveX;
+                          if (map[Math.floor(testEY)][Math.floor(en.x)] === 0) en.y += moveY;
+                      }
+                  }
+              } else if (en.state === 'dying') {
+                  en.deathTimer--;
+                  if (en.deathTimer <= 0) {
+                      en.state = 'dead';
+                      en.deathTimer = 60;
+                  }
+              } else if (en.state === 'dead') {
+                  en.deathTimer--;
+                  if (en.deathTimer <= 0) {
+                      en.state = 'alive';
+                      let tile;
+                      do {
+                          tile = getRandomFloorTile();
+                      } while (Math.hypot(tile.x - player.x, tile.y - player.y) < 6.0);
+                      en.x = tile.x;
+                      en.y = tile.y;
+                      en.awake = false;
+                  }
+              }
+          });
+
+          if (!isDead && nearestDistance <= 4.0 && growlCooldown <= 0) {
+              let vol = 0.45 - (nearestDistance * 0.09);
+              doomAudio.playGrowl(vol);
+              growlCooldown = Math.floor(35 + nearestDistance * 20);
+          }
+
+          // Подбор лута
+          if (!isDead) {
+              items.forEach(it => {
+                  let d = Math.hypot(player.x - it.x, player.y - it.y);
+                  if (d < 0.45) {
+                      let collected = false;
+                      if (it.type === 'medkit' && player.health < 100) {
+                          player.health = Math.min(100, player.health + 25);
+                          hpFlashTimer = 25;
+                          collected = true;
+                      } else if (it.type === 'ammo') {
+                          player.ammo += 20;
+                          ammoFlashTimer = 25;
+                          collected = true;
+                      }
+
+                      if (collected) {
+                          doomAudio.playItem();
+                          let newPos = getRandomFloorTile();
+                          it.x = newPos.x;
+                          it.y = newPos.y;
+                      }
+                  }
+              });
+          }
+
+          // Выстрел
+          if (!isDead && keys[' '] && gunAnim === 0 && player.ammo > 0) {
+              gunAnim = 6;
+              flash = true;
+              player.ammo--;
+              faceAnimTimer = 12;
+              doomAudio.playShot();
+              
+              enemies.forEach(en => {
+                  if (Math.hypot(en.x - player.x, en.y - player.y) < 12) {
+                      en.awake = true;
+                  }
+              });
+
+              bullets.push({
+                  x: player.x,
+                  y: player.y,
+                  dirX: Math.cos(player.angle),
+                  dirY: Math.sin(player.angle),
+                  life: 20
+              });
+          } else {
+              if (gunAnim > 0) gunAnim--;
+              else flash = false;
+          }
+
+          if (faceAnimTimer > 0) faceAnimTimer--;
+
+          gazeTimer++;
+          if (gazeTimer > 50) {
+              gazeTimer = 0;
+              gazeDirection = Math.floor(Math.random() * 3) - 1;
+          }
+
+          for (let i = bullets.length - 1; i >= 0; i--) {
+              let b = bullets[i];
+              b.x += b.dirX * 0.4;
+              b.y += b.dirY * 0.4;
+              b.life--;
+
+              let mapX = Math.floor(b.x);
+              let mapY = Math.floor(b.y);
+              if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length || map[mapY][mapX] > 0 || b.life <= 0) {
+                  bullets.splice(i, 1);
+                  continue;
+              }
+
+              enemies.forEach(en => {
+                  if (en.state === 'alive' && Math.hypot(en.x - b.x, en.y - b.y) < 0.45) {
+                      en.state = 'dying';
+                      en.deathTimer = 10;
+                      kills++;
+                      doomAudio.playMonsterDeath();
+                      bullets.splice(i, 1);
+                  }
+              });
+          }
+
+          ctx.save();
+          if (screenShake > 0) {
+              let shakeX = (Math.random() - 0.5) * screenShake * 1.5;
+              let shakeY = (Math.random() - 0.5) * screenShake * 1.5;
+              ctx.translate(shakeX, shakeY);
+              screenShake--;
+          }
+
+          ctx.fillStyle = "#0c0a0a";
+          ctx.fillRect(0, 0, screenWidth, viewportHeight / 2);
+          ctx.fillStyle = "#1b1919";
+          ctx.fillRect(0, viewportHeight / 2, screenWidth, viewportHeight / 2);
+
+          let fov = Math.PI / 3;
+          let halfFov = fov / 2;
+          let zBuffer = [];
+
+          for (let x = 0; x < screenWidth; x++) {
+              let cameraX = 2 * x / screenWidth - 1;
+              let rayAngle = player.angle + Math.atan(cameraX * Math.tan(halfFov));
+
+              let rayDist = 0;
+              let hit = false;
+              let wallType = 1;
+              let hitSide = 0;
+              let wallHitCoord = 0;
+
+              let cos = Math.cos(rayAngle);
+              let sin = Math.sin(rayAngle);
+
+              while (!hit && rayDist < 30) {
+                  rayDist += 0.02;
+                  let currX = player.x + cos * rayDist;
+                  let currY = player.y + sin * rayDist;
+                  let testX = Math.floor(currX);
+                  let testY = Math.floor(currY);
+
+                  if (testX < 0 || testX >= map[0].length || testY < 0 || testY >= map.length) {
+                      hit = true;
+                      rayDist = 30;
+                      wallType = 1;
+                  } else if (map[testY][testX] > 0) {
+                      hit = true;
+                      wallType = map[testY][testX];
+                      let fracX = currX - testX;
+                      let fracY = currY - testY;
+                      hitSide = (Math.min(fracX, 1 - fracX) < Math.min(fracY, 1 - fracY)) ? 1 : 0;
+                      wallHitCoord = hitSide === 1 ? fracY : fracX;
+                  }
+              }
+
+              let correctedDist = rayDist * Math.cos(rayAngle - player.angle);
+              zBuffer[x] = correctedDist;
+
+              let light = getLightLevel(correctedDist);
+              let sideShade = (hitSide === 1) ? 0.78 : 1.0;
+              let effLight = light * sideShade;
+
+              let wallHeight = Math.min(viewportHeight, Math.floor(280 / (correctedDist + 0.0001)));
+              let drawStart = Math.floor((viewportHeight - wallHeight) / 2);
+
+              let r = 0, g = 0, b = 0;
+              let texX = Math.floor(wallHitCoord * 16);
+
+              if (wallType === 1) {
+                  let brickStripe = (texX % 8 === 0) ? 0.65 : 1.0;
+                  r = Math.floor(190 * effLight * brickStripe);
+                  g = Math.floor(25 * effLight * brickStripe);
+                  b = Math.floor(20 * effLight);
+              } else if (wallType === 2) {
+                  let isLed = (texX >= 6 && texX <= 10);
+                  r = Math.floor((isLed ? 40 : 125) * effLight);
+                  g = Math.floor((isLed ? 210 : 130) * effLight);
+                  b = Math.floor((isLed ? 70 : 135) * effLight);
+              } else if (wallType === 3) {
+                  let stripe = (texX % 4 === 0) ? 1.3 : 0.85;
+                  r = Math.floor(25 * effLight * stripe);
+                  g = Math.floor(55 * effLight * stripe);
+                  b = Math.floor(170 * effLight * stripe);
+              } else if (wallType === 4) {
+                  let isHazard = (texX % 6 < 3);
+                  r = Math.floor((isHazard ? 210 : 35) * effLight);
+                  g = Math.floor((isHazard ? 180 : 35) * effLight);
+                  b = Math.floor(25 * effLight);
+              }
+
+              ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+              ctx.fillRect(x, drawStart, 1, wallHeight);
+          }
+
+          items.forEach(it => {
+              let itAngle = Math.atan2(it.y - player.y, it.x - player.x) - player.angle;
+              while (itAngle < -Math.PI) itAngle += Math.PI * 2;
+              while (itAngle > Math.PI) itAngle -= Math.PI * 2;
+
+              if (Math.abs(itAngle) < fov + 0.2) {
+                  let dist = Math.hypot(it.x - player.x, it.y - player.y);
+                  if (dist > 0.15) {
+                      let screenX = Math.floor((screenWidth / 2) + (itAngle / fov) * screenWidth);
+                      let size = Math.min(160, Math.floor(130 / dist));
+                      let startX = Math.floor(screenX - size / 2);
+                      let endX = Math.floor(screenX + size / 2);
+
+                      for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
+                          if (zBuffer[sx] > dist) {
+                              let sy = Math.floor((viewportHeight / 2) + size * 0.4);
+
+                              if (it.type === 'medkit') {
+                                  ctx.fillStyle = "#ffffff";
+                                  ctx.fillRect(sx, sy, 1, size * 0.5);
+                                  let relX = (sx - startX) / size;
+                                  if ((relX >= 0.42 && relX <= 0.58) || (relX >= 0.25 && relX <= 0.75)) {
+                                      ctx.fillStyle = "#dd0000";
+                                      ctx.fillRect(sx, sy + size * 0.15, 1, size * 0.2);
+                                  }
+                              } else {
+                                  ctx.fillStyle = "#4a5320";
+                                  ctx.fillRect(sx, sy, 1, size * 0.45);
+                                  let relX = (sx - startX) / size;
+                                  if (relX >= 0.35 && relX <= 0.65) {
+                                      ctx.fillStyle = "#d4af37";
+                                      ctx.fillRect(sx, sy + size * 0.1, 1, size * 0.2);
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+
+          // Отрисовка спрайтов монстров
+          enemies.forEach(en => {
+              let spriteAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+              while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
+              while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
+
+              if (Math.abs(spriteAngle) < fov + 0.65) {
+                  let dist = Math.hypot(en.x - player.x, en.y - player.y);
+                  
+                  if (dist > 0.08) {
+                      let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
+                      let size = Math.floor(250 / dist);
+                      let startX = Math.floor(screenX - size / 2);
+                      let endX = Math.floor(screenX + size / 2);
+
+                      let light = getLightLevel(dist);
+                      let demonRed = Math.floor(180 * light);
+                      let goreDark = Math.floor(90 * light);
+                      let armorGray = Math.floor(60 * light);
+
+                      if (en.state === 'alive') {
+                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
+                              if (zBuffer[sx] > dist) {
+                                  let sy = Math.floor((viewportHeight - size) / 2);
+                                  let drawTop = Math.max(0, sy + Math.floor(size * 0.2));
+                                  let drawH = Math.min(viewportHeight - drawTop, Math.floor(size * 0.65));
+
+                                  if (drawH > 0) {
+                                      ctx.fillStyle = `rgb(${demonRed}, 0, 0)`;
+                                      ctx.fillRect(sx, drawTop, 1, drawH);
+                                      if (sx % 4 === 0) {
+                                          ctx.fillStyle = `rgb(${armorGray}, ${armorGray}, ${armorGray})`;
+                                          ctx.fillRect(sx, sy + Math.floor(size * 0.35), 1, Math.floor(size * 0.3));
+                                      }
+                                  }
+                              }
+                          }
+
+                          let headSize = Math.max(8, Math.floor(size / 2.5));
+                          let hCenterCol = Math.floor(screenX);
+                          let canDrawHead = (hCenterCol >= 0 && hCenterCol < screenWidth && zBuffer[hCenterCol] > dist) ||
+                                            (screenX < 0 && zBuffer[0] > dist) || 
+                                            (screenX >= screenWidth && zBuffer[screenWidth - 1] > dist);
+
+                          if (canDrawHead) {
+                              let hx = screenX - headSize / 2;
+                              let hy = (viewportHeight / 2) - headSize / 1.5;
+
+                              let hornCol = Math.floor(220 * light);
+                              ctx.fillStyle = `rgb(${hornCol}, ${Math.floor(180 * light)}, 0)`;
+                              ctx.fillRect(hx - headSize * 0.3, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
+                              ctx.fillRect(hx + headSize * 0.9, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
+
+                              ctx.fillStyle = `rgb(${Math.floor(230 * light)}, ${Math.floor(60 * light)}, 0)`;
+                              ctx.fillRect(hx, hy, headSize, headSize * 0.8);
+
+                              ctx.fillStyle = "#ffff00";
+                              ctx.fillRect(hx + headSize * 0.15, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
+                              ctx.fillRect(hx + headSize * 0.65, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
+
+                              if (en.attackCooldown > 15) {
+                                  ctx.fillStyle = "#ff0000";
+                                  ctx.fillRect(hx + headSize * 0.2, hy + headSize * 0.55, headSize * 0.6, headSize * 0.25);
+                              } else {
+                                  ctx.fillStyle = "#000000";
+                                  ctx.fillRect(hx + headSize * 0.25, hy + headSize * 0.6, headSize * 0.5, headSize * 0.15);
+                              }
+                          }
+                      } else if (en.state === 'dying') {
+                          let fallShift = size * 0.18;
+                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
+                              if (zBuffer[sx] > dist) {
+                                  let sy = Math.floor((viewportHeight - size) / 2) + fallShift;
+                                  ctx.fillStyle = (sx % 3 === 0) ? `rgb(${demonRed}, 0, 0)` : `rgb(${goreDark}, 0, 0)`;
+                                  ctx.fillRect(sx, sy + size * 0.35, 1, size * 0.38);
+                              }
+                          }
+                      } else if (en.state === 'dead') {
+                          let poolShift = size * 0.36;
+                          let poolWidthStart = Math.max(0, Math.floor(screenX - size * 0.65));
+                          let poolWidthEnd = Math.min(screenWidth, Math.floor(screenX + size * 0.65));
+
+                          for (let sx = poolWidthStart; sx < poolWidthEnd; sx++) {
+                              if (zBuffer[sx] > dist) {
+                                  let sy = Math.floor((viewportHeight - size) / 2) + poolShift;
+                                  ctx.fillStyle = (sx % 2 === 0) ? `rgb(${goreDark}, 0, 0)` : `rgb(40, 0, 0)`;
+                                  ctx.fillRect(sx, sy + size * 0.46, 1, size * 0.14);
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+
+          bullets.forEach(b => {
+              let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
+              while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
+              while (bulletAngle > Math.PI) bulletAngle -= Math.PI * 2;
+
+              if (Math.abs(bulletAngle) < fov) {
+                  let dist = Math.hypot(b.x - player.x, b.y - player.y);
+                  let screenX = Math.floor((screenWidth / 2) + (bulletAngle / fov) * screenWidth);
+                  let bSize = Math.max(4, Math.floor(20 / dist));
+
+                  if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > dist) {
+                      ctx.fillStyle = "#00ffff";
+                      ctx.beginPath();
+                      ctx.arc(screenX, viewportHeight / 2, bSize, 0, Math.PI * 2);
+                      ctx.fill();
+                      ctx.fillStyle = "#ffffff";
+                      ctx.beginPath();
+                      ctx.arc(screenX, viewportHeight / 2, bSize / 2, 0, Math.PI * 2);
+                      ctx.fill();
+                  }
+              }
+          });
+
+          let bobbing = Math.sin(bobPhase) * 6;
+          let gunYOffset = (gunAnim * 3) + bobbing + gunDropOffset;
+          let gunBaseX = screenWidth / 2;
+          
+          ctx.fillStyle = "#151515";
+          ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 36, 45);
+          ctx.fillStyle = "#3a3a3a";
+          ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 6, 45);
+
+          ctx.fillStyle = "#222222";
+          ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 24, 35);
+          ctx.fillStyle = "#4a4a4a";
+          ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 4, 35);
+
+          ctx.fillStyle = "#111111";
+          ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 12, 30);
+          ctx.fillStyle = "#666666";
+          ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 2, 30);
+
+          if (flash && !isDead) {
+              ctx.fillStyle = "#ff3300";
+              ctx.beginPath();
+              ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 22, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.fillStyle = "#ffcc00";
+              ctx.beginPath();
+              ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 12, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.fillStyle = "#ffffff";
+              ctx.beginPath();
+              ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 6, 0, Math.PI * 2);
+              ctx.fill();
+          }
+
+          for (let i = bloodSplats.length - 1; i >= 0; i--) {
+              let p = bloodSplats[i];
+              p.x += p.vx;
+              p.y += p.vy;
+              p.vy += 0.5;
+              p.life--;
+
+              let alpha = p.life / p.maxLife;
+              ctx.fillStyle = `rgba(180, 0, 0, ${alpha})`;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+              ctx.fill();
+
+              if (p.life <= 0) bloodSplats.splice(i, 1);
+          }
+
+          if (damageFlash > 0) {
+              ctx.fillStyle = `rgba(220, 0, 0, ${Math.min(0.65, damageFlash * 0.04)})`;
+              ctx.fillRect(0, 0, screenWidth, viewportHeight);
+              damageFlash--;
+          }
+
+          if (!isDead && backStalkWarning) {
+              let pulse = (Math.sin(Date.now() / 120) + 1) * 0.5;
+              ctx.strokeStyle = `rgba(160, 0, 0, ${0.3 + pulse * 0.45})`;
+              ctx.lineWidth = 14;
+              ctx.strokeRect(0, 0, screenWidth, viewportHeight);
+          }
+
+          ctx.restore();
+
+          if (!isDead) {
+              ctx.fillStyle = "rgba(0, 255, 0, 0.7)";
+              ctx.fillRect(screenWidth / 2 - 2, viewportHeight / 2 - 1, 4, 2);
+              ctx.fillRect(screenWidth / 2 - 1, viewportHeight / 2 - 2, 2, 4);
+          }
+
+          if (isDead) {
+              ctx.fillStyle = "rgba(30, 0, 0, 0.65)";
+              ctx.fillRect(0, 0, screenWidth, viewportHeight);
+
+              ctx.strokeStyle = "rgba(180, 0, 0, 0.8)";
+              ctx.lineWidth = 4;
+              ctx.strokeRect(6, 6, screenWidth - 12, viewportHeight - 12);
+
+              ctx.textAlign = "center";
+              ctx.font = "900 52px 'Impact', 'Arial Black', sans-serif";
+
+              ctx.fillStyle = "#000000";
+              ctx.fillText("YOU DIED", screenWidth / 2 + 3, viewportHeight / 2 - 35 + 3);
+
+              let textGrad = ctx.createLinearGradient(0, viewportHeight / 2 - 70, 0, viewportHeight / 2 - 15);
+              textGrad.addColorStop(0, "#ff4444");
+              textGrad.addColorStop(0.6, "#aa0000");
+              textGrad.addColorStop(1.0, "#330000");
+              ctx.fillStyle = textGrad;
+              ctx.fillText("YOU DIED", screenWidth / 2, viewportHeight / 2 - 35);
+
+              ctx.font = "bold 16px 'Courier New', monospace";
+              ctx.fillStyle = "#ffcc00";
+              ctx.fillText(`TOTAL FRAGS: ${kills}`, screenWidth / 2, viewportHeight / 2 + 15);
+
+              let secondsLeft = Math.ceil(deathTimer / 35);
+              ctx.font = "bold 14px 'Tahoma', sans-serif";
+              ctx.fillStyle = (deathTimer % 10 < 5) ? "#ffffff" : "#ff5555";
+              ctx.fillText(`RESTARTING IN ${secondsLeft}...`, screenWidth / 2, viewportHeight / 2 + 50);
+
+              ctx.textAlign = "start";
+          }
+
+          // Панель статуса
+          ctx.fillStyle = "#333333";
+          ctx.fillRect(0, viewportHeight, screenWidth, screenHeight - viewportHeight);
+          ctx.fillStyle = "#0c0c0c";
+          ctx.fillRect(6, viewportHeight + 6, screenWidth - 12, screenHeight - viewportHeight - 12);
+
+          ctx.font = "bold 22px 'Courier New', monospace";
+
+          if (hpFlashTimer > 0) {
+              ctx.fillStyle = (hpFlashTimer % 6 < 3) ? "#00ff66" : "#ffffff";
+          } else {
+              ctx.fillStyle = (player.health <= 25) ? "#ff0000" : "#cc0000";
+          }
+          ctx.fillText(player.health + "%", 40, viewportHeight + 60);
+
+          if (ammoFlashTimer > 0) {
+              ctx.fillStyle = (ammoFlashTimer % 6 < 3) ? "#ffff55" : "#ffffff";
+          } else {
+              ctx.fillStyle = "#ffcc00";
+          }
+          ctx.fillText(player.ammo, 580, viewportHeight + 60);
+
+          ctx.fillStyle = "#00ff00";
+          ctx.fillText(kills, 190, viewportHeight + 60);
+
+          ctx.font = "bold 10px 'Courier New', monospace";
+          ctx.fillStyle = "#888";
+          ctx.fillText("HEALTH", 35, viewportHeight + 25);
+          ctx.fillText("AMMO", 585, viewportHeight + 25);
+          ctx.fillText("FRAGS", 190, viewportHeight + 25);
+
+          // Лицо Думгая
+          let faceBoxX = screenWidth / 2 - 36;
+          let faceBoxY = viewportHeight + 12;
+          
+          ctx.fillStyle = "#1a1a1a";
+          ctx.fillRect(faceBoxX, faceBoxY, 72, 78);
+          ctx.strokeStyle = isDead ? "#990000" : ((damageFlash > 0 || backStalkWarning) ? "#cc0000" : "#555");
+          ctx.lineWidth = 2;
+          ctx.strokeRect(faceBoxX, faceBoxY, 72, 78);
+
+          ctx.fillStyle = "#2d4c2d";
+          ctx.fillRect(faceBoxX + 10, faceBoxY + 8, 52, 62);
+          ctx.fillStyle = "#b8860b";
+          ctx.fillRect(faceBoxX + 14, faceBoxY + 16, 44, 20);
+
+          ctx.fillStyle = isDead ? "#a89f91" : "#f5d0b1";
+          ctx.fillRect(faceBoxX + 20, faceBoxY + 28, 32, 34);
+
+          if (!isDead && player.health < 50) {
+              let bloodCol = (player.health < 25) ? "#880000" : "#bb0000";
+              ctx.fillStyle = bloodCol;
+              
+              ctx.fillRect(faceBoxX + 22, faceBoxY + 31, 3, 7);
+              ctx.fillRect(faceBoxX + 24, faceBoxY + 36, 2, 5);
+
+              ctx.fillRect(faceBoxX + 47, faceBoxY + 34, 3, 8);
+              ctx.fillRect(faceBoxX + 48, faceBoxY + 42, 2, 4);
+
+              ctx.fillRect(faceBoxX + 34, faceBoxY + 45, 4, 3);
+              ctx.fillRect(faceBoxX + 35, faceBoxY + 48, 2, 4);
+
+              if (player.health < 25) {
+                  ctx.fillStyle = "#660000";
+                  ctx.fillRect(faceBoxX + 26, faceBoxY + 54, 5, 2);
+                  ctx.fillRect(faceBoxX + 41, faceBoxY + 54, 4, 2);
+                  ctx.fillRect(faceBoxX + 31, faceBoxY + 30, 8, 2);
+              }
+          }
+
+          if (isDead) {
+              ctx.strokeStyle = "#440000";
+              ctx.lineWidth = 2;
+              
+              ctx.beginPath();
+              ctx.moveTo(faceBoxX + 24, faceBoxY + 36); ctx.lineTo(faceBoxX + 30, faceBoxY + 42);
+              ctx.moveTo(faceBoxX + 30, faceBoxY + 36); ctx.lineTo(faceBoxX + 24, faceBoxY + 42);
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.moveTo(faceBoxX + 42, faceBoxY + 36); ctx.lineTo(faceBoxX + 48, faceBoxY + 42);
+              ctx.moveTo(faceBoxX + 48, faceBoxY + 36); ctx.lineTo(faceBoxX + 42, faceBoxY + 42);
+              ctx.stroke();
+
+              ctx.fillStyle = "#880000";
+              ctx.fillRect(faceBoxX + 28, faceBoxY + 50, 16, 5);
+              ctx.fillRect(faceBoxX + 32, faceBoxY + 55, 4, 6);
+          } else {
+              ctx.fillStyle = "#000";
+              let eyeOffsetX = 0;
+              if (damageFlash > 0 || playerInvulnTimer > 0) {
+                  ctx.fillRect(faceBoxX + 24, faceBoxY + 36, 6, 2);
+                  ctx.fillRect(faceBoxX + 42, faceBoxY + 36, 6, 2);
+                  ctx.fillStyle = "#aa0000";
+                  ctx.fillRect(faceBoxX + 28, faceBoxY + 50, 16, 6);
+              } else if (faceAnimTimer > 0) {
+                  ctx.fillRect(faceBoxX + 24, faceBoxY + 38, 5, 5);
+                  ctx.fillRect(faceBoxX + 43, faceBoxY + 38, 5, 5);
+                  ctx.fillRect(faceBoxX + 28, faceBoxY + 52, 16, 3);
+              } else {
+                  if (gazeDirection === -1) eyeOffsetX = -3;
+                  else if (gazeDirection === 1) eyeOffsetX = 3;
+
+                  ctx.fillRect(faceBoxX + 26 + eyeOffsetX, faceBoxY + 38, 4, 4);
+                  ctx.fillRect(faceBoxX + 42 + eyeOffsetX, faceBoxY + 38, 4, 4);
+                  ctx.fillRect(faceBoxX + 30, faceBoxY + 52, 12, 2);
+              }
+          }
+
+      }, 1000 / 35);
+  }
 </script>
+
+
 
 <!-- другие скрипты -->
 <script type="text/javascript">

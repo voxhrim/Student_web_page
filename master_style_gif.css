@@ -60,6 +60,118 @@ body {
 }
 
 
+/* =========================================================
+   Ретро-стилизация Google Translate под Windows 98/2000
+   ========================================================= */
+
+/* Контейнер языкового селектора в стиле трея панели задач */
+.win-lang-picker {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080; /* Вдавленный бордер трея */
+    padding: 1px 4px;
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+}
+
+.lang-icon {
+    font-size: 12px;
+}
+
+.lang-label {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Классический выпадающий список Windows */
+.win-select {
+    background: #ffffff;
+    color: #000000;
+    font-family: Tahoma, "MS Sans Serif", sans-serif;
+    font-size: 11px;
+    border: 1px solid;
+    border-color: #404040 #d4d0c8 #d4d0c8 #404040;
+    outline: none;
+    padding: 1px 2px;
+    cursor: pointer;
+}
+
+.win-select:focus {
+    outline: 1px dotted #000000;
+}
+
+/* ---------------- Жёсткое скрытие уродливого баннера Google ---------------- */
+/* Прячем оригинальный контейнер за экран, не отключая его отрисовку */
+.google-hidden-engine {
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}
+
+/* Скрываем всплывающий верхний фрейм и оверлей Google */
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+}
+
+/* Запрещаем Гуглу сдвигать body вниз */
+body {
+    top: 0px !important;
+    position: static !important;
+}
+
+/* Убираем всплывающие подсказки перевода при наведении */
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+/* Полное скрытие верхней панели переводчика */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+.VIpgJd-ZVi9od-OR94Gd-Ry7tvd,
+iframe[id=":1.container"],
+iframe[id=":2.container"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+}
+
+/* Блокируем принудительный сдвиг контента вниз */
+html, body {
+    top: 0px !important;
+    position: static !important;
+    margin-top: 0px !important;
+}
+
+/* Скрываем всплывающие тултипы и подсветку слов */
+#goog-gt-tt,
+.goog-te-balloon-frame {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}
+
+
 /* /* /* ---------------- Фоновый персонаж ---------------- */ */ */
  /* .background-image { */ */
      /* position: fixed; */ */
