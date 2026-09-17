@@ -674,7 +674,7 @@
 		<div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden;">
 			<canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: auto; max-height: calc(88vh - 70px); aspect-ratio: 720/460; image-rendering: pixelated; image-rendering: crisp-edges; border: 2px solid #404040; box-sizing: border-box; object-fit: contain;"></canvas>
 			<div style="font-family: Tahoma, sans-serif; font-size: clamp(11px, 1.2vw, 14px); color: #B53B3B; margin-top: 4px; padding-bottom: 2px; text-align: center; flex-shrink: 0;">
-				Управление: Стрелки - шаг, ПРОБЕЛ — огонь.
+				Управление: WASD - движение, Стрелки — поворот камеры, ПРОБЕЛ — огонь.
 			</div>
 		</div>
 	</div>
@@ -1392,18 +1392,17 @@ document.addEventListener("DOMContentLoaded", function() {
       // ==========================================
       const monsterFrames = [];
       const monsterFrameNames = [
-          'CBO2A1.png', // Стояние / Ходьба
-          'CBO2P1.png', // Замах ближнего боя 1
-          'CBO2Q1.png', // Замах 2
-          'CBO2R1.png', // Удар с зеленым эффектом 1
-          <!-- 'CBO2R1.png', // Удар с зеленым эффектом 2 -->
-          <!-- 'CBO2A1.png', // Возврат 1 -->
-          <!-- 'CBO2A1.png'  // Возврат 2 -->
+          // Шаги (Индексы 0 - 3)
+          'CBO2A1.png', 'CBO2B1.png', 'CBO2C1.png', 'CBO2D1.png', 
+          // Удар (Индексы 4 - 6)
+          'CBO2P1.png', 'CBO2Q1.png', 'CBO2R1.png',               
+          // Смерть (Индексы 7 - 12)
+          'CBO2J0.png', 'CBO2K0.png', 'CBO2L0.png', 'CBO2M0.png', 'CBO2N0.png', 'CBO2O0.png' 
       ];
 
       monsterFrameNames.forEach(name => {
           let img = new Image();
-          img.src = 'resorse/images/textures/monster/' + name; // Проверь путь к папке со спрайтами монстров
+          img.src = 'resorse/images/textures/monster/' + name;
           monsterFrames.push(img);
       });
 
@@ -1683,7 +1682,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		
       resetDoomState();
 
-      let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, ' ': false };
+      let keys = { KeyW: false, KeyA: false, KeyS: false, KeyD: false, ArrowLeft: false, ArrowRight: false, Space: false };
       let gunAnim = 0;
       let bobPhase = 0;
       let gunDropOffset = 0;
@@ -1693,19 +1692,19 @@ document.addEventListener("DOMContentLoaded", function() {
       let gazeDirection = 0;
 
       window.addEventListener('keydown', (e) => {
-          if (keys.hasOwnProperty(e.key) || e.key === ' ') {
-              keys[e.key] = true;
-              if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
-                  if (document.getElementById('doom-window').style.display === 'block') {
-                      e.preventDefault();
-                  }
+          let code = e.code === 'Space' ? 'Space' : e.code;
+          if (keys.hasOwnProperty(code)) {
+              keys[code] = true;
+              if (document.getElementById('doom-window').style.display === 'block') {
+                  e.preventDefault(); // Блокируем прокрутку страницы
               }
           }
       });
 
       window.addEventListener('keyup', (e) => {
-          if (keys.hasOwnProperty(e.key) || e.key === ' ') {
-              keys[e.key] = false;
+          let code = e.code === 'Space' ? 'Space' : e.code;
+          if (keys.hasOwnProperty(code)) {
+              keys[code] = false;
           }
       });
 
@@ -1784,6 +1783,7 @@ document.addEventListener("DOMContentLoaded", function() {
               let isTurning = false;
               let turnDir = 0;
 
+              // Повороты камеры на стрелки
               if (keys['ArrowLeft']) { isTurning = true; turnDir = -1; }
               if (keys['ArrowRight']) { isTurning = true; turnDir = 1; }
 
@@ -1798,15 +1798,23 @@ document.addEventListener("DOMContentLoaded", function() {
                   player.turnFrames = 0;
               }
 
+              // Вектор движения вперед/назад
               let dx = Math.cos(player.angle) * moveSpeed;
               let dy = Math.sin(player.angle) * moveSpeed;
+              
+              // Вектор стрейфа (перпендикулярно направлению взгляда, сдвиг на 90 градусов)
+              let strafeDx = Math.cos(player.angle + Math.PI / 2) * moveSpeed;
+              let strafeDy = Math.sin(player.angle + Math.PI / 2) * moveSpeed;
 
               let nextX = player.x;
               let nextY = player.y;
               let isMoving = false;
 
-              if (keys['ArrowUp']) { nextX += dx; nextY += dy; isMoving = true; }
-              if (keys['ArrowDown']) { nextX -= dx; nextY -= dy; isMoving = true; }
+              // Шаги (WASD)
+              if (keys['KeyW']) { nextX += dx; nextY += dy; isMoving = true; }
+              if (keys['KeyS']) { nextX -= dx; nextY -= dy; isMoving = true; }
+              if (keys['KeyA']) { nextX -= strafeDx; nextY -= strafeDy; isMoving = true; }
+              if (keys['KeyD']) { nextX += strafeDx; nextY += strafeDy; isMoving = true; }
 
               if (isMoving) {
                   bobPhase += 0.25;
@@ -1894,7 +1902,8 @@ document.addEventListener("DOMContentLoaded", function() {
               }
 
               if (!isDead && en.awake) {
-                  if (distToPlayer <= 0.48 && canSeePlayer) {
+                  // Увеличили дистанцию атаки с 0.48 до 0.9
+                  if (distToPlayer <= 0.6 && canSeePlayer) {
                       if (en.attackCooldown <= 0 && playerInvulnTimer <= 0) {
                           en.attackCooldown = 35;
                           playerInvulnTimer = 30;
@@ -1977,7 +1986,7 @@ document.addEventListener("DOMContentLoaded", function() {
               en.deathTimer--;
               if (en.deathTimer <= 0) {
                   en.state = 'dead';
-                  en.deathTimer = 60;
+                  en.deathTimer = 90;
               }
           } else if (en.state === 'dead') {
               en.deathTimer--;
@@ -2027,7 +2036,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
           // Выстрел
-          if (!isDead && keys[' '] && gunAnim === 0 && player.ammo > 0) {
+          if (!isDead && keys['Space'] && gunAnim === 0 && player.ammo > 0) {
               // Чередуем выстрелы: если была правая, стреляем из левой, и наоборот
               player.lastShotSide = (player.lastShotSide === 'right') ? 'left' : 'right';
               
@@ -2090,7 +2099,7 @@ document.addEventListener("DOMContentLoaded", function() {
               enemies.forEach(en => {
                   if (en.state === 'alive' && Math.hypot(en.x - b.x, en.y - b.y) < 0.45) {
                       en.state = 'dying';
-                      en.deathTimer = 10;
+                      en.deathTimer = 30;
                       kills++;
                       doomAudio.playMonsterDeath();
                       bullets.splice(i, 1);
@@ -2417,146 +2426,125 @@ document.addEventListener("DOMContentLoaded", function() {
 
                   // РЕНДЕР ПРЕДМЕТОВ
                   else if (item.type === 'item') {
-                      let itemWidth = Math.floor(size * 0.4); 
-                      let itemHeight = Math.floor(size * 0.4);
-                      let startX = Math.floor(screenX - itemWidth / 2);
-                      let drawY = Math.floor(viewportHeight / 2) + Math.floor(size / 2) - itemHeight; 
                       let img = itemSprites[spriteObj.type];
 
                       if (img && img.complete && img.naturalWidth > 0) {
+                          let scale = (size * 0.4) / img.naturalHeight;
+                          let itemWidth = Math.floor(img.naturalWidth * scale);
+                          let itemHeight = Math.floor(img.naturalHeight * scale);
+                          let startX = Math.floor(screenX - itemWidth / 2);
+                          
+                          let wallHeight = Math.floor(450 / dist);
+                          let floorY = Math.floor(viewportHeight / 2 + wallHeight / 2);
+                          let drawY = floorY - itemHeight; 
+                          
+                          let pulse = (Math.sin(Date.now() / 200) + 1) * 0.5; 
+                          let glowAlpha = pulse * 0.35; 
+                          let totalBrightness = light + glowAlpha;
+
+                          // Создаем глобальный буфер один раз, чтобы не нагружать сборщик мусора
+                          if (!window.itemBuffer) {
+                              window.itemBuffer = document.createElement('canvas');
+                              window.itemCtx = window.itemBuffer.getContext('2d');
+                          }
+                          
+                          // Подгоняем размер буфера и очищаем его
+                          window.itemBuffer.width = img.naturalWidth;
+                          window.itemBuffer.height = img.naturalHeight;
+
+                          // Применяем фильтр ОДИН РАЗ ко всему спрайту
+                          window.itemCtx.filter = `brightness(${totalBrightness})`;
+                          window.itemCtx.drawImage(img, 0, 0);
+                          window.itemCtx.filter = 'none';
+
+                          // Быстро рисуем вертикальные полосы из уже затемненного буфера
                           for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, startX + itemWidth); sx++) {
                               if (zBuffer[sx] > dist) {
                                   let texX = Math.floor(((sx - startX) / itemWidth) * img.naturalWidth);
-                                  ctx.drawImage(img, texX, 0, 1, img.naturalHeight, sx, drawY, 1, itemHeight);
-                                  if (light < 1.0) {
-                                      ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
-                                      ctx.fillRect(sx, drawY, 1, itemHeight);
-                                  }
+                                  ctx.drawImage(
+                                      window.itemBuffer, 
+                                      texX, 0, 1, img.naturalHeight, 
+                                      sx, drawY, 1, itemHeight
+                                  );
                               }
                           }
                       }
                   }
 
-                  // РЕНДЕР МОНСТРОВ (С АНИМАЦИЕЙ ЗЕЛЕНОГО БЛИЖНЕГО БОЯ)
+                 // РЕНДЕР МОНСТРОВ
                   else if (item.type === 'enemy') {
                       let en = spriteObj;
-                      let startX = Math.floor(screenX - size / 2);
-                      let endX = Math.floor(screenX + size / 2);
+                      let frameIndex = 0;
 
                       if (en.state === 'alive') {
-                          // Выбор кадра анимации: если монстр бьет (мало дистанции), крутим анимацию CBO2P
-                          let frameIndex = 0;
-                          if (dist <= 0.8) {
-                              // Анимация удара длится по таймеру атаки
-                              let animStep = Math.floor(((en.attackCooldown || 0) % 30) / 5);
-                              frameIndex = 1 + (animStep % 4); // кадры 1-6 с зеленым эффектом
+                          if (en.attackCooldown > 0) {
+                              if (en.attackCooldown > 24) frameIndex = 4;
+                              else if (en.attackCooldown > 12) frameIndex = 5;
+                              else frameIndex = 6;
+                          } else if (en.awake) {
+                              frameIndex = Math.floor(Date.now() / 180) % 4;
+                          } else {
+                              frameIndex = 0;
                           }
+                      } else if (en.state === 'dying') {
+                          let deathStep = Math.floor((30 - en.deathTimer) / 5); 
+                          if (deathStep < 0) deathStep = 0;
+                          if (deathStep > 5) deathStep = 5;
+                          frameIndex = 7 + deathStep;
+                      } else if (en.state === 'dead') {
+                          frameIndex = 12;
+                      }
 
-                          let currentMonsterImg = monsterFrames[frameIndex] || monsterFrames[0];
+                      let currentMonsterImg = monsterFrames[frameIndex] || monsterFrames[0];
 
-                          if (currentMonsterImg && currentMonsterImg.complete && currentMonsterImg.naturalWidth > 0) {
-                              let mWidth = size;
-                              let mHeight = size;
-                              let mDrawX = screenX - mWidth / 2;
-                              let mDrawY = viewportHeight / 2 - mHeight / 2;
+                      if (currentMonsterImg && currentMonsterImg.complete && currentMonsterImg.naturalWidth > 0) {
+                          let baseImg = monsterFrames[0];
+                          let baseHeight = (baseImg && baseImg.naturalHeight > 0) ? baseImg.naturalHeight : 100;
+                          
+                          let scale = (size * 1.5) / baseHeight; 
+                          let mWidth = Math.floor(currentMonsterImg.naturalWidth * scale);
+                          let mHeight = Math.floor(currentMonsterImg.naturalHeight * scale);
+                          let mDrawX = screenX - mWidth / 2;
+                          
+                          let wallHeight = Math.floor(450 / dist);
+                          let floorY = Math.floor(viewportHeight / 2 + wallHeight / 2);
+                          let mDrawY = floorY - mHeight;
 
-                              for (let sx = Math.max(0, Math.floor(mDrawX)); sx < Math.min(screenWidth, Math.floor(mDrawX + mWidth)); sx++) {
-                                  if (zBuffer[sx] > dist) {
-                                      let texX = Math.floor(((sx - mDrawX) / mWidth) * currentMonsterImg.naturalWidth);
-                                      ctx.drawImage(
-                                          currentMonsterImg, 
-                                          texX, 0, 1, currentMonsterImg.naturalHeight, 
-                                          sx, mDrawY, 1, mHeight
-                                      );
-
-                                      // Затенение по свету
-                                      if (light < 1.0) {
-                                          ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
-                                          ctx.fillRect(sx, mDrawY, 1, mHeight);
-                                      }
-                                  }
-                              }
+                          // Тот же трюк с аппаратным буфером для монстров
+                          if (!window.mobBuffer) {
+                              window.mobBuffer = document.createElement('canvas');
+                              window.mobCtx = window.mobBuffer.getContext('2d');
                           }
-                      } 
-                      // Умирающие / мертвые монстры
-                      else {
-                          let demonRed = Math.floor(180 * light);
-                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
+                          
+                          window.mobBuffer.width = currentMonsterImg.naturalWidth;
+                          window.mobBuffer.height = currentMonsterImg.naturalHeight;
+
+                          // Применяем освещение ОДИН РАЗ
+                          window.mobCtx.filter = `brightness(${light})`;
+                          window.mobCtx.drawImage(currentMonsterImg, 0, 0);
+                          window.mobCtx.filter = 'none';
+
+                          for (let sx = Math.max(0, Math.floor(mDrawX)); sx < Math.min(screenWidth, Math.floor(mDrawX + mWidth)); sx++) {
                               if (zBuffer[sx] > dist) {
-                                  let sy = Math.floor((viewportHeight - size) / 2) + (en.state === 'dead' ? size * 0.36 : size * 0.18);
-                                  ctx.fillStyle = `rgb(${demonRed}, 0, 0)`;
-                                  ctx.fillRect(sx, sy + size * 0.35, 1, size * 0.38);
-                               }
+                                  let texX = Math.floor(((sx - mDrawX) / mWidth) * currentMonsterImg.naturalWidth);
+                                  ctx.drawImage(
+                                      window.mobBuffer, // Берем готовую затемненную картинку без рамок
+                                      texX, 0, 1, currentMonsterImg.naturalHeight, 
+                                      sx, mDrawY, 1, mHeight
+                                  );
+                              }
                           }
                       }
                   }
-              }
+			}
           });
 		
+
+		
+			
 			// ==========================================
-          // ОТРИСОВКА КОЛОНН (СПРАЙТЫ-УКРАШЕНИЯ)
+          // ОТРИСОВКА ПОЛЕТА ПУЛЬ
           // ==========================================
-          
-
-
-			// ==========================================
-          // ОТРИСОВКА ПРЕДМЕТОВ (АПТЕЧКИ И ПАТРОНЫ)
-          // ==========================================
-          items.forEach(it => {
-              // Вычисляем угол между игроком и предметом
-              let spriteAngle = Math.atan2(it.y - player.y, it.x - player.x) - player.angle;
-              while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
-              while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
-
-              // Проверяем, находится ли предмет в поле зрения
-              if (Math.abs(spriteAngle) < fov + 0.5) {
-                  let dist = Math.hypot(it.x - player.x, it.y - player.y);
-                  
-                  if (dist > 0.2) {
-                      let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
-                      
-                      // Базовый размер зависит от дистанции
-                      let size = Math.floor(250 / dist); 
-                      // Уменьшаем предметы, чтобы они не были размером с монстра (коэффициент 0.4)
-                      let itemWidth = Math.floor(size * 0.4); 
-                      let itemHeight = Math.floor(size * 0.4);
-                      
-                      let startX = Math.floor(screenX - itemWidth / 2);
-                      let drawY = Math.floor(viewportHeight / 2) + Math.floor(size / 2) - itemHeight; // Ставим на пол
-                      
-                      let img = itemSprites[it.type];
-
-                      // Рисуем, если картинка загрузилась
-                      if (img && img.complete && img.naturalWidth > 0) {
-                          let light = getLightLevel(dist, flash && !isDead);
-
-                          // Отрисовка вертикальными полосами (чтобы стены перекрывали предметы)
-                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, startX + itemWidth); sx++) {
-                              if (zBuffer[sx] > dist) {
-                                  // Высчитываем, какую часть картинки рисовать
-                                  let texX = Math.floor(((sx - startX) / itemWidth) * img.naturalWidth);
-                                  
-                                  ctx.drawImage(img, texX, 0, 1, img.naturalHeight, sx, drawY, 1, itemHeight);
-                                  
-                                  // Применяем атмосферное затенение
-                                  if (light < 1.0) {
-                                      ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
-                                      ctx.fillRect(sx, drawY, 1, itemHeight);
-                                  } else if (light > 1.0 && flash && !isDead) {
-                                      // Подсветка от выстрела
-                                      let flashInt = Math.min(0.5, (light - 1.0) * 0.5);
-                                      ctx.fillStyle = `rgba(255, 170, 50, ${flashInt})`;
-                                      ctx.fillRect(sx, drawY, 1, itemHeight);
-                                  }
-                              }
-                          }
-                      }
-                  }
-              }
-          });
-
-         
-
           bullets.forEach(b => {
               let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
               while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
@@ -2564,14 +2552,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
               if (Math.abs(bulletAngle) < fov) {
                   let dist = Math.hypot(b.x - player.x, b.y - player.y);
+                  
+                  // Проекция пули на экран
                   let screenX = Math.floor((screenWidth / 2) + (bulletAngle / fov) * screenWidth);
                   let bSize = Math.max(4, Math.floor(20 / dist));
 
+                  // Рисуем пулю, если она перед стеной
                   if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > dist) {
+                      // Голубое плазменное свечение
                       ctx.fillStyle = "#00ffff";
                       ctx.beginPath();
                       ctx.arc(screenX, viewportHeight / 2, bSize, 0, Math.PI * 2);
                       ctx.fill();
+                      
+                      // Белое раскаленное ядро
                       ctx.fillStyle = "#ffffff";
                       ctx.beginPath();
                       ctx.arc(screenX, viewportHeight / 2, bSize / 2, 0, Math.PI * 2);
@@ -2579,8 +2573,6 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
           });
-			
-			
 
           // ==========================================
           // ОТРИСОВКА ОРУЖИЯ (ИЗ ОТДЕЛЬНЫХ КАДРОВ)
