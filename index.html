@@ -1368,6 +1368,24 @@ document.addEventListener("DOMContentLoaded", function() {
 		'BLAPB0.png', // 11: Эффектная пауза/осмотр (пистолеты сведены вместе)
 		'LOWBA0.png'  // 12: Финал (возврат в покой)
 	];
+	
+	// ==========================================
+      // МЕНЕДЖЕР СПРАЙТОВ ЛИЦА (HUD)
+      // ==========================================
+      const faceFrames = {};
+      const faceFileNames = [
+          'guy1.png', 'guy2.png', 'guy3.png', 'guy5.png', 'guy6.png', 'guy7.png',
+          'guy9.png', 'guy10.png', 'guy11.png', 'guy13.png', 'guy14.png', 'guy15.png',
+          'guy17.png', 'guy18.png', 'guy19.png', 'guy21.png', 'guy22.png', 'guy23.png',
+          'guy24.png'
+      ];
+
+      faceFileNames.forEach(name => {
+          let img = new Image();
+          // Убедись, что путь к папке guyanim правильный!
+          img.src = 'resorse/images/textures/guyanim/' + name; 
+          faceFrames[name] = img;
+      });
 
 	// ==========================================
       // МЕНЕДЖЕР СПРАЙТОВ МОНСТРОВ 	
@@ -1826,8 +1844,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
               if (canY) player.y = targetY;
-              if (canY) player.y = targetY;
-          }
+			}
 
           for (let i = 0; i < enemies.length; i++) {
               for (let j = i + 1; j < enemies.length; j++) {
@@ -1867,13 +1884,12 @@ document.addEventListener("DOMContentLoaded", function() {
                   en.awake = true;
               }
 
-              if (en.awake && distToPlayer < nearestDistance) nearestDistance = distToPlayer;
-
               let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
               while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
               while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
 
-              if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3)) {
+              // Добавлено && canSeePlayer, чтобы рамка не мигала из-за врагов за стеной
+              if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3) && canSeePlayer) {
                   backStalkWarning = true;
               }
 
@@ -1948,14 +1964,12 @@ document.addEventListener("DOMContentLoaded", function() {
                           let testEX = en.x + moveX + (moveX > 0 ? eMargin : -eMargin);
                           let testEY = en.y + moveY + (moveY > 0 ? eMargin : -eMargin);
 
-                          // Проверка коллизий (только стены карты, без декораций)
+                          // Проверка коллизий только со стенами карты
                           let mCellX = map[Math.floor(en.y)][Math.floor(testEX)];
-                          let mCanMoveX = (mCellX === 0);
-                          if (mCanMoveX) en.x += moveX;
+                          if (mCellX === 0) en.x += moveX;
 
                           let mCellY = map[Math.floor(testEY)][Math.floor(en.x)];
-                          let mCanMoveY = (mCellY === 0);
-                          if (mCanMoveY) en.y += moveY;
+                          if (mCellY === 0) en.y += moveY;
                       }
                   }
               }
@@ -2045,7 +2059,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (faceAnimTimer > 0) faceAnimTimer--;
 
           gazeTimer++;
-          if (gazeTimer > 50) {
+          if (gazeTimer > 30) { // Было 50. Теперь анимация смены взгляда работает быстрее
               gazeTimer = 0;
               gazeDirection = Math.floor(Math.random() * 3) - 1;
           }
@@ -2747,82 +2761,65 @@ document.addEventListener("DOMContentLoaded", function() {
           ctx.fillText("AMMO", 585, viewportHeight + 25);
           ctx.fillText("FRAGS", 190, viewportHeight + 25);
 
-          // Лицо Думгая
+          // ==========================================
+          // ЛИЦО ДУМГАЯ (ИЗ СПРАЙТОВ)
+          // ==========================================
           let faceBoxX = screenWidth / 2 - 36;
           let faceBoxY = viewportHeight + 12;
           
-          ctx.fillStyle = "#1a1a1a";
+          // Фоновая подложка и рамка
+          ctx.fillStyle = "#222222"; 
           ctx.fillRect(faceBoxX, faceBoxY, 72, 78);
           ctx.strokeStyle = isDead ? "#990000" : ((damageFlash > 0 || backStalkWarning) ? "#cc0000" : "#555");
           ctx.lineWidth = 2;
           ctx.strokeRect(faceBoxX, faceBoxY, 72, 78);
 
-          ctx.fillStyle = "#2d4c2d";
-          ctx.fillRect(faceBoxX + 10, faceBoxY + 8, 52, 62);
-          ctx.fillStyle = "#b8860b";
-          ctx.fillRect(faceBoxX + 14, faceBoxY + 16, 44, 20);
+          let faceImageName = 'guy24.png'; // Если мертв — берем самый последний кровавый спрайт
 
-          ctx.fillStyle = isDead ? "#a89f91" : "#f5d0b1";
-          ctx.fillRect(faceBoxX + 20, faceBoxY + 28, 32, 34);
+          if (!isDead) {
+              // 5 стадий здоровья (шаг по 20%)
+              let hpState = 0;
+              if (player.health < 20) hpState = 4;
+              else if (player.health < 40) hpState = 3;
+              else if (player.health < 60) hpState = 2;
+              else if (player.health < 80) hpState = 1;
+              else hpState = 0;
 
-          if (!isDead && player.health < 50) {
-              let bloodCol = (player.health < 25) ? "#880000" : "#bb0000";
-              ctx.fillStyle = bloodCol;
+              let isAction = (faceAnimTimer > 0 || playerInvulnTimer > 0); 
+
+              // Наборы покоя (бегающие глаза): [Влево, Центр, Вправо]
+              let idleSets = [
+                  ['guy1.png', 'guy2.png', 'guy3.png'],    // 100-80%
+                  ['guy5.png', 'guy6.png', 'guy7.png'],    // 79-60%
+                  ['guy9.png', 'guy10.png', 'guy11.png'],  // 59-40%
+                  ['guy13.png', 'guy14.png', 'guy15.png'], // 39-20%
+                  ['guy17.png', 'guy18.png', 'guy19.png']  // 19-1%
+              ];
               
-              ctx.fillRect(faceBoxX + 22, faceBoxY + 31, 3, 7);
-              ctx.fillRect(faceBoxX + 24, faceBoxY + 36, 2, 5);
+              // Набор действий (4 лица из последней группы). 
+              // Для 1 и 2 стадии (здоров/легкая рана) используем первый спрайт стрельбы guy21
+              let actionFaces = ['guy21.png', 'guy21.png', 'guy22.png', 'guy23.png', 'guy24.png'];
 
-              ctx.fillRect(faceBoxX + 47, faceBoxY + 34, 3, 8);
-              ctx.fillRect(faceBoxX + 48, faceBoxY + 42, 2, 4);
+              // gazeDirection бывает -1, 0, 1. Прибавляем 1, чтобы получить индексы 0, 1, 2
+              let dirIndex = gazeDirection + 1; 
 
-              ctx.fillRect(faceBoxX + 34, faceBoxY + 45, 4, 3);
-              ctx.fillRect(faceBoxX + 35, faceBoxY + 48, 2, 4);
-
-              if (player.health < 25) {
-                  ctx.fillStyle = "#660000";
-                  ctx.fillRect(faceBoxX + 26, faceBoxY + 54, 5, 2);
-                  ctx.fillRect(faceBoxX + 41, faceBoxY + 54, 4, 2);
-                  ctx.fillRect(faceBoxX + 31, faceBoxY + 30, 8, 2);
+              if (isAction) {
+                  // Во время стрельбы или урона берем ровно 1 спрайт из последней группы
+                  faceImageName = actionFaces[hpState];
+              } else {
+                  // В покое берем текущую стадию здоровья и меняем глаза
+                  faceImageName = idleSets[hpState][dirIndex];
               }
           }
 
-          if (isDead) {
-              ctx.strokeStyle = "#440000";
-              ctx.lineWidth = 2;
-              
-              ctx.beginPath();
-              ctx.moveTo(faceBoxX + 24, faceBoxY + 36); ctx.lineTo(faceBoxX + 30, faceBoxY + 42);
-              ctx.moveTo(faceBoxX + 30, faceBoxY + 36); ctx.lineTo(faceBoxX + 24, faceBoxY + 42);
-              ctx.stroke();
-
-              ctx.beginPath();
-              ctx.moveTo(faceBoxX + 42, faceBoxY + 36); ctx.lineTo(faceBoxX + 48, faceBoxY + 42);
-              ctx.moveTo(faceBoxX + 48, faceBoxY + 36); ctx.lineTo(faceBoxX + 42, faceBoxY + 42);
-              ctx.stroke();
-
-              ctx.fillStyle = "#880000";
-              ctx.fillRect(faceBoxX + 28, faceBoxY + 50, 16, 5);
-              ctx.fillRect(faceBoxX + 32, faceBoxY + 55, 4, 6);
+          // Отрисовка выбранного спрайта
+          let faceImg = faceFrames[faceImageName];
+          if (faceImg && faceImg.complete && faceImg.naturalWidth > 0) {
+              // Сдвинули на 1 пиксель вправо (faceBoxX + 6)
+              ctx.drawImage(faceImg, faceBoxX + 6, faceBoxY + 4, 64, 70);
           } else {
               ctx.fillStyle = "#000";
-              let eyeOffsetX = 0;
-              if (damageFlash > 0 || playerInvulnTimer > 0) {
-                  ctx.fillRect(faceBoxX + 24, faceBoxY + 36, 6, 2);
-                  ctx.fillRect(faceBoxX + 42, faceBoxY + 36, 6, 2);
-                  ctx.fillStyle = "#aa0000";
-                  ctx.fillRect(faceBoxX + 28, faceBoxY + 50, 16, 6);
-              } else if (faceAnimTimer > 0) {
-                  ctx.fillRect(faceBoxX + 24, faceBoxY + 38, 5, 5);
-                  ctx.fillRect(faceBoxX + 43, faceBoxY + 38, 5, 5);
-                  ctx.fillRect(faceBoxX + 28, faceBoxY + 52, 16, 3);
-              } else {
-                  if (gazeDirection === -1) eyeOffsetX = -3;
-                  else if (gazeDirection === 1) eyeOffsetX = 3;
-
-                  ctx.fillRect(faceBoxX + 26 + eyeOffsetX, faceBoxY + 38, 4, 4);
-                  ctx.fillRect(faceBoxX + 42 + eyeOffsetX, faceBoxY + 38, 4, 4);
-                  ctx.fillRect(faceBoxX + 30, faceBoxY + 52, 12, 2);
-              }
+              ctx.fillRect(faceBoxX + 6, faceBoxY + 4, 64, 70);
           }
 
       }, 1000 / 35);
