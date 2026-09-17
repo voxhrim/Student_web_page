@@ -1462,17 +1462,17 @@ document.addEventListener("DOMContentLoaded", function() {
      const map = [ 
           [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1],
           [1,0,0,0,0,0,0,1,4,4,4,9,4,4,4,1,0,0,0,0,0,0,0,1],
-          [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,1,5,1,1,0,1],
+          [1,0,0,0,0,0,0,6,4,0,0,0,0,0,4,1,0,1,1,5,1,1,0,1],
           [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,0,0,0,1,0,1],
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,0,1,0,0,0,1,0,1],
           [1,0,0,0,0,0,0,1,4,0,4,0,4,0,4,1,0,1,0,0,0,1,0,1],
-          [1,0,0,0,0,0,0,1,4,4,4,0,4,4,4,1,0,1,1,0,1,1,0,1],
+          [1,0,0,0,0,0,0,6,4,4,4,0,4,4,4,1,0,1,1,0,1,1,0,1],
           [1,1,8,0,0,8,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
-          [1,2,2,0,0,2,2,2,2,2,2,0,2,2,2,2,1,1,1,1,1,1,0,1],
+          [1,2,2,0,0,2,2,2,7,2,2,0,2,2,2,2,1,1,1,1,1,1,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,1,1,1,1,1],
+          [1,7,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,1,1,1,1,1],
           [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,0,0,1,3,3,9,3,1],
-          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,1,0,1,3,0,0,0,1],
+          [1,2,0,0,7,2,0,0,0,0,2,2,0,0,0,2,1,0,1,3,0,0,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,3,3,0,3,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,5,0,1],
           [1,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,1,1,1,3,0,3,0,1],
@@ -1538,15 +1538,14 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		// Функция обработки движения с мягким скольжением по круглому хитбоксу
       function tryMove(newX, newY) {
-          let radius = 0.18; // Уменьшенный радиус, чтобы протискиваться в узкие зазоры
+          let radius = 0.22; // Стандартный радиус игрока
 
-          // Вспомогательная функция: проходима ли точка на карте (пустота 0 или колонны 6, 7)
+          // Теперь проходима только пустота (0)
           function isWalkable(x, y) {
               let mapX = Math.floor(x);
               let mapY = Math.floor(y);
               if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length) return false;
-              let cell = map[mapY][mapX];
-              return cell === 0 || cell === 6 || cell === 7;
+              return map[mapY][mapX] === 0;
           }
 
           // === ДВИЖЕНИЕ ПО ОСИ X ===
@@ -1554,22 +1553,14 @@ document.addEventListener("DOMContentLoaded", function() {
           let canX = true;
           let offsetX = (testX > player.x) ? radius : -radius;
           
-          // Проверяем верхнюю и нижнюю точки игрока по оси X
           if (!isWalkable(testX + offsetX, player.y - radius) || 
               !isWalkable(testX + offsetX, player.y + radius)) {
               canX = false;
           }
 
-          // Проверка столкновений с монстрами по X
           if (canX) {
               for (let en of enemies) {
-                  if (en.state === 'alive' && Math.hypot(testX - en.x, player.y - en.y) < 0.15) { canX = false; break; }
-              }
-          }
-          // Проверка столкновений с колоннами по X
-          if (canX) {
-              for (let dec of decorations) {
-                  if (Math.hypot(newX - dec.colX, pY - dec.colY) < 0.15) { canX = false; break; }
+                  if (en.state === 'alive' && Math.hypot(testX - en.x, player.y - en.y) < 0.35) { canX = false; break; }
               }
           }
           if (canX) player.x = testX;
@@ -1579,26 +1570,19 @@ document.addEventListener("DOMContentLoaded", function() {
           let canY = true;
           let offsetY = (testY > player.y) ? radius : -radius;
 
-          // Проверяем левую и правую точки игрока по оси Y
           if (!isWalkable(player.x - radius, testY + offsetY) || 
               !isWalkable(player.x + radius, testY + offsetY)) {
               canY = false;
           }
 
-          // Проверка столкновений с монстрами по Y
           if (canY) {
               for (let en of enemies) {
-                  if (en.state === 'alive' && Math.hypot(player.x - en.x, testY - en.y) < 0.15) { canY = false; break; }
-              }
-          }
-          // Проверка столкновений с колоннами по Y
-          if (canY) {
-              for (let dec of decorations) {
-                  if (Math.hypot(player.x - dec.colX, newY - dec.colY) < 0.15) { canY = false; break; }
+                  if (en.state === 'alive' && Math.hypot(player.x - en.x, testY - en.y) < 0.35) { canY = false; break; }
               }
           }
           if (canY) player.y = testY;
       }
+	  
       function hasLineOfSight(x0, y0, x1, y1) {
           let dx = x1 - x0;
           let dy = y1 - y0;
@@ -1678,38 +1662,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
       }
 	  
-	 decorations = [];
-      fdecorations = [];
-      for (let y = 0; y < map.length; y++) {
-          for (let x = 0; x < map[0].length; x++) {
-              if (map[y][x] === 6 || map[y][x] === 7) {
-                  let posValX = 0.5;
-                  let posValY = 0.5;
-                  let colValX = 0.5;
-                  let colValY = 0.5;
-
-                  let hasTop = (y > 0 && map[y-1][x] > 0 && map[y-1][x] !== 6 && map[y-1][x] !== 7);
-                  let hasBottom = (y < map.length - 1 && map[y+1][x] > 0 && map[y+1][x] !== 6 && map[y+1][x] !== 7);
-                  let hasLeft = (x > 0 && map[y][x-1] > 0 && map[y][x-1] !== 6 && map[y][x-1] !== 7);
-                  let hasRight = (x < map[0].length - 1 && map[y][x+1] > 0 && map[y][x+1] !== 6 && map[y][x+1] !== 7);
-
-                  // Золотая середина для красоты
-                  if (hasTop) { posValY = 0.20; colValY = 0.05; }
-                  if (hasBottom) { posValY = 0.80; colValY = 0.95; }
-                  if (hasLeft) { posValX = 0.20; colValX = 0.05; }
-                  if (hasRight) { posValX = 0.80; colValX = 0.95; }
-
-                  decorations.push({ 
-                      type: map[y][x], 
-                      x: x + posValX,     
-                      y: y + posValY,     
-                      colX: x + colValX,  
-                      colY: y + colValY   
-                  });
-              }
-          }
-      }
-
+		
       resetDoomState();
 
       let keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, ' ': false };
@@ -1845,24 +1798,18 @@ document.addEventListener("DOMContentLoaded", function() {
                   doomAudio.stopSteps();
               }
 
-              // Плавное круговое скольжение (хитбокс-цилиндр)
+              // Плавное круговое скольжение
               const radius = 0.22;
 
               // Пробуем сдвинуться по X
               let targetX = player.x + (nextX - player.x);
               let checkX = targetX + (targetX > player.x ? radius : -radius);
               let mapCellX = map[Math.floor(player.y)][Math.floor(checkX)];
-              let canX = (mapCellX === 0 || mapCellX === 6 || mapCellX === 7);
+              let canX = (mapCellX === 0);
 
               if (canX) {
                   for (let en of enemies) {
                       if (en.state === 'alive' && Math.hypot(targetX - en.x, player.y - en.y) < 0.4) { canX = false; break; }
-                  }
-              }
-              if (canX) {
-                  for (let dec of decorations) {
-                      // Круговой радиус хитбокса колонны (0.35 дает мягкое скольжение)
-                      if (Math.hypot(targetX - dec.x, player.y - dec.y) < 0.35) { canX = false; break; }
                   }
               }
               if (canX) player.x = targetX;
@@ -1871,18 +1818,14 @@ document.addEventListener("DOMContentLoaded", function() {
               let targetY = player.y + (nextY - player.y);
               let checkY = targetY + (targetY > player.y ? radius : -radius);
               let mapCellY = map[Math.floor(checkY)][Math.floor(player.x)];
-              let canY = (mapCellY === 0 || mapCellY === 6 || mapCellY === 7);
+              let canY = (mapCellY === 0);
 
               if (canY) {
                   for (let en of enemies) {
                       if (en.state === 'alive' && Math.hypot(player.x - en.x, targetY - en.y) < 0.4) { canY = false; break; }
                   }
               }
-              if (canY) {
-                  for (let dec of decorations) {
-                      if (Math.hypot(player.x - dec.x, targetY - dec.y) < 0.35) { canY = false; break; }
-                  }
-              }
+              if (canY) player.y = targetY;
               if (canY) player.y = targetY;
           }
 
@@ -2005,23 +1948,13 @@ document.addEventListener("DOMContentLoaded", function() {
                           let testEX = en.x + moveX + (moveX > 0 ? eMargin : -eMargin);
                           let testEY = en.y + moveY + (moveY > 0 ? eMargin : -eMargin);
 
-                          // Проверка коллизий с учетом проходов и колонн (6 и 7)
+                          // Проверка коллизий (только стены карты, без декораций)
                           let mCellX = map[Math.floor(en.y)][Math.floor(testEX)];
-                          let mCanMoveX = (mCellX === 0 || mCellX === 6 || mCellX === 7);
-                          if (mCanMoveX) {
-                              for (let dec of decorations) {
-                                  if (Math.hypot(testEX - dec.x, en.y - dec.y) < 0.25) { mCanMoveX = false; break; }
-                              }
-                          }
+                          let mCanMoveX = (mCellX === 0);
                           if (mCanMoveX) en.x += moveX;
 
                           let mCellY = map[Math.floor(testEY)][Math.floor(en.x)];
-                          let mCanMoveY = (mCellY === 0 || mCellY === 6 || mCellY === 7);
-                          if (mCanMoveY) {
-                              for (let dec of decorations) {
-                                  if (Math.hypot(en.x - dec.x, testEY - dec.y) < 0.25) { mCanMoveY = false; break; }
-                              }
-                          }
+                          let mCanMoveY = (mCellY === 0);
                           if (mCanMoveY) en.y += moveY;
                       }
                   }
@@ -2133,24 +2066,10 @@ document.addEventListener("DOMContentLoaded", function() {
                   hitObstacle = true;
               } else {
                   let cell = map[mapY][mapX];
-                  // Если стена обычная (не 6 и не 7), пуля уничтожается
-                  if (cell > 0 && cell !== 6 && cell !== 7) {
+                  // Любой блок больше нуля (включая 6 и 7) — это стена, пуля уничтожается
+                  if (cell > 0) {
                       hitObstacle = true;
-                  } 
-                  // Если пуля летит через блок с колонной (6 или 7)
-                  else if (cell === 6 || cell === 7) {
-                      for (let dec of decorations) {
-                          if (Math.hypot(dec.x - b.x, dec.y - b.y) < 0.16) {
-                              hitObstacle = true; 
-                              break;
-                          }
-                      }
                   }
-              }
-
-              if (hitObstacle || b.life <= 0) {
-                  bullets.splice(i, 1);
-                  continue;
               }
 
               // Столкновение пули с монстром
@@ -2310,55 +2229,10 @@ document.addEventListener("DOMContentLoaded", function() {
                       break;
                   }
 
-
-                  // === ПРОВЕРКА ЦИЛИНДРИЧЕСКОЙ КОЛОННЫ (6 или 7) ===
                   let mt = map[mapY][mapX];
-
-                  // === ПРОВЕРКА ЦИЛИНДРИЧЕСКОЙ КОЛОННЫ (6 или 7) ===
-                  if (mt === 6 || mt === 7) {
-                      let dec = decorations.find(d => Math.floor(d.x) === mapX && Math.floor(d.y) === mapY);
-                      if (dec) {
-                          let cx = dec.x; 
-                          let cy = dec.y;
-                          let radius = 0.3; // Радиус цилиндра
-
-                          let fx = player.x - cx;
-                          let fy = player.y - cy;
-
-                          let A = rayDirX * rayDirX + rayDirY * rayDirY;
-                          let B = 2 * (fx * rayDirX + fy * rayDirY);
-                          let C = fx * fx + fy * fy - radius * radius;
-                          let discriminant = B * B - 4 * A * C;
-
-                          if (discriminant >= 0) {
-                              let t = (-B - Math.sqrt(discriminant)) / (2 * A);
-                              if (t > 0) {
-                                  hit = true;
-                                  wallType = mt;
-                                  
-                                  let correctedDist = t * Math.cos(rayAngle - player.angle);
-                                  if (correctedDist < 0.1) correctedDist = 0.1;
-                                  zBuffer[x] = correctedDist;
-
-                                  // 1. Находим точную точку касания луча на окружности цилиндра в мире
-                                  let hitX = player.x + t * rayDirX;
-                                  let hitY = player.y + t * rayDirY;
-
-                                  // 2. Считаем угол точки удара относительно центра колонны для круговой текстуры
-                                  let angleToHit = Math.atan2(hitY - cy, hitX - cx);
-                                  // Переводим угол из [-PI, PI] в нормальный диапазон текстуры [0, 1]
-                                  let cylinderHitCoord = (angleToHit + Math.PI) / (Math.PI * 2);
-
-                                  // Передаем эту координату в общую отрисовку текстуры ниже
-                                  wallHitCoordOverride = cylinderHitCoord; 
-                                  break;
-                              }
-                          }
-                      }
-                  }
-
-                  // Игнорируем 6 и 7 для обычных стен, если не попали в цилиндр
-                  if (mt > 0 && mt !== 6 && mt !== 7) {
+                  
+                  // Стандартная обработка ЛЮБОЙ стены (включая 6 и 7)
+                  if (mt > 0) {
                       hit = true;
                       wallType = mt;
                   }
