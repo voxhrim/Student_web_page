@@ -114,9 +114,7 @@
                 <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
 
             </div>
-            <!-- <div id="headergif"> -->
-                <!-- <img src="resorse/images/gif/Chips.gif" alt="" width="100"> -->
-            <!-- </div> -->
+
         </div>
     </div>
 
@@ -125,17 +123,17 @@
 
         <!-- Сидящий на верхнем краю окна персонаж -->
 		
-		<div class="anime-sitter" title="Добро пожаловать!">
-			<img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж">
-		</div>
+		<!-- <div class="anime-sitter" title="Добро пожаловать!"> -->
+			<!-- <img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж"> -->
+		<!-- </div> -->
 		
 		<!-- Фрагмент ниже для сжатого формата - если короче будет место поджимать -->
 		
-        <!-- <div class="anime-sitter" title="Добро пожаловать!"> -->
-			<!-- <video autoplay loop muted playsinline> -->
-				<!-- <source src="resorse/images/gif/1anime5.webm" type="video/webm"> -->
-			<!-- </video> -->
-		<!-- </div> -->
+         <div class="anime-sitter" title="Добро пожаловать!"> 
+			<video autoplay loop muted playsinline>
+				 <source src="resorse/images/gif/1anime5.webm" type="video/webm">
+			</video>
+		 </div> 
 
         <!-- Полоса заголовка окна -->
         <div class="win-title-bar">
@@ -661,7 +659,7 @@
 
 
 	<!-- Окно пасхалки DOOM -->
-	<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; width: 750px;">
+	<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 99999; width: 85vw; max-width: 1020px; height: auto; max-height: 88vh;">
 		<div class="win-title-bar">
 			<div class="win-title-text">
 				<span class="win-icon"></span> DOOM_E1M1.exe
@@ -673,13 +671,13 @@
 			</div>
 		</div>
 		
-    <div class="win-window-body" style="background: #000; padding: 6px; text-align: center;">
-        <canvas id="doomCanvas" width="720" height="460" style="display: block; margin: 0 auto; image-rendering: pixelated; border: 2px solid #404040;"></canvas>
-        <div style="font-family: Tahoma, sans-serif; font-size: 14px; color: #B53B3B; margin-top: 6px; text-align: center; padding: 2px;">
-            Управление: Стрелки - шаг, ПРОБЕЛ — огонь.
-        </div>
-    </div>
-</div>
+		<div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden;">
+			<canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: auto; max-height: calc(88vh - 70px); aspect-ratio: 720/460; image-rendering: pixelated; image-rendering: crisp-edges; border: 2px solid #404040; box-sizing: border-box; object-fit: contain;"></canvas>
+			<div style="font-family: Tahoma, sans-serif; font-size: clamp(11px, 1.2vw, 14px); color: #B53B3B; margin-top: 4px; padding-bottom: 2px; text-align: center; flex-shrink: 0;">
+				Управление: Стрелки - шаг, ПРОБЕЛ — огонь.
+			</div>
+		</div>
+	</div>
 
 <!-- скрипт погоды -->
 
@@ -1210,7 +1208,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           trackMap.forEach((name, idx) => {
               const audio = new Audio(`${SOUND_PATH}${name}${SOUND_EXT}`);
-              audio.volume = 0.4;
+              audio.volume = 0.3;
               audio.preload = 'auto';
               audio.addEventListener('loadedmetadata', () => {
                   this.sequenceDurations[idx] = audio.duration;
@@ -1330,18 +1328,85 @@ document.addEventListener("DOMContentLoaded", function() {
   // ==========================================
   // МЕНЕДЖЕР ТЕКСТУР
   // ==========================================
-  const TEXTURE_PATH = 'resorse/images/textures/';
-  const wallTextures = {
-      1: new Image(),
-      2: new Image(),
-      3: new Image(),
-      4: new Image()
-  };
-  // Загружаем текстуры (названия файлов должны совпадать)
-  wallTextures[1].src = TEXTURE_PATH + 'wall1.webp';
-  wallTextures[2].src = TEXTURE_PATH + 'wall2.webp';
-  wallTextures[3].src = TEXTURE_PATH + 'wall3.webp';
-  wallTextures[4].src = TEXTURE_PATH + 'wall4.webp';
+	  const TEXTURE_PATH = 'resorse/images/textures/';
+	  const wallTextures = {};
+	  for (let i = 1; i <= 10; i++) {
+		  wallTextures[i] = new Image();
+	  }
+	  
+	  // Базовые стены
+	  wallTextures[1].src = TEXTURE_PATH + 'BRICK_1A.PNG';    // 1: Серый кирпич
+	  wallTextures[2].src = TEXTURE_PATH + 'BRICK_2B.PNG';    // 2: Красный кирпич
+	  wallTextures[3].src = TEXTURE_PATH + 'TECH_1C.PNG';     // 3: Техническая серая стена
+	  wallTextures[4].src = TEXTURE_PATH + 'CRATE_1D.PNG';    // 4: Ящики/Груз
+	  
+	  // Декорации и терминалы
+	  wallTextures[5].src = TEXTURE_PATH + 'CONSOLE_1B.PNG';  // 5: Компьютер
+	  wallTextures[8].src = TEXTURE_PATH + 'LIGHT_1B.PNG';    // 8: Стена с лампами
+	  wallTextures[9].src = TEXTURE_PATH + 'TECH_4E.PNG';     // 9: Панель с графиком
+	  wallTextures[10].src = TEXTURE_PATH + 'BRICK_3D.PNG';   // 10: Кирпич с плющом
+	  
+	  // Колонны (Идеально для проходов и углов)
+	  wallTextures[6].src = TEXTURE_PATH + 'SUPPORT_3A.PNG';  // 6: Колонна (желтый свет)
+	  wallTextures[7].src = TEXTURE_PATH + 'SUPPORT_4A.PNG';  // 7: Колонна (синий свет)
+  
+	const weaponFrames = [];
+
+	// Массив из 13 кадров, выстроенный в полноценную анимацию стрельбы по-македонски
+	const frameNames = [
+		'LOWBA0.png', // 0: Покой (два пистолета опущены)
+		'BLPSE0.png', // 1: Вспышка (выстрел правым пистолетом)
+		'BLPSA0.png', // 2: Отдача правого 1
+		'BLPSB0.png', // 3: Отдача правого 2
+		'BLPSC0.png', // 4: Возврат правого 1
+		'BLPSD0.png', // 5: Возврат правого 2
+		'LLPSE0.png', // 6: Вспышка (выстрел левым пистолетом)
+		'LLPSA0.png', // 7: Отдача левого 1
+		'LLPSB0.png', // 8: Отдача левого 2
+		'LLPSC0.png', // 9: Возврат левого 1
+		'LLPSD0.png', // 10: Возврат левого 2
+		'BLAPB0.png', // 11: Эффектная пауза/осмотр (пистолеты сведены вместе)
+		'LOWBA0.png'  // 12: Финал (возврат в покой)
+	];
+
+	// ==========================================
+      // МЕНЕДЖЕР СПРАЙТОВ МОНСТРОВ 	
+      // ==========================================
+      const monsterFrames = [];
+      const monsterFrameNames = [
+          'CBO2A1.png', // Стояние / Ходьба
+          'CBO2P1.png', // Замах ближнего боя 1
+          'CBO2Q1.png', // Замах 2
+          'CBO2R1.png', // Удар с зеленым эффектом 1
+          <!-- 'CBO2R1.png', // Удар с зеленым эффектом 2 -->
+          <!-- 'CBO2A1.png', // Возврат 1 -->
+          <!-- 'CBO2A1.png'  // Возврат 2 -->
+      ];
+
+      monsterFrameNames.forEach(name => {
+          let img = new Image();
+          img.src = 'resorse/images/textures/monster/' + name; // Проверь путь к папке со спрайтами монстров
+          monsterFrames.push(img);
+      });
+
+	for (let i = 0; i < 13; i++) {
+		let img = new Image();
+		let fileName = frameNames[i]; 
+		
+		// Вставь здесь точный путь к папке, в которую ты закинул эти картинки.
+		// Если они лежат в общей папке текстур, то путь будет таким:
+		img.src = 'resorse/images/textures/pistol/' + fileName; 
+		
+		weaponFrames.push(img);
+	}
+
+	const itemSprites = {
+      medkit: new Image(),
+      ammo: new Image()
+	  };
+	  // Замени путь, если закинул картинки в другую папку
+	  itemSprites.medkit.src = 'resorse/images/textures/med.png';
+	  itemSprites.ammo.src = 'resorse/images/textures/bulets.png';
 
   function openDoomEasterEgg() {
       const win = document.getElementById('doom-window');
@@ -1349,6 +1414,12 @@ document.addEventListener("DOMContentLoaded", function() {
       win.style.display = 'block';
       doomAudio.startMusic();
       startDoomGame();
+      
+      // Снимаем фокус с активного элемента (кнопки запуска), 
+      // чтобы случайное нажатие Enter не перезапускало игру
+      if (document.activeElement) {
+          document.activeElement.blur();
+      }
   }
 
   function closeDoomEasterEgg(e) {
@@ -1385,34 +1456,34 @@ document.addEventListener("DOMContentLoaded", function() {
       <!-- const MIN_BRIGHTNESS = 0.05; -->
 	  
 	  const LIGHT_STEP = 0.15;
-      const MAX_LIGHT_DIST = 10;   // Уменьшаем дальность видимости во тьме для мрачности
+      const MAX_LIGHT_DIST = 8;   // Уменьшаем дальность видимости во тьме для мрачности
       const MIN_BRIGHTNESS = 0.01; // Почти абсолютная темнота вдалеке
 
-      const map = [
-          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-          [1,0,0,0,0,0,0,1,4,4,4,4,4,4,4,1,0,0,0,0,0,0,0,1],
-          [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,1,1,1,1,0,1],
+     const map = [ 
+          [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1],
+          [1,0,0,0,0,0,0,1,4,4,4,9,4,4,4,1,0,0,0,0,0,0,0,1],
+          [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,1,5,1,1,0,1],
           [1,0,0,0,0,0,0,1,4,0,0,0,0,0,4,1,0,1,0,0,0,1,0,1],
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,0,1,0,0,0,1,0,1],
           [1,0,0,0,0,0,0,1,4,0,4,0,4,0,4,1,0,1,0,0,0,1,0,1],
           [1,0,0,0,0,0,0,1,4,4,4,0,4,4,4,1,0,1,1,0,1,1,0,1],
-          [1,1,1,0,0,1,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
+          [1,1,8,0,0,8,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
           [1,2,2,0,0,2,2,2,2,2,2,0,2,2,2,2,1,1,1,1,1,1,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,1,1,1,1,1],
-          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,0,0,1,3,3,3,3,1],
-          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,1,0,1,3,0,0,0,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,3,0,3,0,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,3,0,1],
+          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,0,0,1,3,3,9,3,1],
+          [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,1,0,7,3,0,0,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,7,3,0,3,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,5,0,1],
           [1,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,1,1,1,3,0,3,0,1],
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,3,0,1],
           [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,3,3,3,0,1],
-          [1,0,1,3,3,3,3,3,3,3,3,3,3,1,0,1,1,0,1,1,1,1,0,1],
+          [1,0,1,3,3,8,3,3,3,3,3,8,3,1,0,1,1,0,1,1,1,1,0,1],
           [1,0,1,3,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,1],
-          [1,0,1,3,0,3,0,0,0,0,3,0,3,1,1,1,1,1,1,1,1,1,0,1],
-          [1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,0,1,5,0,3,0,0,0,0,3,0,5,1,1,1,1,1,1,1,1,1,0,1],
+          [1,0,0,0,0,8,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,1],
           [1,0,1,3,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,1,1,1],
-          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+          [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1]
       ];
 
       function getRandomFloorTile() {
@@ -1426,7 +1497,108 @@ document.addEventListener("DOMContentLoaded", function() {
           }
           return emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
       }
+	  
+		// Функция строит карту кратчайших расстояний от игрока до каждой клетки лабиринта
+      function calculateDistanceMap(targetX, targetY) {
+          let rows = map.length;
+          let cols = map[0].length;
+          let dist = Array.from({length: rows}, () => Array(cols).fill(-1));
+          
+          let startX = Math.floor(targetX);
+          let startY = Math.floor(targetY);
+          
+          if (startY < 0 || startY >= rows || startX < 0 || startX >= cols) return dist;
 
+          let queue = [{x: startX, y: startY}];
+          dist[startY][startX] = 0;
+
+          let dx = [0, 0, -1, 1];
+          let dy = [-1, 1, 0, 0];
+
+          while(queue.length > 0) {
+              let curr = queue.shift();
+              let d = dist[curr.y][curr.x];
+
+              for(let i = 0; i < 4; i++) {
+                  let nx = curr.x + dx[i];
+                  let ny = curr.y + dy[i];
+
+                  if(ny >= 0 && ny < rows && nx >= 0 && nx < cols) {
+                      let cell = map[ny][nx];
+                      // Проходимые клетки: пустота (0) или колонны (6, 7)
+                      if ((cell === 0 || cell === 6 || cell === 7) && dist[ny][nx] === -1) {
+                          dist[ny][nx] = d + 1;
+                          queue.push({x: nx, y: ny});
+                      }
+                  }
+              }
+          }
+          return dist;
+      }
+		
+		// Функция обработки движения с мягким скольжением по круглому хитбоксу
+      function tryMove(newX, newY) {
+          let radius = 0.18; // Уменьшенный радиус, чтобы протискиваться в узкие зазоры
+
+          // Вспомогательная функция: проходима ли точка на карте (пустота 0 или колонны 6, 7)
+          function isWalkable(x, y) {
+              let mapX = Math.floor(x);
+              let mapY = Math.floor(y);
+              if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length) return false;
+              let cell = map[mapY][mapX];
+              return cell === 0 || cell === 6 || cell === 7;
+          }
+
+          // === ДВИЖЕНИЕ ПО ОСИ X ===
+          let testX = newX;
+          let canX = true;
+          let offsetX = (testX > player.x) ? radius : -radius;
+          
+          // Проверяем верхнюю и нижнюю точки игрока по оси X
+          if (!isWalkable(testX + offsetX, player.y - radius) || 
+              !isWalkable(testX + offsetX, player.y + radius)) {
+              canX = false;
+          }
+
+          // Проверка столкновений с монстрами по X
+          if (canX) {
+              for (let en of enemies) {
+                  if (en.state === 'alive' && Math.hypot(testX - en.x, player.y - en.y) < 0.15) { canX = false; break; }
+              }
+          }
+          // Проверка столкновений с колоннами по X
+          if (canX) {
+              for (let dec of decorations) {
+                  if (Math.hypot(newX - dec.colX, pY - dec.colY) < 0.15) { canX = false; break; }
+              }
+          }
+          if (canX) player.x = testX;
+
+          // === ДВИЖЕНИЕ ПО ОСИ Y ===
+          let testY = newY;
+          let canY = true;
+          let offsetY = (testY > player.y) ? radius : -radius;
+
+          // Проверяем левую и правую точки игрока по оси Y
+          if (!isWalkable(player.x - radius, testY + offsetY) || 
+              !isWalkable(player.x + radius, testY + offsetY)) {
+              canY = false;
+          }
+
+          // Проверка столкновений с монстрами по Y
+          if (canY) {
+              for (let en of enemies) {
+                  if (en.state === 'alive' && Math.hypot(player.x - en.x, testY - en.y) < 0.15) { canY = false; break; }
+              }
+          }
+          // Проверка столкновений с колоннами по Y
+          if (canY) {
+              for (let dec of decorations) {
+                  if (Math.hypot(player.x - dec.colX, newY - dec.colY) < 0.15) { canY = false; break; }
+              }
+          }
+          if (canY) player.y = testY;
+      }
       function hasLineOfSight(x0, y0, x1, y1) {
           let dx = x1 - x0;
           let dy = y1 - y0;
@@ -1436,12 +1608,14 @@ document.addEventListener("DOMContentLoaded", function() {
               let t = i / steps;
               let cx = Math.floor(x0 + dx * t);
               let cy = Math.floor(y0 + dy * t);
-              if (map[cy] && map[cy][cx] > 0) return false;
+              let cell = map[cy] ? map[cy][cx] : 1;
+              // Игнорируем колонны (6 и 7) при проверке видимости
+              if (cell > 0 && cell !== 6 && cell !== 7) return false;
           }
           return true;
       }
 
-      let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets;
+      let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets, decorations;
       let isDead = false;
       let deathTimer = 0;
       let growlCooldown = 0;
@@ -1452,8 +1626,8 @@ document.addEventListener("DOMContentLoaded", function() {
       let hpFlashTimer = 0;
       let ammoFlashTimer = 0;
 
-      const DEATH_DELAY_FRAMES = 120;
-      const ENEMY_COUNT = 8;
+      const DEATH_DELAY_FRAMES = 150;
+      const ENEMY_COUNT = 12;
 
       function resetDoomState() {
           player = {
@@ -1461,7 +1635,7 @@ document.addEventListener("DOMContentLoaded", function() {
               y: 1.5,
               angle: 0,
               health: 100,
-              ammo: 35
+              ammo: 15
           };
           kills = 0;
           damageFlash = 0;
@@ -1503,6 +1677,38 @@ document.addEventListener("DOMContentLoaded", function() {
               items.push({ type: 'ammo', x: pAmmo.x, y: pAmmo.y });
           }
       }
+	  
+	 decorations = [];
+      fdecorations = [];
+      for (let y = 0; y < map.length; y++) {
+          for (let x = 0; x < map[0].length; x++) {
+              if (map[y][x] === 6 || map[y][x] === 7) {
+                  let posValX = 0.5;
+                  let posValY = 0.5;
+                  let colValX = 0.5;
+                  let colValY = 0.5;
+
+                  let hasTop = (y > 0 && map[y-1][x] > 0 && map[y-1][x] !== 6 && map[y-1][x] !== 7);
+                  let hasBottom = (y < map.length - 1 && map[y+1][x] > 0 && map[y+1][x] !== 6 && map[y+1][x] !== 7);
+                  let hasLeft = (x > 0 && map[y][x-1] > 0 && map[y][x-1] !== 6 && map[y][x-1] !== 7);
+                  let hasRight = (x < map[0].length - 1 && map[y][x+1] > 0 && map[y][x+1] !== 6 && map[y][x+1] !== 7);
+
+                  // Золотая середина для красоты
+                  if (hasTop) { posValY = 0.20; colValY = 0.05; }
+                  if (hasBottom) { posValY = 0.80; colValY = 0.95; }
+                  if (hasLeft) { posValX = 0.20; colValX = 0.05; }
+                  if (hasRight) { posValX = 0.80; colValX = 0.95; }
+
+                  decorations.push({ 
+                      type: map[y][x], 
+                      x: x + posValX,     
+                      y: y + posValY,     
+                      colX: x + colValX,  
+                      colY: y + colValY   
+                  });
+              }
+          }
+      }
 
       resetDoomState();
 
@@ -1536,17 +1742,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Обновленная система расчета освещенности
 		function getLightLevel(distance, isFlash) {
-          // Нелинейный (квадратичный) спад света — тьма сгущается быстрее и атмосфернее
           let factor = 1.0 - Math.pow(distance / MAX_LIGHT_DIST, 1.6);
           if (factor < MIN_BRIGHTNESS) factor = MIN_BRIGHTNESS;
 
-          // Вспышка: мощный слепящий импульс для всей видимости, особенно вблизи
+          // Вспышка теперь короткая: вместо 0.15 ставим 0.4, 
+          // чтобы свет ярко вспыхивал прямо перед игроком и быстро сходил на нет к 3-4 блоку
           if (isFlash) {
-              let flashPower = Math.max(0, 1.3 - (distance * 0.15));
-              factor += flashPower; // Нагнетаем яркость поверх темноты
+              let flashPower = Math.max(0, 0.6 - (distance * 0.1)); 
+              factor += flashPower;
           }
 
-          if (factor > 2.5) factor = 2.5; // Разрешаем сильный пересвет при выстреле
+          if (factor > 2.5) factor = 2.5;
+		  factor = Math.floor(factor / 0.040) * 0.040;
           return factor;
       }
 
@@ -1599,11 +1806,26 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
           if (!isDead) {
-              let rotSpeed = 0.065;
-              let moveSpeed = 0.055;
+              let moveSpeed = 0.075;
+              
+              if (typeof player.turnFrames === 'undefined') player.turnFrames = 0;
 
-              if (keys['ArrowLeft']) player.angle -= rotSpeed;
-              if (keys['ArrowRight']) player.angle += rotSpeed;
+              let isTurning = false;
+              let turnDir = 0;
+
+              if (keys['ArrowLeft']) { isTurning = true; turnDir = -1; }
+              if (keys['ArrowRight']) { isTurning = true; turnDir = 1; }
+
+              if (isTurning) {
+                  player.turnFrames++;
+                  let minSens = 0.025;
+                  let maxSens = 0.080;
+                  let accelTime = 10;
+                  let accelFactor = Math.min(player.turnFrames / accelTime, 1.0); 
+                  player.angle += turnDir * (minSens + (maxSens - minSens) * accelFactor); 
+              } else {
+                  player.turnFrames = 0;
+              }
 
               let dx = Math.cos(player.angle) * moveSpeed;
               let dy = Math.sin(player.angle) * moveSpeed;
@@ -1623,33 +1845,45 @@ document.addEventListener("DOMContentLoaded", function() {
                   doomAudio.stopSteps();
               }
 
-              const margin = 0.2;
-              let moveStepX = nextX - player.x;
-              let moveStepY = nextY - player.y;
-              let checkX = nextX + (moveStepX > 0 ? margin : (moveStepX < 0 ? -margin : 0));
-              let checkY = nextY + (moveStepY > 0 ? margin : (moveStepY < 0 ? -margin : 0));
+              // Плавное круговое скольжение (хитбокс-цилиндр)
+              const radius = 0.22;
 
-              let canMoveX = (map[Math.floor(player.y)][Math.floor(checkX)] === 0);
-              if (canMoveX) {
+              // Пробуем сдвинуться по X
+              let targetX = player.x + (nextX - player.x);
+              let checkX = targetX + (targetX > player.x ? radius : -radius);
+              let mapCellX = map[Math.floor(player.y)][Math.floor(checkX)];
+              let canX = (mapCellX === 0 || mapCellX === 6 || mapCellX === 7);
+
+              if (canX) {
                   for (let en of enemies) {
-                      if (en.state === 'alive' && Math.hypot(nextX - en.x, player.y - en.y) < 0.4) {
-                          canMoveX = false;
-                          break;
-                      }
+                      if (en.state === 'alive' && Math.hypot(targetX - en.x, player.y - en.y) < 0.4) { canX = false; break; }
                   }
               }
-              if (canMoveX) player.x = nextX;
-
-              let canMoveY = (map[Math.floor(checkY)][Math.floor(player.x)] === 0);
-              if (canMoveY) {
-                  for (let en of enemies) {
-                      if (en.state === 'alive' && Math.hypot(player.x - en.x, nextY - en.y) < 0.4) {
-                          canMoveY = false;
-                          break;
-                      }
+              if (canX) {
+                  for (let dec of decorations) {
+                      // Круговой радиус хитбокса колонны (0.35 дает мягкое скольжение)
+                      if (Math.hypot(targetX - dec.x, player.y - dec.y) < 0.35) { canX = false; break; }
                   }
               }
-              if (canMoveY) player.y = nextY;
+              if (canX) player.x = targetX;
+
+              // Пробуем сдвинуться по Y
+              let targetY = player.y + (nextY - player.y);
+              let checkY = targetY + (targetY > player.y ? radius : -radius);
+              let mapCellY = map[Math.floor(checkY)][Math.floor(player.x)];
+              let canY = (mapCellY === 0 || mapCellY === 6 || mapCellY === 7);
+
+              if (canY) {
+                  for (let en of enemies) {
+                      if (en.state === 'alive' && Math.hypot(player.x - en.x, targetY - en.y) < 0.4) { canY = false; break; }
+                  }
+              }
+              if (canY) {
+                  for (let dec of decorations) {
+                      if (Math.hypot(player.x - dec.x, targetY - dec.y) < 0.35) { canY = false; break; }
+                  }
+              }
+              if (canY) player.y = targetY;
           }
 
           for (let i = 0; i < enemies.length; i++) {
@@ -1680,60 +1914,89 @@ document.addEventListener("DOMContentLoaded", function() {
           // ЛОГИКА И ДВИЖЕНИЕ МОНСТРОВ
           // ==========================================
           enemies.forEach(en => {
-              if (en.attackCooldown > 0) en.attackCooldown--;
+          if (en.attackCooldown > 0) en.attackCooldown--;
 
-              if (en.state === 'alive') {
-                  let distToPlayer = Math.hypot(player.x - en.x, player.y - en.y);
-                  let canSeePlayer = hasLineOfSight(en.x, en.y, player.x, player.y);
+          if (en.state === 'alive') {
+              let distToPlayer = Math.hypot(player.x - en.x, player.y - en.y);
+              let canSeePlayer = hasLineOfSight(en.x, en.y, player.x, player.y);
 
-                  if (!en.awake && distToPlayer < 8.0) {
-                      en.awake = true;
-                  }
+              if (!en.awake && distToPlayer < 8.0) {
+                  en.awake = true;
+              }
 
-                  if (en.awake && distToPlayer < nearestDistance) nearestDistance = distToPlayer;
+              if (en.awake && distToPlayer < nearestDistance) nearestDistance = distToPlayer;
 
-                  let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
-                  while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
-                  while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
+              let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+              while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
+              while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
 
-                  if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3)) {
-                      backStalkWarning = true;
-                  }
+              if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3)) {
+                  backStalkWarning = true;
+              }
 
-                  if (!isDead && en.awake) {
-                      if (distToPlayer <= 0.48 && canSeePlayer) {
-                          if (en.attackCooldown <= 0 && playerInvulnTimer <= 0) {
-                              en.attackCooldown = 35;
-                              playerInvulnTimer = 30;
-                              player.health = Math.max(0, player.health - 20);
-                              damageFlash = 12;
-                              screenShake = 10;
-                              faceAnimTimer = 18;
-                              spawnBlood();
-                              doomAudio.playBite();
-                              doomAudio.playHurt();
-                          }
+              if (!isDead && en.awake) {
+                  if (distToPlayer <= 0.48 && canSeePlayer) {
+                      if (en.attackCooldown <= 0 && playerInvulnTimer <= 0) {
+                          en.attackCooldown = 35;
+                          playerInvulnTimer = 30;
+                          player.health = Math.max(0, player.health - 20);
+                          damageFlash = 12;
+                          screenShake = 10;
+                          faceAnimTimer = 18;
+                          spawnBlood();
+                          doomAudio.playBite();
+                          doomAudio.playHurt();
+                      }
+                  } else {
+                      let eSpeed = 0.020;
+                      let targetX, targetY;
+
+                      if (canSeePlayer) {
+                          // РЕЖИМ АТАКИ: Видит игрока — бежит напрямик (по диагонали / прямой)
+                          targetX = player.x;
+                          targetY = player.y;
                       } else {
-                          let eSpeed = 0.020;
-                          let dirX = (player.x - en.x) / distToPlayer;
-                          let dirY = (player.y - en.y) / distToPlayer;
+                          // РЕЖИМ ПОИСКА: Не видит — идет змейкой по карте расстояний
+                          let playerDistMap = calculateDistanceMap(player.x, player.y);
+                          let curTileX = Math.floor(en.x);
+                          let curTileY = Math.floor(en.y);
+                          
+                          let bestX = en.x;
+                          let bestY = en.y;
+                          let minD = (playerDistMap[curTileY] && playerDistMap[curTileY][curTileX] !== -1) 
+                                     ? playerDistMap[curTileY][curTileX] 
+                                     : 9999;
 
-                          if (!canSeePlayer) {
-                              let margin = 0.25;
-                              let canX = (map[Math.floor(en.y)][Math.floor(en.x + Math.sign(dirX) * margin)] === 0);
-                              let canY = (map[Math.floor(en.y + Math.sign(dirY) * margin)][Math.floor(en.x)] === 0);
+                          // Проверяем 4 соседние клетки и ищем ту, у которой меньше расстояние до игрока
+                          let neighbors = [
+                              {x: curTileX + 1, y: curTileY},
+                              {x: curTileX - 1, y: curTileY},
+                              {x: curTileX, y: curTileY + 1},
+                              {x: curTileX, y: curTileY - 1}
+                          ];
 
-                              if (!canX && canY) {
-                                  dirX = 0;
-                                  dirY = Math.sign(dirY) || 1;
-                              } else if (canX && !canY) {
-                                  dirX = Math.sign(dirX) || 1;
-                                  dirY = 0;
-                              } else if (!canX && !canY) {
-                                  dirX = (map[Math.floor(en.y)][Math.floor(en.x + 0.3)] === 0) ? 1 : -1;
-                                  dirY = 0;
+                          for(let n of neighbors) {
+                              if(n.y >= 0 && n.y < map.length && n.x >= 0 && n.x < map[0].length) {
+                                  let cell = map[n.y][n.x];
+                                  if(cell === 0 || cell === 6 || cell === 7) {
+                                      let d = playerDistMap[n.y][n.x];
+                                      if(d !== -1 && d < minD) {
+                                          minD = d;
+                                          bestX = n.x + 0.5; // Целимся в центр клетки
+                                          bestY = n.y + 0.5;
+                                      }
+                                  }
                               }
                           }
+                          targetX = bestX;
+                          targetY = bestY;
+                      }
+
+                      // Движение к выбранной точке (targetX, targetY)
+                      let dToTarget = Math.hypot(targetX - en.x, targetY - en.y);
+                      if (dToTarget > 0.05) {
+                          let dirX = (targetX - en.x) / dToTarget;
+                          let dirY = (targetY - en.y) / dToTarget;
 
                           let moveX = dirX * eSpeed;
                           let moveY = dirY * eSpeed;
@@ -1742,30 +2005,47 @@ document.addEventListener("DOMContentLoaded", function() {
                           let testEX = en.x + moveX + (moveX > 0 ? eMargin : -eMargin);
                           let testEY = en.y + moveY + (moveY > 0 ? eMargin : -eMargin);
 
-                          if (map[Math.floor(en.y)][Math.floor(testEX)] === 0) en.x += moveX;
-                          if (map[Math.floor(testEY)][Math.floor(en.x)] === 0) en.y += moveY;
+                          // Проверка коллизий с учетом проходов и колонн (6 и 7)
+                          let mCellX = map[Math.floor(en.y)][Math.floor(testEX)];
+                          let mCanMoveX = (mCellX === 0 || mCellX === 6 || mCellX === 7);
+                          if (mCanMoveX) {
+                              for (let dec of decorations) {
+                                  if (Math.hypot(testEX - dec.x, en.y - dec.y) < 0.25) { mCanMoveX = false; break; }
+                              }
+                          }
+                          if (mCanMoveX) en.x += moveX;
+
+                          let mCellY = map[Math.floor(testEY)][Math.floor(en.x)];
+                          let mCanMoveY = (mCellY === 0 || mCellY === 6 || mCellY === 7);
+                          if (mCanMoveY) {
+                              for (let dec of decorations) {
+                                  if (Math.hypot(en.x - dec.x, testEY - dec.y) < 0.25) { mCanMoveY = false; break; }
+                              }
+                          }
+                          if (mCanMoveY) en.y += moveY;
                       }
                   }
-              } else if (en.state === 'dying') {
-                  en.deathTimer--;
-                  if (en.deathTimer <= 0) {
-                      en.state = 'dead';
-                      en.deathTimer = 60;
-                  }
-              } else if (en.state === 'dead') {
-                  en.deathTimer--;
-                  if (en.deathTimer <= 0) {
-                      en.state = 'alive';
-                      let tile;
-                      do {
-                          tile = getRandomFloorTile();
-                      } while (Math.hypot(tile.x - player.x, tile.y - player.y) < 6.0);
-                      en.x = tile.x;
-                      en.y = tile.y;
-                      en.awake = false;
-                  }
               }
-          });
+          } else if (en.state === 'dying') {
+              en.deathTimer--;
+              if (en.deathTimer <= 0) {
+                  en.state = 'dead';
+                  en.deathTimer = 60;
+              }
+          } else if (en.state === 'dead') {
+              en.deathTimer--;
+              if (en.deathTimer <= 0) {
+                  en.state = 'alive';
+                  let tile;
+                  do {
+                      tile = getRandomFloorTile();
+                  } while (Math.hypot(tile.x - player.x, tile.y - player.y) < 6.0);
+                  en.x = tile.x;
+                  en.y = tile.y;
+                  en.awake = false;
+              }
+          }
+      });
 
           if (!isDead && nearestDistance <= 4.0 && growlCooldown <= 0) {
               let vol = 0.45 - (nearestDistance * 0.09);
@@ -1781,10 +2061,10 @@ document.addEventListener("DOMContentLoaded", function() {
                       let collected = false;
                       if (it.type === 'medkit' && player.health < 100) {
                           player.health = Math.min(100, player.health + 25);
-                          hpFlashTimer = 25;
+                          hpFlashTimer = 35;
                           collected = true;
                       } else if (it.type === 'ammo') {
-                          player.ammo += 20;
+                          player.ammo += 15;
                           ammoFlashTimer = 25;
                           collected = true;
                       }
@@ -1801,7 +2081,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Выстрел
           if (!isDead && keys[' '] && gunAnim === 0 && player.ammo > 0) {
-              gunAnim = 6;
+              // Чередуем выстрелы: если была правая, стреляем из левой, и наоборот
+              player.lastShotSide = (player.lastShotSide === 'right') ? 'left' : 'right';
+              
+              // 16 кадров на выстрел = сниженная скорострельность и плавная анимация
+              gunAnim = 16; 
               flash = true;
               player.ammo--;
               faceAnimTimer = 12;
@@ -1822,7 +2106,7 @@ document.addEventListener("DOMContentLoaded", function() {
               });
           } else {
               if (gunAnim > 0) gunAnim--;
-              else flash = false;
+              if (gunAnim < 13) flash = false; // Освещение стен работает только в самом начале выстрела
           }
 
           if (faceAnimTimer > 0) faceAnimTimer--;
@@ -1841,11 +2125,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
               let mapX = Math.floor(b.x);
               let mapY = Math.floor(b.y);
-              if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length || map[mapY][mapX] > 0 || b.life <= 0) {
+              
+              let hitObstacle = false;
+              
+              // Проверка выхода за карту
+              if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length) {
+                  hitObstacle = true;
+              } else {
+                  let cell = map[mapY][mapX];
+                  // Если стена обычная (не 6 и не 7), пуля уничтожается
+                  if (cell > 0 && cell !== 6 && cell !== 7) {
+                      hitObstacle = true;
+                  } 
+                  // Если пуля летит через блок с колонной (6 или 7)
+                  else if (cell === 6 || cell === 7) {
+                      for (let dec of decorations) {
+                          if (Math.hypot(dec.x - b.x, dec.y - b.y) < 0.16) {
+                              hitObstacle = true; 
+                              break;
+                          }
+                      }
+                  }
+              }
+
+              if (hitObstacle || b.life <= 0) {
                   bullets.splice(i, 1);
                   continue;
               }
 
+              // Столкновение пули с монстром
               enemies.forEach(en => {
                   if (en.state === 'alive' && Math.hypot(en.x - b.x, en.y - b.y) < 0.45) {
                       en.state = 'dying';
@@ -1866,46 +2174,87 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
 			// ==========================================
-			// ОТРИСОВКА ПОЛА И ПОТОЛКА (ГРАДИЕНТНАЯ)
+			// ОТРИСОВКА ПОЛА И ПОТОЛКА (ШАХМАТНАЯ ПЛИТКА)
 			// ==========================================
-			for (let y = viewportHeight / 2; y < viewportHeight; y++) {
-				// Вычисляем дистанцию для текущей горизонтальной линии
-				let rowDistance = 175 / (y - viewportHeight / 2 + 0.001); 
-				
-				// Считаем свет для текущей строки пола по ее дистанции
-				let rowLight = getLightLevel(rowDistance, flash && !isDead);
-				let floorLight = Math.pow(rowLight, 1.8); 
+			let halfH = viewportHeight / 2;
+			
+			// Вычисляем векторы направления для самого левого и самого правого луча камеры
+			let dirX = Math.cos(player.angle);
+			let dirY = Math.sin(player.angle);
+			let planeLen = Math.tan(halfFov);
+			let planeX = -dirY * planeLen;
+			let planeY = dirX * planeLen;
 
-				let baseF = 35; // Пол темный изначально
-				let fR = Math.floor(baseF * floorLight);
-				let fG = Math.floor((baseF * 0.9) * floorLight);
-				let fB = Math.floor((baseF * 0.9) * floorLight);
+			let rayDirX0 = dirX - planeX;
+			let rayDirY0 = dirY - planeY;
+			let rayDirX1 = dirX + planeX;
+			let rayDirY1 = dirY + planeY;
 
-				let baseC = 15; // Потолок почти черный
-				let cR = Math.floor(baseC * floorLight);
-				let cG = Math.floor((baseC * 0.8) * floorLight);
-				let cB = Math.floor((baseC * 0.8) * floorLight);
+			for (let y = halfH; y < viewportHeight; y += 2) {
+				let p = y - halfH;
+				let rowDistance = halfH / (p === 0 ? 0.1 : p);
+				let rowLight = getLightLevel(rowDistance, false);
 
-				// Вспышка на полу
-				if (flash && !isDead && rowLight > 1.0) {
-					let flashAdd = Math.min(40, (rowLight - 1.0) * 50); 
-					fR += flashAdd; fG += flashAdd * 0.8;
-					cR += flashAdd; cG += flashAdd * 0.8;
+				// Шаг текстуры пола при движении на 1 пиксель экрана по горизонтали
+				let floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
+				let floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenWidth;
+
+				// Стартовые координаты в 2D мире для текущей строки (x = 0)
+				let floorX = player.x + rowDistance * rayDirX0;
+				let floorY = player.y + rowDistance * rayDirY0;
+
+				// Вспышка выстрела
+				let flashAddR = 0, flashAddG = 0, flashAddB = 0;
+				if (flash && !isDead) {
+					let normY = p / halfH; 
+					let flashFactor = Math.pow(normY, 3);
+					let flashInt = flashFactor * 90; 
+					flashAddR = flashInt;
+					flashAddG = flashInt * 0.75;
+					flashAddB = flashInt * 0.3;
 				}
 
-				// Рисуем линию пола
-				ctx.fillStyle = `rgb(${fR}, ${fG}, ${fB})`;
-				ctx.fillRect(0, y, screenWidth, 1);
-
-				// Рисуем линию потолка (зеркально)
-				let ceilY = viewportHeight - y - 1;
+				// Потолок отрисовываем максимально быстро, одной сплошной линией
+				let ceilY = viewportHeight - y;
+				let cR = Math.floor(15 * rowLight);
+				let cG = Math.floor(15 * rowLight);
+				let cB = Math.floor(20 * rowLight);
 				ctx.fillStyle = `rgb(${cR}, ${cG}, ${cB})`;
-				ctx.fillRect(0, ceilY, screenWidth, 1);
-			}
+				ctx.fillRect(0, ceilY, screenWidth, 2);
 
+				// Пол рисуем горизонтальными отрезками по 4 пикселя (отличный компромисс между качеством и FPS)
+				for (let x = 0; x < screenWidth; x += 4) {
+					// Формируем сетку. Коэффициент 2 делает плитку мельче (по 4 плитки на один игровой блок)
+					let checker = (Math.floor(floorX * 2) + Math.floor(floorY * 2)) % 2 === 0;
+
+					let fR = checker ? 20 : 35;
+					let fG = checker ? 20 : 35;
+					let fB = checker ? 25 : 40;
+
+					if (flashAddR > 0) {
+						fR = Math.min(255, fR + flashAddR);
+						fG = Math.min(255, fG + flashAddG);
+						fB = Math.min(255, fB + flashAddB);
+					}
+
+					fR = Math.floor(fR * rowLight);
+					fG = Math.floor(fG * rowLight);
+					fB = Math.floor(fB * rowLight);
+
+					ctx.fillStyle = `rgb(${fR}, ${fG}, ${fB})`;
+					ctx.fillRect(x, y, 4, 2);
+
+					// Сдвигаем мировые координаты луча (умножаем на 4, так как шаг цикла x = 4)
+					floorX += floorStepX * 4;
+					floorY += floorStepY * 4;
+				}
+			}
+			
           // ==========================================
           // ОТРИСОВКА СТЕН (DDA RAYCASTING + ТЕКСТУРЫ)
           // ==========================================
+		  
+			let wallHitCoordOverride = null;
           for (let x = 0; x < screenWidth; x++) {
               let cameraX = 2 * x / screenWidth - 1;
               let rayAngle = player.angle + Math.atan(cameraX * Math.tan(halfFov));
@@ -1961,9 +2310,57 @@ document.addEventListener("DOMContentLoaded", function() {
                       break;
                   }
 
-                  if (map[mapY][mapX] > 0) {
+
+                  // === ПРОВЕРКА ЦИЛИНДРИЧЕСКОЙ КОЛОННЫ (6 или 7) ===
+                  let mt = map[mapY][mapX];
+
+                  // === ПРОВЕРКА ЦИЛИНДРИЧЕСКОЙ КОЛОННЫ (6 или 7) ===
+                  if (mt === 6 || mt === 7) {
+                      let dec = decorations.find(d => Math.floor(d.x) === mapX && Math.floor(d.y) === mapY);
+                      if (dec) {
+                          let cx = dec.x; 
+                          let cy = dec.y;
+                          let radius = 0.3; // Радиус цилиндра
+
+                          let fx = player.x - cx;
+                          let fy = player.y - cy;
+
+                          let A = rayDirX * rayDirX + rayDirY * rayDirY;
+                          let B = 2 * (fx * rayDirX + fy * rayDirY);
+                          let C = fx * fx + fy * fy - radius * radius;
+                          let discriminant = B * B - 4 * A * C;
+
+                          if (discriminant >= 0) {
+                              let t = (-B - Math.sqrt(discriminant)) / (2 * A);
+                              if (t > 0) {
+                                  hit = true;
+                                  wallType = mt;
+                                  
+                                  let correctedDist = t * Math.cos(rayAngle - player.angle);
+                                  if (correctedDist < 0.1) correctedDist = 0.1;
+                                  zBuffer[x] = correctedDist;
+
+                                  // 1. Находим точную точку касания луча на окружности цилиндра в мире
+                                  let hitX = player.x + t * rayDirX;
+                                  let hitY = player.y + t * rayDirY;
+
+                                  // 2. Считаем угол точки удара относительно центра колонны для круговой текстуры
+                                  let angleToHit = Math.atan2(hitY - cy, hitX - cx);
+                                  // Переводим угол из [-PI, PI] в нормальный диапазон текстуры [0, 1]
+                                  let cylinderHitCoord = (angleToHit + Math.PI) / (Math.PI * 2);
+
+                                  // Передаем эту координату в общую отрисовку текстуры ниже
+                                  wallHitCoordOverride = cylinderHitCoord; 
+                                  break;
+                              }
+                          }
+                      }
+                  }
+
+                  // Игнорируем 6 и 7 для обычных стен, если не попали в цилиндр
+                  if (mt > 0 && mt !== 6 && mt !== 7) {
                       hit = true;
-                      wallType = map[mapY][mapX];
+                      wallType = mt;
                   }
               }
 
@@ -1974,14 +2371,22 @@ document.addEventListener("DOMContentLoaded", function() {
               if (correctedDist < 0.1) correctedDist = 0.1;
               zBuffer[x] = correctedDist;
 
+              // === НАСТРОЙКА РАЗМЕРА ТЕКСТУР ===
+              let tileFactor = 1.0; 
+              // 5 (Компьютер) и 9 (График) остаются полноразмерными стенами 1х1
+              if (wallType === 5 || wallType === 9) {
+                  tileFactor = 1.0; 
+              }
+
               // Точный расчет координаты текстуры вдоль плоскости стены (0.0 .. 1.0)
               let wallHitCoord = 0;
               if (hitSide === 0) {
-                  wallHitCoord = player.y + rayDist * rayDirY;
+                  // Умножаем мировую координату на множитель перед обрезкой
+                  wallHitCoord = (player.y + rayDist * rayDirY) * tileFactor;
                   wallHitCoord -= Math.floor(wallHitCoord);
                   if (rayDirX > 0) wallHitCoord = 1.0 - wallHitCoord; // устранение зеркальности
               } else {
-                  wallHitCoord = player.x + rayDist * rayDirX;
+                  wallHitCoord = (player.x + rayDist * rayDirX) * tileFactor;
                   wallHitCoord -= Math.floor(wallHitCoord);
                   if (rayDirY < 0) wallHitCoord = 1.0 - wallHitCoord; // устранение зеркальности
               }
@@ -1993,149 +2398,276 @@ document.addEventListener("DOMContentLoaded", function() {
               let wallHeight = Math.floor(450 / correctedDist);
               let drawStart = Math.floor((viewportHeight - wallHeight) / 2);
 
+
               let tex = wallTextures[wallType] || wallTextures[1];
 
               if (tex && tex.complete && tex.naturalWidth > 0) {
-                  let texX = Math.floor(wallHitCoord * 64);
+                  // Берем реальные размеры загруженной текстуры
+                  let tWidth = tex.naturalWidth;
+                  let tHeight = tex.naturalHeight;
+                  
+                  let texX = Math.floor(wallHitCoord * tWidth);
                   if (texX < 0) texX = 0;
-                  if (texX > 63) texX = 63;
+                  if (texX >= tWidth) texX = tWidth - 1;
 
-                  ctx.drawImage(tex, texX, 0, 1, 64, x, drawStart, 1, wallHeight);
+                  // Отрисовка с вертикальным повторением (тайлингом)
+                  let stepHeight = wallHeight / tileFactor;
+                  for (let i = 0; i < tileFactor; i++) {
+                      // Math.ceil нужен, чтобы между кусочками текстур не было микро-щелей
+                      ctx.drawImage(
+                          tex, 
+                          texX, 0, 1, tHeight, 
+                          x, drawStart + (i * stepHeight), 1, Math.ceil(stepHeight)
+                      );
+                  }
 
+                  // Дальше идет старый код наложения теней (его не трогаем)
                   let sTop = Math.max(0, drawStart);
                   let sBottom = Math.min(viewportHeight, drawStart + wallHeight);
                   if (sBottom > sTop) {
                       if (effLight < 1.0) {
-                          // Тени и мрак
                           ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - effLight})`;
                           ctx.fillRect(x, sTop, 1, sBottom - sTop);
                       } else if (effLight > 1.0) {
-                          // Вспышка: мощная огненно-желтая подсветка стен
                           let flashIntensity = Math.min(0.75, (effLight - 1.0) * 0.8);
                           ctx.fillStyle = `rgba(255, 170, 50, ${flashIntensity})`;
                           ctx.fillRect(x, sTop, 1, sBottom - sTop);
                       }
                   }
               } else {
-                  // Запасная заливка цветом
+                  // Запасная заливка цветом для всех 10 типов стен
                   let r = 0, g = 0, b = 0;
-                  let tX = Math.floor(wallHitCoord * 16);
-                  if (wallType === 1) {
-                      r = Math.floor(190 * effLight);
-                      g = Math.floor(25 * effLight);
-                      b = Math.floor(20 * effLight);
-                  } else if (wallType === 2) {
-                      r = Math.floor(125 * effLight);
-                      g = Math.floor(130 * effLight);
-                      b = Math.floor(135 * effLight);
-                  } else if (wallType === 3) {
-                      r = Math.floor(25 * effLight);
-                      g = Math.floor(55 * effLight);
-                      b = Math.floor(170 * effLight);
-                  } else if (wallType === 4) {
-                      let isHazard = (tX % 6 < 3);
-                      r = Math.floor((isHazard ? 210 : 35) * effLight);
-                      g = Math.floor((isHazard ? 180 : 35) * effLight);
-                      b = Math.floor(25 * effLight);
+                  
+                  if (wallType === 1 || wallType === 10) { // Кирпичи
+                      r = Math.floor(150 * effLight); g = Math.floor(150 * effLight); b = Math.floor(150 * effLight);
+                  } else if (wallType === 2) { // Красный кирпич
+                      r = Math.floor(180 * effLight); g = Math.floor(50 * effLight); b = Math.floor(50 * effLight);
+                  } else if (wallType === 3 || wallType === 8 || wallType === 9) { // Техно и лампы
+                      r = Math.floor(100 * effLight); g = Math.floor(110 * effLight); b = Math.floor(120 * effLight);
+                  } else if (wallType === 4) { // Ящики
+                      r = Math.floor(130 * effLight); g = Math.floor(100 * effLight); b = Math.floor(50 * effLight);
+                  } else if (wallType === 5) { // Компьютер
+                      r = Math.floor(40 * effLight); g = Math.floor(150 * effLight); b = Math.floor(40 * effLight);
+                  } else if (wallType === 6 || wallType === 7) { // Колонны
+                      r = Math.floor(180 * effLight); g = Math.floor(180 * effLight); b = Math.floor(180 * effLight);
                   }
+                  
                   ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
                   ctx.fillRect(x, drawStart, 1, wallHeight);
               }
           }
 
-          // Отрисовка спрайтов монстров
+			// ==========================================
+          // СБОР И СОРТИРОВКА ВСЕХ СПРАЙТОВ ПО ГЛУБИНЕ (ОТ ДАЛЬНИХ К БЛИЖНИМ)
+          // ==========================================
+          let renderQueue = [];
+
+          <!-- // 1. Добавляем колонны (декорации) -->
+          <!-- decorations.forEach(dec => { -->
+              <!-- let dist = Math.hypot(dec.x - player.x, dec.y - player.y); -->
+              <!-- renderQueue.push({ type: 'decoration', obj: dec, dist: dist }); -->
+          <!-- }); -->
+
+          // 2. Добавляем предметы (аптечки/патроны)
+          items.forEach(it => {
+              let dist = Math.hypot(it.x - player.x, it.y - player.y);
+              renderQueue.push({ type: 'item', obj: it, dist: dist });
+          });
+
+          // 3. Добавляем монстров
           enemies.forEach(en => {
-              let spriteAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+              let dist = Math.hypot(en.x - player.x, en.y - player.y);
+              renderQueue.push({ type: 'enemy', obj: en, dist: dist });
+          });
+
+          // СОРТИРОВКА: Сначала рисуем те, что дальше (dist больше), в самом конце — те, что ближе к игроку
+          renderQueue.sort((a, b) => b.dist - a.dist);
+
+          // РЕНДЕР ОТСОРТИРОВАННОЙ ОЧЕРЕДИ
+          renderQueue.forEach(item => {
+              let spriteObj = item.obj;
+              let dist = item.dist;
+
+              let spriteAngle = Math.atan2(spriteObj.y - player.y, spriteObj.x - player.x) - player.angle;
               while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
               while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
+			  
+			 
+				let angleMargin = (1.5 / dist) + 0.5; 
+				if (Math.abs(spriteAngle) < halfFov + angleMargin && dist > 0.08) {
+                  let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
+                  let size = Math.floor(250 / dist);
+                  let light = getLightLevel(dist, flash && !isDead);
 
-              if (Math.abs(spriteAngle) < fov + 0.65) {
-                  let dist = Math.hypot(en.x - player.x, en.y - player.y);
-                  
-                  if (dist > 0.08) {
-                      let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
-                      let size = Math.floor(250 / dist);
+                // РЕНДЕР КОЛОНН (На полную высоту от пола до потолка)
+                  if (item.type === 'decoration') {
+                      // Делаем дистанцию чуть-чуть ближе для Z-буфера, чтобы стенка позади её не перекрывала
+                      let renderDist = Math.max(0.1, dist - 0.05); 
+                      
+                      let wallHeight = Math.floor(450 / renderDist); // Точно такая же высота, как у стен!
+                      let drawStart = Math.floor((viewportHeight - wallHeight) / 2); // От пола до потолка
+                      
+                      let itemWidth = Math.floor((250 / renderDist) * 0.7); // Ширина пропорциональна расстоянию
+                      let startX = Math.floor(screenX - itemWidth / 2);
+                      
+                      let img = wallTextures[spriteObj.type];
+
+                      if (img && img.complete && img.naturalWidth > 0) {
+                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, startX + itemWidth); sx++) {
+                              if (sx >= 0 && sx < screenWidth && zBuffer[sx] > renderDist) {
+                                  let texX = Math.floor(((sx - startX) / itemWidth) * img.naturalWidth);
+                                  ctx.drawImage(img, texX, 0, 1, img.naturalHeight, sx, drawStart, 1, wallHeight);
+                                  
+                                  if (light < 1.0) {
+                                      ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
+                                      ctx.fillRect(sx, drawStart, 1, wallHeight);
+                                  }
+                              }
+                          }
+                      }
+                  }
+
+                  // РЕНДЕР ПРЕДМЕТОВ
+                  else if (item.type === 'item') {
+                      let itemWidth = Math.floor(size * 0.4); 
+                      let itemHeight = Math.floor(size * 0.4);
+                      let startX = Math.floor(screenX - itemWidth / 2);
+                      let drawY = Math.floor(viewportHeight / 2) + Math.floor(size / 2) - itemHeight; 
+                      let img = itemSprites[spriteObj.type];
+
+                      if (img && img.complete && img.naturalWidth > 0) {
+                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, startX + itemWidth); sx++) {
+                              if (zBuffer[sx] > dist) {
+                                  let texX = Math.floor(((sx - startX) / itemWidth) * img.naturalWidth);
+                                  ctx.drawImage(img, texX, 0, 1, img.naturalHeight, sx, drawY, 1, itemHeight);
+                                  if (light < 1.0) {
+                                      ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
+                                      ctx.fillRect(sx, drawY, 1, itemHeight);
+                                  }
+                              }
+                          }
+                      }
+                  }
+
+                  // РЕНДЕР МОНСТРОВ (С АНИМАЦИЕЙ ЗЕЛЕНОГО БЛИЖНЕГО БОЯ)
+                  else if (item.type === 'enemy') {
+                      let en = spriteObj;
                       let startX = Math.floor(screenX - size / 2);
                       let endX = Math.floor(screenX + size / 2);
 
-                      let light = getLightLevel(dist, flash && !isDead);
-                      let demonRed = Math.floor(180 * light);
-                      let goreDark = Math.floor(90 * light);
-                      let armorGray = Math.floor(60 * light);
-
                       if (en.state === 'alive') {
-                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
-                              if (zBuffer[sx] > dist) {
-                                  let sy = Math.floor((viewportHeight - size) / 2);
-                                  let drawTop = Math.max(0, sy + Math.floor(size * 0.2));
-                                  let drawH = Math.min(viewportHeight - drawTop, Math.floor(size * 0.65));
+                          // Выбор кадра анимации: если монстр бьет (мало дистанции), крутим анимацию CBO2P
+                          let frameIndex = 0;
+                          if (dist <= 0.8) {
+                              // Анимация удара длится по таймеру атаки
+                              let animStep = Math.floor(((en.attackCooldown || 0) % 30) / 5);
+                              frameIndex = 1 + (animStep % 4); // кадры 1-6 с зеленым эффектом
+                          }
 
-                                  if (drawH > 0) {
-                                      ctx.fillStyle = `rgb(${demonRed}, 0, 0)`;
-                                      ctx.fillRect(sx, drawTop, 1, drawH);
-                                      if (sx % 4 === 0) {
-                                          ctx.fillStyle = `rgb(${armorGray}, ${armorGray}, ${armorGray})`;
-                                          ctx.fillRect(sx, sy + Math.floor(size * 0.35), 1, Math.floor(size * 0.3));
+                          let currentMonsterImg = monsterFrames[frameIndex] || monsterFrames[0];
+
+                          if (currentMonsterImg && currentMonsterImg.complete && currentMonsterImg.naturalWidth > 0) {
+                              let mWidth = size;
+                              let mHeight = size;
+                              let mDrawX = screenX - mWidth / 2;
+                              let mDrawY = viewportHeight / 2 - mHeight / 2;
+
+                              for (let sx = Math.max(0, Math.floor(mDrawX)); sx < Math.min(screenWidth, Math.floor(mDrawX + mWidth)); sx++) {
+                                  if (zBuffer[sx] > dist) {
+                                      let texX = Math.floor(((sx - mDrawX) / mWidth) * currentMonsterImg.naturalWidth);
+                                      ctx.drawImage(
+                                          currentMonsterImg, 
+                                          texX, 0, 1, currentMonsterImg.naturalHeight, 
+                                          sx, mDrawY, 1, mHeight
+                                      );
+
+                                      // Затенение по свету
+                                      if (light < 1.0) {
+                                          ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
+                                          ctx.fillRect(sx, mDrawY, 1, mHeight);
                                       }
                                   }
                               }
                           }
-
-                          let headSize = Math.max(8, Math.floor(size / 2.5));
-                          let hCenterCol = Math.floor(screenX);
-                          let canDrawHead = (hCenterCol >= 0 && hCenterCol < screenWidth && zBuffer[hCenterCol] > dist) ||
-                                            (screenX < 0 && zBuffer[0] > dist) || 
-                                            (screenX >= screenWidth && zBuffer[screenWidth - 1] > dist);
-
-                          if (canDrawHead) {
-                              let hx = screenX - headSize / 2;
-                              let hy = (viewportHeight / 2) - headSize / 1.5;
-
-                              let hornCol = Math.floor(220 * light);
-                              ctx.fillStyle = `rgb(${hornCol}, ${Math.floor(180 * light)}, 0)`;
-                              ctx.fillRect(hx - headSize * 0.3, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
-                              ctx.fillRect(hx + headSize * 0.9, hy - headSize * 0.3, headSize * 0.4, headSize * 0.5);
-
-                              ctx.fillStyle = `rgb(${Math.floor(230 * light)}, ${Math.floor(60 * light)}, 0)`;
-                              ctx.fillRect(hx, hy, headSize, headSize * 0.8);
-
-                              ctx.fillStyle = "#ffff00";
-                              ctx.fillRect(hx + headSize * 0.15, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
-                              ctx.fillRect(hx + headSize * 0.65, hy + headSize * 0.2, headSize * 0.2, headSize * 0.2);
-
-                              if (en.attackCooldown > 15) {
-                                  ctx.fillStyle = "#ff0000";
-                                  ctx.fillRect(hx + headSize * 0.2, hy + headSize * 0.55, headSize * 0.6, headSize * 0.25);
-                              } else {
-                                  ctx.fillStyle = "#000000";
-                                  ctx.fillRect(hx + headSize * 0.25, hy + headSize * 0.6, headSize * 0.5, headSize * 0.15);
-                              }
-                          }
-                      } else if (en.state === 'dying') {
-                          let fallShift = size * 0.18;
+                      } 
+                      // Умирающие / мертвые монстры
+                      else {
+                          let demonRed = Math.floor(180 * light);
                           for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, endX); sx++) {
                               if (zBuffer[sx] > dist) {
-                                  let sy = Math.floor((viewportHeight - size) / 2) + fallShift;
-                                  ctx.fillStyle = (sx % 3 === 0) ? `rgb(${demonRed}, 0, 0)` : `rgb(${goreDark}, 0, 0)`;
+                                  let sy = Math.floor((viewportHeight - size) / 2) + (en.state === 'dead' ? size * 0.36 : size * 0.18);
+                                  ctx.fillStyle = `rgb(${demonRed}, 0, 0)`;
                                   ctx.fillRect(sx, sy + size * 0.35, 1, size * 0.38);
-                              }
+                               }
                           }
-                      } else if (en.state === 'dead') {
-                          let poolShift = size * 0.36;
-                          let poolWidthStart = Math.max(0, Math.floor(screenX - size * 0.65));
-                          let poolWidthEnd = Math.min(screenWidth, Math.floor(screenX + size * 0.65));
+                      }
+                  }
+              }
+          });
+		
+			// ==========================================
+          // ОТРИСОВКА КОЛОНН (СПРАЙТЫ-УКРАШЕНИЯ)
+          // ==========================================
+          
 
-                          for (let sx = poolWidthStart; sx < poolWidthEnd; sx++) {
+
+			// ==========================================
+          // ОТРИСОВКА ПРЕДМЕТОВ (АПТЕЧКИ И ПАТРОНЫ)
+          // ==========================================
+          items.forEach(it => {
+              // Вычисляем угол между игроком и предметом
+              let spriteAngle = Math.atan2(it.y - player.y, it.x - player.x) - player.angle;
+              while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
+              while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
+
+              // Проверяем, находится ли предмет в поле зрения
+              if (Math.abs(spriteAngle) < fov + 0.5) {
+                  let dist = Math.hypot(it.x - player.x, it.y - player.y);
+                  
+                  if (dist > 0.2) {
+                      let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
+                      
+                      // Базовый размер зависит от дистанции
+                      let size = Math.floor(250 / dist); 
+                      // Уменьшаем предметы, чтобы они не были размером с монстра (коэффициент 0.4)
+                      let itemWidth = Math.floor(size * 0.4); 
+                      let itemHeight = Math.floor(size * 0.4);
+                      
+                      let startX = Math.floor(screenX - itemWidth / 2);
+                      let drawY = Math.floor(viewportHeight / 2) + Math.floor(size / 2) - itemHeight; // Ставим на пол
+                      
+                      let img = itemSprites[it.type];
+
+                      // Рисуем, если картинка загрузилась
+                      if (img && img.complete && img.naturalWidth > 0) {
+                          let light = getLightLevel(dist, flash && !isDead);
+
+                          // Отрисовка вертикальными полосами (чтобы стены перекрывали предметы)
+                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, startX + itemWidth); sx++) {
                               if (zBuffer[sx] > dist) {
-                                  let sy = Math.floor((viewportHeight - size) / 2) + poolShift;
-                                  ctx.fillStyle = (sx % 2 === 0) ? `rgb(${goreDark}, 0, 0)` : `rgb(40, 0, 0)`;
-                                  ctx.fillRect(sx, sy + size * 0.46, 1, size * 0.14);
+                                  // Высчитываем, какую часть картинки рисовать
+                                  let texX = Math.floor(((sx - startX) / itemWidth) * img.naturalWidth);
+                                  
+                                  ctx.drawImage(img, texX, 0, 1, img.naturalHeight, sx, drawY, 1, itemHeight);
+                                  
+                                  // Применяем атмосферное затенение
+                                  if (light < 1.0) {
+                                      ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
+                                      ctx.fillRect(sx, drawY, 1, itemHeight);
+                                  } else if (light > 1.0 && flash && !isDead) {
+                                      // Подсветка от выстрела
+                                      let flashInt = Math.min(0.5, (light - 1.0) * 0.5);
+                                      ctx.fillStyle = `rgba(255, 170, 50, ${flashInt})`;
+                                      ctx.fillRect(sx, drawY, 1, itemHeight);
+                                  }
                               }
                           }
                       }
                   }
               }
           });
+
+         
 
           bullets.forEach(b => {
               let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
@@ -2159,40 +2691,86 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
           });
+			
+			
 
+          // ==========================================
+          // ОТРИСОВКА ОРУЖИЯ (ИЗ ОТДЕЛЬНЫХ КАДРОВ)
+          // ==========================================
           let bobbing = Math.sin(bobPhase) * 6;
-          let gunYOffset = (gunAnim * 3) + bobbing + gunDropOffset;
-          let gunBaseX = screenWidth / 2;
-          
-          ctx.fillStyle = "#151515";
-          ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 36, 45);
-          ctx.fillStyle = "#3a3a3a";
-          ctx.fillRect(gunBaseX - 18, viewportHeight - 45 + gunYOffset, 6, 45);
+          let gunYOffset = bobbing + gunDropOffset;
 
-          ctx.fillStyle = "#222222";
-          ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 24, 35);
-          ctx.fillStyle = "#4a4a4a";
-          ctx.fillRect(gunBaseX - 12, viewportHeight - 75 + gunYOffset, 4, 35);
+          let currentAnimFrame = 0;
+          if (gunAnim > 0) {
+              // Разбиваем 16 кадров кулдауна на 5 шагов анимации
+              let step = Math.floor((16 - gunAnim) / 3.2) + 1; 
+              if (step > 5) step = 5;
 
-          ctx.fillStyle = "#111111";
-          ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 12, 30);
-          ctx.fillStyle = "#666666";
-          ctx.fillRect(gunBaseX - 6, viewportHeight - 100 + gunYOffset, 2, 30);
-
-          if (flash && !isDead) {
-              ctx.fillStyle = "#ff3300";
-              ctx.beginPath();
-              ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 22, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.fillStyle = "#ffcc00";
-              ctx.beginPath();
-              ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 12, 0, Math.PI * 2);
-              ctx.fill();
-              ctx.fillStyle = "#ffffff";
-              ctx.beginPath();
-              ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 6, 0, Math.PI * 2);
-              ctx.fill();
+              if (player.lastShotSide === 'right') {
+                  currentAnimFrame = step;     // 1-5: Вспышка и отдача правой пушки
+              } else {
+                  currentAnimFrame = step + 5; // 6-10: Вспышка и отдача левой пушки
+              }
           }
+
+          let currentSprite = weaponFrames[currentAnimFrame] || weaponFrames[0];
+          let spriteName = frameNames[currentAnimFrame]; 
+
+          if (currentSprite && currentSprite.complete && currentSprite.naturalWidth > 0) {
+              
+              let scale = 1.2; 
+              let drawWidth = currentSprite.naturalWidth * scale;
+              let drawHeight = currentSprite.naturalHeight * scale;
+
+              let centerX = (screenWidth - drawWidth) / 2;
+              let drawY = viewportHeight - drawHeight + 10 + gunYOffset;
+
+              let idleSprite = weaponFrames[0]; 
+              let idleW = idleSprite.naturalWidth * scale;
+              let idleH = idleSprite.naturalHeight * scale;
+              let idleX = (screenWidth - idleW) / 2;
+
+              if (spriteName.startsWith('BLPS')) {
+                  // === СТРЕЛЯЕТ ПРАВАЯ ===
+                  ctx.drawImage(
+                      idleSprite, 0, 0, idleSprite.naturalWidth / 2, idleSprite.naturalHeight, 
+                      idleX, drawY, idleW / 2, idleH 
+                  );
+                  let rightX = screenWidth - drawWidth - 40; 
+                  ctx.drawImage(currentSprite, rightX, drawY, drawWidth, drawHeight);
+
+              } else if (spriteName.startsWith('LLPS')) {
+                  // === СТРЕЛЯЕТ ЛЕВАЯ ===
+                  ctx.drawImage(
+                      idleSprite, idleSprite.naturalWidth / 2, 0, idleSprite.naturalWidth / 2, idleSprite.naturalHeight,
+                      idleX + idleW / 2, drawY, idleW / 2, idleH
+                  );
+                  let leftX = 40; 
+                  ctx.drawImage(currentSprite, leftX, drawY, drawWidth, drawHeight);
+
+              } else {
+                  // === ПОКОЙ ===
+                  ctx.drawImage(currentSprite, centerX, drawY, drawWidth, drawHeight);
+              }
+          } else {
+              ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+              ctx.fillRect((screenWidth - 120)/2, viewportHeight - 120 + gunYOffset, 120, 120);
+          }
+
+          <!-- if (flash && !isDead) { -->
+              <!-- ctx.fillStyle = "#ff3300"; -->
+              <!-- ctx.beginPath(); -->
+              <!-- ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 22, 0, Math.PI * 2); -->
+              <!-- ctx.fill(); -->
+              <!-- ctx.fillStyle = "#ffcc00"; -->
+              <!-- ctx.beginPath(); -->
+              <!-- ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 12, 0, Math.PI * 2); -->
+              <!-- ctx.fill(); -->
+              <!-- ctx.fillStyle = "#ffffff"; -->
+              <!-- ctx.beginPath(); -->
+              <!-- ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 6, 0, Math.PI * 2); -->
+              <!-- ctx.fill(); -->
+          <!-- } -->
 
           for (let i = bloodSplats.length - 1; i >= 0; i--) {
               let p = bloodSplats[i];
