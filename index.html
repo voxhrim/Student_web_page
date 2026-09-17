@@ -671,13 +671,20 @@
 			</div>
 		</div>
 		
-		<div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden;">
-			<canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: auto; max-height: calc(88vh - 70px); aspect-ratio: 720/460; image-rendering: pixelated; image-rendering: crisp-edges; border: 2px solid #404040; box-sizing: border-box; object-fit: contain;"></canvas>
+		<div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden; position: relative;">
+			
+			<!-- VHS Контейнер -->
+			<div class="vhs-container">
+				<canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; object-fit: contain;"></canvas>
+				<div class="vhs-scanlines"></div>
+			</div>
+			
+			<canvas id="minimapCanvas" width="180" height="180" style="position: absolute; top: 35px; right: 10px; border: 2px solid #555; background: rgba(0, 0, 0, 0.7); display: none; image-rendering: pixelated; z-index: 10;"></canvas>
+			
 			<div style="font-family: Tahoma, sans-serif; font-size: clamp(11px, 1.2vw, 14px); color: #B53B3B; margin-top: 4px; padding-bottom: 2px; text-align: center; flex-shrink: 0;">
 				Управление: WASD - движение, Стрелки — поворот камеры, ПРОБЕЛ — огонь.
 			</div>
 		</div>
-	</div>
 
 <!-- скрипт погоды -->
 
@@ -1447,10 +1454,8 @@ document.addEventListener("DOMContentLoaded", function() {
       const win = document.getElementById('doom-window');
       if (win) win.style.display = 'none';
       doomAudio.stopMusic();
-      if (doomInterval) {
-          clearInterval(doomInterval);
-          doomInterval = null;
-      }
+      
+      doomInterval = false; // Останавливаем новый цикл
   }
 
   function startDoomGame() {
@@ -1475,6 +1480,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	  const LIGHT_STEP = 0.15;
       const MAX_LIGHT_DIST = 8;   // Уменьшаем дальность видимости во тьме для мрачности
       const MIN_BRIGHTNESS = 0.01; // Почти абсолютная темнота вдалеке
+
+	
+		
+		
+		let showMinimap = true;
+		let showAllMonsters = false;
+
+		window.addEventListener('keydown', (e) => {
+			if (e.code === 'KeyM') showMinimap = !showMinimap; // 'M' переключает миникарту
+			if (e.code === 'KeyN') showAllMonsters = !showAllMonsters; // 'N' переключает все/только видимые
+		});
 
      const map = [ 
           [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1],
@@ -1616,7 +1632,7 @@ document.addEventListener("DOMContentLoaded", function() {
           return true;
       }
 
-      let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets, decorations;
+      let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets, decorations, decals;
       let isDead = false;
       let deathTimer = 0;
       let growlCooldown = 0;
@@ -1643,6 +1659,7 @@ document.addEventListener("DOMContentLoaded", function() {
           screenShake = 0;
           bloodSplats = [];
           bullets = [];
+		  decals = []; // Очищаем дырки от пуль при рестарте
           isDead = false;
           deathTimer = 0;
           growlCooldown = 0;
@@ -1741,7 +1758,31 @@ document.addEventListener("DOMContentLoaded", function() {
           }
       }
 
-      doomInterval = setInterval(() => {
+      let lastTime = 0;
+      let accumulator = 0;
+      const TIME_STEP = 1000 / 35; // Целевая скорость логики
+      doomInterval = true; 
+
+      function gameLoop(timestamp) {
+          if (!doomInterval) return; 
+          requestAnimationFrame(gameLoop);
+          
+          if (!lastTime) lastTime = timestamp;
+          let deltaTime = timestamp - lastTime;
+          lastTime = timestamp;
+
+          if (deltaTime > 250) deltaTime = 250;
+          accumulator += deltaTime;
+
+          let updates = 0;
+          // Крутим логику, пока есть накопленное время, но не больше 4 раз за кадр
+          while (accumulator >= TIME_STEP && updates < 4) {
+              accumulator -= TIME_STEP;
+              updates++;
+              
+              // Флаг пропуска рендера: если цикл пойдет на еще один круг, графику не рисуем!
+              let skipRender = (accumulator >= TIME_STEP && updates < 4);
+		  
           if (playerInvulnTimer > 0) playerInvulnTimer--;
           if (hpFlashTimer > 0) hpFlashTimer--;
           if (ammoFlashTimer > 0) ammoFlashTimer--;
@@ -1799,24 +1840,35 @@ document.addEventListener("DOMContentLoaded", function() {
               }
 
               // Вектор движения вперед/назад
-              let dx = Math.cos(player.angle) * moveSpeed;
-              let dy = Math.sin(player.angle) * moveSpeed;
-              
-              // Вектор стрейфа (перпендикулярно направлению взгляда, сдвиг на 90 градусов)
-              let strafeDx = Math.cos(player.angle + Math.PI / 2) * moveSpeed;
-              let strafeDy = Math.sin(player.angle + Math.PI / 2) * moveSpeed;
-
-              let nextX = player.x;
+             let nextX = player.x;
               let nextY = player.y;
-              let isMoving = false;
 
               // Шаги (WASD)
-              if (keys['KeyW']) { nextX += dx; nextY += dy; isMoving = true; }
-              if (keys['KeyS']) { nextX -= dx; nextY -= dy; isMoving = true; }
-              if (keys['KeyA']) { nextX -= strafeDx; nextY -= strafeDy; isMoving = true; }
-              if (keys['KeyD']) { nextX += strafeDx; nextY += strafeDy; isMoving = true; }
+              let moveForward = 0;
+              let moveStrafe = 0;
+
+              if (keys['KeyW']) moveForward += 1;
+              if (keys['KeyS']) moveForward -= 1;
+              if (keys['KeyD']) moveStrafe += 1;
+              if (keys['KeyA']) moveStrafe -= 1;
+
+              let isMoving = (moveForward !== 0 || moveStrafe !== 0);
 
               if (isMoving) {
+                  // Нормализация вектора (чтобы диагональ не была быстрее)
+                  let len = Math.hypot(moveForward, moveStrafe);
+                  moveForward /= len;
+                  moveStrafe /= len;
+
+                  let dx = Math.cos(player.angle) * moveForward * moveSpeed;
+                  let dy = Math.sin(player.angle) * moveForward * moveSpeed;
+                  
+                  let strafeDx = Math.cos(player.angle + Math.PI / 2) * moveStrafe * moveSpeed;
+                  let strafeDy = Math.sin(player.angle + Math.PI / 2) * moveStrafe * moveSpeed;
+
+                  nextX = player.x + dx + strafeDx;
+                  nextY = player.y + dy + strafeDy;
+
                   bobPhase += 0.25;
                   doomAudio.startSteps();
               } else {
@@ -1835,7 +1887,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
               if (canX) {
                   for (let en of enemies) {
-                      if (en.state === 'alive' && Math.hypot(targetX - en.x, player.y - en.y) < 0.4) { canX = false; break; }
+                      if (en.state === 'alive' && Math.hypot(targetX - en.x, player.y - en.y) < 0.2) { canX = false; break; }
                   }
               }
               if (canX) player.x = targetX;
@@ -1848,7 +1900,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
               if (canY) {
                   for (let en of enemies) {
-                      if (en.state === 'alive' && Math.hypot(player.x - en.x, targetY - en.y) < 0.4) { canY = false; break; }
+                      if (en.state === 'alive' && Math.hypot(player.x - en.x, targetY - en.y) < 0.2) { canY = false; break; }
                   }
               }
               if (canY) player.y = targetY;
@@ -1860,8 +1912,8 @@ document.addEventListener("DOMContentLoaded", function() {
                   let e2 = enemies[j];
                   if (e1.state === 'alive' && e2.state === 'alive') {
                       let distBetween = Math.hypot(e1.x - e2.x, e1.y - e2.y);
-                      if (distBetween < 0.45 && distBetween > 0.001) {
-                          let push = (0.45 - distBetween) * 0.035;
+                      if (distBetween < 0.25 && distBetween > 0.001) {
+                          let push = (0.25 - distBetween) * 0.035;
                           let px = ((e1.x - e2.x) / distBetween) * push;
                           let py = ((e1.y - e2.y) / distBetween) * push;
 
@@ -1966,19 +2018,22 @@ document.addEventListener("DOMContentLoaded", function() {
                           let dirX = (targetX - en.x) / dToTarget;
                           let dirY = (targetY - en.y) / dToTarget;
 
-                          let moveX = dirX * eSpeed;
-                          let moveY = dirY * eSpeed;
-                          let eMargin = 0.22;
+							let moveX = dirX * eSpeed;
+							let moveY = dirY * eSpeed;
+							let eMargin = 0.22;
 
-                          let testEX = en.x + moveX + (moveX > 0 ? eMargin : -eMargin);
-                          let testEY = en.y + moveY + (moveY > 0 ? eMargin : -eMargin);
+							let nextMapX = Math.floor(en.x + moveX + (moveX > 0 ? eMargin : -eMargin));
+							let nextMapY = Math.floor(en.y + moveY + (moveY > 0 ? eMargin : -eMargin));
 
-                          // Проверка коллизий только со стенами карты
-                          let mCellX = map[Math.floor(en.y)][Math.floor(testEX)];
-                          if (mCellX === 0) en.x += moveX;
+							// При движении по X проверяем верхнее и нижнее "плечо"
+							let canMoveX = map[Math.floor(en.y - eMargin)][nextMapX] === 0 && 
+										   map[Math.floor(en.y + eMargin)][nextMapX] === 0;
+							if (canMoveX) en.x += moveX;
 
-                          let mCellY = map[Math.floor(testEY)][Math.floor(en.x)];
-                          if (mCellY === 0) en.y += moveY;
+							// При движении по Y проверяем левое и правое "плечо"
+							let canMoveY = map[nextMapY][Math.floor(en.x - eMargin)] === 0 && 
+										   map[nextMapY][Math.floor(en.x + eMargin)] === 0;
+							if (canMoveY) en.y += moveY;
                       }
                   }
               }
@@ -2035,16 +2090,13 @@ document.addEventListener("DOMContentLoaded", function() {
               });
           }
 
-          // Выстрел
           if (!isDead && keys['Space'] && gunAnim === 0 && player.ammo > 0) {
-              // Чередуем выстрелы: если была правая, стреляем из левой, и наоборот
               player.lastShotSide = (player.lastShotSide === 'right') ? 'left' : 'right';
               
-              // 16 кадров на выстрел = сниженная скорострельность и плавная анимация
               gunAnim = 16; 
               flash = true;
               player.ammo--;
-              faceAnimTimer = 12;
+              faceAnimTimer = 18;
               doomAudio.playShot();
               
               enemies.forEach(en => {
@@ -2053,11 +2105,25 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               });
 
+              // 1. Смещение старта пули к стволу (левому или правому) — сдвинули ближе к центру
+              let barrelOffset = (player.lastShotSide === 'left') ? -0.06 : 0.06;
+              let startX = player.x + Math.cos(player.angle + Math.PI / 2) * barrelOffset;
+              let startY = player.y + Math.sin(player.angle + Math.PI / 2) * barrelOffset;
+              
+              // 2. Виртуальная точка прицеливания (далеко по центру экрана)
+              let targetX = player.x + Math.cos(player.angle) * 10;
+              let targetY = player.y + Math.sin(player.angle) * 10;
+              
+              // 3. Угол полета от ствола в центр + уменьшенный вдвое разброс
+              let bAngle = Math.atan2(targetY - startY, targetX - startX);
+              bAngle += (Math.random() - 0.5) * 0.03; // Разброс по горизонтали (было 0.06)
+              
               bullets.push({
-                  x: player.x,
-                  y: player.y,
-                  dirX: Math.cos(player.angle),
-                  dirY: Math.sin(player.angle),
+                  x: startX,
+                  y: startY,
+                  dirX: Math.cos(bAngle),
+                  dirY: Math.sin(bAngle),
+                  zOffset: (Math.random() - 0.5) * 0.1, // Разброс по вертикали (было 0.2)
                   life: 20
               });
           } else {
@@ -2081,31 +2147,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
               let mapX = Math.floor(b.x);
               let mapY = Math.floor(b.y);
+              let hitWall = false;
               
-              let hitObstacle = false;
-              
-              // Проверка выхода за карту
+              // Проверка столкновения со стеной
               if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length) {
-                  hitObstacle = true;
+                  hitWall = true;
               } else {
-                  let cell = map[mapY][mapX];
-                  // Любой блок больше нуля (включая 6 и 7) — это стена, пуля уничтожается
-                  if (cell > 0) {
-                      hitObstacle = true;
+                  if (map[mapY][mapX] > 0) {
+                      hitWall = true;
+                      // Оставляем дырку на стене, слегка сдвинув ее к игроку, чтобы она не "утонула" в текстуре
+                      decals.push({
+                          x: b.x - b.dirX * 0.15,
+                          y: b.y - b.dirY * 0.15,
+                          zOffset: b.zOffset
+                      });
                   }
               }
 
-              // Столкновение пули с монстром
+              let hitEnemy = false;
+              // Столкновение с монстром
               enemies.forEach(en => {
                   if (en.state === 'alive' && Math.hypot(en.x - b.x, en.y - b.y) < 0.45) {
                       en.state = 'dying';
                       en.deathTimer = 30;
                       kills++;
                       doomAudio.playMonsterDeath();
-                      bullets.splice(i, 1);
+                      hitEnemy = true;
                   }
               });
-          }
+
+             // Удаляем пулю, если она попала в стену, врага или истекло время
+              if (hitWall || hitEnemy || b.life <= 0) {
+                  bullets.splice(i, 1);
+              }
+          } 
+
+          // Пропускаем тяжелую 3D-отрисовку, если нужно нагнать логику (Frame Skip)
+          if (skipRender) continue;
 
           ctx.save();
           if (screenShake > 0) {
@@ -2376,6 +2454,11 @@ document.addEventListener("DOMContentLoaded", function() {
               let dist = Math.hypot(en.x - player.x, en.y - player.y);
               renderQueue.push({ type: 'enemy', obj: en, dist: dist });
           });
+		  // 4. Добавляем декали (дырки от пуль)
+          decals.forEach(dec => {
+              let dist = Math.hypot(dec.x - player.x, dec.y - player.y);
+              renderQueue.push({ type: 'decal', obj: dec, dist: dist });
+          });
 
           // СОРТИРОВКА: Сначала рисуем те, что дальше (dist больше), в самом конце — те, что ближе к игроку
           renderQueue.sort((a, b) => b.dist - a.dist);
@@ -2536,39 +2619,56 @@ document.addEventListener("DOMContentLoaded", function() {
                           }
                       }
                   }
-			}
-          });
-		
+                  // РЕНДЕР ДЕКАЛЕЙ ПОПАДАНИЙ
+                  else if (item.type === 'decal') {
+                      let dec = spriteObj;
+                      let wallHeight = Math.floor(450 / dist);
+                      
+                      // Размер пропорционален высоте стены (в упор дырки будут огромными)
+                      let size = Math.max(2, Math.floor(wallHeight * 0.015)); 
+                      
+                      let centerY = viewportHeight / 2;
+                      let drawY = centerY + (dec.zOffset * wallHeight); 
 
-		
+                      // Проецируем Евклидово расстояние декали в перпендикулярное (как у стен)
+                      let perpDist = dist * Math.cos(spriteAngle);
+
+                      // Зазор -0.3 решает проблему "моргания" и исчезновения на углах
+                      if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > perpDist - 0.3) {
+                          ctx.fillStyle = '#080808'; 
+                          ctx.beginPath();
+                          ctx.arc(screenX, drawY, size, 0, Math.PI * 2);
+                          ctx.fill();
+                      }
+                  }
+              }
+          });
 			
-			// ==========================================
-          // ОТРИСОВКА ПОЛЕТА ПУЛЬ
-          // ==========================================
-          bullets.forEach(b => {
+			
+			// ОТРИСОВКА ПОЛЕТА ПУЛЬ
+			bullets.forEach(b => {
               let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
               while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
               while (bulletAngle > Math.PI) bulletAngle -= Math.PI * 2;
 
               if (Math.abs(bulletAngle) < fov) {
                   let dist = Math.hypot(b.x - player.x, b.y - player.y);
-                  
-                  // Проекция пули на экран
                   let screenX = Math.floor((screenWidth / 2) + (bulletAngle / fov) * screenWidth);
                   let bSize = Math.max(4, Math.floor(20 / dist));
+                  
+                  // Смещение высоты летящей пули
+                  let wallHeight = Math.floor(450 / dist);
+                  let drawY = viewportHeight / 2 + (b.zOffset * wallHeight);
 
-                  // Рисуем пулю, если она перед стеной
                   if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > dist) {
-                      // Голубое плазменное свечение
                       ctx.fillStyle = "#00ffff";
                       ctx.beginPath();
-                      ctx.arc(screenX, viewportHeight / 2, bSize, 0, Math.PI * 2);
+                      ctx.arc(screenX, drawY, bSize, 0, Math.PI * 2);
                       ctx.fill();
                       
-                      // Белое раскаленное ядро
                       ctx.fillStyle = "#ffffff";
                       ctx.beginPath();
-                      ctx.arc(screenX, viewportHeight / 2, bSize / 2, 0, Math.PI * 2);
+                      ctx.arc(screenX, drawY, bSize / 2, 0, Math.PI * 2);
                       ctx.fill();
                   }
               }
@@ -2814,7 +2914,59 @@ document.addEventListener("DOMContentLoaded", function() {
               ctx.fillRect(faceBoxX + 6, faceBoxY + 4, 64, 70);
           }
 
-      }, 1000 / 35);
+				// миникарта
+		const miniCanvas = document.getElementById('minimapCanvas');
+			if (showMinimap) {
+				miniCanvas.style.display = 'block';
+				const mCtx = miniCanvas.getContext('2d');
+				mCtx.clearRect(0, 0, 180, 180);
+				
+				let tileSize = 180 / Math.max(map[0].length, map.length);
+				
+				// Рисуем стены
+				mCtx.fillStyle = '#444';
+				for (let y = 0; y < map.length; y++) {
+					for (let x = 0; x < map[0].length; x++) {
+						if (map[y][x] > 0) mCtx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+					}
+				}
+				
+				// Рисуем конус зрения
+				mCtx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+				mCtx.beginPath();
+				mCtx.moveTo(player.x * tileSize, player.y * tileSize);
+				mCtx.arc(player.x * tileSize, player.y * tileSize, 10 * tileSize, player.angle - halfFov, player.angle + halfFov);
+				mCtx.fill();
+
+				// Рисуем игрока
+				mCtx.fillStyle = '#00ff00';
+				mCtx.fillRect(player.x * tileSize - 2, player.y * tileSize - 2, 4, 4);
+				
+				// Рисуем монстров
+				enemies.forEach(en => {
+					if (en.state === 'alive') {
+						let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+						while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
+						while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
+
+						let inFOV = Math.abs(diffAngle) < halfFov && hasLineOfSight(player.x, player.y, en.x, en.y);
+						
+						if (showAllMonsters || inFOV) {
+							mCtx.fillStyle = inFOV ? '#ff0000' : '#880000'; // Ярко красные в FOV, темно-красные за стеной
+							mCtx.fillRect(en.x * tileSize - 1.5, en.y * tileSize - 1.5, 3, 3);
+						}
+					}
+				});
+			} else {
+                  miniCanvas.style.display = 'none';
+              }
+          } // Закрываем цикл while
+          
+          // Если процессор совсем не тянет, сбрасываем время, чтобы игра не зависла намертво
+          if (updates >= 4) accumulator = 0; 
+      }
+
+      requestAnimationFrame(gameLoop); // Первый запуск
   }
 </script>
 

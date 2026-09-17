@@ -573,6 +573,46 @@ html, body {
     padding-right: 11px;
 }
 
+/* Эффект старой кассеты для Doom */
+    .vhs-container {
+        position: relative;
+        width: 100%;
+        max-height: calc(88vh - 70px);
+        aspect-ratio: 720/460;
+        border: 2px solid #404040;
+        box-sizing: border-box;
+        background: #000;
+        overflow: hidden;
+        /* Добавили brightness(1.2) для общего осветления картинки */
+        filter: brightness(1.2) contrast(1.1) saturate(1.2) sepia(0.15) hue-rotate(-5deg);
+        animation: vhs-jitter 6s infinite;
+    }
+
+    .vhs-scanlines {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 5;
+        /* Черные полосы стали намного прозрачнее (0.08 вместо 0.25) */
+        background: 
+            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%), 
+            linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        background-size: 100% 4px, 3px 100%;
+        /* Виньетка больше не съедает пол-экрана (0.35 вместо 0.9) */
+        box-shadow: inset 0 0 30px rgba(0,0,0,0.35); 
+    }
+
+    @keyframes vhs-jitter {
+    0%, 100% { transform: translate(0, 0); }
+    5% { transform: translate(1px, 0); }
+    10% { transform: translate(-1px, 0); }
+    11% { transform: translate(1px, 1px); } /* Убрали скачок яркости и skew */
+    12% { transform: translate(0, 0); }
+    60% { transform: translate(0, -1px); }
+    61% { transform: translate(0, 1px); }
+    95% { transform: translate(-1px, 0); }
+}
+
 
 .color:hover {
     background: #d8d8d8;
