@@ -1510,7 +1510,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <!-- const MIN_BRIGHTNESS = 0.05; -->
 	  
 	  const LIGHT_STEP = 0.15;
-      const MAX_LIGHT_DIST = 8;   // Уменьшаем дальность видимости во тьме для мрачности
+      const MAX_LIGHT_DIST = 10;   // Уменьшаем дальность видимости во тьме для мрачности
       const MIN_BRIGHTNESS = 0.01; // Почти абсолютная темнота вдалеке
 
 	
@@ -1524,7 +1524,10 @@ document.addEventListener("DOMContentLoaded", function() {
 			if (e.code === 'KeyN') showAllMonsters = !showAllMonsters; // 'N' переключает все/только видимые
 		});
 
-     const map = [ 
+     // Карта 40x40 с правильными текстурами и закольцованными широкими проходами
+      // 0 - пол, 1 - стена, 2 - красный кирпич, 3 - техно-стена, 4 - ящики
+      // 5 - комп, 6 - стена с трещиной, 7 - красный кирпич с кровью, 8 - ящик с подтеком, 9 - техно-стена с проводами, 10 - стена с плющом
+      const map = [ 
           [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1],
           [1,0,0,0,0,0,0,1,4,4,8,9,4,4,4,1,0,0,0,0,0,0,0,1],
           [1,0,0,0,0,0,0,6,4,0,0,0,0,0,4,4,0,1,1,5,1,1,0,1],
@@ -1550,7 +1553,7 @@ document.addEventListener("DOMContentLoaded", function() {
           [1,0,1,3,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,1,1,1],
           [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1]
       ];
-
+	  
       function getRandomFloorTile() {
           let emptyTiles = [];
           for (let y = 0; y < map.length; y++) {
@@ -1723,7 +1726,9 @@ document.addEventListener("DOMContentLoaded", function() {
                   isBoss: false, // Флаг босса
 				  isStriking: false, // Флаг для задержки урона
                   speedMult: 1.0, // Множитель скорости
-                  sizeMult: 1.0 // Множитель размера
+                  sizeMult: 1.0, // Множитель размера
+                  targetOffsetX: (Math.random() - 0.5) * 1.5, // Смещение по X для флангования
+                  targetOffsetY: (Math.random() - 0.5) * 1.5  // Смещение по Y для флангования
               });
           }
 
@@ -1951,9 +1956,10 @@ document.addEventListener("DOMContentLoaded", function() {
                   let e1 = enemies[i];
                   let e2 = enemies[j];
                   if (e1.state === 'alive' && e2.state === 'alive') {
+                      // Увеличили радиус хитбокса и силу отталкивания, чтобы толпа занимала больше места
                       let distBetween = Math.hypot(e1.x - e2.x, e1.y - e2.y);
-                      if (distBetween < 0.25 && distBetween > 0.001) {
-                          let push = (0.25 - distBetween) * 0.035;
+                      if (distBetween < 0.45 && distBetween > 0.001) {
+                          let push = (0.45 - distBetween) * 0.12;
                           let px = ((e1.x - e2.x) / distBetween) * push;
                           let py = ((e1.y - e2.y) / distBetween) * push;
 
@@ -2033,9 +2039,9 @@ document.addEventListener("DOMContentLoaded", function() {
                           let targetX, targetY;
 
                           if (canSeePlayer) {
-                              // РЕЖИМ АТАКИ: Видит игрока — бежит напрямик
-                              targetX = player.x;
-                              targetY = player.y;
+                              // РЕЖИМ АТАКИ: Флангование. Целятся не ровно в центр игрока, а пытаются окружить
+                              targetX = player.x + en.targetOffsetX;
+                              targetY = player.y + en.targetOffsetY;
                           } else {
                               // РЕЖИМ ПОИСКА: Не видит — идет змейкой по карте расстояний
                               let playerDistMap = calculateDistanceMap(player.x, player.y);
