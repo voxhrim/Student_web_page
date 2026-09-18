@@ -673,10 +673,22 @@
 		
 		<div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden; position: relative;">
 			
-			<!-- VHS Контейнер -->
-			<div class="vhs-container">
+			<!-- VHS Контейнер (Легкий эффект ЭЛТ-монитора) -->
+			<div class="vhs-container" style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5); background: #000; transform: translateZ(0);">
+				
+				<!-- Холст игры: нормальный 100% размер без обрезки краев -->
 				<canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; object-fit: contain;"></canvas>
-				<div class="vhs-scanlines"></div>
+				
+				<div class="vhs-scanlines" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+				
+				<!-- 1. Верхний блик (сделали почти прозрачным) -->
+				<div style="position: absolute; top: -15%; left: 10%; width: 80%; height: 45%; background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; pointer-events: none;"></div>
+				
+				<!-- 2. Нижняя тень (существенно ослабили) -->
+				<div style="position: absolute; bottom: -20%; left: -10%; width: 120%; height: 40%; background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
+
+				<!-- 3. Легкая виньетка (увеличили светлую зону и уменьшили черноту) -->
+				<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: radial-gradient(circle at 50% 50%, transparent 75%, rgba(0,0,0,0.4) 100%); box-shadow: inset 0 0 15px rgba(0,0,0,0.6);"></div>
 			</div>
 			
 			<canvas id="minimapCanvas" width="180" height="180" style="position: absolute; top: 35px; right: 10px; border: 2px solid #555; background: rgba(0, 0, 0, 0.7); display: none; image-rendering: pixelated; z-index: 10;"></canvas>
@@ -1423,6 +1435,23 @@ document.addEventListener("DOMContentLoaded", function() {
 		
 		weaponFrames.push(img);
 	}
+	
+	// Загрузка анимации ножа (серия KNFS - прямой удар)
+    const knifeFrames = [];
+    const knifeFrameNames = ['KNFSA0.png', 'KNFSB0.png', 'KNFSC0.png', 'KNFSD0.png', 'KNFSE0.png', 'KNFSF0.png'];
+    knifeFrameNames.forEach(name => {
+        let img = new Image();
+        img.src = 'resorse/images/textures/hend/' + name;
+        knifeFrames.push(img);
+    });
+	
+	const hudWeapons = {
+      pistols: new Image(),
+      knife: new Image()
+	};
+    // Используем готовые спрайты как иконки 
+	hudWeapons.pistols.src = 'resorse/images/textures/pistol/BLAPB0.png'; 
+	hudWeapons.knife.src = 'resorse/images/textures/hend/KNFPA0.png';
 
 	const itemSprites = {
       medkit: new Image(),
@@ -1469,8 +1498,11 @@ document.addEventListener("DOMContentLoaded", function() {
       const screenHeight = 460;
       const viewportHeight = 350;
 	  
-	  const fov = Math.PI / 3;      // Добавлено: поле зрения
-      const halfFov = fov / 2;      // Добавлено: половина поля зрения
+	  const fov = Math.PI / 3;      // Добавлено: поле зрения 
+      const halfFov = fov / 2;      // Добавлено: половина поля зрения 
+	  <!-- const fov = 70 * Math.PI / 180; // 110 градусов (Quake Pro) -->
+      <!-- const halfFov = fov / 2; -->
+	  
       const zBuffer = new Array(screenWidth); // Добавлено: буфер глубины
 
       <!-- const LIGHT_STEP = 0.15; -->
@@ -1652,7 +1684,9 @@ document.addEventListener("DOMContentLoaded", function() {
               y: 1.5,
               angle: 0,
               health: 100,
-              ammo: 15
+              ammo: 15,
+              currentWeapon: 'pistols', // Текущее оружие
+              weaponSwitchTimer: 0 // Таймер для анимации смены (0 - нет анимации)
           };
           kills = 0;
           damageFlash = 0;
@@ -1683,7 +1717,13 @@ document.addEventListener("DOMContentLoaded", function() {
                   state: 'alive',
                   deathTimer: 0,
                   attackCooldown: 0,
-                  awake: false
+                  awake: false,
+                  rage: 0,
+                  hp: 1, // Жизни
+                  isBoss: false, // Флаг босса
+				  isStriking: false, // Флаг для задержки урона
+                  speedMult: 1.0, // Множитель скорости
+                  sizeMult: 1.0 // Множитель размера
               });
           }
 
@@ -1788,12 +1828,12 @@ document.addEventListener("DOMContentLoaded", function() {
           if (ammoFlashTimer > 0) ammoFlashTimer--;
 
           itemSpawnTimer++;
-          if (itemSpawnTimer > 240) {
+          if (itemSpawnTimer > 400) { // Сделаем таймер дольше (было 240)
               itemSpawnTimer = 0;
-              if (items.length < 6) {
+              // Теперь по таймеру появляются ТОЛЬКО аптечки, и не больше 3 на карте
+              if (items.filter(i => i.type === 'medkit').length < 3) {
                   let spawnTile = getRandomFloorTile();
-                  let spawnType = (player.health < 60 || Math.random() > 0.5) ? 'medkit' : 'ammo';
-                  items.push({ type: spawnType, x: spawnTile.x, y: spawnTile.y });
+                  items.push({ type: 'medkit', x: spawnTile.x, y: spawnTile.y });
               }
           }
 
@@ -1934,129 +1974,146 @@ document.addEventListener("DOMContentLoaded", function() {
           // ЛОГИКА И ДВИЖЕНИЕ МОНСТРОВ
           // ==========================================
           enemies.forEach(en => {
-          if (en.attackCooldown > 0) en.attackCooldown--;
-
-          if (en.state === 'alive') {
-              let distToPlayer = Math.hypot(player.x - en.x, player.y - en.y);
-              let canSeePlayer = hasLineOfSight(en.x, en.y, player.x, player.y);
-
-              if (!en.awake && distToPlayer < 8.0) {
-                  en.awake = true;
-              }
-
-              let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
-              while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
-              while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
-
-              // Добавлено && canSeePlayer, чтобы рамка не мигала из-за врагов за стеной
-              if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3) && canSeePlayer) {
-                  backStalkWarning = true;
-              }
-
-              if (!isDead && en.awake) {
-                  // Увеличили дистанцию атаки с 0.48 до 0.9
-                  if (distToPlayer <= 0.6 && canSeePlayer) {
-                      if (en.attackCooldown <= 0 && playerInvulnTimer <= 0) {
-                          en.attackCooldown = 35;
+              if (en.attackCooldown > 0) {
+                  en.attackCooldown--;
+                  
+                  // Задержка атаки: урон проходит только на 3-м кадре анимации (когда таймер = 12)
+                  if (en.isStriking && en.attackCooldown === 12) {
+                      en.isStriking = false;
+                      let dist = Math.hypot(player.x - en.x, player.y - en.y);
+                      
+                      // Проверяем, ЖИВ ЛИ САМ МОНСТР, и не успел ли игрок отбежать
+                      if (dist <= 0.9 && !isDead && en.state === 'alive') {
                           playerInvulnTimer = 30;
                           player.health = Math.max(0, player.health - 20);
                           damageFlash = 12;
                           screenShake = 10;
                           faceAnimTimer = 18;
                           spawnBlood();
-                          doomAudio.playBite();
                           doomAudio.playHurt();
-                      }
-                  } else {
-                      let eSpeed = 0.020;
-                      let targetX, targetY;
-
-                      if (canSeePlayer) {
-                          // РЕЖИМ АТАКИ: Видит игрока — бежит напрямик (по диагонали / прямой)
-                          targetX = player.x;
-                          targetY = player.y;
-                      } else {
-                          // РЕЖИМ ПОИСКА: Не видит — идет змейкой по карте расстояний
-                          let playerDistMap = calculateDistanceMap(player.x, player.y);
-                          let curTileX = Math.floor(en.x);
-                          let curTileY = Math.floor(en.y);
-                          
-                          let bestX = en.x;
-                          let bestY = en.y;
-                          let minD = (playerDistMap[curTileY] && playerDistMap[curTileY][curTileX] !== -1) 
-                                     ? playerDistMap[curTileY][curTileX] 
-                                     : 9999;
-
-                          // Проверяем 4 соседние клетки и ищем ту, у которой меньше расстояние до игрока
-                          let neighbors = [
-                              {x: curTileX + 1, y: curTileY},
-                              {x: curTileX - 1, y: curTileY},
-                              {x: curTileX, y: curTileY + 1},
-                              {x: curTileX, y: curTileY - 1}
-                          ];
-
-                          for(let n of neighbors) {
-                              if(n.y >= 0 && n.y < map.length && n.x >= 0 && n.x < map[0].length) {
-                                  let cell = map[n.y][n.x];
-                                  if(cell === 0 || cell === 6 || cell === 7) {
-                                      let d = playerDistMap[n.y][n.x];
-                                      if(d !== -1 && d < minD) {
-                                          minD = d;
-                                          bestX = n.x + 0.5; // Целимся в центр клетки
-                                          bestY = n.y + 0.5;
-                                      }
-                                  }
-                              }
-                          }
-                          targetX = bestX;
-                          targetY = bestY;
-                      }
-
-                      // Движение к выбранной точке (targetX, targetY)
-                      let dToTarget = Math.hypot(targetX - en.x, targetY - en.y);
-                      if (dToTarget > 0.05) {
-                          let dirX = (targetX - en.x) / dToTarget;
-                          let dirY = (targetY - en.y) / dToTarget;
-
-							let moveX = dirX * eSpeed;
-							let moveY = dirY * eSpeed;
-							let eMargin = 0.22;
-
-							let nextMapX = Math.floor(en.x + moveX + (moveX > 0 ? eMargin : -eMargin));
-							let nextMapY = Math.floor(en.y + moveY + (moveY > 0 ? eMargin : -eMargin));
-
-							// При движении по X проверяем верхнее и нижнее "плечо"
-							let canMoveX = map[Math.floor(en.y - eMargin)][nextMapX] === 0 && 
-										   map[Math.floor(en.y + eMargin)][nextMapX] === 0;
-							if (canMoveX) en.x += moveX;
-
-							// При движении по Y проверяем левое и правое "плечо"
-							let canMoveY = map[nextMapY][Math.floor(en.x - eMargin)] === 0 && 
-										   map[nextMapY][Math.floor(en.x + eMargin)] === 0;
-							if (canMoveY) en.y += moveY;
                       }
                   }
               }
-          } else if (en.state === 'dying') {
-              en.deathTimer--;
-              if (en.deathTimer <= 0) {
-                  en.state = 'dead';
-                  en.deathTimer = 90;
+
+              if (en.state === 'alive') {
+                  let distToPlayer = Math.hypot(player.x - en.x, player.y - en.y);
+                  let canSeePlayer = hasLineOfSight(en.x, en.y, player.x, player.y);
+
+                  if (!en.awake && distToPlayer < 8.0) {
+                      en.awake = true;
+                  }
+
+                  let diffAngle = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+                  while (diffAngle < -Math.PI) diffAngle += Math.PI * 2;
+                  while (diffAngle > Math.PI) diffAngle -= Math.PI * 2;
+
+                  if (en.awake && distToPlayer < 2.8 && Math.abs(diffAngle) > (Math.PI / 3) && canSeePlayer) {
+                      backStalkWarning = true;
+                  }
+
+                  if (!isDead && en.awake) {
+                      if (!canSeePlayer) {
+                          en.rage += 0.05;
+                          if (en.rage > 50) en.rage = 50; 
+                      } else {
+                          en.rage = 0; 
+                      }
+
+                      // Увеличили дистанцию старта замаха до 0.7, чтобы игрок мог провоцировать атаку
+                      if (distToPlayer <= 0.7 && canSeePlayer) {
+                          if (en.attackCooldown <= 0) {
+                              en.attackCooldown = 35;
+                              en.isStriking = true; // Начинаем замах! Урон будет позже
+                              doomAudio.playBite(); // Звук рыка воспроизводится сразу в момент замаха
+                          }
+                      } else {
+                          // Базовая скорость растет каждые 10 фрагов + бонус от ярости
+                          let baseSpeed = 0.025 + Math.min(kills * 0.0005, 0.02);
+                          let eSpeed = (baseSpeed + (en.rage * 0.0004)) * (en.speedMult || 1.0);
+                          let targetX, targetY;
+
+                          if (canSeePlayer) {
+                              // РЕЖИМ АТАКИ: Видит игрока — бежит напрямик
+                              targetX = player.x;
+                              targetY = player.y;
+                          } else {
+                              // РЕЖИМ ПОИСКА: Не видит — идет змейкой по карте расстояний
+                              let playerDistMap = calculateDistanceMap(player.x, player.y);
+                              let curTileX = Math.floor(en.x);
+                              let curTileY = Math.floor(en.y);
+                              
+                              let bestX = en.x;
+                              let bestY = en.y;
+                              let minD = (playerDistMap[curTileY] && playerDistMap[curTileY][curTileX] !== -1) 
+                                         ? playerDistMap[curTileY][curTileX] 
+                                         : 9999;
+
+                              let neighbors = [
+                                  {x: curTileX + 1, y: curTileY},
+                                  {x: curTileX - 1, y: curTileY},
+                                  {x: curTileX, y: curTileY + 1},
+                                  {x: curTileX, y: curTileY - 1}
+                              ];
+
+                              for(let n of neighbors) {
+                                  if(n.y >= 0 && n.y < map.length && n.x >= 0 && n.x < map[0].length) {
+                                      let cell = map[n.y][n.x];
+                                      if(cell === 0 || cell === 6 || cell === 7) {
+                                          let d = playerDistMap[n.y][n.x];
+                                          if(d !== -1 && d < minD) {
+                                              minD = d;
+                                              bestX = n.x + 0.5;
+                                              bestY = n.y + 0.5;
+                                          }
+                                      }
+                                  }
+                              }
+                              targetX = bestX;
+                              targetY = bestY;
+                          }
+
+                          let dToTarget = Math.hypot(targetX - en.x, targetY - en.y);
+                          if (dToTarget > 0.05) {
+                              let dirX = (targetX - en.x) / dToTarget;
+                              let dirY = (targetY - en.y) / dToTarget;
+
+                              let moveX = dirX * eSpeed;
+                              let moveY = dirY * eSpeed;
+                              let eMargin = 0.22;
+
+                              let nextMapX = Math.floor(en.x + moveX + (moveX > 0 ? eMargin : -eMargin));
+                              let nextMapY = Math.floor(en.y + moveY + (moveY > 0 ? eMargin : -eMargin));
+
+                              let canMoveX = map[Math.floor(en.y - eMargin)][nextMapX] === 0 && 
+                                             map[Math.floor(en.y + eMargin)][nextMapX] === 0;
+                              if (canMoveX) en.x += moveX;
+
+                              let canMoveY = map[nextMapY][Math.floor(en.x - eMargin)] === 0 && 
+                                             map[nextMapY][Math.floor(en.x + eMargin)] === 0;
+                              if (canMoveY) en.y += moveY;
+                          }
+                      }
+                  }
+              } else if (en.state === 'dying') {
+                  en.deathTimer--;
+                  if (en.deathTimer <= 0) {
+                      en.state = 'dead';
+                      en.deathTimer = 90;
+                  }
+              } else if (en.state === 'dead') {
+                  en.deathTimer--;
+                  if (en.deathTimer <= 0) {
+                      if (en.isBoss) {
+                          en.state = 'removed'; // Боссы удаляются навсегда
+                      } else {
+                          en.state = 'alive';
+                          let tile;
+                          do { tile = getRandomFloorTile(); } while (Math.hypot(tile.x - player.x, tile.y - player.y) < 6.0);
+                          en.x = tile.x; en.y = tile.y; en.awake = false; en.rage = 0; en.hp = 1;
+                      }
+                  }
               }
-          } else if (en.state === 'dead') {
-              en.deathTimer--;
-              if (en.deathTimer <= 0) {
-                  en.state = 'alive';
-                  let tile;
-                  do {
-                      tile = getRandomFloorTile();
-                  } while (Math.hypot(tile.x - player.x, tile.y - player.y) < 6.0);
-                  en.x = tile.x;
-                  en.y = tile.y;
-                  en.awake = false;
-              }
-          }
-      });
+          });
 
           if (!isDead && nearestDistance <= 4.0 && growlCooldown <= 0) {
               let vol = 0.45 - (nearestDistance * 0.09);
@@ -2066,69 +2123,132 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // Подбор лута
           if (!isDead) {
-              items.forEach(it => {
+              // Перебираем массив с конца, чтобы безопасно удалять элементы
+              for (let i = items.length - 1; i >= 0; i--) {
+                  let it = items[i];
                   let d = Math.hypot(player.x - it.x, player.y - it.y);
+                  
                   if (d < 0.45) {
                       let collected = false;
+                      
                       if (it.type === 'medkit' && player.health < 100) {
                           player.health = Math.min(100, player.health + 25);
                           hpFlashTimer = 35;
                           collected = true;
                       } else if (it.type === 'ammo') {
-                          player.ammo += 15;
-                          ammoFlashTimer = 25;
-                          collected = true;
+                          // ОГРАНИЧЕНИЕ: Максимум можно носить 40 патронов
+                          if (player.ammo < 40) {
+                              player.ammo = Math.min(40, player.ammo + 5); 
+                              ammoFlashTimer = 25;
+                              collected = true;
+                          }
                       }
 
                       if (collected) {
                           doomAudio.playItem();
-                          let newPos = getRandomFloorTile();
-                          it.x = newPos.x;
-                          it.y = newPos.y;
+                          // УДАЛЯЕМ предмет с карты навсегда
+                          items.splice(i, 1);
                       }
                   }
-              });
+              }
+          }
+		  // Выстрел
+         // Проверка на смену оружия
+          if (player.currentWeapon === 'pistols' && player.ammo <= 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
+              player.weaponSwitchTimer = 20; // Запускаем анимацию убирания пистолетов
+          } else if (player.currentWeapon === 'knife' && player.ammo > 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
+              player.weaponSwitchTimer = 20; // Достаем пистолеты, если нашли патроны
           }
 
-          if (!isDead && keys['Space'] && gunAnim === 0 && player.ammo > 0) {
-              player.lastShotSide = (player.lastShotSide === 'right') ? 'left' : 'right';
-              
-              gunAnim = 16; 
-              flash = true;
-              player.ammo--;
-              faceAnimTimer = 18;
-              doomAudio.playShot();
-              
-              enemies.forEach(en => {
-                  if (Math.hypot(en.x - player.x, en.y - player.y) < 12) {
-                      en.awake = true;
-                  }
-              });
+          if (player.weaponSwitchTimer > 0) {
+              player.weaponSwitchTimer--;
+              if (player.weaponSwitchTimer === 10) {
+                  // На экваторе анимации (когда оружие скрылось) меняем стейт
+                  player.currentWeapon = (player.currentWeapon === 'pistols') ? 'knife' : 'pistols';
+              }
+          }
 
-              // 1. Смещение старта пули к стволу (левому или правому) — сдвинули ближе к центру
-              let barrelOffset = (player.lastShotSide === 'left') ? -0.06 : 0.06;
-              let startX = player.x + Math.cos(player.angle + Math.PI / 2) * barrelOffset;
-              let startY = player.y + Math.sin(player.angle + Math.PI / 2) * barrelOffset;
-              
-              // 2. Виртуальная точка прицеливания (далеко по центру экрана)
-              let targetX = player.x + Math.cos(player.angle) * 10;
-              let targetY = player.y + Math.sin(player.angle) * 10;
-              
-              // 3. Угол полета от ствола в центр + уменьшенный вдвое разброс
-              let bAngle = Math.atan2(targetY - startY, targetX - startX);
-              bAngle += (Math.random() - 0.5) * 0.03; // Разброс по горизонтали (было 0.06)
-              
-              bullets.push({
-                  x: startX,
-                  y: startY,
-                  dirX: Math.cos(bAngle),
-                  dirY: Math.sin(bAngle),
-                  zOffset: (Math.random() - 0.5) * 0.1, // Разброс по вертикали (было 0.2)
-                  life: 20
-              });
+          // Выстрел или Удар (Только если нет анимации смены)
+          if (!isDead && keys['Space'] && gunAnim === 0 && player.weaponSwitchTimer === 0) {
+              if (player.currentWeapon === 'pistols') {
+                  // === ОГНЕСТРЕЛЬНОЕ ОРУЖИЕ ===
+                  player.lastShotSide = (player.lastShotSide === 'right') ? 'left' : 'right';
+                  gunAnim = 16; 
+                  flash = true;
+                  player.ammo--;
+                  faceAnimTimer = 18;
+                  doomAudio.playShot();
+                  
+                  enemies.forEach(en => {
+                      if (Math.hypot(en.x - player.x, en.y - player.y) < 12) en.awake = true;
+                  });
+
+                  let barrelOffset = (player.lastShotSide === 'left') ? -0.06 : 0.06;
+                  let startX = player.x + Math.cos(player.angle + Math.PI / 2) * barrelOffset;
+                  let startY = player.y + Math.sin(player.angle + Math.PI / 2) * barrelOffset;
+                  
+                  let targetX = player.x + Math.cos(player.angle) * 10;
+                  let targetY = player.y + Math.sin(player.angle) * 10;
+                  
+                  let bAngle = Math.atan2(targetY - startY, targetX - startX);
+                  bAngle += (Math.random() - 0.5) * 0.03; 
+                  
+                  bullets.push({
+                      x: startX, y: startY,
+                      dirX: Math.cos(bAngle), dirY: Math.sin(bAngle),
+                      zOffset: (Math.random() - 0.5) * 0.12, 
+                      life: 20
+                  });
+              } else if (player.currentWeapon === 'knife') {
+                  // === БЛИЖНИЙ БОЙ (НОЖ) ===
+                  gunAnim = 16; 
+                  faceAnimTimer = 18;
+                  
+                  enemies.forEach(en => {
+                      if (Math.hypot(en.x - player.x, en.y - player.y) < 4) en.awake = true;
+                  });
+                  
+                 enemies.forEach(en => {
+                      if (en.state === 'alive') {
+                          let hitRadius = en.isBoss ? 1.6 : 1.3;
+                          let dist = Math.hypot(en.x - player.x, en.y - player.y);
+                          if (dist < hitRadius) {
+                              let angleToEnemy = Math.atan2(en.y - player.y, en.x - player.x) - player.angle;
+                              while (angleToEnemy < -Math.PI) angleToEnemy += Math.PI * 2;
+                              while (angleToEnemy > Math.PI) angleToEnemy -= Math.PI * 2;
+                              
+                              if (Math.abs(angleToEnemy) < fov / 1.5) {
+                                  en.hp--;
+                                  if (en.hp <= 0) {
+                                      en.state = 'dying';
+                                      en.deathTimer = 30;
+                                      kills++;
+                                      doomAudio.playMonsterDeath();
+                                      
+                                      // Из босса 100% падает лут
+                                      if (Math.random() < 0.15 || en.isBoss) {
+                                           items.push({ type: 'ammo', x: en.x, y: en.y });
+                                           if (en.isBoss) items.push({ type: 'medkit', x: en.x + 0.2, y: en.y });
+                                           if (items.length > 10) items.shift();
+                                      }
+
+                                      // СПАВН БОССА КАЖДЫЕ 50 ФРАГОВ
+                                      if (kills % 50 === 0 && kills > 0) {
+                                          let bTile;
+                                          do { bTile = getRandomFloorTile(); } while (Math.hypot(bTile.x - player.x, bTile.y - player.y) < 8.0);
+                                          enemies.push({ x: bTile.x, y: bTile.y, state: 'alive', deathTimer: 0, attackCooldown: 0, awake: true, rage: 0, hp: 5, isBoss: true, speedMult: 0.55, sizeMult: 1.6 });
+                                      }
+                                  } else {
+                                      doomAudio.playHurt(); 
+                                  }
+                              }
+                          }
+                      }
+                  });
+              }
           } else {
               if (gunAnim > 0) gunAnim--;
-              if (gunAnim < 13) flash = false; // Освещение стен работает только в самом начале выстрела
+              if (gunAnim < 13) flash = false; 
           }
 
           if (faceAnimTimer > 0) faceAnimTimer--;
@@ -2165,14 +2285,35 @@ document.addEventListener("DOMContentLoaded", function() {
               }
 
               let hitEnemy = false;
+			  
               // Столкновение с монстром
               enemies.forEach(en => {
-                  if (en.state === 'alive' && Math.hypot(en.x - b.x, en.y - b.y) < 0.45) {
-                      en.state = 'dying';
-                      en.deathTimer = 30;
-                      kills++;
-                      doomAudio.playMonsterDeath();
+                  let hitRadius = en.isBoss ? 0.7 : 0.45;
+                  if (en.state === 'alive' && Math.hypot(en.x - b.x, en.y - b.y) < hitRadius) {
                       hitEnemy = true;
+                      en.hp--;
+                      if (en.hp <= 0) {
+                          en.state = 'dying';
+                          en.deathTimer = 30;
+                          kills++;
+                          doomAudio.playMonsterDeath();
+						  
+                          // ШАНС ВЫПАДЕНИЯ ПАТРОНОВ: снижен до 20% 
+                          if (Math.random() < 0.20 || en.isBoss) {
+                               items.push({ type: 'ammo', x: en.x, y: en.y });
+                               if (en.isBoss) items.push({ type: 'medkit', x: en.x + 0.2, y: en.y });
+                               if (items.length > 10) items.shift();
+                          }
+
+                          // СПАВН БОССА КАЖДЫЕ 50 ФРАГОВ
+                          if (kills % 50 === 0 && kills > 0) {
+                              let bTile;
+                              do { bTile = getRandomFloorTile(); } while (Math.hypot(bTile.x - player.x, bTile.y - player.y) < 8.0);
+                              enemies.push({ x: bTile.x, y: bTile.y, state: 'alive', deathTimer: 0, attackCooldown: 0, awake: true, rage: 0, hp: 5, isBoss: true, speedMult: 0.55, sizeMult: 1.6 });
+                          }
+                      } else {
+                          doomAudio.playHurt(); 
+                      }
                   }
               });
 
@@ -2432,16 +2573,10 @@ document.addEventListener("DOMContentLoaded", function() {
               }
           }
 
-			// ==========================================
+		  // ==========================================
           // СБОР И СОРТИРОВКА ВСЕХ СПРАЙТОВ ПО ГЛУБИНЕ (ОТ ДАЛЬНИХ К БЛИЖНИМ)
           // ==========================================
           let renderQueue = [];
-
-          <!-- // 1. Добавляем колонны (декорации) -->
-          <!-- decorations.forEach(dec => { -->
-              <!-- let dist = Math.hypot(dec.x - player.x, dec.y - player.y); -->
-              <!-- renderQueue.push({ type: 'decoration', obj: dec, dist: dist }); -->
-          <!-- }); -->
 
           // 2. Добавляем предметы (аптечки/патроны)
           items.forEach(it => {
@@ -2451,10 +2586,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
           // 3. Добавляем монстров
           enemies.forEach(en => {
-              let dist = Math.hypot(en.x - player.x, en.y - player.y);
-              renderQueue.push({ type: 'enemy', obj: en, dist: dist });
+              if (en.state !== 'removed') {
+                  let dist = Math.hypot(en.x - player.x, en.y - player.y);
+                  renderQueue.push({ type: 'enemy', obj: en, dist: dist });
+              }
           });
-		  // 4. Добавляем декали (дырки от пуль)
+          
+          // 4. Добавляем декали (дырки от пуль)
           decals.forEach(dec => {
               let dist = Math.hypot(dec.x - player.x, dec.y - player.y);
               renderQueue.push({ type: 'decal', obj: dec, dist: dist });
@@ -2472,43 +2610,14 @@ document.addEventListener("DOMContentLoaded", function() {
               while (spriteAngle < -Math.PI) spriteAngle += Math.PI * 2;
               while (spriteAngle > Math.PI) spriteAngle -= Math.PI * 2;
 			  
-			 
-				let angleMargin = (1.5 / dist) + 0.5; 
-				if (Math.abs(spriteAngle) < halfFov + angleMargin && dist > 0.08) {
+              let angleMargin = (1.5 / dist) + 0.5; 
+              if (Math.abs(spriteAngle) < halfFov + angleMargin && dist > 0.08) {
                   let screenX = Math.floor((screenWidth / 2) + (spriteAngle / fov) * screenWidth);
                   let size = Math.floor(250 / dist);
                   let light = getLightLevel(dist, flash && !isDead);
 
-                // РЕНДЕР КОЛОНН (На полную высоту от пола до потолка)
-                  if (item.type === 'decoration') {
-                      // Делаем дистанцию чуть-чуть ближе для Z-буфера, чтобы стенка позади её не перекрывала
-                      let renderDist = Math.max(0.1, dist - 0.05); 
-                      
-                      let wallHeight = Math.floor(450 / renderDist); // Точно такая же высота, как у стен!
-                      let drawStart = Math.floor((viewportHeight - wallHeight) / 2); // От пола до потолка
-                      
-                      let itemWidth = Math.floor((250 / renderDist) * 0.7); // Ширина пропорциональна расстоянию
-                      let startX = Math.floor(screenX - itemWidth / 2);
-                      
-                      let img = wallTextures[spriteObj.type];
-
-                      if (img && img.complete && img.naturalWidth > 0) {
-                          for (let sx = Math.max(0, startX); sx < Math.min(screenWidth, startX + itemWidth); sx++) {
-                              if (sx >= 0 && sx < screenWidth && zBuffer[sx] > renderDist) {
-                                  let texX = Math.floor(((sx - startX) / itemWidth) * img.naturalWidth);
-                                  ctx.drawImage(img, texX, 0, 1, img.naturalHeight, sx, drawStart, 1, wallHeight);
-                                  
-                                  if (light < 1.0) {
-                                      ctx.fillStyle = `rgba(0, 0, 0, ${1.0 - light})`;
-                                      ctx.fillRect(sx, drawStart, 1, wallHeight);
-                                  }
-                              }
-                          }
-                      }
-                  }
-
                   // РЕНДЕР ПРЕДМЕТОВ
-                  else if (item.type === 'item') {
+                  if (item.type === 'item') {
                       let img = itemSprites[spriteObj.type];
 
                       if (img && img.complete && img.naturalWidth > 0) {
@@ -2584,7 +2693,9 @@ document.addEventListener("DOMContentLoaded", function() {
                           let baseImg = monsterFrames[0];
                           let baseHeight = (baseImg && baseImg.naturalHeight > 0) ? baseImg.naturalHeight : 100;
                           
-                          let scale = (size * 1.5) / baseHeight; 
+                          // Учитываем увеличенный масштаб босса
+                          let sizeMultiplier = en.sizeMult || 1.0;
+                          let scale = (size * 1.5 * sizeMultiplier) / baseHeight; 
                           let mWidth = Math.floor(currentMonsterImg.naturalWidth * scale);
                           let mHeight = Math.floor(currentMonsterImg.naturalHeight * scale);
                           let mDrawX = screenX - mWidth / 2;
@@ -2593,7 +2704,6 @@ document.addEventListener("DOMContentLoaded", function() {
                           let floorY = Math.floor(viewportHeight / 2 + wallHeight / 2);
                           let mDrawY = floorY - mHeight;
 
-                          // Тот же трюк с аппаратным буфером для монстров
                           if (!window.mobBuffer) {
                               window.mobBuffer = document.createElement('canvas');
                               window.mobCtx = window.mobBuffer.getContext('2d');
@@ -2602,8 +2712,12 @@ document.addEventListener("DOMContentLoaded", function() {
                           window.mobBuffer.width = currentMonsterImg.naturalWidth;
                           window.mobBuffer.height = currentMonsterImg.naturalHeight;
 
-                          // Применяем освещение ОДИН РАЗ
-                          window.mobCtx.filter = `brightness(${light})`;
+                          // Применяем ядрено-красный цвет, если это босс
+                          if (en.isBoss) {
+                              window.mobCtx.filter = `brightness(${light * 1.5}) sepia(1) saturate(10) hue-rotate(330deg)`;
+                          } else {
+                              window.mobCtx.filter = `brightness(${light})`;
+                          }
                           window.mobCtx.drawImage(currentMonsterImg, 0, 0);
                           window.mobCtx.filter = 'none';
 
@@ -2611,7 +2725,7 @@ document.addEventListener("DOMContentLoaded", function() {
                               if (zBuffer[sx] > dist) {
                                   let texX = Math.floor(((sx - mDrawX) / mWidth) * currentMonsterImg.naturalWidth);
                                   ctx.drawImage(
-                                      window.mobBuffer, // Берем готовую затемненную картинку без рамок
+                                      window.mobBuffer, 
                                       texX, 0, 1, currentMonsterImg.naturalHeight, 
                                       sx, mDrawY, 1, mHeight
                                   );
@@ -2619,13 +2733,14 @@ document.addEventListener("DOMContentLoaded", function() {
                           }
                       }
                   }
+                  
                   // РЕНДЕР ДЕКАЛЕЙ ПОПАДАНИЙ
                   else if (item.type === 'decal') {
                       let dec = spriteObj;
                       let wallHeight = Math.floor(450 / dist);
                       
                       // Размер пропорционален высоте стены (в упор дырки будут огромными)
-                      let size = Math.max(2, Math.floor(wallHeight * 0.015)); 
+                      let sizeDecal = Math.max(2, Math.floor(wallHeight * 0.015)); 
                       
                       let centerY = viewportHeight / 2;
                       let drawY = centerY + (dec.zOffset * wallHeight); 
@@ -2637,16 +2752,15 @@ document.addEventListener("DOMContentLoaded", function() {
                       if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > perpDist - 0.3) {
                           ctx.fillStyle = '#080808'; 
                           ctx.beginPath();
-                          ctx.arc(screenX, drawY, size, 0, Math.PI * 2);
+                          ctx.arc(screenX, drawY, sizeDecal, 0, Math.PI * 2);
                           ctx.fill();
                       }
                   }
               }
           });
 			
-			
-			// ОТРИСОВКА ПОЛЕТА ПУЛЬ
-			bullets.forEach(b => {
+          // ОТРИСОВКА ПОЛЕТА ПУЛЬ
+          bullets.forEach(b => {
               let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
               while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
               while (bulletAngle > Math.PI) bulletAngle -= Math.PI * 2;
@@ -2673,68 +2787,84 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
           });
+			
+			
 
           // ==========================================
           // ОТРИСОВКА ОРУЖИЯ (ИЗ ОТДЕЛЬНЫХ КАДРОВ)
           // ==========================================
           let bobbing = Math.sin(bobPhase) * 6;
-          let gunYOffset = bobbing + gunDropOffset;
-
-          let currentAnimFrame = 0;
-          if (gunAnim > 0) {
-              // Разбиваем 16 кадров кулдауна на 5 шагов анимации
-              let step = Math.floor((16 - gunAnim) / 3.2) + 1; 
-              if (step > 5) step = 5;
-
-              if (player.lastShotSide === 'right') {
-                  currentAnimFrame = step;     // 1-5: Вспышка и отдача правой пушки
-              } else {
-                  currentAnimFrame = step + 5; // 6-10: Вспышка и отдача левой пушки
-              }
+          
+          // Расчет Y-смещения для плавной смены оружия
+          let dropOffset = 0;
+          if (player.weaponSwitchTimer > 0) {
+              // Парабола: опускается вниз и поднимается обратно
+              let progress = Math.abs(10 - player.weaponSwitchTimer) / 10; // от 1 до 0
+              dropOffset = (1 - progress) * 200; // Опускаем на 200px вниз
           }
+          
+          let gunYOffset = bobbing + gunDropOffset + dropOffset;
 
-          let currentSprite = weaponFrames[currentAnimFrame] || weaponFrames[0];
-          let spriteName = frameNames[currentAnimFrame]; 
-
-          if (currentSprite && currentSprite.complete && currentSprite.naturalWidth > 0) {
-              
-              let scale = 1.2; 
-              let drawWidth = currentSprite.naturalWidth * scale;
-              let drawHeight = currentSprite.naturalHeight * scale;
-
-              let centerX = (screenWidth - drawWidth) / 2;
-              let drawY = viewportHeight - drawHeight + 10 + gunYOffset;
-
-              let idleSprite = weaponFrames[0]; 
-              let idleW = idleSprite.naturalWidth * scale;
-              let idleH = idleSprite.naturalHeight * scale;
-              let idleX = (screenWidth - idleW) / 2;
-
-              if (spriteName.startsWith('BLPS')) {
-                  // === СТРЕЛЯЕТ ПРАВАЯ ===
-                  ctx.drawImage(
-                      idleSprite, 0, 0, idleSprite.naturalWidth / 2, idleSprite.naturalHeight, 
-                      idleX, drawY, idleW / 2, idleH 
-                  );
-                  let rightX = screenWidth - drawWidth - 40; 
-                  ctx.drawImage(currentSprite, rightX, drawY, drawWidth, drawHeight);
-
-              } else if (spriteName.startsWith('LLPS')) {
-                  // === СТРЕЛЯЕТ ЛЕВАЯ ===
-                  ctx.drawImage(
-                      idleSprite, idleSprite.naturalWidth / 2, 0, idleSprite.naturalWidth / 2, idleSprite.naturalHeight,
-                      idleX + idleW / 2, drawY, idleW / 2, idleH
-                  );
-                  let leftX = 40; 
-                  ctx.drawImage(currentSprite, leftX, drawY, drawWidth, drawHeight);
-
-              } else {
-                  // === ПОКОЙ ===
-                  ctx.drawImage(currentSprite, centerX, drawY, drawWidth, drawHeight);
+          if (player.currentWeapon === 'pistols') {
+              let currentAnimFrame = 0;
+              if (gunAnim > 0) {
+                  let step = Math.floor((16 - gunAnim) / 3.2) + 1; 
+                  if (step > 5) step = 5;
+                  currentAnimFrame = (player.lastShotSide === 'right') ? step : step + 5; 
               }
-          } else {
-              ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
-              ctx.fillRect((screenWidth - 120)/2, viewportHeight - 120 + gunYOffset, 120, 120);
+
+              let currentSprite = weaponFrames[currentAnimFrame] || weaponFrames[0];
+              let spriteName = frameNames[currentAnimFrame]; 
+
+              if (currentSprite && currentSprite.complete && currentSprite.naturalWidth > 0) {
+                  let scale = 1.2; 
+                  let drawWidth = currentSprite.naturalWidth * scale;
+                  let drawHeight = currentSprite.naturalHeight * scale;
+
+                  let centerX = (screenWidth - drawWidth) / 2;
+                  let drawY = viewportHeight - drawHeight + 10 + gunYOffset;
+
+                  let idleSprite = weaponFrames[0]; 
+                  let idleW = idleSprite.naturalWidth * scale;
+                  let idleH = idleSprite.naturalHeight * scale;
+                  let idleX = (screenWidth - idleW) / 2;
+
+                  if (spriteName.startsWith('BLPS')) {
+                      ctx.drawImage(idleSprite, 0, 0, idleSprite.naturalWidth / 2, idleSprite.naturalHeight, idleX, drawY, idleW / 2, idleH);
+                      ctx.drawImage(currentSprite, screenWidth - drawWidth - 40, drawY, drawWidth, drawHeight);
+                  } else if (spriteName.startsWith('LLPS')) {
+                      ctx.drawImage(idleSprite, idleSprite.naturalWidth / 2, 0, idleSprite.naturalWidth / 2, idleSprite.naturalHeight, idleX + idleW / 2, drawY, idleW / 2, idleH);
+                      ctx.drawImage(currentSprite, 40, drawY, drawWidth, drawHeight);
+                  } else {
+                      ctx.drawImage(currentSprite, centerX, drawY, drawWidth, drawHeight);
+                  }
+              }
+          } else if (player.currentWeapon === 'knife') {
+              let currentKnifeFrame = 0;
+              if (gunAnim > 0) {
+                  let step = Math.floor((16 - gunAnim) / 2.6); 
+                  if (step > 5) step = 5;
+                  currentKnifeFrame = step;
+              }
+
+              let currentSprite = knifeFrames[currentKnifeFrame] || knifeFrames[0];
+              if (currentSprite && currentSprite.complete && currentSprite.naturalWidth > 0) {
+                  let scale = 1.2; // УМЕНЬШИЛИ НОЖ (Было 1.8)
+                  let drawWidth = currentSprite.naturalWidth * scale;
+                  let drawHeight = currentSprite.naturalHeight * scale;
+
+                  let drawY = viewportHeight - drawHeight + 35 + gunYOffset;
+
+                  // Отражение по горизонтали, чтобы нож был в правой руке
+                  ctx.save();
+                  ctx.translate(screenWidth, 0); // Переносим точку отсчета вправо
+                  ctx.scale(-1, 1); // Отражаем по X
+                  
+                  // Считаем centerX для уже отраженной системы координат
+                  let centerX = (screenWidth - drawWidth) / 2 - 80; // Сдвиг от центра вправо (визуально)
+                  ctx.drawImage(currentSprite, centerX, drawY, drawWidth, drawHeight);
+                  ctx.restore(); // Сбрасываем отражение
+              }
           }
 
           <!-- if (flash && !isDead) { -->
@@ -2828,30 +2958,47 @@ document.addEventListener("DOMContentLoaded", function() {
           ctx.fillStyle = "#0c0c0c";
           ctx.fillRect(6, viewportHeight + 6, screenWidth - 12, screenHeight - viewportHeight - 12);
 
-          ctx.font = "bold 22px 'Courier New', monospace";
+          // --- ПОДПИСИ ---
+          ctx.font = "bold 14px 'Courier New', monospace";
+          ctx.fillStyle = "#888";
+          ctx.fillText("HEALTH", 40, viewportHeight + 28);
+          ctx.fillText("FRAGS", 210, viewportHeight + 28);
+          ctx.fillText("WEAPON", 450, viewportHeight + 28);
+          ctx.fillText("AMMO", 600, viewportHeight + 28);
 
+          // --- ЦИФРЫ ---
+          ctx.font = "bold 38px 'Courier New', monospace";
+
+          // Здоровье
           if (hpFlashTimer > 0) {
               ctx.fillStyle = (hpFlashTimer % 6 < 3) ? "#00ff66" : "#ffffff";
           } else {
-              ctx.fillStyle = (player.health <= 25) ? "#ff0000" : "#cc0000";
+              ctx.fillStyle = (player.health <= 35) ? "#ff0000" : "#cc0000";
           }
-          ctx.fillText(player.health + "%", 40, viewportHeight + 60);
+          ctx.fillText(player.health + "%", 40, viewportHeight + 82);
 
+          // Фраги
+          ctx.fillStyle = "#00ff00";
+          ctx.fillText(kills, 210, viewportHeight + 82);
+
+          // Патроны
           if (ammoFlashTimer > 0) {
               ctx.fillStyle = (ammoFlashTimer % 6 < 3) ? "#ffff55" : "#ffffff";
           } else {
               ctx.fillStyle = "#ffcc00";
           }
-          ctx.fillText(player.ammo, 580, viewportHeight + 60);
+          ctx.fillText(player.ammo, 600, viewportHeight + 82);
 
-          ctx.fillStyle = "#00ff00";
-          ctx.fillText(kills, 190, viewportHeight + 60);
-
-          ctx.font = "bold 10px 'Courier New', monospace";
-          ctx.fillStyle = "#888";
-          ctx.fillText("HEALTH", 35, viewportHeight + 25);
-          ctx.fillText("AMMO", 585, viewportHeight + 25);
-          ctx.fillText("FRAGS", 190, viewportHeight + 25);
+          // --- ИКОНКА АКТИВНОГО ОРУЖИЯ ---
+          let wIcon = (player.currentWeapon === 'pistols') ? hudWeapons.pistols : hudWeapons.knife;
+          if (wIcon && wIcon.complete && wIcon.naturalWidth > 0) {
+              // Немного увеличили масштаб самой иконки
+              let iScale = 65 / Math.max(wIcon.naturalWidth, wIcon.naturalHeight);
+              let iW = wIcon.naturalWidth * iScale;
+              let iH = wIcon.naturalHeight * iScale;
+              // Сдвигаем вправо (центруем под надписью WEAPON)
+              ctx.drawImage(wIcon, 475 - iW / 2, viewportHeight + 35, iW, iH);
+          }
 
           // ==========================================
           // ЛИЦО ДУМГАЯ (ИЗ СПРАЙТОВ)
