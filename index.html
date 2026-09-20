@@ -1227,6 +1227,8 @@ document.addEventListener("DOMContentLoaded", function() {
           this.itemSound.volume = 0.95;
           this.biteSound = new Audio(`${SOUND_PATH}doom_atk${SOUND_EXT}`);
           this.biteSound.volume = 0.25;
+		  this.knifeSound = new Audio(`${SOUND_PATH}doom_knf${SOUND_EXT}`);
+          this.knifeSound.volume = 0.4;
 
           const trackMap = [
               'doom_loop1', 'doom_loop1',
@@ -1310,6 +1312,8 @@ document.addEventListener("DOMContentLoaded", function() {
           if (this.stepDeckB) { this.stepDeckB.pause(); this.stepDeckB.currentTime = 0; }
       },
 
+
+
       playShot() {
           const available = this.shotPool.find(a => a.paused || a.ended) || this.shotPool[0];
           available.currentTime = 0;
@@ -1369,6 +1373,13 @@ document.addEventListener("DOMContentLoaded", function() {
           }
       },
 	  
+	  playKnife() {
+          if (this.knifeSound) {
+              this.knifeSound.currentTime = 0;
+              this.knifeSound.play().catch(() => {});
+          }
+      },
+	  
   };
 
   doomAudio.init();
@@ -1382,19 +1393,15 @@ document.addEventListener("DOMContentLoaded", function() {
 		  wallTextures[i] = new Image();
 	  }
 	  
-	  // Базовые стены
+	  //стены
 	  wallTextures[1].src = TEXTURE_PATH + 'BRICK_1A.PNG';    // 1: Серый кирпич
 	  wallTextures[2].src = TEXTURE_PATH + 'BRICK_2B.PNG';    // 2: Красный кирпич
 	  wallTextures[3].src = TEXTURE_PATH + 'TECH_1C.PNG';     // 3: Техническая серая стена
 	  wallTextures[4].src = TEXTURE_PATH + 'CRATE_1D.PNG';    // 4: Ящики/Груз
-	  
-	  // Декорации и терминалы
 	  wallTextures[5].src = TEXTURE_PATH + 'CONSOLE_1B.PNG';  // 5: Компьютер
 	  wallTextures[8].src = TEXTURE_PATH + 'LIGHT_1B.PNG';    // 8: Стена с лампами
 	  wallTextures[9].src = TEXTURE_PATH + 'TECH_4E.PNG';     // 9: Панель с графиком
 	  wallTextures[10].src = TEXTURE_PATH + 'BRICK_3D.PNG';   // 10: Кирпич с плющом
-	  
-	  // Колонны (Идеально для проходов и углов)
 	  wallTextures[6].src = TEXTURE_PATH + 'SUPPORT_3A.PNG';  // 6: Колонна (желтый свет)
 	  wallTextures[7].src = TEXTURE_PATH + 'SUPPORT_4A.PNG';  // 7: Колонна (синий свет)
   
@@ -1404,21 +1411,21 @@ document.addEventListener("DOMContentLoaded", function() {
 	  
 	const weaponFrames = [];
 
-	// Массив из 13 кадров, выстроенный в полноценную анимацию стрельбы по-македонски
+	// Спрайты пестиколв
 	const frameNames = [
-		'LOWBA0.png', // 0: Покой (два пистолета опущены)
-		'BLPSE0.png', // 1: Вспышка (выстрел правым пистолетом)
-		'BLPSA0.png', // 2: Отдача правого 1
-		'BLPSB0.png', // 3: Отдача правого 2
-		'BLPSC0.png', // 4: Возврат правого 1
-		'BLPSD0.png', // 5: Возврат правого 2
-		'LLPSE0.png', // 6: Вспышка (выстрел левым пистолетом)
-		'LLPSA0.png', // 7: Отдача левого 1
-		'LLPSB0.png', // 8: Отдача левого 2
-		'LLPSC0.png', // 9: Возврат левого 1
-		'LLPSD0.png', // 10: Возврат левого 2
-		'BLAPB0.png', // 11: Эффектная пауза/осмотр (пистолеты сведены вместе)
-		'LOWBA0.png'  // 12: Финал (возврат в покой)
+		'LOWBA0.png', // 0: 
+		'BLPSE0.png', // 1:
+		'BLPSA0.png', // 2: 
+		'BLPSB0.png', // 3: 
+		'BLPSC0.png', // 4: 
+		'BLPSD0.png', // 5: 
+		'LLPSE0.png', // 6:
+		'LLPSA0.png', // 7: 
+		'LLPSB0.png', // 8: 
+		'LLPSC0.png', // 9: 
+		'LLPSD0.png', // 10: 
+		'BLAPB0.png', // 11: 
+		'LOWBA0.png'  // 12: 
 	];
 	
 	// ==========================================
@@ -1434,7 +1441,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
       faceFileNames.forEach(name => {
           let img = new Image();
-          // Убедись, что путь к папке guyanim правильный!
           img.src = 'resorse/images/textures/guyanim/' + name; 
           faceFrames[name] = img;
       });
@@ -1461,15 +1467,12 @@ document.addEventListener("DOMContentLoaded", function() {
 	for (let i = 0; i < 13; i++) {
 		let img = new Image();
 		let fileName = frameNames[i]; 
-		
-		// Вставь здесь точный путь к папке, в которую ты закинул эти картинки.
-		// Если они лежат в общей папке текстур, то путь будет таким:
 		img.src = 'resorse/images/textures/pistol/' + fileName; 
 		
 		weaponFrames.push(img);
 	}
 	
-	// Загрузка анимации ножа (серия KNFS - прямой удар)
+	// Загрузка анимации укола ножа 
     const knifeFrames = [];
     const knifeFrameNames = ['KNFSA0.png', 'KNFSB0.png', 'KNFSC0.png', 'KNFSD0.png', 'KNFSE0.png', 'KNFSF0.png'];
     knifeFrameNames.forEach(name => {
@@ -1478,31 +1481,43 @@ document.addEventListener("DOMContentLoaded", function() {
         knifeFrames.push(img);
     });
 	
+	// Загрузка анимации рубящего ножа
+	const knifeSwingFrames = [];
+    const knifeSwingFrameNames = ['KNFSA0.png', 'KNFLB0.png', 'KNFLC0.png', 'KNFLD0.png', 'KNFLE0.png', 'KNFLC0.png'];
+    knifeSwingFrameNames.forEach(name => {
+        let img = new Image();
+        img.src = 'resorse/images/textures/hend/' + name;
+        knifeSwingFrames.push(img);
+    });
+	
 	const hudWeapons = {
       pistols: new Image(),
       knife: new Image()
 	};
-    // Используем готовые спрайты как иконки 
+    // Иконки оружия
 	hudWeapons.pistols.src = 'resorse/images/textures/pistol/BLAPB0.png'; 
 	hudWeapons.knife.src = 'resorse/images/textures/hend/KNFPA0.png';
 
+
+	// предметы на карте
 	const itemSprites = {
       medkit: new Image(),
-      ammo: new Image()
+      ammo: new Image(),
+      time: new Image() 
 	  };
-	  // Замени путь, если закинул картинки в другую папку
 	  itemSprites.medkit.src = 'resorse/images/textures/med.png';
 	  itemSprites.ammo.src = 'resorse/images/textures/bulets.png';
+      itemSprites.time.src = 'resorse/images/textures/tms.png';
 
+
+  // / / / / / / / / /
+  
   function openDoomEasterEgg() {
       const win = document.getElementById('doom-window');
       if (!win) return;
       win.style.display = 'block';
       doomAudio.startMusic();
       startDoomGame();
-      
-      // Снимаем фокус с активного элемента (кнопки запуска), 
-      // чтобы случайное нажатие Enter не перезапускало игру
       if (document.activeElement) {
           document.activeElement.blur();
       }
@@ -1710,6 +1725,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       let hpFlashTimer = 0;
       let ammoFlashTimer = 0;
+	  let currentKnifeAttackType = 'stab'; // текущий тип удара ножом
 
       const DEATH_DELAY_FRAMES = 150;
       const ENEMY_COUNT = 22;
@@ -1778,6 +1794,8 @@ document.addEventListener("DOMContentLoaded", function() {
               items.push({ type: 'medkit', x: pMed.x, y: pMed.y });
               let pAmmo = getRandomFloorTile();
               items.push({ type: 'ammo', x: pAmmo.x, y: pAmmo.y });
+              let pTime = getRandomFloorTile();
+              items.push({ type: 'time', x: pTime.x, y: pTime.y });
           }
       }
 	  
@@ -1893,12 +1911,17 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			
           itemSpawnTimer++;
-          if (itemSpawnTimer > 400) { // Сделаем таймер дольше (было 240)
+          if (itemSpawnTimer > 400) { 
               itemSpawnTimer = 0;
-              // Теперь по таймеру появляются ТОЛЬКО аптечки, и не больше 3 на карте
+              //  аптечки, и не больше 3 на карте
               if (items.filter(i => i.type === 'medkit').length < 3) {
                   let spawnTile = getRandomFloorTile();
                   items.push({ type: 'medkit', x: spawnTile.x, y: spawnTile.y });
+              }
+              // спавна времени (максимум 1 на карте)
+              if (items.filter(i => i.type === 'time').length < 1) {
+                  let spawnTile = getRandomFloorTile();
+                  items.push({ type: 'time', x: spawnTile.x, y: spawnTile.y });
               }
           }
 
@@ -2284,6 +2307,19 @@ document.addEventListener("DOMContentLoaded", function() {
                               ammoFlashTimer = 35;
                               collected = true;
                           }
+                      } else if (it.type === 'time') {
+                          // Добавляем 10 секунд времени (максимум 60)
+                          player.timeLeft = Math.min(60, player.timeLeft + 10);
+                          
+                          // Спавним всплывающий текст
+                          floatingTexts.push({ 
+                              x: it.x, 
+                              y: it.y, 
+                              text: "+15s", 
+                              life: 35, 
+                              maxLife: 35 
+                          });
+                          collected = true;
                       }
 
                       if (collected) {
@@ -2294,8 +2330,12 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
           }
-		  // Выстрел
-         // Проверка на смену оружия
+
+
+          // ==========================================
+          // ЛОГИКА ОРУЖИЯ (СМЕНА И АТАКА)
+          // ==========================================
+
           if (player.currentWeapon === 'pistols' && player.ammo <= 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
               player.weaponSwitchTimer = 20; // Запускаем анимацию убирания пистолетов
           } else if (player.currentWeapon === 'knife' && player.ammo > 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
@@ -2346,11 +2386,17 @@ document.addEventListener("DOMContentLoaded", function() {
                   gunAnim = 16; 
                   faceAnimTimer = 18;
                   
+                  // Случайный выбор: 50% тычковый (KNFS), 50% рубящий (KNFL)
+                  currentKnifeAttackType = Math.random() < 0.5 ? 'stab' : 'swing';
+                  
+                  // Проигрываем звук удара ножом
+                  doomAudio.playKnife();
+                  
                   enemies.forEach(en => {
                       if (Math.hypot(en.x - player.x, en.y - player.y) < 4) en.awake = true;
                   });
                   
-                 enemies.forEach(en => {
+                  enemies.forEach(en => {
                       if (en.state === 'alive') {
                           let hitRadius = en.isBoss ? 1.6 : 1.3;
                           let dist = Math.hypot(en.x - player.x, en.y - player.y);
@@ -2366,58 +2412,58 @@ document.addEventListener("DOMContentLoaded", function() {
                                       en.deathTimer = 30;
                                       kills++;
                                       doomAudio.playMonsterDeath();
-									  // Вычисляем бонус (10 за босса, 1 за обычного)
-										let timeBonus = en.isBoss ? 10 : 1;
-										player.timeLeft = Math.min(60, player.timeLeft + timeBonus); 
+                                      // Вычисляем бонус
+                                      let timeBonus = en.isBoss ? 10 : 1;
+                                      player.timeLeft = Math.min(60, player.timeLeft + timeBonus); 
 
-										// Спавним всплывающий текст с припиской "s"
-										floatingTexts.push({ 
-											x: en.x, 
-											y: en.y, 
-											text: "+" + timeBonus + "s", 
-											life: 35, 
-											maxLife: 35 
-										});
+                                      // Спавним всплывающий текст
+                                      floatingTexts.push({ 
+                                          x: en.x, 
+                                          y: en.y, 
+                                          text: "+" + timeBonus + "s", 
+                                          life: 35, 
+                                          maxLife: 35 
+                                      });
                                       
                                       // Из босса 100% падает лут
                                       if (Math.random() < 0.20 || en.isBoss) {
-											 items.push({ type: 'ammo', x: en.x, y: en.y, zOffset: -0.15, vz: -0.07, vx: (Math.random()-0.5)*0.08, vy: (Math.random()-0.5)*0.08 });
-											 if (en.isBoss) items.push({ type: 'medkit', x: en.x + 0.2, y: en.y, zOffset: -0.15, vz: -0.09, vx: (Math.random()-0.5)*0.08, vy: (Math.random()-0.5)*0.08 });
-											 if (items.length > 15) items.shift(); // Слегка увеличили лимит предметов
-										}
+                                          items.push({ type: 'ammo', x: en.x, y: en.y, zOffset: -0.15, vz: -0.07, vx: (Math.random()-0.5)*0.08, vy: (Math.random()-0.5)*0.08 });
+                                          if (en.isBoss) items.push({ type: 'medkit', x: en.x + 0.2, y: en.y, zOffset: -0.15, vz: -0.09, vx: (Math.random()-0.5)*0.08, vy: (Math.random()-0.5)*0.08 });
+                                          if (items.length > 15) items.shift();
+                                      }
 
-                                      // СПАВН БОССА КАЖДЫЕ 50 ФРАГОВ
+                                      // СПАВН БОССА
                                       if (kills % 50 === 0 && kills > 0) {
                                           let bTile;
                                           do { bTile = getRandomFloorTile(); } while (Math.hypot(bTile.x - player.x, bTile.y - player.y) < 8.0);
                                           enemies.push({ 
-											x: bTile.x, 
-											y: bTile.y, 
-											state: 'alive', 
-											deathTimer: 0, 
-											attackCooldown: 0, 
-											awake: true, 
-											rage: 0, 
-											hp: 5, 
-											isBoss: true, 
-											isStriking: false,
-											speedMult: 0.8, 
-											sizeMult: 1.6, 
-											targetOffsetX: (Math.random() - 0.5) * 1.5, 
-											targetOffsetY: (Math.random() - 0.5) * 1.5,
-											lostSightTimer: 0, 
-											wanderTimer: 0, 
-											wanderTargetX: bTile.x, 
-											wanderTargetY: bTile.y 
-});
+                                              x: bTile.x, 
+                                              y: bTile.y, 
+                                              state: 'alive', 
+                                              deathTimer: 0, 
+                                              attackCooldown: 0, 
+                                              awake: true, 
+                                              rage: 0, 
+                                              hp: 5, 
+                                              isBoss: true, 
+                                              isStriking: false,
+                                              speedMult: 0.8, 
+                                              sizeMult: 1.6, 
+                                              targetOffsetX: (Math.random() - 0.5) * 1.5, 
+                                              targetOffsetY: (Math.random() - 0.5) * 1.5,
+                                              lostSightTimer: 0, 
+                                              wanderTimer: 0, 
+                                              wanderTargetX: bTile.x, 
+                                              wanderTargetY: bTile.y 
+                                          });
                                       }
                                   } else {
-										  if (en.isBoss) {
-											  doomAudio.playBossHurt(); // Низкий басовый рык для босса
-										  } else {
-											  doomAudio.playHurt();     // Стандартный звук для мелких
-										  }
-									  }
+                                      if (en.isBoss) {
+                                          doomAudio.playBossHurt();
+                                      } else {
+                                          doomAudio.playHurt();
+                                      }
+                                  }
                               }
                           }
                       }
@@ -3158,24 +3204,21 @@ document.addEventListener("DOMContentLoaded", function() {
                   currentKnifeFrame = step;
               }
 
-              let currentSprite = knifeFrames[currentKnifeFrame] || knifeFrames[0];
+              let activeFramesArray = (currentKnifeAttackType === 'swing') ? knifeSwingFrames : knifeFrames;
+              let currentSprite = activeFramesArray[currentKnifeFrame] || activeFramesArray[0];
+              
               if (currentSprite && currentSprite.complete && currentSprite.naturalWidth > 0) {
-                  let scale = 1.4; // размер ножа 
+                  let scale = 1.4; 
                   let drawWidth = currentSprite.naturalWidth * scale;
-					let drawHeight = currentSprite.naturalHeight * scale;
+                  let drawHeight = currentSprite.naturalHeight * scale;
+                  let drawY = Math.floor(viewportHeight - drawHeight - 0 + gunYOffset);
 
-					// Убрали +35. Можно поставить -10 или -20, если захочется поднять еще выше
-					let drawY = Math.floor(viewportHeight - drawHeight - 0 + gunYOffset);
-
-                  // Отражение по горизонтали, чтобы нож был в правой руке
                   ctx.save();
-                  ctx.translate(screenWidth, 0); // Переносим точку отсчета вправо
-                  ctx.scale(-1, 1); // Отражаем по X
-                  
-                  // Считаем centerX для уже отраженной системы координат
-                  let centerX = (screenWidth - drawWidth) / 2 - 80; // Сдвиг от центра вправо (визуально)
+                  ctx.translate(screenWidth, 0);
+                  ctx.scale(-1, 1);
+                  let centerX = (screenWidth - drawWidth) / 2 - 80;
                   ctx.drawImage(currentSprite, centerX, drawY, drawWidth, drawHeight);
-                  ctx.restore(); // Сбрасываем отражение
+                  ctx.restore();
               }
           }
 
