@@ -498,11 +498,22 @@
         <!-- Нижние декоративные анимации -->
         <div class="gif-left">
 		
-				<!-- Кнопка запуска Doom -->
-				<div id="doom-launch-btn-container" style="text-align: right; margin: 20px 0;">
-					<button class="button_doom color_doom" onclick="openDoomEasterEgg()" style="font-weight: bold; color: #800000;">
-						[Запустить DOOM.exe]
-					</button>
+
+				<!-- Иконки запуска Doom и Гайда -->
+				<div id="doom-launch-btn-container" style="display: flex; justify-content: flex-end; gap: 15px; margin: 20px 0; padding-right: 10px;">
+					
+					<!-- Иконка мануала (гайда) -->
+					<div class="desktop-icon-btn" onclick="openDoomGuide()">
+						<img src="resorse/images/icons/txt_icon.webp" alt="Manual" onerror="this.src='resorse/images/icons/email.webp'"> 
+						<div class="icon-text">README.txt</div>
+					</div>
+
+					<!-- Иконка запуска DOOM -->
+					<div class="desktop-icon-btn" onclick="openDoomEasterEgg()">
+						<img src="resorse/images/icons/doom_icon.webp" alt="DOOM" onerror="this.src='resorse/images/icons/github.webp'">
+						<div class="icon-text">DOOM.exe</div>
+					</div>
+
 				</div>
 				
             <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy" style="transform: translateY(-30px);">
@@ -512,8 +523,107 @@
 
     </div> <!-- /#middleblock -->
 
+	
+		<!-- Окно гайда DOOM (Блокнот) -->
+	<div id="doom-guide-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -40%); z-index: 100000; width: 750px; max-width: 90vw; height: 800px; max-height: 80vh;">
+		<div class="win-title-bar">
+			<div class="win-title-text">
+                <!-- Иконка текстового документа -->
+				<span class="win-icon" style="font-size: 14px;">📄</span> README_DOOM.txt — Блокнот
+			</div>
+			<div class="win-controls">
+				<button class="win-btn" type="button" onclick="closeDoomGuide()">_</button>
+				<button class="win-btn" type="button" onclick="closeDoomGuide()">□</button>
+				<button class="win-btn close" type="button" onclick="closeDoomGuide()">✕</button>
+			</div>
+		</div>
+		
+		<div class="win-window-body" style="background: #c0c0c0; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; height: calc(100% - 28px);">
+            <!-- Меню блокнота -->
+            <div style="font-family: Tahoma, sans-serif; font-size: 11px; padding: 2px 0 6px 0; border-bottom: 1px solid #808080; margin-bottom: 6px; color: #000;">
+                <span style="margin-right: 10px;"><u>Ф</u>айл</span>
+                <span style="margin-right: 10px;"><u>П</u>равка</span>
+                <span style="margin-right: 10px;">Ф<u>о</u>рмат</span>
+                <span style="margin-right: 10px;"><u>В</u>ид</span>
+                <span style="margin-right: 10px;">С<u>п</u>равка</span>
+            </div>
+            
+			<!-- Поле с журнальной статьей -->
+			<div class="win-sunken-panel mag-layout" style="background: #fdfdfc; padding: 20px 25px; overflow-y: auto; height: 100%; color: #1a1a1a; cursor: text; text-align: left;">
+                
+                <style>
+                    <!-- // Журнальные стили внедрены прямо сюда для изоляции // -->
+                    .mag-layout { font-family: 'Georgia', 'Times New Roman', serif; }
+                    .mag-header { border-bottom: 3px solid #b71c1c; padding-bottom: 8px; margin-bottom: 15px; }
+                    .mag-title { font-family: 'Arial Black', 'Impact', sans-serif; font-size: 26px; text-transform: uppercase; color: #111; margin: 0 0 5px 0; line-height: 1.1; letter-spacing: -0.5px; }
+                    .mag-subtitle { font-family: 'Arial', sans-serif; font-size: 11px; font-weight: bold; color: #b71c1c; text-transform: uppercase; margin: 0; letter-spacing: 1px; }
+                    .mag-lead { font-size: 15px; font-style: italic; font-weight: bold; text-align: justify; margin-bottom: 20px; line-height: 1.4; color: #333; }
+                    .mag-text { font-size: 14px; line-height: 1.6; text-align: justify; margin-bottom: 15px; }
+                    .mag-h2 { font-family: 'Arial', sans-serif; font-size: 15px; font-weight: bold; color: #b71c1c; margin: 20px 0 8px 0; text-transform: uppercase; }
+                    .mag-img-box { margin: 15px 0; padding: 4px; border: 1px solid #dcdcdc; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+                    .mag-img-box img { width: 100%; display: block; image-rendering: pixelated; }
+                    .mag-caption { font-family: 'Arial', sans-serif; font-size: 11px; padding: 8px; background: #f4f4f4; color: #555; line-height: 1.4; border-top: 1px dotted #ccc; }
+                    .mag-sidebar { float: right; width: 200px; background: #f9f9f9; border-left: 4px solid #b71c1c; padding: 12px; margin: 0 0 15px 20px; font-family: 'Arial', sans-serif; font-size: 12px; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
+                    .mag-sidebar h3 { margin: 0 0 10px 0; color: #111; font-size: 13px; text-transform: uppercase; }
+                    .mag-sidebar ul { padding-left: 15px; margin: 0; line-height: 1.6; color: #333; }
+                    .mag-sidebar li { margin-bottom: 6px; }
+                    .mag-highlight { font-weight: bold; color: #b71c1c; }
+                </style>
 
-    <!-- Окно контактов (каскадное нависающее окно) -->
+                <div class="mag-header">
+                    <h1 class="mag-title">DOOM: Анатомия выживания</h1>
+                    <p class="mag-subtitle">Спецпроект • Руководство по тактике • Журнал "Игрожурия"</p>
+                </div>
+
+                <p class="mag-lead">
+                    Местная инкарнация классики не прощает ошибок. Это суровый, методичный экшен, где главным вашим врагом становятся не столько орды монстров, сколько неумолимо утекающие секунды. Разбираем базовые механики для тех, кто хочет продержаться на арене дольше одной минуты.
+                </p>
+
+                <div class="mag-img-box">
+                    <!-- Укажите путь к скриншоту -->
+                    <img src="resorse/images/doom_screen_hud.webp" alt="Скриншот интерфейса">
+                    <div class="mag-caption">
+                        <b>Интерфейс аскетичен.</b> В нижней части экрана располагается HUD: портрет протагониста, показатели здоровья (HEALTH) и оставшегося времени (TIME). Мельче выведена статистика убийств (FRAGS), активное оружие (WEAPON) и текущий боезапас (AMMO).
+                    </div>
+                </div>
+
+                <div class="mag-sidebar">
+                    <h3>Тактическое управление</h3>
+                    <ul>
+                        <li><span class="mag-highlight">W, A, S, D</span> - Перемещение и стрейф</li>
+                        <li><span class="mag-highlight">Стрелки ← → </span> - Поворот камеры</li>
+                        <li><span class="mag-highlight">Пробел</span> - Огонь </li>
+                        <li><span class="mag-highlight">M</span> - Отключить миникарту</li>
+                    </ul>
+                </div>
+
+                <h2 class="mag-h2">Тайм-менеджмент и ресурсы</h2>
+                <p class="mag-text">
+                    В основе геймплея лежит жесткий таймер. Выживание напрямую зависит от агрессивности вашей игры: каждая уничтоженная рядовая цель пополняет запас на 1 секунду, а ликвидация босса дарит сразу 10. Периодически генератор уровня подкидывает бонусы: карманные часы (+10 секунд), аптечки (восстанавливают 25% здоровья) и коробки с боеприпасами (+5 патронов). Коробки с боеприпасами могут выпасть при уничтожения цели. Контроль инвентаря критичен — герой способен унести не более 40 патронов одновременно.
+                </p>
+
+                <h2 class="mag-h2">Оружейная философия</h2>
+                <p class="mag-text">
+                    Базовым аргументом в спорах с местной, весьма не привлекательной, фауной выступают спаренные пистолеты. Оружие обладает отличной убойной силой, однако имеет фатальный недостаток: акустический след. Звук выстрела демаскирует вашу позицию, стягивая монстров из соседних коридоров. 
+                </p>
+                <p class="mag-text">
+                    Как только обойма пустеет, протагонист автоматически переключается на армейский нож. Ближний бой требует идеального позиционирования и выверенной дистанции, но взамен предлагает бесшумное устранение целей. Идеальный инструмент для аккуратной зачистки комнат когда опустели магазины пистолетов.
+                </p>
+
+                <h2 class="mag-h2">Искусственный интеллект</h2>
+                <p class="mag-text">
+                    Поведение противников подчинено не сложным паттернам. Обнаружив цель, они переходят в режим преследования. Разорвав визуальный контакт на достаточное время, вы заставите монстров потерять интерес и вернуться к патрулированию сектора. 
+                </p>
+                <p class="mag-text">
+                    Особую угрозу представляет алгоритм эскалации: каждые 50 фрагов игра наказывает расслабившегося бойца спавном Брутального Босса. Эта особь отличается увеличенными габаритами и повышенной живучестью, однако её устранение окупается гарантированным выпадением ценного лута. Держите дистанцию и контролируйте периметр.
+                </p>
+
+			</div>
+		</div>
+	</div>
+	
+
+    <!-- Окно контактов -->
     <div id="contacts-window" class="win-window">
         <div class="win-title-bar">
             <div class="win-title-text">
@@ -1512,6 +1622,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // / / / / / / / / /
   
+  function openDoomGuide() {
+      const win = document.getElementById('doom-guide-window');
+      if (win) {
+          win.style.display = 'block';
+          if (document.activeElement) document.activeElement.blur();
+      }
+  }
+
+  function closeDoomGuide(e) {
+      if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+      }
+      const win = document.getElementById('doom-guide-window');
+      if (win) win.style.display = 'none';
+  }
+
   function openDoomEasterEgg() {
       const win = document.getElementById('doom-window');
       if (!win) return;
@@ -1534,7 +1661,6 @@ document.addEventListener("DOMContentLoaded", function() {
       
       doomInterval = false; // Останавливаем новый цикл
   }
-
   function startDoomGame() {
       const canvas = document.getElementById('doomCanvas');
       if (!canvas) return;
@@ -3640,6 +3766,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         switchTab(window.location.hash);
+		
+		
     });
 </script>
 </body>
