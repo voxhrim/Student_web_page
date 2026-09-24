@@ -103,7 +103,7 @@ body {
     outline: 1px dotted #000000;
 }
 
-/* ---------------- Жёсткое скрытие уродливого баннера Google ---------------- */
+/* ---------------- Жёсткое скрытие баннера Google ---------------- */
 /* Прячем оригинальный контейнер за экран, не отключая его отрисовку */
 .google-hidden-engine {
     position: absolute !important;
@@ -171,20 +171,6 @@ html, body {
     box-shadow: none !important;
 }
 
-
-/* /* /* ---------------- Фоновый персонаж ---------------- */ */ */
- /* .background-image { */ */
-     /* position: fixed; */ */
-     /* right: 0; */ */
-     /* bottom: 0; */ */
-     /* width: clamp(170px, 20vw, 360px); */ */
-     /* max-height: 85vh; */ */
-     /* object-fit: contain; */ */
-     /* object-position: bottom right; */ */
-     /* z-index: 1; */ */
-    /* pointer-events: none; */ */
-     /* transition: width 0.2s ease, max-height 0.2s ease; */ */
- /* } */ */
 
 /* ---------------- Стили окон Windows 98/2000 ---------------- */
 .win-window {

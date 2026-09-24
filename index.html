@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="master_style_gif.css?v=2">
 	<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">  <!-- он для миниигры -->
 
-    <!--  стили окна, почему-то в ксс не прописываются -->
+    <!--  стили освновных окон (почему-то в ксс не работает) -->
     <style>
         .win-window {
             background: #c0c0c0 !important;
@@ -23,17 +23,17 @@
 <body>
 
 
-    <!-- Фоновый арт -->
-    <img class="background-image" data-src="resorse/images/AnimeChar.png" alt="" loading="lazy">
+    <!-- <!-- Фоновый рисунок-->
+    <!-- <img class="background-image" data-src="resorse/images/AnimeChar.png" alt="" loading="lazy"> -->
 
-    <!-- Верхний блок ссылок ДонНТУ (Панель задач Windows) -->
+    <!-- Верхний блок ссылок (Панель задач) -->
 	<div id="topblock">
 		<div class="taskbar-start">
 			<span class="win-logo-icon">🪟</span> <strong>Пуск</strong>
 		</div>
 
 		<div style="display: flex; align-items: center; gap: 8px;">
-			<!-- Наш ретро-селектор -->
+			<!-- Блок переводчика от гугл -->
 			<div class="win-lang-picker">
 				<span class="lang-icon">🌐</span>
 				<label for="custom-language-select" class="lang-label">Язык:</label>
@@ -47,21 +47,19 @@
 			</div>
 
 			<div id="donntu">
-				<a href="http://donntu.ru" target="_blank">🌐 ДонНТУ</a>
+				<a href="http://donntu.ru" target="_blank">🏢 ДонНТУ</a>
 				<a href="http://masters.donntu.ru" target="_blank" title="Перейти на портал магистров ДонНТУ">🎓 Портал магистров</a>
 			</div>
 		</div>
 	</div>
 
-<!-- Невидимый для глаз, но полностью рабочий для скриптов контейнер Google -->
+<!-- Контейнер для сокрытия скрипта Google Translate -->
 <div id="google_translate_element" class="google-hidden-engine"></div>
-
-<!-- Невидимый контейнер для стандартного скрипта Google Translate -->
 <div id="google_translate_element" style="display: none;"></div>
 
 
 
-	<!-- Отдельное окно для змейки в свободной области справа -->
+	<!-- Окно для змейки -->
 	<div id="desktop-snake-window" class="win-window">
 		<div class="win-title-bar">
 			<div class="win-title-text">
@@ -80,10 +78,8 @@
 		</div>
 	</div>
 
-    <!-- Единая шапка сайта: классическое окно Windows 2000 -->
+    <!-- Шапка сайта -->
     <div id="header" class="win-window">
-        
-        
 
         <div class="win-title-bar">
             <div class="win-title-text">
@@ -100,7 +96,7 @@
             <div id="photomag" style="cursor: pointer;" onclick="toggleMugshotBubble(event)">
                 <img src="resorse/images/mugshot.webp" width="400" height="225" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
                 
-                <!-- Всплывающий анимированный баббл -->
+                <!-- Бабл при нажатии на аватарку -->
                 <div id="mugshot-bubble" style="display: none;" class="mascot-bubble">
                     Это я!
                 </div>
@@ -119,24 +115,23 @@
         </div>
     </div>
 
-    <!-- Главный блок с вкладками SPA (Окно документа WordPad) -->
+    <!--  Основное окно) -->
     <div id="middleblock" class="win-window window-relative">
 
-        <!-- Сидящий на верхнем краю окна персонаж -->
-		
-		<!-- <div class="anime-sitter" title="Добро пожаловать!"> -->
-			<!-- <img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж"> -->
-		<!-- </div> -->
-		
-		<!-- Фрагмент ниже для сжатого формата - если короче будет место поджимать -->
-		
-         <div class="anime-sitter" title="Добро пожаловать!"> 
-			<video autoplay loop muted playsinline>
-				 <source src="resorse/images/gif/1anime5.webm" type="video/webm">
-			</video>
-		 </div> 
+		<!-- Два куска ниже одинаковые, но для разных типов файлов. Webm - более сжатый формат -->
 
-        <!-- Полоса заголовка окна -->
+		 <div class="anime-sitter" title="Добро пожаловать!"> 
+			 <img src="resorse/images/gif/1anime5.gif" alt="Сидящий персонаж">  				 <!-- 1440 кб -->
+		</div> 
+
+         <!-- <div class="anime-sitter" title="Добро пожаловать!">  -->
+			<!-- <video autoplay loop muted playsinline> -->
+				 <!-- <source src="resorse/images/gif/1anime5.webm" type="video/webm"> -->  	 <!--  490 кб -->
+			<!-- </video> -->
+		 <!-- </div>  -->
+
+
+        <!-- Заголовок окна -->
         <div class="win-title-bar">
             <div class="win-title-text">
                 <span class="win-icon">📄</span> Master_Portfolio.doc — Microsoft WordPad
@@ -147,12 +142,12 @@
                 <button class="win-btn close" type="button">✕</button>
             </div>
         </div>
-			<!-- Тело окна WordPad с серым фоном -->
+
+
         <div class="win-window-body" style="padding: 6px; background: #c0c0c0;">
-		
 			<div class="win-sunken-panel" style="background: #c0c0c0;">
 
-            <!-- Верхнее меню навигации (SPA хеши) -->
+            <!-- Меню навигации (SPA хеши) -->
             <div id="menu">
                 <a class="button tab-link colorfix" href="#about">[О себе]</a>
                 <a class="button tab-link color" href="#referat">[Реферат]</a>
@@ -163,12 +158,12 @@
             <!-- Контейнер основного текста внутри окна -->
             <div id="maintext" class="win-sunken-panel">
 
-                <!-- ======================================================== -->
-                <!-- ВКЛАДКА 1: О СЕБЕ / РЕЗЮМЕ                                -->
-                <!-- ======================================================== -->
+
+                <!---------------- ВКЛАДКА 1: О СЕБЕ --------------------->
+
                 <section id="about" class="tab-content active">
                     
-                    <!-- Уникальный маскот для раздела "О себе" -->
+                    <!-- "Скрепка" для "О себе" -->
                     <div class="anime-mascot-box">
                         <div class="mascot-bubble">Рад знакомству! Это мое резюме!</div>
                         <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
@@ -278,12 +273,11 @@
                         </table>
                 </section>
 
-                <!-- ======================================================== -->
-                <!-- ВКЛАДКА 2: РЕФЕРАТ                                        -->
-                <!-- ======================================================== -->
+
+                <!----------------- ВКЛАДКА 2: РЕФЕРАТ --------------------------->
                 <section id="referat" class="tab-content">
                     
-                    <!-- Уникальный маскот для раздела "Реферат" -->
+                    <!-- "Скрепка" для "Реферат" -->
                     <div class="anime-mascot-box">
                         <div class="mascot-bubble">Это реферат моей магистерской работы</div>
                         <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
@@ -296,7 +290,9 @@
                         Сейчас тут бак. работа, маг. пока нету
                     </p>
 
-                    <!-- Панель управления и встроенный просмотрщик PDF -->
+<!-- Этот кусок нужно заменит на текстовку -->
+
+                    <!-- Просмотрщик PDF внутри браузера-->
                     <div class="article-view-box win-sunken-panel" style="margin-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                             <h3 style="margin: 0; color: #000080;">Документ: Реферат магистра</h3>
@@ -308,12 +304,11 @@
                     </div>
                 </section>
 
-                <!-- ======================================================== -->
-                <!-- ВКЛАДКА 3: НАУЧНЫЕ ТРУДЫ                                  -->
-                <!-- ======================================================== -->
+
+                <!----------------- ВКЛАДКА 3: НАУЧНЫЕ ТРУДЫ ---------------------->
                 <section id="scientific" class="tab-content">
                     
-                    <!-- Уникальный маскот для раздела "Научные труды" -->
+                    <!-- "Скрепка" для "Научные труды" -->
                     <div class="anime-mascot-box">
                         <div class="mascot-bubble">Наука — это круто! Можешь почитать мои работы!</div>
                         <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
@@ -353,7 +348,7 @@
                         </li>
                     </ol>
 
-                    <!-- Встроенный просмотрщик PDF -->
+                    <!-- Просмотрщик PDF внутри браузера -->
                     <div id="pdf-viewer-section" class="article-view-box win-sunken-panel" style="display: none;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                             <h3 id="pdf-viewer-title" style="margin: 0; color: #000080;">Просмотр документа</h3>
@@ -363,12 +358,11 @@
                     </div>
                 </section>
 
-                <!-- ======================================================== -->
-                <!-- ВКЛАДКА 4: ИНДИВИДУАЛЬНЫЙ РАЗДЕЛ                           -->
-                <!-- ======================================================== -->
+
+                <!------------------ ВКЛАДКА 4: ИНДИВИДУАЛЬНЫЙ РАЗДЕЛ ------------------>
+
                 <section id="individual" class="tab-content">
-                    
-                    <!-- Уникальный маскот для раздела "Индивидуальный раздел" -->
+                    "Скрепка" для "Индивидуальный раздел" -->
                     <div class="anime-mascot-box">
                         <div class="mascot-bubble">Крути педали, пока не дали! Погнали в ПВД!</div>
                         <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
@@ -484,52 +478,44 @@
                     </ul>
                 </section>
 
-            </div> <!-- /#maintext -->
+            </div> 
 
-        </div> <!-- /.win-window-body -->
+        </div> 
 
-        <!-- Статус-бар Windows внизу окна -->
+        <!-- Статус-бар под окном -->
         <div class="win-statusbar">
             <div class="status-cell">Готово (Документов: 4)</div>
             <div class="status-cell">В сети / ДонНТУ LAN</div>
             <div class="status-cell fit">100%</div>
         </div>
 
-        <!-- Нижние декоративные анимации -->
+        <!-- Фрагмент под окном крч -->
         <div class="gif-left">
 		
-
-				<!-- Иконки запуска Doom и Гайда -->
 				<div id="doom-launch-btn-container" style="display: flex; justify-content: flex-end; gap: 15px; margin: 20px 0; padding-right: 10px;">
-					
-					<!-- Иконка мануала (гайда) -->
+						<!-- Иконка мануала (гайда) -->
 					<div class="desktop-icon-btn" onclick="openDoomGuide()">
-						<img src="resorse/images/icons/txt_icon.webp" alt="Manual" onerror="this.src='resorse/images/icons/email.webp'"> 
-						<div class="icon-text">README.txt</div>
+						<img src="resorse/images/icons/txt_icon.webp" alt="Manual" onerror="this.src='resorse/images/icons/manual.webp'"> 
+						<div class="icon-text">DuuM manual.txt</div>
 					</div>
-
-					<!-- Иконка запуска DOOM -->
+						<!-- Иконка запуска DOOM -->
 					<div class="desktop-icon-btn" onclick="openDoomEasterEgg()">
-						<img src="resorse/images/icons/doom_icon.webp" alt="DOOM" onerror="this.src='resorse/images/icons/github.webp'">
-						<div class="icon-text">DOOM.exe</div>
+						<img src="resorse/images/icons/doom_icon.webp" alt="DOOM" onerror="this.src='resorse/images/icons/Duum.webp'">
+						<div class="icon-text">DuuM.exe</div>
 					</div>
-
 				</div>
 				
             <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy" style="transform: translateY(-30px);">
-		
-        </div>
-
-
-    </div> <!-- /#middleblock -->
+		</div>
+    </div> 
 
 	
-		<!-- Окно гайда DOOM (Блокнот) -->
+		<!-- Окно гайда DuuM  -->
 	<div id="doom-guide-window" class="win-window" style="display: none; position: fixed; top: 70%; left: 50%; transform: translate(-50%, -40%); z-index: 100000; width: 750px; max-width: 90vw; height: 800px; max-height: 80vh;">
 		<div class="win-title-bar">
 			<div class="win-title-text">
-                <!-- Иконка текстового документа -->
-				<span class="win-icon" style="font-size: 14px;">📄</span> README_DOOM.txt — Блокнот
+
+				<span class="win-icon" style="font-size: 14px;">📄</span> DuuM manual.txt — Блокнот
 			</div>
 			<div class="win-controls">
 				<button class="win-btn" type="button" onclick="closeDoomGuide()">_</button>
@@ -539,7 +525,7 @@
 		</div>
 		
 		<div class="win-window-body" style="background: #c0c0c0; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; height: calc(100% - 28px);">
-            <!-- Меню блокнота -->
+            <!-- интерфейс блокнота -->
             <div style="font-family: Tahoma, sans-serif; font-size: 11px; padding: 2px 0 6px 0; border-bottom: 1px solid #808080; margin-bottom: 6px; color: #000;">
                 <span style="margin-right: 10px;"><u>Ф</u>айл</span>
                 <span style="margin-right: 10px;"><u>П</u>равка</span>
@@ -548,11 +534,11 @@
                 <span style="margin-right: 10px;">С<u>п</u>равка</span>
             </div>
             
-			<!-- Поле с журнальной статьей -->
+			<!-- Поле статьи из журнала -->
 			<div class="win-sunken-panel mag-layout" style="background: #fdfdfc; padding: 20px 25px; overflow-y: auto; height: 100%; color: #1a1a1a; cursor: text; text-align: left;">
                 
                 <style>
-                    <!-- // Журнальные стили внедрены прямо сюда для изоляции // -->
+                    <!-- // блок готовых стилей из интернета: nicepage.com // -->
                     .mag-layout { font-family: 'Georgia', 'Times New Roman', serif; }
                     .mag-header { border-bottom: 3px solid #b71c1c; padding-bottom: 8px; margin-bottom: 15px; }
                     .mag-title { font-family: 'Arial Black', 'Impact', sans-serif; font-size: 26px; text-transform: uppercase; color: #111; margin: 0 0 5px 0; line-height: 1.1; letter-spacing: -0.5px; }
@@ -571,7 +557,7 @@
                 </style>
 
                 <div class="mag-header">
-                    <h1 class="mag-title">DOOM: Анатомия выживания</h1>
+                    <h1 class="mag-title">DuuM: Анатомия выживания</h1>
                     <p class="mag-subtitle">Спецпроект • Руководство по тактике • Журнал "Игрожурия"</p>
                 </div>
 
@@ -591,7 +577,7 @@
                     <h3>Тактическое управление</h3>
                     <ul>
                         <li><span class="mag-highlight">W, A, S, D</span> - Перемещение и стрейф</li>
-                        <li><span class="mag-highlight">Стрелки ← → </span> - Поворот камеры</li>
+                        <li><span class="mag-highlight">Стрелки (← →) </span> - Поворот камеры</li>
                         <li><span class="mag-highlight">Пробел</span> - Огонь </li>
                         <li><span class="mag-highlight">M</span> - Отключить миникарту</li>
                     </ul>
@@ -682,32 +668,30 @@
         </div>
     </div>
 
-	<!-- Окно погоды с прогнозом и направлением ветра -->
-<div id="weather-window" class="win-window">
-    <div class="win-title-bar">
-        <div class="win-title-text">
-            <span class="win-icon"></span> Weather_Station.exe — Погода онлайн
-        </div>
+	<!-- Окно погоды ( Open-meteo.com )-->
+	<div id="weather-window" class="win-window">
+		<div class="win-title-bar">
+			<div class="win-title-text">
+				<span class="win-icon"></span> Weather_Station.exe — Погода онлайн
+			</div>
         <div class="win-controls">
             <button class="win-btn" type="button">_</button>
             <button class="win-btn" type="button">□</button>
             <button class="win-btn close" type="button">✕</button>
         </div>
     </div>
-
     <div class="win-window-body weather-body win-sunken-panel" style="background: #c0c0c0; padding: 10px;">
         <h2 style="font-size: 14px; color: #000080; margin: 0 0 8px 0; text-align: left; font-family: Tahoma, sans-serif; text-indent: 0;">
             Погода в ДонНТУ:
         </h2>
 
 				<div id="weather-content" class="win-sunken-panel" style="background: #ffffff; padding: 10px; font-family: Tahoma, sans-serif; font-size: 12px;">
-				   <!-- Верхняя строка: крупная иконка + равноправные °C и °F с графическими значками -->
+				   <!-- Строка температуры сейчас -->
 						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
 							<div style="display: flex; align-items: center;">
-								<!-- Иконка погоды -->
+
 								<div id="w-icon"></div>
-								
-								<!-- Значения температуры -->
+
 								<div class="w-temp-box">
 									<span id="w-temp-c" class="w-temp-val">--</span>
 									<span class="w-unit-c" title="°C"></span>
@@ -725,7 +709,7 @@
 							</div>
 						</div>
 
-            <!-- Таблица подробных метеоданных -->
+            <!-- Продробности -->
             <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; border-top: 1px dotted #808080;">
                 <tr>
                     <td style="padding: 3px 0; color: #555;">Ветер:</td>
@@ -744,7 +728,7 @@
                 </tr>
             </table>
 
-            <!-- Прогноз на 3 дня -->
+            <!-- Прогноз -->
             <div style="margin-top: 10px; border-top: 1px dotted #808080; padding-top: 8px;">
                 <div style="font-weight: bold; margin-bottom: 6px; color: #000080; font-size: 11px;">
                     Прогноз на 3 дня:
@@ -769,8 +753,8 @@
 </div>
 
 
-	<!-- Окно пасхалки DOOM -->
-	<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%); z-index: 99999; width: 85vw; max-width: 1020px; height: auto; max-height: 88vh;">
+	<!-- Окно миниигры DuuM -->
+	<div id="doom-window" class="win-window" style="display: none; position: fixed; top: 60%; left: 50%; transform: translate(-50%, -40%); z-index: 99999; width: 85vw; max-width: 1020px; height: auto; max-height: 88vh;">
 		<div class="win-title-bar">
 			<div class="win-title-text">
 				<span class="win-icon"></span> DOOM_E1M1.exe
@@ -784,21 +768,17 @@
 		
 		<div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden; position: relative;">
 			
-			<!-- VHS Контейнер (Легкий эффект ЭЛТ-монитора) -->
+			<!-- VHS постобработка -->
 			<div class="vhs-container" style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5); background: #000; transform: translateZ(0);">
-				
-				<!-- Холст игры: нормальный 100% размер без обрезки краев -->
+				<!-- Контейнер отрисовки игры -->
 				<canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; object-fit: contain;"></canvas>
-				
-				<div class="vhs-scanlines" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-				
-				<!-- 1. Верхний блик (сделали почти прозрачным) -->
+				<!-- блик фильтр-->
+				<div class="vhs-scanlines" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>		
+				<!-- блик-->
 				<div style="position: absolute; top: -15%; left: 10%; width: 80%; height: 45%; background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; pointer-events: none;"></div>
-				
-				<!-- 2. Нижняя тень (существенно ослабили) -->
+				<!-- тень -->
 				<div style="position: absolute; bottom: -20%; left: -10%; width: 120%; height: 40%; background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, transparent 70%); border-radius: 50%; pointer-events: none;"></div>
-
-				<!-- 3. Легкая виньетка (увеличили светлую зону и уменьшили черноту) -->
+				<!-- виньетка -->
 				<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: radial-gradient(circle at 50% 50%, transparent 75%, rgba(0,0,0,0.4) 100%); box-shadow: inset 0 0 15px rgba(0,0,0,0.6);"></div>
 			</div>
 			
@@ -923,7 +903,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (descEl) descEl.innerText = weather.text;
             if (iconEl) iconEl.style.backgroundPosition = weather.posMain;
 
-            // 2. Ветер + поворот стрелки
+            // 2. Ветер и поворот стрелки
             const windEl = document.getElementById("w-wind");
             const windIcon = document.getElementById("w-wind-icon");
             if (windEl && cur.wind_direction_10m !== undefined) {
@@ -945,7 +925,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 pressEl.innerText = pressureMm + " мм рт. ст.";
             }
 
-            // 4. Прогноз на 3 дня
+            // 4. Прогноз 
             const forecastBox = document.getElementById("w-forecast-container");
             if (forecastBox && data.daily && data.daily.time) {
                 forecastBox.innerHTML = "";
@@ -1025,11 +1005,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 'google_translate_element');
     }
 
-    // Программное переключение оригинального комбобокса Google Translate
+    // Программное переключение Google Translate
     function applyGoogleTranslate(langCode) {
         if (!langCode) return;
 
-        // Ищем скрытый select, созданный Google Translate
+        // поиск select от Google
         const googleCombo = document.querySelector('.goog-te-combo');
         
         if (googleCombo) {
@@ -1037,14 +1017,14 @@ document.addEventListener("DOMContentLoaded", function() {
             // Инициируем реальные события смены значения
             googleCombo.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
-            // Если библиотека еще подгружается с сервера, повторяем попытку через 300мс
+            // Время ожидания повтора
             setTimeout(() => applyGoogleTranslate(langCode), 300);
         }
     }
 
-    // Синхронизация селектора при загрузке (если в куках уже был выбран язык)
+    // Синхронизация селектора при загрузке (если уже был выбран язык)
     document.addEventListener("DOMContentLoaded", function() {
-        // Проверяем куку googtrans (например, /ru/en)
+        // Проверяем выбранный googtrans 
         const match = document.cookie.match(/(?:^|; )googtrans=([^;]*)/);
         if (match) {
             const parts = decodeURIComponent(match[1]).split('/');
@@ -1054,7 +1034,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 customSelect.value = lang;
             }
         }
-		// Наблюдатель за попытками Google сдвинуть страницу вниз
+		// Наблюдатель за попытками Google сдвинуть страницу вниз (чтоб не скакала)
 		const fixGoogleOffset = () => {
 			if (document.body.style.top && document.body.style.top !== '0px') {
 				document.body.style.top = '0px';
@@ -1078,7 +1058,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		const ctx = canvas.getContext("2d");
 		const container = canvas.parentElement;
 
-		const gridSize = 16; // Масштаб кубиков 
+		const gridSize = 16; // Масштаб сетки
 		let cols = 0;
 		let rows = 0;
 
@@ -1103,7 +1083,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		function resetGame() {
 			isDying = false;
 			deathTimer = 0;
-			// Безопасный старт по центру блока шапки
+			// Старт по центру
 			const startX = Math.floor(cols / 2);
 			const startY = Math.floor(rows / 2);
 			snake = [
@@ -1131,7 +1111,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 		}
 
-		// Искусственный интеллект для поиска еды внутри ограниченного блока
+		// Поиск пути
 		function autoNavigate() {
 			if (cols <= 0 || rows <= 0 || snake.length === 0) return;
 			const head = snake[0];
@@ -1146,7 +1126,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				if (d.x === -dx && d.y === -dy) return false;
 				let nx = head.x + d.x;
 				let ny = head.y + d.y;
-				// Проверка столкновения со стенами блока шапки
+				// Проверка столкновения со стенами
 				if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) return false;
 				// Проверка столкновения с собой
 				for (let part of snake) {
@@ -1182,7 +1162,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 			let head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-			// Столкновение со стеной блока шапки
+			// Столкновение со стеной
 			let hitWall = (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows);
 			let hitSelf = false;
 			
@@ -1193,7 +1173,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				}
 			}
 
-			// Условие смерти: если врезалась в стену ИЛИ длина >= 12 и врезалась в себя
+			// Условие смерти: если врезалась в стену 
 			if (hitWall || (snake.length >= 12 && hitSelf)) {
 				isDying = true;
 				deathTimer = 0;
@@ -1240,15 +1220,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				// Тело змейки
 				ctx.fillStyle = (i === 0) ? "#005500" : "#008000";
 				ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 1, gridSize - 1);
-
-				// Светлая граница сверху и слева
 				ctx.fillStyle = "#00aa00";
 				ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 1, 2);
 				ctx.fillRect(part.x * gridSize, part.y * gridSize, 2, gridSize - 1);
 			}
 		}
 
-		// Запуск игры с небольшой задержкой для корректного чтения размеров блока
+		// Задержка старта (для избежания конфликта масштаба страницы)
 		setTimeout(() => {
 			resizeCanvas();
 			resetGame();
@@ -1266,9 +1244,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
   let doomInterval = null;
 
-  // ==========================================
-  // АУДИОМЕНЕДЖЕР DOOM
-  // ==========================================
+
+  //------------ АУДИО ----------------
+
   const SOUND_PATH = 'resorse/sounds/';
   const SOUND_EXT = '.mp3';
 
@@ -1306,11 +1284,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
           for (let i = 0; i < 5; i++) {
               const a = new Audio(`${SOUND_PATH}doom_sht${SOUND_EXT}`);
-              a.volume = 0.2;
+              a.volume = 0.08;
               this.shotPool.push(a);
           }
 		  
-			// Создаем тяжелый звук для босса на основе существующего рыка
           this.bossHurtSound = new Audio(`${SOUND_PATH}doom_atk${SOUND_EXT}`);
           this.bossHurtSound.volume = 0.7;
           this.bossHurtSound.preservesPitch = false; 
@@ -1428,14 +1405,14 @@ document.addEventListener("DOMContentLoaded", function() {
           const available = this.shotPool.find(a => a.paused || a.ended) || this.shotPool[0];
           available.currentTime = 0;
           
-          // Отключаем алгоритм сохранения высоты тона (теперь скорость влияет на питч)
+          // Скорость влияет на питч
           available.preservesPitch = false;
-          // Для поддержки старых браузеров (Safari)
+          // Для сафари
           if (typeof available.webkitPreservesPitch !== 'undefined') {
               available.webkitPreservesPitch = false;
           }
           
-          // Рандомизируем скорость (и питч) от 0.92 до 1.08 (±8%)
+          // Рандомизирует скорость 
           available.playbackRate = 0.95 + Math.random() * 0.22; 
           
           available.play().catch(() => {});
@@ -1494,10 +1471,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   doomAudio.init();
 
-  // ==========================================
-  // МЕНЕДЖЕР ТЕКСТУР
-  // ==========================================
-	  const TEXTURE_PATH = 'resorse/images/textures/';
+
+  // -------------- ТЕКСТУРЫ -------------------
+
+	  const TEXTURE_PATH = 'resorse/images/textures/walls/';
 	  const wallTextures = {};
 	  for (let i = 1; i <= 10; i++) {
 		  wallTextures[i] = new Image();
@@ -1505,42 +1482,41 @@ document.addEventListener("DOMContentLoaded", function() {
 	  
 	  //стены
 	  wallTextures[1].src = TEXTURE_PATH + 'BRICK_1A.PNG';    // 1: Серый кирпич
-	  wallTextures[2].src = TEXTURE_PATH + 'BRICK_2B.PNG';    // 2: Красный кирпич
-	  wallTextures[3].src = TEXTURE_PATH + 'TECH_1C.PNG';     // 3: Техническая серая стена
-	  wallTextures[4].src = TEXTURE_PATH + 'CRATE_1D.PNG';    // 4: Ящики/Груз
+	  wallTextures[2].src = TEXTURE_PATH + 'BRICK_2A.PNG';    // 2: Красный кирпич
+	  wallTextures[3].src = TEXTURE_PATH + 'TECH_1C.PNG';     // 3: Техническая стена
+	  wallTextures[4].src = TEXTURE_PATH + 'CRATE_1D.PNG';    // 4: Ящики
 	  wallTextures[5].src = TEXTURE_PATH + 'CONSOLE_1B.PNG';  // 5: Компьютер
-	  wallTextures[8].src = TEXTURE_PATH + 'LIGHT_1B.PNG';    // 8: Стена с лампами
-	  wallTextures[9].src = TEXTURE_PATH + 'TECH_4E.PNG';     // 9: Панель с графиком
+	  wallTextures[6].src = TEXTURE_PATH + 'BRICK_1B.PNG';    // 6: Серый кирпич с трещеной
+	  wallTextures[7].src = TEXTURE_PATH + 'BRICK_2B.PNG';    // 7: Красный кирпич с пятном
+	  wallTextures[8].src = TEXTURE_PATH + 'CRATE_1С.PNG';    // 8: Ящики с подтеком
+	  wallTextures[9].src = TEXTURE_PATH + 'TECH_4E.PNG';     // 9: Техническая с проводом
 	  wallTextures[10].src = TEXTURE_PATH + 'BRICK_3D.PNG';   // 10: Кирпич с плющом
-	  wallTextures[6].src = TEXTURE_PATH + 'SUPPORT_3A.PNG';  // 6: Колонна (желтый свет)
-	  wallTextures[7].src = TEXTURE_PATH + 'SUPPORT_4A.PNG';  // 7: Колонна (синий свет)
+
   
 		const decalImg = new Image();
-		// пулевая дырка, блек холл 
-		decalImg.src = 'resorse/images/textures/hole1.png';
+		// Декаль дырки 
+		decalImg.src = 'resorse/images/textures/walls/hole1.png';
 	  
-	const weaponFrames = [];
+		const weaponFrames = [];
 
-	// Спрайты пестиколв
-	const frameNames = [
-		'LOWBA0.png', // 0: 
-		'BLPSE0.png', // 1:
-		'BLPSA0.png', // 2: 
-		'BLPSB0.png', // 3: 
-		'BLPSC0.png', // 4: 
-		'BLPSD0.png', // 5: 
-		'LLPSE0.png', // 6:
-		'LLPSA0.png', // 7: 
-		'LLPSB0.png', // 8: 
-		'LLPSC0.png', // 9: 
-		'LLPSD0.png', // 10: 
-		'BLAPB0.png', // 11: 
-		'LOWBA0.png'  // 12: 
-	];
+		// Пистолеты
+		const frameNames = [
+			'LOWBA0.png', // 0: 
+			'BLPSE0.png', // 1:
+			'BLPSA0.png', // 2: 
+			'BLPSB0.png', // 3: 
+			'BLPSC0.png', // 4: 
+			'BLPSD0.png', // 5: 
+			'LLPSE0.png', // 6:
+			'LLPSA0.png', // 7: 
+			'LLPSB0.png', // 8: 
+			'LLPSC0.png', // 9: 
+			'LLPSD0.png', // 10: 
+			'BLAPB0.png', // 11: 
+			'LOWBA0.png'  // 12: 
+		];
 	
-	// ==========================================
-      // МЕНЕДЖЕР СПРАЙТОВ ЛИЦА (HUD)
-      // ==========================================
+		// Лицо думгая
       const faceFrames = {};
       const faceFileNames = [
           'guy1.png', 'guy2.png', 'guy3.png', 'guy5.png', 'guy6.png', 'guy7.png',
@@ -1555,16 +1531,14 @@ document.addEventListener("DOMContentLoaded", function() {
           faceFrames[name] = img;
       });
 
-	// ==========================================
-      // МЕНЕДЖЕР СПРАЙТОВ МОНСТРОВ 	
-      // ==========================================
+		// Монстры
       const monsterFrames = [];
       const monsterFrameNames = [
-          // Шаги (Индексы 0 - 3)
+          // Шаги (0 - 3)
           'CBO2A1.png', 'CBO2B1.png', 'CBO2C1.png', 'CBO2D1.png', 
-          // Удар (Индексы 4 - 6)
+          // Удар (4 - 6)
           'CBO2P1.png', 'CBO2Q1.png', 'CBO2R1.png',               
-          // Смерть (Индексы 7 - 12)
+          // Смерть (7 - 12)
           'CBO2J0.png', 'CBO2K0.png', 'CBO2L0.png', 'CBO2M0.png', 'CBO2N0.png', 'CBO2O0.png' 
       ];
 
@@ -1574,53 +1548,57 @@ document.addEventListener("DOMContentLoaded", function() {
           monsterFrames.push(img);
       });
 
-	for (let i = 0; i < 13; i++) {
-		let img = new Image();
-		let fileName = frameNames[i]; 
-		img.src = 'resorse/images/textures/pistol/' + fileName; 
+		for (let i = 0; i < 13; i++) {
+			let img = new Image();
+			let fileName = frameNames[i]; 
+			img.src = 'resorse/images/textures/pistol/' + fileName; 
+			
+			weaponFrames.push(img);
+		}
+	
+		// Аним ножа 1
+		const knifeFrames = [];
+		const knifeFrameNames = ['KNFSA0.png', 'KNFSB0.png', 'KNFSC0.png', 'KNFSD0.png', 'KNFSE0.png', 'KNFSF0.png'];
+		knifeFrameNames.forEach(name => {
+			let img = new Image();
+			img.src = 'resorse/images/textures/hend/' + name;
+			knifeFrames.push(img);
+		});
+	
+		// Аним ножа 2
+		const knifeSwingFrames = [];
+		const knifeSwingFrameNames = ['KNFSA0.png', 'KNFLB0.png', 'KNFLC0.png', 'KNFLD0.png', 'KNFLE0.png', 'KNFLC0.png'];
+		knifeSwingFrameNames.forEach(name => {
+			let img = new Image();
+			img.src = 'resorse/images/textures/hend/' + name;
+			knifeSwingFrames.push(img);
+		});
+	
+		const hudWeapons = {
+		  pistols: new Image(),
+		  knife: new Image()
+		};
 		
-		weaponFrames.push(img);
-	}
-	
-	// Загрузка анимации укола ножа 
-    const knifeFrames = [];
-    const knifeFrameNames = ['KNFSA0.png', 'KNFSB0.png', 'KNFSC0.png', 'KNFSD0.png', 'KNFSE0.png', 'KNFSF0.png'];
-    knifeFrameNames.forEach(name => {
-        let img = new Image();
-        img.src = 'resorse/images/textures/hend/' + name;
-        knifeFrames.push(img);
-    });
-	
-	// Загрузка анимации рубящего ножа
-	const knifeSwingFrames = [];
-    const knifeSwingFrameNames = ['KNFSA0.png', 'KNFLB0.png', 'KNFLC0.png', 'KNFLD0.png', 'KNFLE0.png', 'KNFLC0.png'];
-    knifeSwingFrameNames.forEach(name => {
-        let img = new Image();
-        img.src = 'resorse/images/textures/hend/' + name;
-        knifeSwingFrames.push(img);
-    });
-	
-	const hudWeapons = {
-      pistols: new Image(),
-      knife: new Image()
-	};
-    // Иконки оружия
-	hudWeapons.pistols.src = 'resorse/images/textures/pistol/BLAPB0.png'; 
-	hudWeapons.knife.src = 'resorse/images/textures/hend/KNFPA0.png';
+		// Иконки оружия
+		hudWeapons.pistols.src = 'resorse/images/textures/pistol/BLAPB0.png'; 
+		hudWeapons.knife.src = 'resorse/images/textures/hend/KNFPA0.png';
 
 
-	// предметы на карте
-	const itemSprites = {
-      medkit: new Image(),
-      ammo: new Image(),
-      time: new Image() 
-	  };
-	  itemSprites.medkit.src = 'resorse/images/textures/med.png';
-	  itemSprites.ammo.src = 'resorse/images/textures/bulets.png';
-      itemSprites.time.src = 'resorse/images/textures/tms.png';
+		// предметы на карте
+		const itemSprites = {
+		  medkit: new Image(),
+		  ammo: new Image(),
+		  time: new Image() 
+		  };
+		  itemSprites.medkit.src = 'resorse/images/textures/items/med.png';
+		  itemSprites.ammo.src = 'resorse/images/textures/items/bulets.png';
+		  itemSprites.time.src = 'resorse/images/textures/items/tms.png';
 
 
-  // / / / / / / / / /
+
+    // -------------------------------------------------
+
+
   
   function openDoomGuide() {
       const win = document.getElementById('doom-guide-window');
@@ -1659,33 +1637,30 @@ document.addEventListener("DOMContentLoaded", function() {
       if (win) win.style.display = 'none';
       doomAudio.stopMusic();
       
-      doomInterval = false; // Останавливаем новый цикл
+      doomInterval = false; 
   }
+	
+	// ------------- Игровой цикл ---------------
+	
   function startDoomGame() {
       const canvas = document.getElementById('doomCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      // Отключаем сглаживание для четкого пиксель-арта
+      // Отключает сглаживание
       ctx.imageSmoothingEnabled = false; 
 
       const screenWidth = 720;
       const screenHeight = 460;
       const viewportHeight = 350;
 	  
-	  const fov = Math.PI / 3;      // Добавлено: поле зрения 
-      const halfFov = fov / 2;      // Добавлено: половина поля зрения 
-	  <!-- const fov = 70 * Math.PI / 180; // 110 градусов (Quake Pro) -->
-      <!-- const halfFov = fov / 2; -->
+	  const fov = Math.PI / 3;      // поле зрения 
+      const halfFov = fov / 2;      // половина поля зрения 
 	  
-      const zBuffer = new Array(screenWidth); // Добавлено: буфер глубины
-
-      <!-- const LIGHT_STEP = 0.15; -->
-      <!-- const MAX_LIGHT_DIST = 13; -->
-      <!-- const MIN_BRIGHTNESS = 0.05; -->
-	  
-	  const LIGHT_STEP = 0.15;
-      const MAX_LIGHT_DIST = 9;   // Уменьшаем дальность видимости во тьме для мрачности
-      const MIN_BRIGHTNESS = 0.01; // Почти абсолютная темнота вдалеке
+      const zBuffer = new Array(screenWidth); // буфер глубины
+ 
+	
+      const MAX_LIGHT_DIST = 9;   // дальность видимости
+      const MIN_BRIGHTNESS = 0.01; // минимальная яркость блоков (около нулевая)
 
 	
 		
@@ -1694,39 +1669,46 @@ document.addEventListener("DOMContentLoaded", function() {
 		let showAllMonsters = false;
 
 		window.addEventListener('keydown', (e) => {
-			if (e.code === 'KeyM') showMinimap = !showMinimap; // 'M' переключает миникарту
-			if (e.code === 'KeyN') showAllMonsters = !showAllMonsters; // 'N' переключает все/только видимые
+			if (e.code === 'KeyM') showMinimap = !showMinimap; // 'M' скрывает миникарту
+			if (e.code === 'KeyN') showAllMonsters = !showAllMonsters; // 'N' переключает радар чит
 		});
 
-     // Карта 40x40 с правильными текстурами и закольцованными широкими проходами
-      // 0 - пол, 1 - стена, 2 - красный кирпич, 3 - техно-стена, 4 - ящики
-      // 5 - комп, 6 - стена с трещиной, 7 - красный кирпич с кровью, 8 - ящик с подтеком, 9 - техно-стена с проводами, 10 - стена с плющом
       const map = [ 
-          [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1],
+          [1,1,10,1,6,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,6,1,1],
           [1,0,0,0,0,0,0,1,4,4,8,9,4,4,4,1,0,0,0,0,0,0,0,1],
           [1,0,0,0,0,0,0,6,4,0,0,0,0,0,4,4,0,1,1,5,1,1,0,1],
           [1,0,0,0,0,0,0,1,4,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1],
-          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,8,1,0,1,0,0,0,1,0,1],
-          [1,0,0,0,0,0,0,1,4,0,4,0,4,0,4,1,0,1,0,0,0,1,0,1],
+          [6,0,0,0,0,0,0,0,0,0,0,0,0,0,8,1,0,1,0,0,0,1,0,1],
+          [1,0,0,0,0,0,0,1,4,0,4,0,4,0,4,1,0,6,0,0,0,1,0,6],
           [1,0,0,0,0,0,0,6,4,4,4,0,4,4,4,1,0,1,1,0,1,1,0,1],
           [1,1,1,0,0,1,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1],
-          [1,2,2,0,0,2,2,2,7,2,2,0,2,2,2,2,1,1,1,1,1,1,0,1],
+          [1,2,2,0,0,2,2,2,7,2,2,0,2,2,2,2,1,1,1,1,1,6,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,1],
           [1,7,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,1,1,1,1,1,1],
           [1,2,0,0,2,2,0,0,0,0,2,2,0,0,0,2,0,0,1,3,3,9,3,1],
           [1,2,0,0,7,2,0,0,0,0,2,2,0,0,0,2,1,0,1,3,0,0,0,1],
           [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,3,3,0,3,0,1],
-          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,5,0,1],
-          [1,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,1,1,1,3,0,3,0,1],
+          [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,5,0,6],
+          [1,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,1,1,6,3,0,3,0,1],
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,3,0,1],
-          [1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,3,3,3,0,1],
-          [1,0,1,3,3,8,3,3,3,3,3,8,3,1,0,1,1,0,1,1,1,1,0,1],
+          [1,0,1,6,1,6,1,1,1,1,1,1,6,1,0,1,1,0,1,3,3,3,0,1],
+          [1,0,1,3,3,8,3,3,3,3,3,8,3,1,0,6,1,0,1,1,1,1,0,1],
           [1,0,1,3,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,1],
           [1,0,1,5,0,3,0,0,0,0,3,0,5,1,1,1,1,1,1,1,1,1,0,1],
           [1,0,0,0,0,8,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,0,1,3,0,0,0,0,0,0,0,0,3,1,1,1,1,1,1,0,1,1,1,1],
-          [1,1,10,1,1,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1]
+          [1,0,1,3,0,0,0,0,0,0,0,0,3,1,6,1,1,1,1,0,1,6,1,1],
+          [1,1,10,1,6,1,1,1,1,1,10,1,1,1,1,1,1,1,1,10,1,1,1,1]
       ];
+	  // 1: Серый кирпич
+	  // 2: Красный кирпич
+	  // 3: Техническая стена
+	  // 4: Ящики
+	  // 5: Компьютер
+	  // 6: Серый кирпич с трещеной
+	  // 7: Красный кирпич с пятном
+	  // 8: Ящики с подтеком
+	  // 9: Техническая с проводом
+	  // 10: Кирпич с плющом
 	  
       function getRandomFloorTile() {
           let emptyTiles = [];
@@ -1740,7 +1722,7 @@ document.addEventListener("DOMContentLoaded", function() {
           return emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
       }
 	  
-		// Функция строит карту кратчайших расстояний от игрока до каждой клетки лабиринта
+		// карта кратчайших расстояний от игрока до каждой клетки лабиринта
       function calculateDistanceMap(targetX, targetY) {
           let rows = map.length;
           let cols = map[0].length;
@@ -1767,8 +1749,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
                   if(ny >= 0 && ny < rows && nx >= 0 && nx < cols) {
                       let cell = map[ny][nx];
-                      // Проходимые клетки: пустота (0) или колонны (6, 7)
-                      if ((cell === 0 || cell === 6 || cell === 7) && dist[ny][nx] === -1) {
+                      // Проходимые клетки: пустота (0)
+                      if ((cell === 0 ) && dist[ny][nx] === -1) {
                           dist[ny][nx] = d + 1;
                           queue.push({x: nx, y: ny});
                       }
@@ -1778,11 +1760,11 @@ document.addEventListener("DOMContentLoaded", function() {
           return dist;
       }
 		
-		// Функция обработки движения с мягким скольжением по круглому хитбоксу
+		// Функция обработки движения с скольжением по стенам
       function tryMove(newX, newY) {
           let radius = 0.22; // Стандартный радиус игрока
 
-          // Теперь проходима только пустота (0)
+          // Прохол через пустоту (0)
           function isWalkable(x, y) {
               let mapX = Math.floor(x);
               let mapY = Math.floor(y);
@@ -1790,7 +1772,7 @@ document.addEventListener("DOMContentLoaded", function() {
               return map[mapY][mapX] === 0;
           }
 
-          // === ДВИЖЕНИЕ ПО ОСИ X ===
+          // Ось X 
           let testX = newX;
           let canX = true;
           let offsetX = (testX > player.x) ? radius : -radius;
@@ -1807,7 +1789,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
           if (canX) player.x = testX;
 
-          // === ДВИЖЕНИЕ ПО ОСИ Y ===
+          // Ось Y
           let testY = newY;
           let canY = true;
           let offsetY = (testY > player.y) ? radius : -radius;
@@ -1835,8 +1817,7 @@ document.addEventListener("DOMContentLoaded", function() {
               let cx = Math.floor(x0 + dx * t);
               let cy = Math.floor(y0 + dy * t);
               let cell = map[cy] ? map[cy][cx] : 1;
-              // Игнорируем колонны (6 и 7) при проверке видимости
-              if (cell > 0 && cell !== 6 && cell !== 7) return false;
+              if (cell > 0) return false;
           }
           return true;
       }
@@ -1865,16 +1846,16 @@ document.addEventListener("DOMContentLoaded", function() {
               ammo: 15,
 			  timeLeft: 30.0, //  Стартовое время
               currentWeapon: 'pistols', // Текущее оружие
-              weaponSwitchTimer: 0 // Таймер для анимации смены (0 - нет анимации - значение в дефолте)
+              weaponSwitchTimer: 0 
           };
 		  
-		  floatingTexts = []; // Массив для вылетающих цифр "+3"
+		  floatingTexts = [];
           kills = 0;
           damageFlash = 0;
           screenShake = 0;
           bloodSplats = [];
           bullets = [];
-		  decals = []; // Очищаем дырки от пуль при рестарте
+		  decals = [];
           isDead = false;
           deathTimer = 0;
           growlCooldown = 0;
@@ -1942,7 +1923,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (keys.hasOwnProperty(code)) {
               keys[code] = true;
               if (document.getElementById('doom-window').style.display === 'block') {
-                  e.preventDefault(); // Блокируем прокрутку страницы
+                  e.preventDefault(); // отключает прокрутку страницы стрелками во вреия игры
               }
           }
       });
@@ -1956,13 +1937,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
       if (doomInterval) clearInterval(doomInterval);
 
-      // Обновленная система расчета освещенности
+      // расчета освещенности
 		function getLightLevel(distance, isFlash) {
           let factor = 1.0 - Math.pow(distance / MAX_LIGHT_DIST, 1.6);
           if (factor < MIN_BRIGHTNESS) factor = MIN_BRIGHTNESS;
 
-          // Вспышка теперь короткая: вместо 0.15 ставим 0.4, 
-          // чтобы свет ярко вспыхивал прямо перед игроком и быстро сходил на нет к 3-4 блоку
+          // Вспышка от выстрела
           if (isFlash) {
               let flashPower = Math.max(0, 0.6 - (distance * 0.1)); 
               factor += flashPower;
@@ -1989,7 +1969,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       let lastTime = 0;
       let accumulator = 0;
-      const TIME_STEP = 1000 / 35; // Целевая скорость логики
+      const TIME_STEP = 1000 / 35; // Целевая скорость движка
       doomInterval = true; 
 
       function gameLoop(timestamp) {
@@ -2004,12 +1984,10 @@ document.addEventListener("DOMContentLoaded", function() {
           accumulator += deltaTime;
 
           let updates = 0;
-          // Крутим логику, пока есть накопленное время, но не больше 4 раз за кадр
+          // Пропуск кадров, если лагает
           while (accumulator >= TIME_STEP && updates < 4) {
               accumulator -= TIME_STEP;
               updates++;
-              
-              // Флаг пропуска рендера: если цикл пойдет на еще один круг, графику не рисуем!
               let skipRender = (accumulator >= TIME_STEP && updates < 4);
 		  
           if (playerInvulnTimer > 0) playerInvulnTimer--;
@@ -2018,15 +1996,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 			
 			if (!isDead) {
-				// Отнимаем время (TIME_STEP у нас в миллисекундах)
+				// после пропуска отнимает время игрока
 				player.timeLeft -= TIME_STEP / 1000;
 				if (player.timeLeft <= 0) {
 					player.timeLeft = 0;
-					player.health = 0; // Если время вышло — смерть
+					player.health = 0;
 				}
 			}
 
-			// Обновляем прозрачность и время жизни всплывающих цифр
+			// Тайминги вспылающий цифер
 			for (let i = floatingTexts.length - 1; i >= 0; i--) {
 				floatingTexts[i].life--;
 				if (floatingTexts[i].life <= 0) floatingTexts.splice(i, 1);
@@ -2039,12 +2017,12 @@ document.addEventListener("DOMContentLoaded", function() {
           itemSpawnTimer++;
           if (itemSpawnTimer > 400) { 
               itemSpawnTimer = 0;
-              //  аптечки, и не больше 3 на карте
+              //  Оптечки (огран 3 шт)
               if (items.filter(i => i.type === 'medkit').length < 3) {
                   let spawnTile = getRandomFloorTile();
                   items.push({ type: 'medkit', x: spawnTile.x, y: spawnTile.y });
               }
-              // спавна времени (максимум 1 на карте)
+              // Часы (огран 1 шт)
               if (items.filter(i => i.type === 'time').length < 1) {
                   let spawnTile = getRandomFloorTile();
                   items.push({ type: 'time', x: spawnTile.x, y: spawnTile.y });
@@ -2079,15 +2057,15 @@ document.addEventListener("DOMContentLoaded", function() {
 				let isTurning = false;
 				let turnDir = 0;
 
-				// Повороты камеры на стрелки
+				// Повороты камеры
 				if (keys['ArrowLeft']) { isTurning = true; turnDir = -1; }
 				if (keys['ArrowRight']) { isTurning = true; turnDir = 1; }
 
 				if (isTurning) {
 					player.turnFrames++;
 					let minSens = 0.025;
-					// Подняли максимальную скорость вращения (разгон камеры стал резче)
-					let maxSens = 0.110;
+					// Ускорение ввода при зажатии
+				  let maxSens = 0.110;
                   let accelTime = 10;
                   let accelFactor = Math.min(player.turnFrames / accelTime, 1.0); 
                   player.angle += turnDir * (minSens + (maxSens - minSens) * accelFactor); 
@@ -2096,10 +2074,10 @@ document.addEventListener("DOMContentLoaded", function() {
               }
 
               // Вектор движения вперед/назад
-             let nextX = player.x;
+              let nextX = player.x;
               let nextY = player.y;
 
-              // Шаги (WASD)
+              // Шаги
               let moveForward = 0;
               let moveStrafe = 0;
 
@@ -2111,7 +2089,7 @@ document.addEventListener("DOMContentLoaded", function() {
               let isMoving = (moveForward !== 0 || moveStrafe !== 0);
 
               if (isMoving) {
-                  // Нормализация вектора (чтобы диагональ не была быстрее)
+                  // Нормализация вектора по диагонали
                   let len = Math.hypot(moveForward, moveStrafe);
                   moveForward /= len;
                   moveStrafe /= len;
@@ -2132,10 +2110,9 @@ document.addEventListener("DOMContentLoaded", function() {
                   doomAudio.stopSteps();
               }
 
-              // Плавное круговое скольжение
+              // Скольжение по стенам
               const radius = 0.22;
-
-              // Пробуем сдвинуться по X
+              // Сдвиг X
               let targetX = player.x + (nextX - player.x);
               let checkX = targetX + (targetX > player.x ? radius : -radius);
               let mapCellX = map[Math.floor(player.y)][Math.floor(checkX)];
@@ -2148,7 +2125,7 @@ document.addEventListener("DOMContentLoaded", function() {
               }
               if (canX) player.x = targetX;
 
-              // Пробуем сдвинуться по Y
+              // Сжвиг Y
               let targetY = player.y + (nextY - player.y);
               let checkY = targetY + (targetY > player.y ? radius : -radius);
               let mapCellY = map[Math.floor(checkY)][Math.floor(player.x)];
@@ -2176,8 +2153,6 @@ document.addEventListener("DOMContentLoaded", function() {
                           let push = (minDist - distBetween) * 0.15;
                           let px = ((e1.x - e2.x) / distBetween) * push;
                           let py = ((e1.y - e2.y) / distBetween) * push;
-
-                          // Толкаем с учетом ПОЛНОГО хитбокса (тройная проверка: верх, низ и центр)
                           let m1 = e1.isBoss ? 0.28 : 0.22;
                           let nx1 = Math.floor(e1.x + px + (px > 0 ? m1 : -m1));
                           if (map[Math.floor(e1.y - m1)][nx1] === 0 && map[Math.floor(e1.y + m1)][nx1] === 0 && map[Math.floor(e1.y)][nx1] === 0) e1.x += px;
@@ -2198,9 +2173,8 @@ document.addEventListener("DOMContentLoaded", function() {
           let nearestDistance = 999;
           backStalkWarning = false;
 
-          // ==========================================
-          // ЛОГИКА И ДВИЖЕНИЕ МОНСТРОВ
-          // ==========================================
+          // --------------- ЛОГИКА И ДВИЖЕНИЕ МОНСТРОВ ---------------------
+
           enemies.forEach(en => {
               if (en.attackCooldown > 0) {
                   en.attackCooldown--;
@@ -2241,7 +2215,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                   if (!isDead) {
                       if (en.awake) {
-                          // === РЕЖИМ ПРЕСЛЕДОВАНИЯ ===
+                          // Преследование
                           if (!canSeePlayer) {
                               en.rage += 0.05;
                               if (en.rage > 50) en.rage = 50; 
@@ -2329,7 +2303,7 @@ document.addEventListener("DOMContentLoaded", function() {
                               }
                           }
                       } else {
-                          // === РЕЖИМ ПАТРУЛИРОВАНИЯ (СОН) ===
+                          // Патрулирование
                           en.wanderTimer--;
                           if (en.wanderTimer <= 0) {
                               let wTile = getRandomFloorTile();
@@ -2398,21 +2372,19 @@ document.addEventListener("DOMContentLoaded", function() {
               growlCooldown = Math.floor(35 + nearestDistance * 20);
           }
 
-          // Подбор лута
+          // -------------- Подбор предметов ------------- 
           if (!isDead) {
-              // Перебираем массив с конца, чтобы безопасно удалять элементы
+              // Удаление с конца 
               for (let i = items.length - 1; i >= 0; i--) {
                   let it = items[i];
                   
-                  // --- ФИЗИКА ПРЕДМЕТОВ (ВЗЛЕТ И ПАДЕНИЕ) ---
+                  // --- Анимация выподения предмета ---
                   if (it.zOffset !== undefined && it.zOffset < 0) {
                       it.x += it.vx || 0; // Разлет в стороны
                       it.y += it.vy || 0;
                       it.zOffset += it.vz; // Полет вверх/вниз
-                      it.vz += 0.008; // Гравитация тянет вниз
-                      
-                      // Удар о землю
-                      if (it.zOffset >= 0) {
+                      it.vz += 0.008; // Скорость падения                
+                      if (it.zOffset >= 0) { // призимление
                           it.zOffset = 0; 
                           it.vx = 0; it.vy = 0;
                       }
@@ -2427,21 +2399,21 @@ document.addEventListener("DOMContentLoaded", function() {
                           hpFlashTimer = 35;
                           collected = true;
                       } else if (it.type === 'ammo') {
-                          // ОГРАНИЧЕНИЕ: Максимум можно носить 40 патронов
+                          // Огран в 40 патронов
                           if (player.ammo < 50) {
                               player.ammo = Math.min(40, player.ammo + 5); 
                               ammoFlashTimer = 35;
                               collected = true;
                           }
                       } else if (it.type === 'time') {
-                          // Добавляем 10 секунд времени (максимум 60)
+                          // Добав 10 секунд (максимум 60)
                           player.timeLeft = Math.min(60, player.timeLeft + 10);
                           
-                          // Спавним всплывающий текст
+                          // Вспылающий текст
                           floatingTexts.push({ 
                               x: it.x, 
                               y: it.y, 
-                              text: "+15s", 
+                              text: "+10s", 
                               life: 35, 
                               maxLife: 35 
                           });
@@ -2450,7 +2422,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                       if (collected) {
                           doomAudio.playItem();
-                          // УДАЛЯЕМ предмет с карты навсегда
+                          // удаление предмета с карты 
                           items.splice(i, 1);
                       }
                   }
@@ -2458,28 +2430,27 @@ document.addEventListener("DOMContentLoaded", function() {
           }
 
 
-          // ==========================================
-          // ЛОГИКА ОРУЖИЯ (СМЕНА И АТАКА)
-          // ==========================================
+
+          // -------------- ОРУЖИЕ -----------------------
+
 
           if (player.currentWeapon === 'pistols' && player.ammo <= 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
-              player.weaponSwitchTimer = 20; // Запускаем анимацию убирания пистолетов
-          } else if (player.currentWeapon === 'knife' && player.ammo > 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
-              player.weaponSwitchTimer = 20; // Достаем пистолеты, если нашли патроны
-          }
+			player.weaponSwitchTimer = 20;
+			} else if (player.currentWeapon === 'knife' && player.ammo > 0 && player.weaponSwitchTimer === 0 && gunAnim === 0) {
+				player.weaponSwitchTimer = 20;
+			}
 
           if (player.weaponSwitchTimer > 0) {
               player.weaponSwitchTimer--;
               if (player.weaponSwitchTimer === 10) {
-                  // На экваторе анимации (когда оружие скрылось) меняем стейт
                   player.currentWeapon = (player.currentWeapon === 'pistols') ? 'knife' : 'pistols';
               }
           }
 
-          // Выстрел или Удар (Только если нет анимации смены)
+          // Выстрел или Удар (если нет анимации смены)
           if (!isDead && keys['Space'] && gunAnim === 0 && player.weaponSwitchTimer === 0) {
               if (player.currentWeapon === 'pistols') {
-                  // === ОГНЕСТРЕЛЬНОЕ ОРУЖИЕ ===
+                  // Пестики
                   player.lastShotSide = (player.lastShotSide === 'right') ? 'left' : 'right';
                   gunAnim = 14; 
                   flash = true;
@@ -2508,14 +2479,12 @@ document.addEventListener("DOMContentLoaded", function() {
                       life: 20
                   });
               } else if (player.currentWeapon === 'knife') {
-                  // === БЛИЖНИЙ БОЙ (НОЖ) ===
+                  // Нож
                   gunAnim = 16; 
                   faceAnimTimer = 18;
                   
-                  // Случайный выбор: 50% тычковый (KNFS), 50% рубящий (KNFL)
+                  // Случайный выбор: тычковый/рубящий 
                   currentKnifeAttackType = Math.random() < 0.5 ? 'stab' : 'swing';
-                  
-                  // Проигрываем звук удара ножом
                   doomAudio.playKnife();
                   
                   enemies.forEach(en => {
@@ -2538,11 +2507,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                       en.deathTimer = 30;
                                       kills++;
                                       doomAudio.playMonsterDeath();
-                                      // Вычисляем бонус
+
                                       let timeBonus = en.isBoss ? 10 : 1;
                                       player.timeLeft = Math.min(60, player.timeLeft + timeBonus); 
 
-                                      // Спавним всплывающий текст
                                       floatingTexts.push({ 
                                           x: en.x, 
                                           y: en.y, 
@@ -2558,7 +2526,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                           if (items.length > 15) items.shift();
                                       }
 
-                                      // СПАВН БОССА
+                                      // Спавн босса
                                       if (kills % 50 === 0 && kills > 0) {
                                           let bTile;
                                           do { bTile = getRandomFloorTile(); } while (Math.hypot(bTile.x - player.x, bTile.y - player.y) < 8.0);
@@ -2603,7 +2571,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (faceAnimTimer > 0) faceAnimTimer--;
 
           gazeTimer++;
-          if (gazeTimer > 30) { // Было 50. Теперь анимация смены взгляда работает быстрее
+          if (gazeTimer > 30) { 
               gazeTimer = 0;
               gazeDirection = Math.floor(Math.random() * 3) - 1;
           }
@@ -2644,19 +2612,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 					// Вычисляем координату на самой плоскости стены (от 0.0 до 1.0)
 					let hitCoord = 0;
-					let hitDir = 1; // <--- НОВОЕ: Направление прилета пули
+					let hitDir = 1; // Направление прилета пули
 
 					if (hitSide === 0) {
 						hitCoord = hitY - Math.floor(hitY);
 						if (b.dirX > 0) hitCoord = 1.0 - hitCoord;
-						hitDir = b.dirX > 0 ? 1 : -1; // <--- НОВОЕ: Левая или правая грань
+						hitDir = b.dirX > 0 ? 1 : -1; // Левая или правая грань
 					} else {
 						hitCoord = hitX - Math.floor(hitX);
 						if (b.dirY < 0) hitCoord = 1.0 - hitCoord;
-						hitDir = b.dirY > 0 ? 1 : -1; // <--- НОВОЕ: Передняя или задняя грань
+						hitDir = b.dirY > 0 ? 1 : -1; // Передняя или задняя грань
 					}
 
-					// Сохраняем логические параметры вместо абсолютных координат
 					decals.push({
 						mapX: mapX,
 						mapY: mapY,
@@ -2685,7 +2652,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							let timeBonus = en.isBoss ? 10 : 1;
 							player.timeLeft = Math.min(60, player.timeLeft + timeBonus); 
 
-							// Спавним всплывающий текст с припиской "s"
+							// Всплывающий текст 
 							floatingTexts.push({ 
 								x: en.x, 
 								y: en.y, 
@@ -2694,14 +2661,14 @@ document.addEventListener("DOMContentLoaded", function() {
 								maxLife: 35 
 							});
 						  
-                          // ШАНС ВЫПАДЕНИЯ ПАТРОНОВ: снижен до 30% 
+                          // Шанс дропа патронов
                           if (Math.random() < 0.20 || en.isBoss) {
 								 items.push({ type: 'ammo', x: en.x, y: en.y, zOffset: -0.15, vz: -0.07, vx: (Math.random()-0.5)*0.08, vy: (Math.random()-0.5)*0.08 });
 								 if (en.isBoss) items.push({ type: 'medkit', x: en.x + 0.2, y: en.y, zOffset: -0.15, vz: -0.09, vx: (Math.random()-0.5)*0.08, vy: (Math.random()-0.5)*0.08 });
 								 if (items.length > 15) items.shift(); // Слегка увеличили лимит предметов
 							}
 
-                          // СПАВН БОССА КАЖДЫЕ 50 ФРАГОВ
+                          // Босс каждые 50 фрагов
                           if (kills % 50 === 0 && kills > 0) {
                               let bTile;
                               do { bTile = getRandomFloorTile(); } while (Math.hypot(bTile.x - player.x, bTile.y - player.y) < 8.0);
@@ -2709,21 +2676,21 @@ document.addEventListener("DOMContentLoaded", function() {
                           }
                       } else {
                           if (en.isBoss) {
-                              doomAudio.playBossHurt(); // Низкий басовый рык для босса
+                              doomAudio.playBossHurt(); 
                           } else {
-                              doomAudio.playHurt();     // Стандартный звук для мелких
+                              doomAudio.playHurt(); 
                           }
                       }
                   }
               });
 
-             // Удаляем пулю, если она попала в стену, врага или истекло время
+             // Удаляем пулю при столкновении
               if (hitWall || hitEnemy || b.life <= 0) {
                   bullets.splice(i, 1);
               }
           } 
 
-          // Пропускаем тяжелую 3D-отрисовку, если нужно нагнать логику (Frame Skip)
+          // Скип кадров
           if (skipRender) continue;
 
           ctx.save();
@@ -2734,12 +2701,12 @@ document.addEventListener("DOMContentLoaded", function() {
               screenShake--;
           }
 
-			// ==========================================
-			// ОТРИСОВКА ПОЛА И ПОТОЛКА (ШАХМАТНАЯ ПЛИТКА)
-			// ==========================================
+
+			// -------------- ОТРИСОВКА ПОЛА ----------------
+
 			let halfH = viewportHeight / 2;
 			
-			// Вычисляем векторы направления для самого левого и самого правого луча камеры
+			// Векторы направления для самого левого и самого правого луча камеры
 			let dirX = Math.cos(player.angle);
 			let dirY = Math.sin(player.angle);
 			let planeLen = Math.tan(halfFov);
@@ -2837,7 +2804,7 @@ document.addEventListener("DOMContentLoaded", function() {
               }
 
               let hit = false;
-              let hitSide = 0; // 0 — стена X (вертикальная), 1 — стена Y (горизонтальная)
+              let hitSide = 0; // 0 — стена X, 1 — стена Y
               let wallType = 1;
 
               // DDA: шагаем строго по линиям сетки тайлов карты
@@ -2865,13 +2832,13 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
 
-              // Точная непрерывная дистанция без квантования шагами
+              // Точная дистанция
               let rayDist = (hitSide === 0) ? (sideDistX - deltaDistX) : (sideDistY - deltaDistY);
               let correctedDist = rayDist * Math.cos(rayAngle - player.angle);
               if (correctedDist < 0.1) correctedDist = 0.1;
               zBuffer[x] = correctedDist;
 
-              // === НАСТРОЙКА РАЗМЕРА ТЕКСТУР ===
+              // Размер для текстур 1 - обычная, 2 - мелкая и т.д. (исключая техн стены - нет соединения для вертикальных дубликатов)
               let tileFactor = 1.0; 
               if (wallType === 5 || wallType === 9) {
                   tileFactor = 1.0; 
@@ -2897,7 +2864,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
               let tex = wallTextures[wallType] || wallTextures[1];
 
-              // 1. ОТРИСОВКА САМОЙ СТЕНЫ
+              // ОТРИСОВКА СТЕНЫ
               if (tex && tex.complete && tex.naturalWidth > 0) {
                   let tWidth = tex.naturalWidth;
                   let tHeight = tex.naturalHeight;
@@ -2921,34 +2888,34 @@ document.addEventListener("DOMContentLoaded", function() {
                   ctx.fillRect(x, drawStart, 1, wallHeight);
               }
 			  
-              // 2. ОТРИСОВКА ДЕКАЛЕЙ (ПОВЕРХ СТЕНЫ)
+              // ОТРИСОВКА ДЕКАЛЕЙ
               let baseHitCoord = (hitSide === 0) ? (player.y + rayDist * rayDirY) : (player.x + rayDist * rayDirX);
               baseHitCoord -= Math.floor(baseHitCoord);
               if (hitSide === 0 && rayDirX > 0) baseHitCoord = 1.0 - baseHitCoord;
               if (hitSide === 1 && rayDirY < 0) baseHitCoord = 1.0 - baseHitCoord;
 
-              // Направление взгляда камеры для этой стены
+              // Направление взгляда камеры для стены
               let currentFaceDir = (hitSide === 0) ? stepX : stepY;
 
               for (let d = 0; d < decals.length; d++) {
                   let dec = decals[d];
                   
-                  // Проверяем совпадение конкретной грани
+                  // Проверяем совпадение грани
                   if (dec.mapX === mapX && dec.mapY === mapY && dec.side === hitSide && dec.dir === currentFaceDir) {
                       let dx = baseHitCoord - dec.hitCoord;
                       let decalRadius = 0.05; 
                       
                       if (Math.abs(dx) < decalRadius) {
-                          // Компенсация искажения пропорций экрана для идеального круга
-                          let aspectFix = 1.385; 
+                          // Компенсация искажения пропорций экрана 
+                          let aspectFix = 1.38; 
 
-                          // Математическая высота колонки дырки с учетом коррекции
+                          // Математическая высота дырки 
                           let colHeight = Math.sqrt(decalRadius * decalRadius - dx * dx);
                           let pixelHeight = colHeight * wallHeight * aspectFix; 
                           let centerY = viewportHeight / 2;
                           let centerDrawY = centerY + (dec.zOffset * wallHeight);
 
-                          // 1. Отрисовка основной текстуры дырки (черной)
+                          // Отрисовка основной текстуры дырки 
                           if (decalImg.complete && decalImg.naturalWidth > 0) {
                               let texU = (dx + decalRadius) / (decalRadius * 2);
                               let texX = Math.floor(texU * decalImg.naturalWidth);
@@ -2964,31 +2931,27 @@ document.addEventListener("DOMContentLoaded", function() {
                               ctx.fillRect(x, centerDrawY - pixelHeight, 1, pixelHeight * 2);
                           }
 
-                          // 2. Эффект остывающего кратера (объемное градиентное свечение)
+                          // Эффект остывающего кратера 
                           if (dec.life > 0) {
                               let heat = dec.life / 18; // от 1.0 до 0.0
                               let heatRadius = decalRadius * 0.8; 
                               
                               if (Math.abs(dx) < heatRadius) {
-                                  // Высота раскаленного центра также умножается на aspectFix
                                   let heatColHeight = Math.sqrt(heatRadius * heatRadius - dx * dx);
                                   let heatPixelHeight = heatColHeight * wallHeight * aspectFix;
-                                  
-                                  // Включаем аддитивное смешивание
+
                                   ctx.globalCompositeOperation = "lighter";
                                   
-                                  // Обновленный, более глубокий температурный градиент
                                   let grad = ctx.createLinearGradient(0, centerDrawY - heatPixelHeight, 0, centerDrawY + heatPixelHeight);
                                   grad.addColorStop(0, `rgba(150, 0, 0, 0)`);
                                   grad.addColorStop(0.15, `rgba(255, 30, 0, ${heat * 0.6})`); 
-                                  grad.addColorStop(0.5, `rgba(255, 255, 180, ${heat * 1.2})`); // Бело-желтый центр (очень горячо)
+                                  grad.addColorStop(0.5, `rgba(255, 255, 180, ${heat * 1.2})`);
                                   grad.addColorStop(0.85, `rgba(255, 30, 0, ${heat * 0.6})`);
                                   grad.addColorStop(1, `rgba(150, 0, 0, 0)`);
 
                                   ctx.fillStyle = grad;
                                   ctx.fillRect(x, centerDrawY - heatPixelHeight, 1, heatPixelHeight * 2);
-                                  
-                                  // Обязательно возвращаем стандартный режим
+
                                   ctx.globalCompositeOperation = "source-over";
                               }
                           }
@@ -2996,7 +2959,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   }
               }
 
-              // 3. НАЛОЖЕНИЕ ОСВЕЩЕНИЯ И ТЕНЕЙ (ПОКРЫВАЕТ И СТЕНУ, И ДЕКАЛИ)
+              // Освещение
               let sTop = Math.max(0, drawStart);
               let sBottom = Math.min(viewportHeight, drawStart + wallHeight);
               if (sBottom > sTop) {
@@ -3011,18 +2974,16 @@ document.addEventListener("DOMContentLoaded", function() {
               }
           }
 
-		  // ==========================================
-          // СБОР И СОРТИРОВКА ВСЕХ СПРАЙТОВ ПО ГЛУБИНЕ (ОТ ДАЛЬНИХ К БЛИЖНИМ)
-          // ==========================================
+          // Z буфер
           let renderQueue = [];
 
-          // 2. Добавляем предметы (аптечки/патроны)
+          // Предметы на карте
           items.forEach(it => {
               let dist = Math.hypot(it.x - player.x, it.y - player.y);
               renderQueue.push({ type: 'item', obj: it, dist: dist });
           });
 
-          // 3. Добавляем монстров
+          // Монстры
           enemies.forEach(en => {
               if (en.state !== 'removed') {
                   let dist = Math.hypot(en.x - player.x, en.y - player.y);
@@ -3030,16 +2991,14 @@ document.addEventListener("DOMContentLoaded", function() {
               }
           });
 
-			// 4. ДОБАВЛЯЕМ ВСПЛЫВАЮЩИЙ ТЕКСТ (СЮДА!)
+			// Текст (вермя)
 			floatingTexts.forEach(ft => {
 				let dist = Math.hypot(ft.x - player.x, ft.y - player.y);
 				renderQueue.push({ type: 'text', obj: ft, dist: dist });
 			});
 			
-          // СОРТИРОВКА: Сначала рисуем те, что дальше (dist больше), в самом конце — те, что ближе к игроку
+          // Сортировка по Z
           renderQueue.sort((a, b) => b.dist - a.dist);
-
-          // РЕНДЕР ОТСОРТИРОВАННОЙ ОЧЕРЕДИ
           renderQueue.forEach(item => {
               let spriteObj = item.obj;
               let dist = item.dist;
@@ -3054,7 +3013,8 @@ document.addEventListener("DOMContentLoaded", function() {
                   let size = Math.floor(250 / dist);
                   let light = getLightLevel(dist, flash && !isDead);
 
-                 // РЕНДЕР ПРЕДМЕТОВ
+                 
+				 // Рендер предметов
                   if (item.type === 'item') {
                       let img = itemSprites[spriteObj.type];
 
@@ -3067,7 +3027,7 @@ document.addEventListener("DOMContentLoaded", function() {
                           let wallHeight = Math.floor(450 / dist);
                           let floorY = Math.floor(viewportHeight / 2 + wallHeight / 2);
                           
-                          // ЕСЛИ предмет лежит на полу (zOffset == 0), заставляем его плавно левитировать
+                          // Анимация предметов
                           let zPos = spriteObj.zOffset !== undefined ? spriteObj.zOffset : 0;
                           if (zPos === 0) zPos = Math.sin(Date.now() / 200) * 0.03 - 0.03; 
                           
@@ -3085,7 +3045,7 @@ document.addEventListener("DOMContentLoaded", function() {
                           window.itemBuffer.width = img.naturalWidth;
                           window.itemBuffer.height = img.naturalHeight;
 
-                          // Добавили золотистую тень (drop-shadow), чтобы предметы светились в темноте
+                          // Свечение предметов
                           window.itemCtx.filter = `brightness(${totalBrightness}) drop-shadow(0px 0px 4px rgba(255, 215, 0, ${glowAlpha}))`;
                           window.itemCtx.drawImage(img, 0, 0);
                           window.itemCtx.filter = 'none';
@@ -3099,29 +3059,29 @@ document.addEventListener("DOMContentLoaded", function() {
                       }
                   }
 
-					// РЕНДЕР ВСПЛЫВАЮЩИХ ЦИФР
+					// рендер текста (время)
 					else if (item.type === 'text') {
 						let ft = spriteObj;
 						let wallHeight = Math.floor(450 / dist);
 						
-						// Поднимаем текст вверх со временем
+						// взлет
 						let rise = (1 - (ft.life / ft.maxLife)) * 0.6;
 						let drawY = viewportHeight / 2 + (0.1 - rise) * wallHeight; 
 						
-						// Прозрачность затухает к концу жизни
+						// затухание
 						ctx.fillStyle = `rgba(255, 200, 0, ${ft.life / ft.maxLife})`;
 						let fontSize = Math.max(12, Math.floor(wallHeight * 0.25)); // Текст масштабируется в 3D
 						ctx.font = `bold ${fontSize}px 'VT323', monospace`;
 						ctx.textAlign = 'center';
 						
-						// Рисуем с небольшой черной обводкой (тенью) для читаемости
+						// обводка
 						ctx.fillText(ft.text, screenX + 1, drawY + 1);
 						ctx.fillText(ft.text, screenX, drawY);
 						ctx.textAlign = 'start';
 					}
 
 
-                 // РЕНДЕР МОНСТРОВ
+                 // ----------- Рендер монстров -------------
                   else if (item.type === 'enemy') {
                       let en = spriteObj;
                       let frameIndex = 0;
@@ -3151,7 +3111,7 @@ document.addEventListener("DOMContentLoaded", function() {
                           let baseImg = monsterFrames[0];
                           let baseHeight = (baseImg && baseImg.naturalHeight > 0) ? baseImg.naturalHeight : 100;
                           
-                          // Учитываем увеличенный масштаб босса
+                          // с учетом босса
                           let sizeMultiplier = en.sizeMult || 1.0;
                           let scale = (size * 1.5 * sizeMultiplier) / baseHeight; 
                           let mWidth = Math.floor(currentMonsterImg.naturalWidth * scale);
@@ -3170,7 +3130,7 @@ document.addEventListener("DOMContentLoaded", function() {
                           window.mobBuffer.width = currentMonsterImg.naturalWidth;
                           window.mobBuffer.height = currentMonsterImg.naturalHeight;
 
-                          // Применяем ядрено-красный цвет, если это босс
+                          // покарска босса в красный
                           if (en.isBoss) {
                               window.mobCtx.filter = `brightness(${light * 1.5}) sepia(1) saturate(10) hue-rotate(330deg)`;
                           } else {
@@ -3192,7 +3152,7 @@ document.addEventListener("DOMContentLoaded", function() {
                       }
                   }
                   
-                  // РЕНДЕР ДЕКАЛЕЙ ПОПАДАНИЙ
+                  // Рендер декалей
 					else if (item.type === 'decal') {
 						let dec = spriteObj;
 						let perpDist = dist * Math.cos(spriteAngle);
@@ -3208,21 +3168,15 @@ document.addEventListener("DOMContentLoaded", function() {
 						// Рисуем дырку вертикальными колонками, чтобы она обрезалась краем стены
 						for (let sx = startX; sx <= endX; sx++) {
 							
-							// Главный фикс: проверяем Z-буфер ДЛЯ КАЖДОЙ колонки
-							// Допуск 0.1 нужен, чтобы избежать мерцания на стыках (Z-fighting)
+							// проверяем Z-буфер
 							if (sx >= 0 && sx < screenWidth && zBuffer[sx] >= perpDist - 0.1) {
 								
 								let dx = sx - screenX;
-								// Математика окружности (теорема Пифагора) для расчета высоты текущей колонки
 								let colHeight = Math.sqrt(sizeDecal * sizeDecal - dx * dx);
-								
-								// 1. Тень (отрисовываем со сдвигом на 1px вправо и вниз)
 								if (sx < screenWidth - 1) {
 									ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
 									ctx.fillRect(sx + 1, drawY - colHeight + 1, 1, colHeight * 2);
 								}
-
-								// 2. Основное отверстие пули
 								ctx.fillStyle = '#111111';
 								let coreHeight = Math.max(0, colHeight - 0.5); 
 								ctx.fillRect(sx, drawY - coreHeight, 1, coreHeight * 2);
@@ -3234,7 +3188,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			  
           });
 			
-          // ОТРИСОВКА ПОЛЕТА ПУЛЬ
+          // Полет пули
           bullets.forEach(b => {
               let bulletAngle = Math.atan2(b.y - player.y, b.x - player.x) - player.angle;
               while (bulletAngle < -Math.PI) bulletAngle += Math.PI * 2;
@@ -3250,19 +3204,16 @@ document.addEventListener("DOMContentLoaded", function() {
                   let drawY = viewportHeight / 2 + (b.zOffset * wallHeight);
 
                   if (screenX >= 0 && screenX < screenWidth && zBuffer[screenX] > dist) {
-                      // Включаем встроенное свечение Canvas
                       ctx.shadowBlur = 10;
                       ctx.shadowColor = "#ffaa00";
 
-                      // Желто-оранжевый контур (ореол пули)
                       ctx.fillStyle = "#ffcc00";
                       ctx.beginPath();
                       ctx.arc(screenX, drawY, bSize, 0, Math.PI * 2);
                       ctx.fill();
-                      
-                      ctx.shadowBlur = 0; // Отключаем тень для центра, чтобы не двоилось
-                      
-                      // Раскаленный бело-желтый центр
+  
+                      ctx.shadowBlur = 0;
+
                       ctx.fillStyle = "#ffffee";
                       ctx.beginPath();
                       ctx.arc(screenX, drawY, bSize * 0.6, 0, Math.PI * 2);
@@ -3273,16 +3224,15 @@ document.addEventListener("DOMContentLoaded", function() {
 			
 			
 
-          // ==========================================
-          // ОТРИСОВКА ОРУЖИЯ (ИЗ ОТДЕЛЬНЫХ КАДРОВ)
-          // ==========================================
+
+          // ОТРИСОВКА ОРУЖИЯ 
+
           let bobbing = (1 - Math.cos(bobPhase)) * 8;
           
-          // Расчет Y-смещения для плавной смены оружия
+          // Расчет Y-смещения
           let dropOffset = 0;
           if (player.weaponSwitchTimer > 0) {
-              // Парабола: опускается вниз и поднимается обратно
-              let progress = Math.abs(10 - player.weaponSwitchTimer) / 10; // от 1 до 0
+              let progress = Math.abs(10 - player.weaponSwitchTimer) / 10; 
               dropOffset = (1 - progress) * 200; // Опускаем на 200px вниз
           }
           
@@ -3347,21 +3297,6 @@ document.addEventListener("DOMContentLoaded", function() {
                   ctx.restore();
               }
           }
-
-          <!-- if (flash && !isDead) { -->
-              <!-- ctx.fillStyle = "#ff3300"; -->
-              <!-- ctx.beginPath(); -->
-              <!-- ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 22, 0, Math.PI * 2); -->
-              <!-- ctx.fill(); -->
-              <!-- ctx.fillStyle = "#ffcc00"; -->
-              <!-- ctx.beginPath(); -->
-              <!-- ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 12, 0, Math.PI * 2); -->
-              <!-- ctx.fill(); -->
-              <!-- ctx.fillStyle = "#ffffff"; -->
-              <!-- ctx.beginPath(); -->
-              <!-- ctx.arc(gunBaseX, viewportHeight - 110 + gunYOffset, 6, 0, Math.PI * 2); -->
-              <!-- ctx.fill(); -->
-          <!-- } -->
 
           for (let i = bloodSplats.length - 1; i >= 0; i--) {
               let p = bloodSplats[i];
@@ -3439,7 +3374,7 @@ document.addEventListener("DOMContentLoaded", function() {
           ctx.fillStyle = "#0c0c0c";
           ctx.fillRect(6, viewportHeight + 6, screenWidth - 12, screenHeight - viewportHeight - 12);
 
-          // --- ПОДПИСИ ---
+          // --- надписи ---
 			ctx.font = "24px 'VT323', monospace";
 			ctx.fillStyle = "#888";
 			ctx.fillText("HEALTH", 40, viewportHeight + 28);
@@ -3452,7 +3387,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			ctx.fillText("WEAPON", 450, viewportHeight + 28);
 			ctx.fillText("AMMO", 600, viewportHeight + 28);
 
-			// --- ЦИФРЫ ---
+			// --- цифры ---
 			ctx.font = "46px 'VT323', monospace";
 
 			// Здоровье
@@ -3463,7 +3398,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			ctx.fillText(player.health + "%", 40, viewportHeight + 72);
 
-			// Таймер (с миганием)
+			// Таймер
 			let tColor = "#ffffff";
 			let blink = true;
 			if (player.timeLeft <= 10) {
@@ -3478,7 +3413,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				ctx.fillText(Math.ceil(player.timeLeft), 210, viewportHeight + 72);
 			}
 
-			// Фраги (мелкие)
+			// Фраги
 			ctx.fillStyle = "#00ff00";
 			ctx.font = "24px 'VT323', monospace";
 			ctx.fillText(kills, 280, viewportHeight + 72); // Выровнено под надписью FRAGS
@@ -3492,34 +3427,30 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			ctx.fillText(player.ammo, 600, viewportHeight + 72);
 
-          // --- ИКОНКА АКТИВНОГО ОРУЖИЯ ---
+          // Иконка оружия
           let wIcon = (player.currentWeapon === 'pistols') ? hudWeapons.pistols : hudWeapons.knife;
           if (wIcon && wIcon.complete && wIcon.naturalWidth > 0) {
-              // Немного увеличили масштаб самой иконки
               let iScale = 65 / Math.max(wIcon.naturalWidth, wIcon.naturalHeight);
               let iW = wIcon.naturalWidth * iScale;
               let iH = wIcon.naturalHeight * iScale;
-              // Сдвигаем вправо (центруем под надписью WEAPON)
               ctx.drawImage(wIcon, 475 - iW / 2, viewportHeight + 35, iW, iH);
           }
 
-          // ==========================================
-          // ЛИЦО ДУМГАЯ (ИЗ СПРАЙТОВ)
-          // ==========================================
+
+          // Лицо думгая
           let faceBoxX = screenWidth / 2 - 36;
           let faceBoxY = viewportHeight + 12;
           
-          // Фоновая подложка и рамка
           ctx.fillStyle = "#222222"; 
           ctx.fillRect(faceBoxX, faceBoxY, 72, 78);
           ctx.strokeStyle = isDead ? "#990000" : ((damageFlash > 0 || backStalkWarning) ? "#cc0000" : "#555");
           ctx.lineWidth = 2;
           ctx.strokeRect(faceBoxX, faceBoxY, 72, 78);
 
-          let faceImageName = 'guy24.png'; // Если мертв — берем самый последний кровавый спрайт
+          let faceImageName = 'guy24.png'; // Если мертв
 
           if (!isDead) {
-              // 5 стадий здоровья (шаг по 20%)
+              // 5 стадий здоровья
               let hpState = 0;
               if (player.health < 20) hpState = 4;
               else if (player.health < 40) hpState = 3;
@@ -3529,7 +3460,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
               let isAction = (faceAnimTimer > 0 || playerInvulnTimer > 0); 
 
-              // Наборы покоя (бегающие глаза): [Влево, Центр, Вправо]
+              // Стадии лица
               let idleSets = [
                   ['guy1.png', 'guy2.png', 'guy3.png'],    // 100-80%
                   ['guy5.png', 'guy6.png', 'guy7.png'],    // 79-60%
@@ -3538,8 +3469,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   ['guy17.png', 'guy18.png', 'guy19.png']  // 19-1%
               ];
               
-              // Набор действий (4 лица из последней группы). 
-              // Для 1 и 2 стадии (здоров/легкая рана) используем первый спрайт стрельбы guy21
+              // Для 1 и 2 стадиииспользуем первый спрайт стрельбы guy21
               let actionFaces = ['guy21.png', 'guy21.png', 'guy22.png', 'guy23.png', 'guy24.png'];
 
               // gazeDirection бывает -1, 0, 1. Прибавляем 1, чтобы получить индексы 0, 1, 2
@@ -3549,15 +3479,13 @@ document.addEventListener("DOMContentLoaded", function() {
                   // Во время стрельбы или урона берем ровно 1 спрайт из последней группы
                   faceImageName = actionFaces[hpState];
               } else {
-                  // В покое берем текущую стадию здоровья и меняем глаза
                   faceImageName = idleSets[hpState][dirIndex];
               }
           }
 
-          // Отрисовка выбранного спрайта
+          // Отрисовка
           let faceImg = faceFrames[faceImageName];
           if (faceImg && faceImg.complete && faceImg.naturalWidth > 0) {
-              // Сдвинули на 1 пиксель вправо (faceBoxX + 6)
               ctx.drawImage(faceImg, faceBoxX + 6, faceBoxY + 4, 64, 70);
           } else {
               ctx.fillStyle = "#000";
@@ -3573,7 +3501,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				
 				let tileSize = 180 / Math.max(map[0].length, map.length);
 				
-				// Рисуем стены
+				// Рисуем стены на карте
 				mCtx.fillStyle = '#444';
 				for (let y = 0; y < map.length; y++) {
 					for (let x = 0; x < map[0].length; x++) {
@@ -3581,7 +3509,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					}
 				}
 				
-				// Рисуем конус зрения
+				// Рисуем область взгляда
 				mCtx.fillStyle = 'rgba(255, 255, 255, 0.1)';
 				mCtx.beginPath();
 				mCtx.moveTo(player.x * tileSize, player.y * tileSize);
@@ -3602,7 +3530,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						let inFOV = Math.abs(diffAngle) < halfFov && hasLineOfSight(player.x, player.y, en.x, en.y);
 						
 						if (showAllMonsters || inFOV) {
-							mCtx.fillStyle = inFOV ? '#ff0000' : '#880000'; // Ярко красные в FOV, темно-красные за стеной
+							mCtx.fillStyle = inFOV ? '#ff0000' : '#880000'; //
 							mCtx.fillRect(en.x * tileSize - 1.5, en.y * tileSize - 1.5, 3, 3);
 						}
 					}
@@ -3610,45 +3538,44 @@ document.addEventListener("DOMContentLoaded", function() {
 			} else {
                   miniCanvas.style.display = 'none';
               }
-          } // Закрываем цикл while
-          
-          // Если процессор совсем не тянет, сбрасываем время, чтобы игра не зависла намертво
+          } 
           if (updates >= 4) accumulator = 0; 
       }
 
-      requestAnimationFrame(gameLoop); // Первый запуск
+      requestAnimationFrame(gameLoop); 
   }
 </script>
 
 
 <!-- другие скрипты -->
 <script type="text/javascript">
-	// Настройки путей к звукам и громкости
+
+	// Системные звуки
 	const CLICK_SRC = 'resorse/sounds/Akvariume.mp3';
 	const STOP_SRC = 'resorse/sounds/ErorreSong.mp3';
 	
 	const CLICK_VOLUME = 0.2;
-	const SYSTEM_VOLUME = 0.4; // Громкость для системных звуков
+	const SYSTEM_VOLUME = 0.4; 
 
-	// Универсальная функция для воспроизведения любого звука
+	// Воспроизведение звука
 	function playSound(src, volume = CLICK_VOLUME) {
 		const sound = new Audio(src);
 		sound.volume = volume;
 		sound.play().catch(() => {});
 	}
 
-	// Обработка кликов по всему сайту
+	// Обработка кликов 
 	document.addEventListener('pointerdown', function(e) {
-		// 1. Проверяем клик по системным / функциональным кнопкам 
+		//  Тип кнопки
 		if (e.target.closest('.win-btn, .taskbar-start')) {
 			playSound(STOP_SRC, SYSTEM_VOLUME);
 		}
-		// 2. Обычные кнопки вкладок
 		else if (e.target.closest('.button, button, #donntu a')) {
 			playSound(CLICK_SRC, CLICK_VOLUME);
 		}
 	});
 
+	// Появление и изчезания бабла
 	function toggleMugshotBubble(event) {
         event.stopPropagation();
         
@@ -3658,7 +3585,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (bubble.style.display === 'none' || !bubble.style.display) {
             bubble.style.display = 'block';
             
-            // Автоматически скрываем через 3 секунды
+            // скрытие через ..
             setTimeout(() => {
                 bubble.style.display = 'none';
             }, 6000);
@@ -3679,7 +3606,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const currentActive = document.querySelector('.tab-content.active');
         if (currentActive === targetSection) return;
 
-        // Синхронно обновляем подсветку во всех меню
         const allLinks = document.querySelectorAll('.tab-link');
         allLinks.forEach(link => {
             link.classList.remove('colorfix');
@@ -3692,7 +3618,6 @@ document.addEventListener("DOMContentLoaded", function() {
             link.classList.remove('color');
         });
 
-        // Мгновенное переключение вкладок
         const allSections = document.querySelectorAll('.tab-content');
         allSections.forEach(sec => {
             sec.classList.remove('active', 'tab-leaving');
@@ -3700,7 +3625,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         targetSection.classList.add('active');
 
-        // Ленивая загрузка картинок во вкладке
+        // Подгрузка только нужных картинок
         const lazyImages = targetSection.querySelectorAll('img[data-src]');
         lazyImages.forEach(img => {
             if (!img.src || img.src === window.location.href) {
@@ -3708,7 +3633,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
-        // Управление PDF-фреймом реферата
+        // Управление PDF-фреймом
         const referatFrame = document.getElementById('referat-frame');
         if (referatFrame) {
             if (targetId === 'referat') {
