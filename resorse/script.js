@@ -2665,3 +2665,188 @@ window.addEventListener('DOMContentLoaded', function() {
 
     switchTab(window.location.hash);
 });
+
+
+
+/* ==========================================================================
+   WINDOWS 95 BOOT SEQUENCE, WINDOW ANIMATIONS & CRT POWER CONTROL
+   ========================================================================== */
+
+const BOOT_GIF_SRC = 'resorse/images/win95_boot.gif';
+const STARTUP_SOUND_SRC = 'resorse/sounds/wim95.mp3';
+
+let bootSequenceCompleted = false;
+let currentBootAudio = null;
+let bootFallbackTimer = null;
+
+function prepareDesktopForBoot() {
+    const taskbar = document.getElementById('topblock');
+    const windows = [
+        document.getElementById('header'),
+        document.getElementById('desktop-snake-window'),
+        document.getElementById('middleblock'),
+        document.getElementById('contacts-window'),
+        document.getElementById('weather-window')
+    ];
+
+    if (taskbar) {
+        taskbar.classList.remove('taskbar-visible');
+        taskbar.classList.add('desktop-boot-hidden');
+    }
+
+    windows.forEach(win => {
+        if (win) {
+            win.classList.remove('win-open-anim');
+            win.classList.add('desktop-boot-hidden');
+        }
+    });
+}
+
+function revealDesktopWindows() {
+    const taskbar = document.getElementById('topblock');
+    const windows = [
+        document.getElementById('header'),
+        document.getElementById('desktop-snake-window'),
+        document.getElementById('middleblock'),
+        document.getElementById('contacts-window'),
+        document.getElementById('weather-window')
+    ];
+
+    setTimeout(() => {
+        if (taskbar) {
+            taskbar.classList.remove('desktop-boot-hidden');
+            taskbar.classList.add('taskbar-visible');
+        }
+    }, 450);
+
+    windows.forEach((win, index) => {
+        if (!win) return;
+        setTimeout(() => {
+            win.classList.remove('desktop-boot-hidden');
+            void win.offsetWidth;
+            win.classList.add('win-open-anim');
+        }, 700 + index * 160);
+    });
+}
+
+function finishBootSequence() {
+    if (bootSequenceCompleted) return;
+    bootSequenceCompleted = true;
+
+    if (bootFallbackTimer) {
+        clearTimeout(bootFallbackTimer);
+        bootFallbackTimer = null;
+    }
+
+    if (currentBootAudio) {
+        currentBootAudio.pause();
+        currentBootAudio.currentTime = 0;
+        currentBootAudio = null;
+    }
+
+    const bootScreen = document.getElementById('win95-boot-screen');
+    const bootGif = document.getElementById('win95-boot-gif');
+
+    if (bootScreen) {
+        bootScreen.classList.add('boot-fade-out');
+        setTimeout(() => {
+            bootScreen.style.display = 'none';
+            bootScreen.classList.remove('boot-fade-out');
+            if (bootGif) bootGif.src = '';
+        }, 350);
+    }
+
+    revealDesktopWindows();
+}
+
+function startBootSequence() {
+    bootSequenceCompleted = false;
+    prepareDesktopForBoot();
+
+    const bootScreen = document.getElementById('win95-boot-screen');
+    const bootGif = document.getElementById('win95-boot-gif');
+
+    if (!bootScreen) {
+        revealDesktopWindows();
+        return;
+    }
+
+    // Перезапускаем GIF с первого кадра через уникальный параметр
+    if (bootGif) {
+        bootGif.src = `${BOOT_GIF_SRC}?t=${Date.now()}`;
+    }
+
+    bootScreen.style.display = 'flex';
+    bootScreen.classList.remove('boot-fade-out');
+
+    // Запускаем звук параллельно с GIF и завершаем заставку по событию ended
+    currentBootAudio = new Audio(STARTUP_SOUND_SRC);
+    currentBootAudio.volume = 0.6;
+
+    currentBootAudio.onended = () => finishBootSequence();
+    currentBootAudio.onerror = () => finishBootSequence();
+
+    // Страховочный таймер на случай, если звук не загрузится или заблокирован
+    bootFallbackTimer = setTimeout(() => {
+        finishBootSequence();
+    }, 8000);
+
+    currentBootAudio.play().catch(() => {
+        // Если автовоспроизведение звука заблокировано, закрываем через 3.5 сек
+        clearTimeout(bootFallbackTimer);
+        bootFallbackTimer = setTimeout(() => finishBootSequence(), 3500);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    prepareDesktopForBoot();
+    revealDesktopWindows();
+});
+
+function toggleStartMenu(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById('win-start-menu');
+    if (!menu) return;
+    menu.style.display = (menu.style.display === 'none' || !menu.style.display) ? 'flex' : 'none';
+}
+
+document.addEventListener('pointerdown', function(e) {
+    const menu = document.getElementById('win-start-menu');
+    if (menu && menu.style.display === 'flex') {
+        if (!e.target.closest('#win-start-menu') && !e.target.closest('.taskbar-start')) {
+            menu.style.display = 'none';
+        }
+    }
+});
+
+function shutdownPC() {
+    const menu = document.getElementById('win-start-menu');
+    const overlay = document.getElementById('crt-shutdown-overlay');
+    if (menu) menu.style.display = 'none';
+    if (!overlay) return;
+
+    if (typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg();
+    if (typeof closeDoomGuide === 'function') closeDoomGuide();
+
+    overlay.classList.remove('is-off');
+    overlay.style.display = 'flex';
+    void overlay.offsetWidth;
+    overlay.classList.add('shutting-down');
+
+    setTimeout(() => {
+        overlay.classList.remove('shutting-down');
+        overlay.classList.add('is-off');
+        prepareDesktopForBoot();
+    }, 650);
+}
+
+function powerOnPC() {
+    const overlay = document.getElementById('crt-shutdown-overlay');
+    if (!overlay) return;
+
+    playSound(CLICK_SRC, SYSTEM_VOLUME);
+    overlay.classList.remove('is-off', 'shutting-down');
+    overlay.style.display = 'none';
+
+    startBootSequence();
+}

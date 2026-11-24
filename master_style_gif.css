@@ -13,6 +13,7 @@ body {
     font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
     overflow-x: hidden;
     position: relative;
+    min-height: 100vh;
 }
 
 /* --------------------------------------------------------------------------
@@ -48,6 +49,18 @@ body {
     gap: 6px;
     padding: 4px 8px;
     box-sizing: border-box;
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#topblock.desktop-boot-hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+}
+
+#topblock.taskbar-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .taskbar-start {
@@ -61,6 +74,7 @@ body {
     border: 2px solid;
     border-color: #ffffff #404040 #404040 #ffffff;
     cursor: pointer;
+    user-select: none;
 }
 
 .taskbar-start:active {
@@ -157,14 +171,38 @@ iframe[id=":2.container"],
 }
 
 /* --------------------------------------------------------------------------
-   4. WINDOWS UI COMPONENTS
+   4. WINDOWS UI COMPONENTS & WINDOW OPEN ANIMATION
    -------------------------------------------------------------------------- */
 .win-window {
+    --win-tx: 0px;
+    --win-ty: 0px;
     background: #c0c0c0 !important;
     border: 3px solid !important;
     border-color: #ffffff #404040 #404040 #ffffff !important;
     box-shadow: 0 0 0 2px #000000, 4px 4px 0px rgba(0, 0, 0, 0.7) !important;
     box-sizing: border-box !important;
+    transform: translate(var(--win-tx), var(--win-ty));
+}
+
+.win-window.desktop-boot-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.win-window.win-open-anim {
+    animation: modernWinOpen 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modernWinOpen {
+    0% {
+        opacity: 0;
+        transform: translate(var(--win-tx), calc(var(--win-ty) + 18px)) scale(0.93);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(var(--win-tx), var(--win-ty)) scale(1);
+    }
 }
 
 .window-relative {
@@ -288,11 +326,12 @@ iframe[id=":2.container"],
    5. HEADER WINDOW & MASCOTS
    -------------------------------------------------------------------------- */
 #header {
+    --win-tx: -80px;
+    --win-ty: 0px;
     position: relative;
     z-index: 2;
     width: min(68vw, 1980px);
     margin: 10px auto 40px auto;
-    transform: translateX(-80px);
 }
 
 .header-body {
@@ -441,11 +480,12 @@ iframe[id=":2.container"],
    6. MAIN PORTFOLIO WINDOW & TYPOGRAPHY
    -------------------------------------------------------------------------- */
 #middleblock {
+    --win-tx: 40px;
+    --win-ty: 0px;
     position: relative;
     z-index: 3;
     width: min(68vw, 980px);
     margin: -75px auto 36px auto;
-    transform: translateX(40px);
     height: fit-content;
 }
 
@@ -740,6 +780,8 @@ table#resume td ol {
    8. WIDGETS: SNAKE, CONTACTS, WEATHER & DUUM VHS
    -------------------------------------------------------------------------- */
 #desktop-snake-window {
+    --win-tx: 0px;
+    --win-ty: 0px;
     position: absolute;
     top: 90px;
     right: 40px;
@@ -749,11 +791,12 @@ table#resume td ol {
 }
 
 #contacts-window {
+    --win-tx: 0px;
+    --win-ty: -180px;
     position: absolute;
     z-index: 4;
     width: min(46vw, 580px);
     left: 50%;
-    transform: translate(0px, -180px);
     margin: 0;
 }
 
@@ -809,11 +852,12 @@ table#resume td ol {
 }
 
 #weather-window {
+    --win-tx: -320px;
+    --win-ty: 0px;
     position: relative;
     z-index: 4;
     width: min(46vw, 580px);
     margin: 20px auto 60px auto;
-    transform: translateX(-320px);
 }
 
 .w-temp-box {
@@ -948,22 +992,226 @@ table#resume td ol {
 }
 
 /* --------------------------------------------------------------------------
-   9. RESPONSIVE SYSTEM (HYBRID VIEWPORT + POINTER TRIGGERS)
+   9. START MENU, WIN95 BOOT SCREEN & CRT SHUTDOWN
    -------------------------------------------------------------------------- */
+#win95-boot-screen {
+    position: fixed;
+    inset: 0;
+    background: #000000;
+    z-index: 999998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+}
 
-/* Компактный десктоп */
+#win95-boot-screen.boot-fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#win95-boot-gif {
+    width: 100vw;
+    height: 100vh;
+    object-fit: fill;
+    display: block;
+    background: #000000;
+}
+
+.boot-skip-hint {
+    position: fixed;
+    bottom: 16px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    pointer-events: none;
+}
+
+#win-start-menu {
+    --win-tx: 0px;
+    --win-ty: 0px;
+    position: fixed;
+    top: 32px;
+    left: 6px;
+    width: 210px;
+    z-index: 100001;
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+    animation: modernWinOpen 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.start-menu-sidebar {
+    width: 24px;
+    background: linear-gradient(180deg, #000080 0%, #1084d0 100%);
+    color: #ffffff;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8px 0;
+    font-family: "Arial Black", Tahoma, sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    user-select: none;
+}
+
+.start-menu-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #c0c0c0;
+    padding: 2px;
+}
+
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    background: transparent;
+    border: none;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-align: left;
+    cursor: pointer;
+}
+
+.start-menu-item:hover {
+    background-color: #000080;
+    color: #ffffff;
+}
+
+.power-symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: #aa0000;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 11px;
+    border: 1px solid #404040;
+}
+
+#crt-shutdown-overlay {
+    position: fixed;
+    inset: 0;
+    background: #050505;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#crt-beam {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: #ffffff;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#crt-shutdown-overlay.shutting-down #crt-beam {
+    animation: crtCollapse 0.65s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes crtCollapse {
+    0% {
+        opacity: 0.95;
+        transform: scale(1, 1);
+        filter: brightness(2);
+    }
+    45% {
+        opacity: 1;
+        transform: scale(1, 0.006);
+        filter: brightness(3);
+    }
+    80% {
+        opacity: 0.9;
+        transform: scale(0.015, 0.006);
+        filter: brightness(4);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0, 0);
+    }
+}
+
+#crt-power-on-btn {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3a3a3a, #181818);
+    border: 4px solid #2b2b2b;
+    box-shadow: 0 0 0 2px #000000, 0 6px 18px rgba(0, 0, 0, 0.9), inset 0 2px 3px rgba(255, 255, 255, 0.15);
+    color: #555555;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#crt-shutdown-overlay.is-off #crt-power-on-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#crt-power-on-btn:hover {
+    color: #00ff66;
+    box-shadow: 0 0 0 2px #000000, 0 0 18px rgba(0, 255, 102, 0.35), inset 0 2px 3px rgba(255, 255, 255, 0.2);
+}
+
+#crt-power-on-btn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.power-btn-ring {
+    font-size: 28px;
+    line-height: 1;
+}
+
+.power-btn-label {
+    font-family: Tahoma, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   10. RESPONSIVE SYSTEM (HYBRID VIEWPORT + POINTER TRIGGERS)
+   -------------------------------------------------------------------------- */
 @media screen and (max-width: 1320px) and (min-width: 1101px) and (hover: hover) and (pointer: fine) {
     #header {
+        --win-tx: -15px;
         width: min(72vw, 900px);
-        transform: translateX(-15px);
     }
     #middleblock {
+        --win-tx: 35px;
         width: min(72vw, 900px);
-        transform: translateX(35px);
     }
     #contacts-window {
+        --win-tx: -220px;
+        --win-ty: -180px;
         width: min(50vw, 500px);
-        transform: translate(-220px, -180px);
     }
     #desktop-snake-window {
         width: 240px;
@@ -971,7 +1219,6 @@ table#resume td ol {
     }
 }
 
-/* Планшеты и мобильные устройства */
 @media screen and (max-width: 1100px),
        screen and (pointer: coarse) and (max-width: 1366px) {
 
@@ -979,12 +1226,10 @@ table#resume td ol {
         padding-bottom: 30px;
     }
 
-    /* скрыват висящие за краями окна элементы */
     .anime-sitter { 
         display: none !important; 
     }
 
-    /* помощника в компакт */
     .anime-mascot-box {
         position: static;
         display: flex;
@@ -1013,17 +1258,17 @@ table#resume td ol {
         animation: none;
     }
 
-    /* все окна в единую вертикальную колонку по центру */
     #header,
     #middleblock,
     #contacts-window,
     #weather-window,
     #desktop-snake-window { 
+        --win-tx: 0px !important;
+        --win-ty: 0px !important;
         width: 95% !important; 
         max-width: 760px !important;
         margin-left: auto !important;
         margin-right: auto !important;
-        transform: none !important;
         position: relative !important;
         top: auto !important;
         right: auto !important;
@@ -1056,7 +1301,6 @@ table#resume td ol {
         margin-bottom: 24px !important;
     }
 
-    /* Адаптация шапки профиля */
     .header-body { 
         flex-direction: column; 
         align-items: center; 
@@ -1086,7 +1330,6 @@ table#resume td ol {
         line-height: 1.45;
     }
 
-    /* Адаптация кнопок вкладок*/
     #menu {
         justify-content: center;
         gap: 6px;
@@ -1101,7 +1344,6 @@ table#resume td ol {
         box-sizing: border-box;
     }
 
-    /* Таблицы резюме и публикаций */
     table#resume,
     table.resume-table {
         width: 100%;
@@ -1133,7 +1375,6 @@ table#resume td ol {
         text-align: left;
     }
 
-    /* запуск игр на сенсоре */
     #doom-launch-btn-container {
         display: none !important;
     }
@@ -1148,7 +1389,6 @@ table#resume td ol {
     }
 }
 
-/* Узкие экраны смартфонов  */
 @media screen and (max-width: 640px) {
     #topblock {
         justify-content: center;
