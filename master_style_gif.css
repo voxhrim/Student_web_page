@@ -1,10 +1,23 @@
-/* =========================================================
-/* =========================================================
-   Личный сайт магистра ДонНТУ в стиле Windows 2000 / Ретро-аниме
-   Единая таблица стилей со встроенным SPA-переключением
-   ========================================================= */
+/* --------------------------------------------------------------------------
+   1. BASE & LAYOUT
+   -------------------------------------------------------------------------- */
+html, body {
+    top: 0px !important;
+    margin-top: 0px !important;
+}
 
-/* ---------------- Механика SPA вкладок ---------------- */
+body {
+    background-color: #008080;
+    margin: 0;
+    padding-bottom: 80px;
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   2. SPA TAB MECHANICS
+   -------------------------------------------------------------------------- */
 .tab-content {
     display: none;
     opacity: 1;
@@ -12,81 +25,93 @@
     position: relative;
 }
 
-/* Активная вкладка (мгновенное переключение без зависаний) */
 .tab-content.active {
     display: block;
 }
 
-/* Вкладка в момент смены */
 .tab-content.tab-leaving {
     display: none;
 }
 
-/* ---------------- Основной фон: Чистый Classic Windows Teal ---------------- */
-body {
-    background-color: #008080;
-    margin: 0;
-    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
-    overflow-x: hidden;
+/* --------------------------------------------------------------------------
+   3. TASKBAR & GOOGLE TRANSLATE OVERRIDES
+   -------------------------------------------------------------------------- */
+#topblock {
+    min-height: 32px;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    border-bottom: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px 8px;
+    box-sizing: border-box;
 }
 
-
-
-/* =========================================================
-   Игровое поле змейки вокруг/внутри окна шапки
-   ========================================================= */
-body {
-    background-color: #008080;
-    margin: 0;
-    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
-    overflow-x: hidden;
-    position: relative; /* Обязательно для привязки absolute-элементов */
+.taskbar-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    padding: 2px 8px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    cursor: pointer;
 }
 
-#desktop-snake-window {
-    position: absolute;
-    top: 90px;          /* Чуть ниже панели задач */
-    right: 40px;        /* Справа на странице */
-    width: 290px;       /* Ширина окна со змейкой */
-	height: 220px;
-    z-index: 5;
+.taskbar-start:active {
+    border-color: #404040 #ffffff #ffffff #404040;
 }
 
-/* На мобильных устройствах скрывается окно, чтобы не ломать верстку */
-@media screen and (max-width: 1200px) {
-    #desktop-snake-window {
-        display: none !important;
-    }
+#donntu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
 }
 
+#donntu a {
+    display: inline-flex;
+    align-items: center;
+    font-family: Tahoma, sans-serif;
+    font-size: 12px;
+    color: #000000;
+    text-decoration: none;
+    padding: 3px 10px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    white-space: nowrap;
+}
 
-/* =========================================================
-   Ретро-стилизация Google Translate под Windows 98/2000
-   ========================================================= */
+#donntu a:hover {
+    background: #d8d8d8;
+}
 
-/* Контейнер языкового селектора в стиле трея панели задач */
+#donntu a:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+}
+
 .win-lang-picker {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     background: #c0c0c0;
     border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080; /* Вдавленный бордер трея */
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
     padding: 1px 4px;
     font-family: Tahoma, sans-serif;
     font-size: 11px;
 }
 
-.lang-icon {
-    font-size: 12px;
-}
-
 .lang-label {
     font-weight: bold;
-    color: #000;
+    color: #000000;
 }
 
-/* Классический выпадающий список Windows */
 .win-select {
     background: #ffffff;
     color: #000000;
@@ -103,8 +128,6 @@ body {
     outline: 1px dotted #000000;
 }
 
-/* ---------------- Жёсткое скрытие баннера Google ---------------- */
-/* Прячем оригинальный контейнер за экран, не отключая его отрисовку */
 .google-hidden-engine {
     position: absolute !important;
     left: -9999px !important;
@@ -114,65 +137,28 @@ body {
     overflow: hidden !important;
 }
 
-/* Скрываем всплывающий верхний фрейм и оверлей Google */
-.goog-te-banner-frame.skiptranslate,
-iframe.goog-te-banner-frame {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-}
-
-/* Запрещаем Гуглу сдвигать body вниз */
-body {
-    top: 0px !important;
-    position: static !important;
-}
-
-/* Убираем всплывающие подсказки перевода при наведении */
-#goog-gt-tt,
-.goog-te-balloon-frame {
-    display: none !important;
-}
-
-.goog-text-highlight {
-    background: none !important;
-    box-shadow: none !important;
-}
-
-/* Полное скрытие верхней панели переводчика */
 .goog-te-banner-frame,
 .goog-te-banner-frame.skiptranslate,
 iframe.goog-te-banner-frame,
 .VIpgJd-ZVi9od-OR94Gd-Ry7tvd,
 iframe[id=":1.container"],
-iframe[id=":2.container"] {
+iframe[id=":2.container"],
+#goog-gt-tt,
+.goog-te-balloon-frame {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;
     width: 0 !important;
 }
 
-/* Блокируем принудительный сдвиг контента вниз */
-html, body {
-    top: 0px !important;
-    position: static !important;
-    margin-top: 0px !important;
-}
-
-/* Скрываем всплывающие тултипы и подсветку слов */
-#goog-gt-tt,
-.goog-te-balloon-frame {
-    display: none !important;
-    visibility: hidden !important;
-}
-
 .goog-text-highlight {
     background: none !important;
     box-shadow: none !important;
 }
 
-
-/* ---------------- Стили окон Windows 98/2000 ---------------- */
+/* --------------------------------------------------------------------------
+   4. WINDOWS UI COMPONENTS
+   -------------------------------------------------------------------------- */
 .win-window {
     background: #c0c0c0 !important;
     border: 3px solid !important;
@@ -181,36 +167,10 @@ html, body {
     box-sizing: border-box !important;
 }
 
-.desktop-icon-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 76px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .desktop-icon-btn img {
-            width: 32px;
-            height: 32px;
-            margin-bottom: 4px;
-            image-rendering: pixelated; /* чтобы пиксельные иконки не мылились */
-        }
-        .desktop-icon-btn .icon-text {
-            font-family: Tahoma, sans-serif;
-            font-size: 11px;
-            color: #000000; /* Черный текст, если фон светлый. Если фон темный - поменяйте на #ffffff */
-            padding: 1px 3px;
-            border: 1px dotted transparent;
-            text-align: center;
-            line-height: 1.2;
-        }
-        /* Эффект выделения иконки при наведении */
-        .desktop-icon-btn:hover .icon-text {
-            background-color: #000080; /* Синий цвет выделения Windows */
-            color: #ffffff;
-            border: 1px dotted #ffffff;
-        }
-        
+.window-relative {
+    position: relative;
+}
+
 .win-title-bar {
     height: 24px;
     background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
@@ -235,13 +195,10 @@ html, body {
     text-overflow: ellipsis;
 }
 
-.win-icon {
-    font-size: 13px;
-}
-
 .win-controls {
     display: flex;
     gap: 2px;
+    flex-shrink: 0;
 }
 
 .win-btn {
@@ -265,13 +222,11 @@ html, body {
     padding-left: 1px;
 }
 
-/* Вдавленные внутрь панели (Sunken 3D Border) */
 .win-sunken-panel {
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080 !important;
 }
 
-/* Строка состояния внизу окна */
 .win-statusbar {
     background: #c0c0c0;
     display: flex;
@@ -285,8 +240,11 @@ html, body {
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     padding: 2px 6px;
     font-size: 11px;
-    color: #222;
+    color: #222222;
     flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .status-cell.fit {
@@ -294,21 +252,129 @@ html, body {
     text-align: center;
 }
 
-/* ---------------- Сидящий аниме-персонаж на краю окна ---------------- */
-.window-relative {
+.desktop-icon-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 76px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.desktop-icon-btn img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 4px;
+    image-rendering: pixelated;
+}
+
+.desktop-icon-btn .icon-text {
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    padding: 1px 3px;
+    border: 1px dotted transparent;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.desktop-icon-btn:hover .icon-text {
+    background-color: #000080;
+    color: #ffffff;
+    border: 1px dotted #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   5. HEADER WINDOW & MASCOTS
+   -------------------------------------------------------------------------- */
+#header {
     position: relative;
+    z-index: 2;
+    width: min(68vw, 1980px);
+    margin: 10px auto 40px auto;
+    transform: translateX(-80px);
+}
+
+.header-body {
+    display: flex;
+    padding: 15px 12px 25px 12px;
+    gap: 15px;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    background: #c0c0c0;
+    min-height: 290px;
+}
+
+#photomag {
+    flex-shrink: 0;
+    position: relative;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    background: #000000;
+    line-height: 0;
+    width: clamp(380px, 32vw, 560px);
+    aspect-ratio: 16 / 9;
+}
+
+#photomag img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#mugshot-bubble {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 50;
+    margin: 0;
+    animation: bubbleBob 1.4s ease-in-out infinite alternate !important;
+}
+
+#headertext {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+#header h1 {
+    text-align: left;
+    font-family: "Times New Roman", serif;
+    font-size: clamp(22px, 2.6vw, 40px);
+    color: #000080;
+    margin: 0 0 6px;
+    line-height: 1.15;
+}
+
+#header h3 {
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: clamp(12px, 1.1vw, 14px);
+    font-weight: normal;
+    color: #000000;
+    margin: 0;
+    line-height: 1.35;
+}
+
+#header h3 a {
+    color: #0000cc;
+    text-decoration: underline;
+}
+
+#header h3 a:hover {
+    color: #cc0000;
 }
 
 .anime-sitter {
     position: absolute;
     top: -62px;
-    right: 50px; 
+    right: 50px;
     z-index: 20;
     pointer-events: none;
 }
 
-.anime-sitter img,
-.anime-sitter video {
+.anime-sitter img {
     width: 140px !important;
     max-width: none !important;
     height: auto !important;
@@ -316,13 +382,11 @@ html, body {
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
 }
 
-/* ---------------- анимация маскота ---------------- */
 .anime-mascot-box {
     position: absolute;
     top: 5px;
-    /* Привязываем к левому краю главного окна #middleblock и отступаем ровно 130px левее */
-    left: -230px; 
-    right: auto; /* Сбрасываем правый отступ, если он был задан */
+    left: -230px;
+    right: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -373,172 +437,18 @@ html, body {
     100% { transform: translateY(-6px) rotate(-3deg); }
 }
 
-/* ---------------- Верхняя панель (Таскбар ДонНТУ) ---------------- */
-#topblock {
-    min-height: 32px;
-    background: linear-gradient(90deg, #000080 0%, #1084d0 100%); /* Синий градиент Windows */
-    border-bottom: 2px solid;
-    border-color: #ffffff #404040 #404040 #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 2px 8px;
-    box-sizing: border-box;
-}
-
-
-.taskbar-start {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-family: Tahoma, sans-serif;
-    font-size: 12px;
-    padding: 2px 8px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #ffffff #404040 #404040 #ffffff;
-    cursor: pointer;
-}
-
-.taskbar-start:active {
-    border-color: #404040 #ffffff #ffffff #404040;
-}
-
-#donntu {
-    display: flex;
-    gap: 6px;
-}
-
-#donntu a {
-    font-family: Tahoma, sans-serif;
-    font-size: 12px;
-    color: #000000;
-    text-decoration: none;
-    padding: 3px 10px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #ffffff #404040 #404040 #ffffff;
-}
-
-#donntu a:hover {
-    background: #d8d8d8;
-}
-
-#donntu a:active {
-    border-color: #404040 #ffffff #ffffff #404040;
-}
-
-/* ---------------- Шапка сайта ---------------- */
-#header {
-    position: relative;
-    z-index: 2;
-    width: min(68vw, 1980px);
-    margin: 10px auto 40px auto;
-    transform: translateX(-80px); /* отступ от центра */
-}
-
-.header-body {
-    display: flex;
-    padding: 15px 12px 25px 12px; /* нижний внутренний отступ (padding-bottom) примерно на 3-4 строки */
-    gap: 15px;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    background: #c0c0c0;
-    min-height: 290px; /* установил минимальную высоту под размер картинки 16/9 и текст */
-}
-
-#photomag {
-    flex-shrink: 0;
-	position: relative; 
-    border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080;
-    background: #000;
-    line-height: 0;
-    width: clamp(380px, 32vw, 560px); /* Размер контейнера под фотку */
-    aspect-ratio: 16 / 9;            /*  пропорции 16/9  */
-}
-
-#mugshot-bubble {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    z-index: 50;
-    margin: 0;
-    animation: bubbleBob 1.4s ease-in-out infinite alternate !important;
-}
-
-#photomag img {
-    display: block;
-    width: 100%;                     
-    height: 100%;                    
-    object-fit: cover;               
-}
-
-#headertext {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-}
-
-#header h1 {
-    text-align: left;
-    font-family: "Times New Roman", serif;
-    font-size: clamp(18px, 2vw, 25px);
-    color: #000080;
-    margin: 0 0 4px;
-}
-
-#header h3 {
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: clamp(12px, 1.1vw, 14px);
-    font-weight: normal;
-    color: #000000;
-    margin: 0;
-}
-
-#header h3 a {
-    color: #0000cc;
-    text-decoration: underline;
-}
-
-#header h3 a:hover {
-    color: #cc0000;
-}
-
-/* #headergif { */
-    /* margin-left: auto; */
-    /* flex-shrink: 0; */
-    /* padding: 0px; */
-	/* align-self: center; */
-/* } */
-
-/* #headergif img { */
-    /* width: clamp(45px, 6vw, 85px); */
-    /* height: auto; */
-/* }#headergif { */
-    /* margin-left: auto; */
-    /* flex-shrink: 0; */
-    /* padding: 0px; */
-	/* align-self: center; */
-/* } */
-
-/* #headergif img { */
-    /* width: clamp(45px, 6vw, 85px); */
-    /* height: auto; */
-/* } */
-
-/* ---------------- Основной блок ---------------- */
+/* --------------------------------------------------------------------------
+   6. MAIN PORTFOLIO WINDOW & TYPOGRAPHY
+   -------------------------------------------------------------------------- */
 #middleblock {
     position: relative;
     z-index: 3;
     width: min(68vw, 980px);
     margin: -75px auto 36px auto;
     transform: translateX(40px);
-	height: fit-content;
+    height: fit-content;
 }
 
-/* ---------------- Меню / Кнопки окон Windows ---------------- */
 #menu {
     text-align: left;
     padding: 5px 8px;
@@ -563,73 +473,6 @@ html, body {
     cursor: pointer;
 }
 
-.button_doom {
-    display: inline-block;
-    font-family: Tahoma, sans-serif;
-    font-size: 12px;
-    font-weight: normal;
-    color: #000000;
-    text-decoration: none;
-    padding: 4px 12px;
-    background: #DEC4C3;
-    border: 3px solid;
-    border-color: #F7E4DC #404040 #404040 #F7E4DC;
-    cursor: pointer;
-}
-
-.color_doom:hover {
-    background: #EBD5D2;
-}
-
-.color_doom:active {
-    border-color: #404040 #F7E4DC #F7E4DC #404040;
-    padding-top: 5px;
-    padding-left: 13px;
-    padding-bottom: 3px;
-    padding-right: 11px;
-}
-
-/* Эффект старой кассеты для Doom */
-    .vhs-container {
-        position: relative;
-        width: 100%;
-        max-height: calc(88vh - 70px);
-        aspect-ratio: 720/460;
-        border: 2px solid #404040;
-        box-sizing: border-box;
-        background: #000;
-        overflow: hidden;
-        /* Добавили brightness(1.2) для общего осветления картинки */
-        filter: brightness(1.2) contrast(1.1) saturate(1.2) sepia(0.15) hue-rotate(-5deg);
-        animation: vhs-jitter 6s infinite;
-    }
-
-    .vhs-scanlines {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none;
-        z-index: 5;
-        /* Черные полосы стали намного прозрачнее (0.08 вместо 0.25) */
-        background: 
-            linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%), 
-            linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-        background-size: 100% 4px, 3px 100%;
-        /* Виньетка больше не съедает пол-экрана (0.35 вместо 0.9) */
-        box-shadow: inset 0 0 30px rgba(0,0,0,0.35); 
-    }
-
-    @keyframes vhs-jitter {
-    0%, 100% { transform: translate(0, 0); }
-    5% { transform: translate(1px, 0); }
-    10% { transform: translate(-1px, 0); }
-    11% { transform: translate(1px, 1px); } /* Убрали скачок яркости и skew */
-    12% { transform: translate(0, 0); }
-    60% { transform: translate(0, -1px); }
-    61% { transform: translate(0, 1px); }
-    95% { transform: translate(-1px, 0); }
-}
-
-
 .color:hover {
     background: #d8d8d8;
 }
@@ -653,9 +496,8 @@ html, body {
     cursor: default;
 }
 
-/* ---------------- Основной текст (Лист документа) ---------------- */
 #maintext {
-   position: relative;
+    position: relative;
     background-color: #ffffff;
     background-image: url("resorse/images/paper.webp");
     background-repeat: repeat;
@@ -684,7 +526,7 @@ h1 {
     margin: 12px 0;
 }
 
-#maintext h2, .lib_h2 {
+#maintext h2 {
     font-family: "Times New Roman", serif;
     font-size: clamp(17px, 1.7vw, 21px);
     color: #000080;
@@ -746,13 +588,9 @@ ul li a:hover, ol li a:hover {
     color: #cc0000;
 }
 
-li.ct1, li.ct2 {
-    border-bottom: 1px dotted #888;
+li.ct1 {
+    border-bottom: 1px dotted #888888;
     margin-bottom: 5px;
-}
-
-li.ct2 {
-    margin-left: 20px;
 }
 
 ol li {
@@ -775,47 +613,20 @@ ol li {
     text-indent: 0;
     text-align: center;
     padding: 4px 10px;
-    color: #333;
+    color: #333333;
 }
 
 .gif-left {
     text-align: left;
     margin: 15px auto;
     width: 90%;
-	height: auto;
+    height: auto;
 }
 
 .gif-left img {
     width: 100%;
     max-width: 250px;
     height: auto;
-}
-
-.gif-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: clamp(10px, 1.8vw, 25px);
-    margin: 10px 0;
-}
-
-.gif-row img {
-    width: clamp(95px, 11vw, 190px);
-    height: auto;
-    object-fit: contain;
-}
- /* адаптация гифок */
-@media screen and (max-width: 1200px) {
-    .gif-row img {
-        width: clamp(100px, 25vw, 150px) !important;
-        max-width: none !important;
-    }
-    
-    .gif-center img {
-        width: 100% !important;
-        max-width: 350px !important;
-    }
 }
 
 .comment {
@@ -832,20 +643,26 @@ ol li {
     font-weight: bold;
 }
 
-table#resume {
+/* --------------------------------------------------------------------------
+   7. TABLES & DOCUMENT VIEWERS
+   -------------------------------------------------------------------------- */
+table#resume,
+table.resume-table {
     width: 95%;
     margin: 0 auto;
     border-collapse: collapse;
     font-size: clamp(13px, 1.1vw, 16px);
 }
 
-table#resume tr td {
-    padding: clamp(2px, 0.8vw, 7px) clamp(5px, 1vw, 10px);
+table#resume tr td,
+table.resume-table tr td {
+    padding: clamp(4px, 0.8vw, 7px) clamp(6px, 1vw, 10px);
     border: 1px solid #808080;
     vertical-align: top;
 }
 
-table#resume td.c1 {
+table#resume td.c1,
+table.resume-table td.c1 {
     width: 30%;
     text-align: right;
     font-weight: bold;
@@ -853,41 +670,40 @@ table#resume td.c1 {
     background-color: #e4e4f0;
 }
 
-table#resume tr.odd td.c2 {
+table#resume tr.odd td.c2,
+table.resume-table tr.odd td.c2 {
     background-color: #ffffff;
 }
 
-table#resume tr.even td.c2 {
+table#resume tr.even td.c2,
+table.resume-table tr.even td.c2 {
     background-color: #f6f6f6;
 }
 
-table#resume tr:hover td.c1 {
+table#resume tr:hover td.c1,
+table.resume-table tr:hover td.c1 {
     background-color: #ffffcc;
 }
 
-table#resume tr:hover td.c2 {
+table#resume tr:hover td.c2,
+table.resume-table tr:hover td.c2 {
     background-color: #ffffee;
 }
 
-table#resume td a {
+table#resume td a,
+table.resume-table td a {
     font-size: inherit;
     color: #0000cc;
 }
 
-table#resume td a:hover {
+table#resume td a:hover,
+table.resume-table td a:hover {
     color: #cc0000;
 }
 
 table#resume td ol {
     margin: 0;
     padding-left: 18px;
-}
-
-#menub {
-    width: min(75vw, 1100px);
-    margin: 0 auto 25px auto;
-    padding: 8px 12px;
-    text-align: center;
 }
 
 .lib {
@@ -920,121 +736,24 @@ table#resume td ol {
     background: #ffffff;
 }
 
-/* =========================================================
-   Экран входа в стиле Windows 2000 / XP
-   ========================================================= */
-#win-login-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #008080;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+/* --------------------------------------------------------------------------
+   8. WIDGETS: SNAKE, CONTACTS, WEATHER & DUUM VHS
+   -------------------------------------------------------------------------- */
+#desktop-snake-window {
+    position: absolute;
+    top: 90px;
+    right: 40px;
+    width: 290px;
+    height: 220px;
+    z-index: 5;
 }
 
-.login-window {
-    width: 400px;
-    background: #c0c0c0;
-    border: 3px solid;
-    border-color: #dfdfdf #404040 #404040 #dfdfdf;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
-}
-
-.login-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-}
-
-.login-header-row {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.login-text-info {
-    font-size: 12px;
-    color: #000;
-    line-height: 1.4;
-}
-
-.login-inputs {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    background: #ffffff;
-    border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080;
-    padding: 12px;
-    box-sizing: border-box;
-}
-
-.login-field {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-}
-
-.login-field span {
-    font-weight: bold;
-    color: #000;
-}
-
-.login-field input {
-    width: 210px;
-    padding: 3px 5px;
-    border: 1px solid #7f9db9;
-    font-family: Tahoma, sans-serif;
-    font-size: 12px;
-    background: #fff;
-}
-
-.login-footer-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    width: 100%;
-    margin-top: 5px;
-}
-
-.login-btn {
-    min-width: 75px;
-    padding: 4px 10px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #ffffff #404040 #404040 #ffffff;
-    font-family: Tahoma, sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.login-btn:active {
-    border-color: #404040 #ffffff #ffffff #404040;
-    padding-top: 5px;
-    padding-left: 11px;
-}
-
-/* =========================================================
-   Окно контактов и элементы
-   ========================================================= */
 #contacts-window {
     position: absolute;
     z-index: 4;
     width: min(46vw, 580px);
     left: 50%;
-    /* Сдвигаем влево относительно центра экрана и поднимаем на нужный уровень */
-    transform: translateX(-580px); /* отрегулируйте число под ваш макет */
-	transform: translateY(-180px);
+    transform: translate(0px, -180px);
     margin: 0;
 }
 
@@ -1045,7 +764,6 @@ table#resume td ol {
     gap: 8px;
 }
 
-/* Карточка контакта — обычный блок, не ссылка */
 .contact-item {
     display: flex;
     align-items: center;
@@ -1053,14 +771,13 @@ table#resume td ol {
     padding: 6px 10px;
     background: #ffffff;
     border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080; /* Эффект вдавленного поля */
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
     color: #000000;
     font-family: Tahoma, sans-serif;
     font-size: 13px;
-    user-select: text; /* Текст внутри можно выделять */
+    user-select: text;
 }
 
-/* Кликабельная иконка слева */
 .contact-icon-link {
     display: inline-flex;
     align-items: center;
@@ -1068,7 +785,7 @@ table#resume td ol {
     padding: 3px;
     background: #c0c0c0;
     border: 1px solid;
-    border-color: #ffffff #404040 #404040 #ffffff; /* Кнопочный 3Д-бордер */
+    border-color: #ffffff #404040 #404040 #ffffff;
     cursor: pointer;
     flex-shrink: 0;
 }
@@ -1091,49 +808,33 @@ table#resume td ol {
     word-break: break-all;
 }
 
-
-/* =========================================================
-   Окно погоды Windows 2000
-   ========================================================= */
 #weather-window {
     position: relative;
     z-index: 4;
     width: min(46vw, 580px);
-    margin: 20px auto 40px auto; /* Аккуратный отступ от предыдущих окон */
-    transform: translateX(-320px); /* Можно сдвинуть чуть правее для каскадного ретро-эффекта */
+    margin: 20px auto 60px auto;
+    transform: translateX(-320px);
 }
 
-@media screen and (max-width: 1150px) {
-    #weather-window {
-        width: 96% !important;
-        margin: 0 auto 25px auto !important;
-        transform: none !important;
-    }
-}
-
-/* Оформление значений температуры */
 .w-temp-box {
     display: flex;
     align-items: center;
     gap: 3px;
 }
 
-/* Размер цифр (+16, +61) */
 .w-temp-val {
     font-size: 34px;
     font-weight: bold;
-    color: #000;
+    color: #000000;
     line-height: 1;
 }
 
-/* Размер наклонной черты (/) */
 .w-temp-divider {
     font-size: 28px;
-    color: #777;
+    color: #777777;
     margin: 0 4px;
 }
 
-/* 1. Главная иконка погоды (спрайт масштабирован до 400x500px, ячейка 55x55px) */
 #w-icon,
 .w-forecast-icon,
 .w-wind-arrow,
@@ -1147,24 +848,21 @@ table#resume td ol {
     flex-shrink: 0;
 }
 
-/* 1. Главная иконка погоды: крупная, без полей, по центру */
 #w-icon {
     width: 60px;
     height: 52px;
-    background-size: 720px 900px !important; /* масштаб 0.9 */
+    background-size: 720px 900px !important;
     vertical-align: middle;
     margin-right: 12px;
 }
 
-/* 2. Карточки прогноза на 3 дня */
 .w-forecast-icon {
     width: 44px;
     height: 38px;
-    background-size: 520px 650px !important; /* масштаб 0.65 */
+    background-size: 520px 650px !important;
     margin: 2px auto;
 }
 
-/* 3. Стрелка ветра */
 .w-wind-arrow {
     width: 20px;
     height: 20px;
@@ -1176,7 +874,6 @@ table#resume td ol {
     transition: transform 0.4s ease;
 }
 
-/* 4. Значки °C и °F из спрайта (строка 4: колонки 4 и 5) */
 .w-unit-c {
     width: 20px;
     height: 20px;
@@ -1195,7 +892,6 @@ table#resume td ol {
     margin-left: 2px;
 }
 
-/* 5. Значки °C и °F для прогноза */
 .w-unit-mini-c {
     width: 14px;
     height: 14px;
@@ -1212,14 +908,51 @@ table#resume td ol {
     vertical-align: -1px;
 }
 
-/* =========================================================
-   АДАПТИВНОСТЬ
-   ========================================================= */
+.vhs-container {
+    position: relative;
+    width: 100%;
+    max-height: calc(88vh - 70px);
+    aspect-ratio: 720 / 460;
+    border: 2px solid #404040;
+    box-sizing: border-box;
+    background: #000000;
+    overflow: hidden;
+    filter: brightness(1.2) contrast(1.1) saturate(1.2) sepia(0.15) hue-rotate(-5deg);
+    animation: vhs-jitter 6s infinite;
+}
 
+.vhs-scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    background: 
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%), 
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35); 
+}
 
-/* Экраны ноутбуков / планшетов / 4/3 (от 901px до 1200px) */
-@media screen and (max-width: 1200px) and (min-width: 901px) {
-    /* Чуть уменьшаем сдвиги окон, чтобы они не уходили за границы экрана */
+@keyframes vhs-jitter {
+    0%, 100% { transform: translate(0, 0); }
+    5% { transform: translate(1px, 0); }
+    10% { transform: translate(-1px, 0); }
+    11% { transform: translate(1px, 1px); }
+    12% { transform: translate(0, 0); }
+    60% { transform: translate(0, -1px); }
+    61% { transform: translate(0, 1px); }
+    95% { transform: translate(-1px, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   9. RESPONSIVE SYSTEM (HYBRID VIEWPORT + POINTER TRIGGERS)
+   -------------------------------------------------------------------------- */
+
+/* Компактный десктоп */
+@media screen and (max-width: 1320px) and (min-width: 1101px) and (hover: hover) and (pointer: fine) {
     #header {
         width: min(72vw, 900px);
         transform: translateX(-15px);
@@ -1230,22 +963,28 @@ table#resume td ol {
     }
     #contacts-window {
         width: min(50vw, 500px);
-        transform: translateX(-220px);
+        transform: translate(-220px, -180px);
     }
-    /* Змейка чуть компактнее, чтобы помещаться на 4/3 */
     #desktop-snake-window {
         width: 240px;
         right: 15px;
     }
 }
 
+/* Планшеты и мобильные устройства */
+@media screen and (max-width: 1100px),
+       screen and (pointer: coarse) and (max-width: 1366px) {
 
-/* Скрываем фиксированную змейку справа и переносим при ширине экрана меньше 1150px (включая 4/3 и планшеты) */
-@media screen and (max-width: 1150px) {
-    .background-image, .anime-sitter { 
+    body {
+        padding-bottom: 30px;
+    }
+
+    /* скрыват висящие за краями окна элементы */
+    .anime-sitter { 
         display: none !important; 
     }
 
+    /* помощника в компакт */
     .anime-mascot-box {
         position: static;
         display: flex;
@@ -1253,20 +992,35 @@ table#resume td ol {
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin: 0 auto 15px auto;
-        padding: 6px;
-        background: rgba(255, 255, 255, 0.7);
+        margin: 0 auto 14px auto;
+        padding: 8px 10px;
+        background: rgba(255, 255, 255, 0.85);
         border: 1px dashed #808080;
         animation: none;
-        max-width: 95%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
-    .mascot-bubble { max-width: none; margin-bottom: 0; text-align: left; }
-    .mascot-bubble::after, .mascot-bubble::before { display: none; }
-    .mascot-img { width: 45px; }
 
-    /* Выравниваем все окна по центру */
-    #header, #middleblock, #menub, #contacts-window { 
-        width: 96% !important; 
+    .mascot-bubble {
+        max-width: none;
+        margin-bottom: 0;
+        text-align: left;
+        animation: none;
+    }
+
+    .mascot-img {
+        width: 44px;
+        animation: none;
+    }
+
+    /* все окна в единую вертикальную колонку по центру */
+    #header,
+    #middleblock,
+    #contacts-window,
+    #weather-window,
+    #desktop-snake-window { 
+        width: 95% !important; 
+        max-width: 760px !important;
         margin-left: auto !important;
         margin-right: auto !important;
         transform: none !important;
@@ -1276,74 +1030,168 @@ table#resume td ol {
         left: auto !important;
     }
 
-    #header { margin-bottom: 20px !important; }
-    #middleblock { margin-top: 0 !important; margin-bottom: 20px !important; }
-    #contacts-window { margin-bottom: 20px !important; }
-
-    /* Змейка */
-    #desktop-snake-window {
-        position: relative !important;
-        top: 4px !important;
-        right: auto !important;
-        width: 96% !important;
-        margin: 0 auto 18px auto !important;
-        display: block !important;
+    #header {
+        margin-top: 12px !important;
+        margin-bottom: 16px !important;
     }
 
+    #desktop-snake-window {
+        display: block !important;
+        height: auto !important;
+        overflow: hidden !important;
+        margin-bottom: 16px !important;
+    }
+
+    #middleblock {
+        margin-top: 0 !important;
+        margin-bottom: 16px !important;
+    }
+
+    #contacts-window {
+        margin-bottom: 16px !important;
+    }
+
+    #weather-window {
+        margin-top: 0 !important;
+        margin-bottom: 24px !important;
+    }
+
+    /* Адаптация шапки профиля */
     .header-body { 
         flex-direction: column; 
         align-items: center; 
         text-align: center; 
-        padding: 10px; 
+        padding: 12px;
+        min-height: auto;
     }
-	
-	#photomag {
+    
+    #photomag {
         width: 100%;
-        max-width: 300px;
-        border: none;
-        background: transparent;
+        max-width: 340px;
     }
-	
-   #photomag img { 
+    
+    #headertext {
         width: 100%;
-        height: auto;
-        aspect-ratio: 16 / 9;
-        object-fit: contain;
     }
 
+    #header h1 { 
+        text-align: center;
+        font-size: 24px;
+        margin-top: 6px;
     }
-    #headertext, #header h1 { 
-        text-align: left; 
+
+    #header h3 {
+        text-align: left;
+        font-size: 13px;
+        line-height: 1.45;
     }
-    #headergif { 
-        margin: 4px auto 0; 
-        align-self: center;
+
+    /* Адаптация кнопок вкладок*/
+    #menu {
+        justify-content: center;
+        gap: 6px;
+        padding: 6px;
     }
 
     .button { 
-        display: inline-block; 
-        width: auto; 
-        margin: 2px; 
-        text-align: center; 
+        flex: 1 1 calc(50% - 10px);
+        font-size: 14px;
+        padding: 7px 8px;
+        text-align: center;
+        box-sizing: border-box;
     }
 
-    table#resume td.c1, table#resume td.c2 { 
+    /* Таблицы резюме и публикаций */
+    table#resume,
+    table.resume-table {
+        width: 100%;
+    }
+
+    table#resume td.c1,
+    table#resume td.c2,
+    table.resume-table td.c1,
+    table.resume-table td.c2 { 
         display: block; 
         width: 100%; 
         box-sizing: border-box; 
         text-align: left; 
     }
-    table#resume td.c1 { 
-        background: #d8d8f0; 
-    }
-    
-    p { 
-        margin: 8px 4px; 
-        text-indent: 15px; 
+
+    table#resume td.c1,
+    table.resume-table td.c1 { 
+        background: #d8d8f0;
+        border-bottom: none;
     }
 
-	@media screen and (max-width: 700px) {
-		#doom-launch-btn-container {
-			display: none !important;
-		}
-	}
+    .lib {
+        margin: 10px 6px 12px 6px;
+    }
+
+    p { 
+        margin: 8px 4px; 
+        text-indent: 16px;
+        text-align: left;
+    }
+
+    /* запуск игр на сенсоре */
+    #doom-launch-btn-container {
+        display: none !important;
+    }
+
+    .gif-left {
+        text-align: center;
+    }
+
+    .gif-left img {
+        transform: none !important;
+        max-width: 180px;
+    }
+}
+
+/* Узкие экраны смартфонов  */
+@media screen and (max-width: 640px) {
+    #topblock {
+        justify-content: center;
+        padding: 6px;
+    }
+
+    #topblock > div {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .taskbar-start {
+        display: none;
+    }
+
+    #donntu a {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    #header h1 {
+        font-size: 20px;
+    }
+
+    .button {
+        flex: 1 1 100%;
+        font-size: 14px;
+    }
+
+    .w-temp-val {
+        font-size: 26px;
+    }
+
+    .w-temp-divider {
+        font-size: 22px;
+    }
+
+    #w-forecast-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .article-frame {
+        height: 360px;
+    }
+}
