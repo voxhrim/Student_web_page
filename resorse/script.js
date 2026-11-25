@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 /* ==========================================================================
-   SNAKE WIDGET (AUTO-PILOT CANVAS)
+   SNAKE WIDGET 
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -297,6 +297,42 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Подсчёт количества доступных свободных клеток из точки (startX, startY)
+    function countFreeSpace(startX, startY) {
+        let visited = new Set();
+        let queue = [{ x: startX, y: startY }];
+        let occupied = new Set(snake.map(p => `${p.x},${p.y}`));
+        // Хвост освободится на следующем ходу, если змейка не ест
+        const tail = snake[snake.length - 1];
+        occupied.delete(`${tail.x},${tail.y}`);
+
+        visited.add(`${startX},${startY}`);
+        let count = 0;
+
+        while (queue.length > 0 && count <= snake.length + 2) {
+            let curr = queue.shift();
+            count++;
+
+            const dirs = [
+                { x: 0, y: -1 }, { x: 0, y: 1 },
+                { x: -1, y: 0 }, { x: 1, y: 0 }
+            ];
+
+            for (let d of dirs) {
+                let nx = curr.x + d.x;
+                let ny = curr.y + d.y;
+                let key = `${nx},${ny}`;
+
+                if (nx >= 0 && nx < cols && ny >= 0 && ny < rows &&
+                    !occupied.has(key) && !visited.has(key)) {
+                    visited.add(key);
+                    queue.push({ x: nx, y: ny });
+                }
+            }
+        }
+        return count;
+    }
+
     function autoNavigate() {
         if (cols <= 0 || rows <= 0 || snake.length === 0) return;
         const head = snake[0];
@@ -312,13 +348,32 @@ document.addEventListener("DOMContentLoaded", function() {
             let nx = head.x + d.x;
             let ny = head.y + d.y;
             if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) return false;
-            for (let part of snake) {
-                if (part.x === nx && part.y === ny) return false;
+            for (let i = 0; i < snake.length - 1; i++) {
+                if (snake[i].x === nx && snake[i].y === ny) return false;
             }
             return true;
         });
 
         if (validDirs.length > 0) {
+            // До 12 клеток змейка избегает тупиков (выбирает ветку, где поместится её тело)
+            if (snake.length < 12) {
+                let safeDirs = validDirs.filter(d => {
+                    return countFreeSpace(head.x + d.x, head.y + d.y) >= snake.length;
+                });
+                if (safeDirs.length > 0) {
+                    validDirs = safeDirs;
+                } else {
+                    // Если все ветки тесные — выбираем самую просторную
+                    validDirs.sort((a, b) => {
+                        return countFreeSpace(head.x + b.x, head.y + b.y) - countFreeSpace(head.x + a.x, head.y + a.y);
+                    });
+                    dx = validDirs[0].x;
+                    dy = validDirs[0].y;
+                    return;
+                }
+            }
+
+            // Идём к еде по кратчайшему пути
             validDirs.sort((a, b) => {
                 let distA = Math.abs((head.x + a.x) - food.x) + Math.abs((head.y + a.y) - food.y);
                 let distB = Math.abs((head.x + b.x) - food.x) + Math.abs((head.y + b.y) - food.y);
@@ -348,26 +403,27 @@ document.addEventListener("DOMContentLoaded", function() {
         let hitWall = (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows);
         let hitSelf = false;
         
-        for (let part of snake) {
-            if (part.x === head.x && part.y === head.y) {
+        // Проверяем столкновение с телом (кроме самого кончика хвоста, если не съели еду)
+        let willEat = (head.x === food.x && head.y === food.y);
+        let checkLimit = willEat ? snake.length : snake.length - 1;
+
+        for (let i = 0; i < checkLimit; i++) {
+            if (snake[i].x === head.x && snake[i].y === head.y) {
                 hitSelf = true;
                 break;
             }
         }
 
-        if (hitWall || (snake.length >= 12 && hitSelf)) {
+        // Если врезались в стену или в себя (и наступила фаза смерти >= 12, либо безвыходный тупик)
+        if (hitWall || hitSelf) {
             isDying = true;
             deathTimer = 0;
             return;
         }
 
-        if (hitSelf) {
-            return; 
-        }
-
         snake.unshift(head);
 
-        if (head.x === food.x && head.y === food.y) {
+        if (willEat) {
             spawnFood();
         } else {
             snake.pop();
@@ -2672,7 +2728,7 @@ window.addEventListener('DOMContentLoaded', function() {
    WINDOWS 95 BOOT SEQUENCE, WINDOW ANIMATIONS & CRT POWER CONTROL
    ========================================================================== */
 
-const BOOT_GIF_SRC = 'resorse/images/win95_boot.gif';
+const BOOT_GIF_SRC = 'resorse/images/gif/win95_boot.gif';
 const STARTUP_SOUND_SRC = 'resorse/sounds/wim95.mp3';
 
 let bootSequenceCompleted = false;

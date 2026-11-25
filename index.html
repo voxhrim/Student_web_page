@@ -232,10 +232,6 @@
 									Магистратура: ДонНТУ, 2025 – 2027 гг. (направление 22.04.02 «Металлургия»)
 								</td>
 							</tr>
-							<tr class="odd">
-								<td class="c1">Средний балл</td>
-								<td class="c2">4.9</td>
-							</tr>
 							<tr class="even">
 								<td class="c1">Знание языков</td>
 								<td class="c2">Русский — родной; Украинский - B1; Английский - A2–B1.</td>
@@ -783,43 +779,35 @@
         </div>
     </div>
 
-		<!-- Меню «Пуск» -->
-	<div id="win-start-menu" class="win-window" style="display: none;">
-		<div class="start-menu-sidebar">
-			<span>Windows 2000</span>
-		</div>
-		<div class="start-menu-items">
-			<button type="button" class="start-menu-item" onclick="shutdownPC()">
-				<span class="power-symbol">⏻</span> Завершение работы...
-			</button>
-		</div>
-	</div>
+		<!-- <!-- Меню «Пуск» --> -->
+	<!-- <div id="win-start-menu" class="win-window" style="display: none;"> -->
+		<!-- <div class="start-menu-sidebar"> -->
+			<!-- <span>Windows 95</span> -->
+		<!-- </div> -->
+		<!-- <div class="start-menu-items"> -->
+			<!-- <button type="button" class="start-menu-item" onclick="shutdownPC()"> -->
+				<!-- <span class="power-symbol">⏻</span> Завершение работы... -->
+			<!-- </button> -->
+		<!-- </div> -->
+	<!-- </div> -->
 
-	<!-- Оверлей выключенного монитора (эффект кинескопа) -->
-	<div id="crt-shutdown-overlay" style="display: none;">
-		<div id="crt-beam"></div>
-		<button type="button" id="crt-power-on-btn" onclick="powerOnPC()" title="Включить питание">
-			<span class="power-btn-ring">⏻</span>
-			<span class="power-btn-label">POWER</span>
-		</button>
-	</div>
 	
-
 
 	<!-- ======================================================================
          BOOT SCREEN, START MENU & CRT SHUTDOWN OVERLAY
          ====================================================================== -->
     <div id="win95-boot-screen" style="display: none;" onclick="finishBootSequence()">
 		<img id="win95-boot-gif" src="" alt="Windows 95 Boot">
-    <div class="boot-skip-hint">Нажмите в любом месте, чтобы пропустить...</div>
+        <div class="boot-skip-hint">Нажмите в любом месте, чтобы пропустить...</div>
 	</div>
+
     <div id="win-start-menu" class="win-window" style="display: none;">
         <div class="start-menu-sidebar">
             <span>Windows 95</span>
         </div>
         <div class="start-menu-items">
             <button type="button" class="start-menu-item" onclick="shutdownPC()">
-                <span class="power-symbol">⏻</span> Завершение работы...
+                <span class="power-symbol">⏻</span> Завершить работу
             </button>
         </div>
     </div>
@@ -827,8 +815,7 @@
     <div id="crt-shutdown-overlay" style="display: none;">
         <div id="crt-beam"></div>
         <button type="button" id="crt-power-on-btn" onclick="powerOnPC()" title="Включить питание">
-            <span class="power-btn-ring">⏻</span>
-            <span class="power-btn-label">POWER</span>
+            <img src="resorse/images/gif/OnButton.webp" alt="Включить питание">
         </button>
     </div>
 	
