@@ -413,11 +413,14 @@ iframe[id=":2.container"],
     pointer-events: none;
 }
 
-.anime-sitter img {
+anime-sitter img,
+.anime-sitter video {
     width: 140px !important;
     max-width: none !important;
     height: auto !important;
     display: block;
+    background: transparent;
+    pointer-events: none;
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
 }
 
