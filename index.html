@@ -1,11 +1,11 @@
-<!DOCTYPE HTML >
+<!DOCTYPE HTML>
 <html lang="ru">
 <head>
     <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портал магистра - Назарюк В.Ю.</title>
     <link rel="shortcut icon" href="resorse/images/icons/master.webp" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="master_style_gif.css?v=2">
+    <link rel="stylesheet" type="text/css" href="resorse/style.css?v=3">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
     <!-- Базовые стили отрисовки окон и системных иконок 16x16 -->
@@ -59,14 +59,18 @@
 <body>
 
     <!-- ======================================================================
-         TASKBAR & NAVIGATION HEADER
+         TASKBAR, WINDOW TABS & SYSTEM TRAY
          ====================================================================== -->
     <div id="topblock">
-        <div class="taskbar-start" onclick="toggleStartMenu(event)">
-		<img src="resorse/images/icons/win_start.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> <strong>Пуск</strong>
-	</div>
+        <div class="taskbar-left-group">
+            <div class="taskbar-start" id="taskbar-start-btn" onclick="toggleStartMenu(event)">
+                <img src="resorse/images/icons/win_start.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> <strong>Пуск</strong>
+            </div>
+            <div class="taskbar-divider"></div>
+            <div id="taskbar-tasks" class="taskbar-tasks"></div>
+        </div>
 
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="taskbar-right-group">
             <div class="win-lang-picker">
                 <img src="resorse/images/icons/lang.png" alt="" class="win-ui-icon" onerror="this.style.display='none'">
                 <label for="custom-language-select" class="lang-label">Язык:</label>
@@ -87,6 +91,10 @@
                     <img src="resorse/images/icons/masters.png" alt="" class="win-ui-icon" style="margin-right: 3px;" onerror="this.style.display='none'">Портал магистров
                 </a>
             </div>
+
+            <div class="taskbar-tray" title="Системное время">
+                <span id="taskbar-clock">12:00</span>
+            </div>
         </div>
     </div>
 
@@ -94,21 +102,56 @@
     <div id="google_translate_element" class="google-hidden-engine" style="display: none;"></div>
 
     <!-- ======================================================================
+         DESKTOP SHORTCUTS (TOP-LEFT WORKSPACE)
+         ====================================================================== -->
+    <div class="desktop-icons-grid">
+        <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('header')" title="Открыть визитку магистра">
+            <img src="resorse/images/icons/folder.png" alt="Profile" onerror="this.onerror=null; this.src='resorse/images/icons/master.webp'">
+            <div class="icon-text">Магистр.exe</div>
+        </div>
+
+        <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#about')" title="Открыть резюме магистра">
+            <img src="resorse/images/icons/doc.png" alt="Resume">
+            <div class="icon-text">Резюме.doc</div>
+        </div>
+
+        <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#scientific')" title="Открыть научные труды">
+            <img src="resorse/images/icons/doc.png" alt="Library">
+            <div class="icon-text">Наука.doc</div>
+        </div>
+
+        <div class="desktop-icon-btn" onclick="if(typeof openDoomGuide === 'function') openDoomGuide()" title="Руководство по DuuM">
+            <img src="resorse/images/icons/txt_icon.webp" alt="Manual" onerror="this.onerror=null; this.src='resorse/images/icons/doc.png'"> 
+            <div class="icon-text">DuuM manual.txt</div>
+        </div>
+
+        <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('weather-window')" title="Метеостанция ДонНТУ">
+            <img src="resorse/images/icons/masters.png" alt="Weather">
+            <div class="icon-text">Погода.exe</div>
+        </div>
+
+        <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('contacts-window')" title="Адресная книга">
+            <img src="resorse/images/icons/email.webp" alt="Contacts">
+            <div class="icon-text">Контакты.exe</div>
+        </div>
+    </div>
+
+    <!-- ======================================================================
          SNAKE ARCADE WIDGET
          ====================================================================== -->
-    <div id="desktop-snake-window" class="win-window">
+    <div id="desktop-snake-window" class="win-window" data-win-title="Snake_Arcade.exe">
         <div class="win-title-bar">
             <div class="win-title-text">
                 <span class="win-icon"></span> Snake_Arcade.exe
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button">_</button>
-                <button class="win-btn" type="button">□</button>
-                <button class="win-btn close" type="button">✕</button>
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('desktop-snake-window', event)">_</button>
+                <button class="win-btn" type="button" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('desktop-snake-window', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeWin === 'function') closeWin('desktop-snake-window', event)">✕</button>
             </div>
         </div>
-        <div class="win-window-body" style="background: #c0c0c0; padding: 0; height: 160px; position: relative;">
-            <div id="window-snake-container" style="position: absolute; width: 100%; height: 100%;">
+        <div class="win-window-body" style="background: #c0c0c0; padding: 4px; height: 164px; position: relative; box-sizing: border-box;">
+            <div id="window-snake-container" class="win-sunken-panel" style="position: relative; width: 100%; height: 100%;">
                 <canvas id="snakeCanvasWindow">
                     <div style="padding: 20px; text-align: center; color: #404040; font-family: Tahoma, sans-serif; font-size: 12px;">
                         Виджет недоступен: браузер не поддерживает HTML5 Canvas.
@@ -121,15 +164,15 @@
     <!-- ======================================================================
          PROFILE HEADER WINDOW
          ====================================================================== -->
-    <div id="header" class="win-window">
+    <div id="header" class="win-window" data-win-title="Nazaryuk_V_Yu.exe">
         <div class="win-title-bar">
             <div class="win-title-text">
                 <img src="resorse/images/icons/folder.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> C:\DonNTU\Masters\Nazaryuk_V_Yu.exe
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button" aria-label="Свернуть">_</button>
-                <button class="win-btn" type="button" aria-label="Развернуть">□</button>
-                <button class="win-btn close" type="button" aria-label="Закрыть">✕</button>
+                <button class="win-btn" type="button" aria-label="Свернуть" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('header', event)">_</button>
+                <button class="win-btn" type="button" aria-label="Развернуть / Восстановить" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('header', event)">□</button>
+                <button class="win-btn close" type="button" aria-label="Закрыть" title="Закрыть" onclick="if(typeof closeWin === 'function') closeWin('header', event)">✕</button>
             </div>
         </div>
 
@@ -162,7 +205,7 @@
     <!-- ======================================================================
          MAIN PORTFOLIO WINDOW (SPA TABS)
          ====================================================================== -->
-    <div id="middleblock" class="win-window window-relative">
+    <div id="middleblock" class="win-window window-relative" data-win-title="Master_Portfolio.doc">
 
         <div class="anime-sitter" title="Добро пожаловать!"> 
 			<video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
@@ -173,21 +216,21 @@
                 <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Master_Portfolio.doc — Microsoft WordPad
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button">_</button>
-                <button class="win-btn" type="button">□</button>
-                <button class="win-btn close" type="button">✕</button>
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('middleblock', event)">_</button>
+                <button class="win-btn" type="button" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('middleblock', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeWin === 'function') closeWin('middleblock', event)">✕</button>
             </div>
         </div>
 
         <div class="win-window-body" style="padding: 6px; background: #c0c0c0;">
             <div class="win-sunken-panel" style="background: #c0c0c0;">
 
-                <!-- Навигация по разделам -->
+                <!-- Навигация по разделам (Win95 Property Tabs) -->
                 <div id="menu">
-                    <a class="button tab-link colorfix" href="#about">[О себе]</a>
-                    <a class="button tab-link color" href="#referat">[Реферат]</a>
-                    <a class="button tab-link color" href="#scientific">[Научные труды]</a>
-                    <a class="button tab-link color" href="#individual">[Индивидуальный раздел]</a>
+                    <a class="button tab-link colorfix" href="#about">О себе</a>
+                    <a class="button tab-link color" href="#referat">Реферат</a>
+                    <a class="button tab-link color" href="#scientific">Научные труды</a>
+                    <a class="button tab-link color" href="#individual">Индивидуальный раздел</a>
                 </div>
 
                 <!-- Контейнер контента вкладок -->
@@ -195,18 +238,13 @@
 
                     <!-- TAB 1: ABOUT & CV -->
                     <div id="about" class="tab-content active">
-                        <div class="anime-mascot-box">
-                            <div class="mascot-bubble">Рад знакомству! Это мое резюме!</div>
-                            <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
-                        </div>
-
                         <hr>
                         <h2>Обо мне</h2>
                         <p>
-                            Я выбрал эту специальность потому, что в старшей школе увлекся кузнечным делом. Мне понравилось как выглядить горячий метал. Я пришел в ДонНТУ (лучших технический вуз
-                            моего региона) и нашел там специальность связанную с металлом - металлургия черных металов.<br>
-                            Обучение в университете проходило по множеству дисцеплин, всесторонне раскрывая возможности моей специальности. От азов доменного производства, заканчивая современными 
-                            технологиями, например адьютивные технологии и подготовка материалов для них.
+                            Я выбрал эту специальность потому, что в старшей школе увлекся кузнечным делом. Мне понравилось, как выглядит горячий металл. Я пришел в ДонНТУ (лучший технический вуз
+                            моего региона) и нашел там специальность, связанную с металлом — металлургия черных металлов.<br>
+                            Обучение в университете проходило по множеству дисциплин, всесторонне раскрывая возможности моей специальности: от азов доменного производства до современных 
+                            технологий, например аддитивных технологий и подготовки материалов для них.
                             После окончания учебы в магистратуре планирую поступить в аспирантуру. Хочу заниматься научной деятельностью и работать в университете.
                         </p>
 
@@ -240,7 +278,7 @@
 							</tr>
 							<tr class="even">
 								<td class="c1">Знание языков</td>
-								<td class="c2">Русский — родной; Украинский - B1; Английский - A2–B1.</td>
+								<td class="c2">Русский — родной; Украинский — B1; Английский — A2–B1.</td>
 							</tr>
 							<tr class="odd">
 								<td class="c1">Увлечения</td>
@@ -298,20 +336,15 @@
 									</ol>
 								</td>
 							</tr>
-								<tr class="even">
-									<td class="c1">Планы на будущее</td>
-									<td class="c2">Успешная защита магистерской диссертации, поступление в аспирантуру, продолжение научно-исследовательской деятельности в области металлургии черных металлов и материаловедения, развитие в качестве востребованного инженера-исследователя.</td>
-								</tr>
+							<tr class="even">
+								<td class="c1">Планы на будущее</td>
+								<td class="c2">Успешная защита магистерской диссертации, поступление в аспирантуру, продолжение научно-исследовательской деятельности в области металлургии черных металлов и материаловедения, развитие в качестве востребованного инженера-исследователя.</td>
+							</tr>
 						</table>
                     </div>
 
                     <!-- TAB 2: MASTER THESIS ABSTRACT -->
                     <div id="referat" class="tab-content">
-                        <div class="anime-mascot-box">
-                            <div class="mascot-bubble">Это реферат моей магистерской работы</div>
-                            <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
-                        </div>
-
                         <h1>Реферат по теме выпускной работы</h1>
                         <hr>
 
@@ -333,73 +366,55 @@
 
                     <!-- TAB 3: SCIENTIFIC PUBLICATIONS -->
                     <div id="scientific" class="tab-content">
-                        <div class="anime-mascot-box">
-                            <div class="mascot-bubble">Наука — это круто! Можешь почитать мои работы!</div>
-                            <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
-                        </div>
-
                         <h1>Библиотека материалов по теме выпускной работы</h1>
                         <hr>
                         
                         <p style="background-color:#ffffcc; color: #800000; padding: 10px; border: 2px solid #808080;">
-                            <b style="color: red; font-size: 16px;">!</b> Список не полный.
+                            <b style="color: red; font-size: 15px;">!</b> Список не полный.
                         </p>
 
                         <h2>Собственные публикации и доклады</h2>
 							<ol>
 								<li class="lib">
-									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю. — Создание прогнозной модели износостойкости литых чугунов (2026)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю. — Создание прогнозной модели износостойкости литых чугунов (2026)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
 										Назарюк, В. Ю. Создание прогнозной модели износостойкости литых чугунов / В. Ю. Назарюк // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2026.
 									</a>
 									<p><span class="cat">Авторы:</span> В. Ю. Назарюк</p>
 									<p><span class="cat">Описание:</span> Разработка прогнозной модели абразивной износостойкости отливок из высокохромистых чугунов.</p>
 									<p><span class="cat">Действие:</span> 
-										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
 										<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSPMELCh2026.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
 									</p>
 								</li>
 
 								<li class="lib">
-									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. — Сравнительные испытания материала отливок колес шламовых насосов (2025)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. — Сравнительные испытания материала отливок колес шламовых насосов (2025)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
 										Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2025. – С. 14-15.
 									</a>
 									<p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
 									<p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
 									<p><span class="cat">Действие:</span> 
-										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
 										<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSEMOKShNAE2025.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
 									</p>
 								</li>
 
 								<li class="lib">
-									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. — Сравнительные испытания материала отливок колес шламовых насосов (2024)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 18px;">
+									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. — Сравнительные испытания материала отливок колес шламовых насосов (2024)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
 										Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2024. – С. 14-15.
 									</a>
 									<p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
 									<p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
 									<p><span class="cat">Действие:</span> 
-										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 13px; padding: 4px 10px;">Просмотреть PDF на странице</button> 
+										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
 										<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSEMOKShNAE2024.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
 									</p>
 								</li>
 							</ol>
-
-                        <div id="pdf-viewer-section" class="article-view-box win-sunken-panel" style="display: none;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h3 id="pdf-viewer-title" style="margin: 0; color: #000080;">Просмотр документа</h3>
-                                <button class="button color" onclick="if(typeof closeDocFrame === 'function') closeDocFrame()">Закрыть просмотр</button>
-                            </div>
-                            <iframe id="doc-frame" class="article-frame" data-src="" src="about:blank"></iframe>
-                        </div>
                     </div>
 
                     <!-- TAB 4: INDIVIDUAL SECTION -->
                     <div id="individual" class="tab-content">
-                        <div class="anime-mascot-box">
-                            <div class="mascot-bubble">Крути педали, пока не дали! Погнали в ПВД!</div>
-                            <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="mascot-img">
-                        </div>
-
                         <h1>Индивидуальный раздел: В седле</h1>
                         <hr>
 
@@ -407,7 +422,7 @@
                             &laquo;Жизнь — как вождение велосипеда: чтобы сохранить равновесие, ты должен двигаться.&raquo; (Альберт Эйнштейн)
                         </p>
 
-                        <h2>В неучебное время я занимаюсь туризмом, а в особенности люблю - велосипедный туризм</h2>
+                        <h2>В неучебное время я занимаюсь туризмом, а в особенности люблю — велосипедный туризм</h2>
                         <p>
                             Для инженера крайне важно находить время для перезагрузки, находить баланс между работой и отдыхом. Моим главным источником вдохновения и объектом мечтаний является <strong>спортивный велосипедный туризм</strong>.
                         </p>
@@ -424,9 +439,9 @@
                             В поездках я отдаю предпочтение формату автономных путешествий:
                         </p>
                         <ul>
-                            <li><strong>ПВД (Походы выходного дня):</strong> радиальные и линейные выезды на дистанции 80-150 км по родному краю. В современных условиях такие походы проходят без ночевок.</li>
+                            <li><strong>ПВД (Походы выходного дня):</strong> радиальные и линейные выезды на дистанции 80–150 км по родному краю. В современных условиях такие походы проходят без ночевок.</li>
                             <li><strong>Многодневный байкпакинг:</strong> походы с палаткой или гамачной системой, походной кухней и запасами еды, где всё необходимое крепится прямо на раму и руль велосипеда. 
-                            Такие походы позволяют почувствовать весь вкус путешествия по своей родине</li>
+                            Такие походы позволяют почувствовать весь вкус путешествия по своей родине.</li>
                         </ul>
 
                         <h2>Почему велосипед?</h2>
@@ -520,20 +535,36 @@
             <div class="status-cell fit">100%</div>
         </div>
 
-        <!-- Десктоп-ярлыки мини-игры и руководства -->
-        <div class="gif-left">
-            <div id="doom-launch-btn-container" style="display: flex; justify-content: flex-end; gap: 15px; margin: 20px 0; padding-right: 10px;">
-                <div class="desktop-icon-btn" onclick="if(typeof openDoomGuide === 'function') openDoomGuide()">
-                    <img src="resorse/images/icons/txt_icon.webp" alt="Manual" onerror="this.onerror=null; this.src='resorse/images/icons/doc.png'"> 
-                    <div class="icon-text">DuuM manual.txt</div>
-                </div>
-                <div class="desktop-icon-btn" onclick="if(typeof openDoomEasterEgg === 'function') { openDoomEasterEgg(); } else { alert('Для запуска DuuM.exe требуется современный браузер с поддержкой HTML5 Canvas.'); }">
-                    <img src="resorse/images/icons/doom_icon.webp" alt="DOOM" onerror="this.onerror=null; this.src='resorse/images/icons/Duum.webp'">
-                    <div class="icon-text">DuuM.exe</div>
-                </div>
+        <!-- Офисный помощник (Скрепка) в правом нижнем углу окна -->
+        <div id="clippy-assistant" class="clippy-assistant">
+            <div class="clippy-bubble">
+                <button type="button" class="clippy-close-btn" title="Скрыть подсказку" onclick="event.stopPropagation(); document.getElementById('clippy-assistant').classList.add('is-collapsed')">×</button>
+                <span id="clippy-text">Рад знакомству! Это мое резюме!</span>
             </div>
-            
-            <img src="resorse/images/gif/anime3.gif" alt="" loading="lazy" style="transform: translateY(-30px);">
+            <img src="resorse/images/gif/anime4.gif" alt="Помощник" class="clippy-avatar" title="Нажмите, чтобы показать/скрыть подсказку" onclick="document.getElementById('clippy-assistant').classList.toggle('is-collapsed')">
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         DOCUMENT PDF VIEWER WINDOW (НАУЧНЫЕ ТРУДЫ)
+         ====================================================================== -->
+    <div id="doc-viewer-window" class="win-window" data-win-title="PDF_Viewer.exe" style="display: none;">
+        <div class="win-title-bar">
+            <div class="win-title-text">
+                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> <span id="pdf-viewer-title">Просмотр документа</span>
+            </div>
+            <div class="win-controls">
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('doc-viewer-window', event)">_</button>
+                <button class="win-btn" type="button" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('doc-viewer-window', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeDocFrame === 'function') closeDocFrame(event)">✕</button>
+            </div>
+        </div>
+        <div class="win-window-body">
+            <iframe id="doc-frame" src="about:blank"></iframe>
+        </div>
+        <div class="win-statusbar">
+            <div class="status-cell" id="doc-viewer-status">Документ загружен</div>
+            <div class="status-cell fit">PDF</div>
         </div>
     </div>
 
@@ -546,9 +577,9 @@
                 <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> DuuM manual.txt — Блокнот
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button" onclick="if(typeof closeDoomGuide === 'function') closeDoomGuide()">_</button>
-                <button class="win-btn" type="button" onclick="if(typeof closeDoomGuide === 'function') closeDoomGuide()">□</button>
-                <button class="win-btn close" type="button" onclick="if(typeof closeDoomGuide === 'function') closeDoomGuide()">✕</button>
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof closeDoomGuide === 'function') closeDoomGuide(event)">_</button>
+                <button class="win-btn" type="button" title="На весь экран" onclick="if(typeof toggleModalMaximize === 'function') toggleModalMaximize('doom-guide-window', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeDoomGuide === 'function') closeDoomGuide(event)">✕</button>
             </div>
         </div>
         
@@ -633,15 +664,15 @@
     <!-- ======================================================================
          CONTACTS WINDOW
          ====================================================================== -->
-    <div id="contacts-window" class="win-window">
+    <div id="contacts-window" class="win-window" data-win-title="Contacts_Book.exe">
         <div class="win-title-bar">
             <div class="win-title-text">
                 <span class="win-icon"></span> Contacts_Book.exe
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button">_</button>
-                <button class="win-btn" type="button">□</button>
-                <button class="win-btn close" type="button">✕</button>
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('contacts-window', event)">_</button>
+                <button class="win-btn" type="button" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('contacts-window', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeWin === 'function') closeWin('contacts-window', event)">✕</button>
             </div>
         </div>
 
@@ -656,13 +687,6 @@
                 </a>
                 <span class="contact-text"><strong>E-mail:</strong> nazariuk.donntu@gmail.com</span>
             </div>
-
-            <!-- <div class="contact-item"> -->
-                <!-- <a class="contact-icon-link" href="https://t.me/Voxhrim" target="_blank" title="Открыть Telegram"> -->
-                    <!-- <img class="contact-icon" src="resorse/images/icons/tg.webp" alt="Telegram"> -->
-                <!-- </a> -->
-                <!-- <span class="contact-text"><strong>Telegram:</strong> @Voxhrim</span> -->
-            <!-- </div> -->
 
             <div class="contact-item">
                 <a class="contact-icon-link" href="https://discord.com/users/521297931039408139" target="_blank" title="Открыть профиль Discord">
@@ -688,15 +712,15 @@
     <!-- ======================================================================
          WEATHER STATION WIDGET (OPEN-METEO API)
          ====================================================================== -->
-    <div id="weather-window" class="win-window">
+    <div id="weather-window" class="win-window" data-win-title="Weather_Station.exe">
         <div class="win-title-bar">
             <div class="win-title-text">
                 <span class="win-icon"></span> Weather_Station.exe — Погода онлайн
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button">_</button>
-                <button class="win-btn" type="button">□</button>
-                <button class="win-btn close" type="button">✕</button>
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('weather-window', event)">_</button>
+                <button class="win-btn" type="button" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('weather-window', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeWin === 'function') closeWin('weather-window', event)">✕</button>
             </div>
         </div>
 
@@ -774,9 +798,9 @@
                 <span class="win-icon"></span> DuuM
             </div>
             <div class="win-controls">
-                <button class="win-btn" type="button" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg()">_</button>
-                <button class="win-btn" type="button" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg()">□</button>
-                <button class="win-btn close" type="button" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg()">✕</button>
+                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg(event)">_</button>
+                <button class="win-btn" type="button" title="На весь экран" onclick="if(typeof toggleModalMaximize === 'function') toggleModalMaximize('doom-window', event)">□</button>
+                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg(event)">✕</button>
             </div>
         </div>
         
@@ -797,21 +821,43 @@
         </div>
     </div>
 
-	
-
-	<!-- ======================================================================
+    <!-- ======================================================================
          BOOT SCREEN, START MENU & CRT SHUTDOWN OVERLAY
          ====================================================================== -->
     <div id="win95-boot-screen" style="display: none;" onclick="finishBootSequence()">
-		<img id="win95-boot-gif" src="" alt="Windows 95 Boot">
+        <img id="win95-boot-gif" src="" alt="Windows 95 Boot">
         <div class="boot-skip-hint">Нажмите в любом месте, чтобы пропустить...</div>
-	</div>
+    </div>
 
     <div id="win-start-menu" class="win-window" style="display: none;">
         <div class="start-menu-sidebar">
             <span>Windows 95</span>
         </div>
         <div class="start-menu-items">
+            <button type="button" class="start-menu-item" onclick="if(typeof openDoomEasterEgg === 'function') { closeStartMenu(); openDoomEasterEgg(); }">
+                <img src="resorse/images/icons/doom_icon.webp" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Запустить DuuM.exe
+            </button>
+            <button type="button" class="start-menu-item" onclick="if(typeof openDoomGuide === 'function') { closeStartMenu(); openDoomGuide(); }">
+                <img src="resorse/images/icons/txt_icon.webp" alt="" class="win-ui-icon" onerror="this.style.display='none'"> DuuM manual.txt
+            </button>
+            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopApp === 'function') { closeStartMenu(); openDesktopApp('desktop-snake-window'); }">
+                <img src="resorse/images/icons/masters.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Snake_Arcade.exe
+            </button>
+            <div class="start-menu-sep"></div>
+            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopTab === 'function') { closeStartMenu(); openDesktopTab('#about'); }">
+                <img src="resorse/images/icons/folder.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Резюме магистра
+            </button>
+            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopTab === 'function') { closeStartMenu(); openDesktopTab('#scientific'); }">
+                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Научные труды
+            </button>
+            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopTab === 'function') { closeStartMenu(); openDesktopTab('#individual'); }">
+                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Индивидуальный раздел
+            </button>
+            <div class="start-menu-sep"></div>
+            <button type="button" class="start-menu-item" onclick="if(typeof restoreAllWindows === 'function') { closeStartMenu(); restoreAllWindows(); }">
+                <img src="resorse/images/icons/win_start.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Восстановить все окна
+            </button>
+            <div class="start-menu-sep"></div>
             <button type="button" class="start-menu-item" onclick="shutdownPC()">
                 <span class="power-symbol">⏻</span> Завершить работу
             </button>

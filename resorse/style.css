@@ -9,11 +9,15 @@ html, body {
 body {
     background-color: #008080;
     margin: 0;
-    padding-bottom: 80px;
     font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
-    overflow-x: hidden;
     position: relative;
-    min-height: 100vh;
+}
+
+@media screen and (min-width: 1101px) {
+    html, body {
+        height: 100vh;
+        overflow: hidden;
+    }
 }
 
 /* --------------------------------------------------------------------------
@@ -35,20 +39,23 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   3. TASKBAR & GOOGLE TRANSLATE OVERRIDES
+   3. TASKBAR, SYSTEM TRAY & GOOGLE TRANSLATE OVERRIDES
    -------------------------------------------------------------------------- */
 #topblock {
-    min-height: 32px;
-    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    height: 32px;
+    background: #c0c0c0;
     border-bottom: 2px solid;
     border-color: #ffffff #404040 #404040 #ffffff;
+    box-shadow: 0 1px 0 #000000;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 4px 8px;
+    padding: 3px 6px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 9000;
     transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -63,6 +70,14 @@ body {
     transform: translateY(0);
 }
 
+.taskbar-left-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 .taskbar-start {
     display: inline-flex;
     align-items: center;
@@ -75,26 +90,114 @@ body {
     border-color: #ffffff #404040 #404040 #ffffff;
     cursor: pointer;
     user-select: none;
+    flex-shrink: 0;
 }
 
-.taskbar-start:active {
+.taskbar-start:active,
+.taskbar-start.active {
     border-color: #404040 #ffffff #ffffff #404040;
+    padding-top: 3px;
+    padding-left: 9px;
+    padding-bottom: 1px;
+    padding-right: 7px;
+}
+
+.taskbar-divider {
+    width: 2px;
+    height: 20px;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #ffffff;
+    flex-shrink: 0;
+}
+
+.taskbar-tasks {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.taskbar-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 165px;
+    height: 22px;
+    padding: 0 8px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.taskbar-tab:hover {
+    background: #d0d0d0;
+}
+
+.taskbar-tab.is-active {
+    background-color: #dfdfdf;
+    background-image: radial-gradient(#a0a0a0 15%, transparent 16%);
+    background-size: 2px 2px;
+    border-color: #404040 #ffffff #ffffff #404040;
+    font-weight: bold;
+}
+
+.taskbar-tab.is-minimized {
+    opacity: 0.85;
+}
+
+.taskbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.taskbar-tray {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 8px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+#taskbar-clock {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.3px;
 }
 
 #donntu {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 5px;
 }
 
 #donntu a {
     display: inline-flex;
     align-items: center;
     font-family: Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: #000000;
     text-decoration: none;
-    padding: 3px 10px;
+    padding: 2px 8px;
     background: #c0c0c0;
     border: 2px solid;
     border-color: #ffffff #404040 #404040 #ffffff;
@@ -114,7 +217,7 @@ body {
     align-items: center;
     gap: 4px;
     background: #c0c0c0;
-    border: 2px solid;
+    border: 1px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     padding: 1px 4px;
     font-family: Tahoma, sans-serif;
@@ -134,7 +237,7 @@ body {
     border: 1px solid;
     border-color: #404040 #d4d0c8 #d4d0c8 #404040;
     outline: none;
-    padding: 1px 2px;
+    padding: 0px 2px;
     cursor: pointer;
 }
 
@@ -171,23 +274,193 @@ iframe[id=":2.container"],
 }
 
 /* --------------------------------------------------------------------------
-   4. WINDOWS UI COMPONENTS & WINDOW OPEN ANIMATION
+   4. DESKTOP ICONS GRID (TOP-LEFT DESKTOP SHORTCUTS)
+   -------------------------------------------------------------------------- */
+.desktop-icons-grid {
+    position: fixed;
+    top: 46px;
+    left: 14px;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    user-select: none;
+}
+
+.desktop-icon-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 78px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 3px;
+}
+
+.desktop-icon-btn img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 4px;
+    image-rendering: pixelated;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.5));
+}
+
+.desktop-icon-btn .icon-text {
+    font-family: Tahoma, "MS Sans Serif", sans-serif;
+    font-size: 11px;
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #000000;
+    padding: 1px 4px;
+    border: 1px dotted transparent;
+    text-align: center;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.desktop-icon-btn:hover .icon-text,
+.desktop-icon-btn:focus .icon-text {
+    background-color: #000080;
+    color: #ffffff;
+    text-shadow: none;
+    border: 1px dotted #ffff00;
+}
+
+/* --------------------------------------------------------------------------
+   5. WINDOWS UI COMPONENTS, RESIZERS, MAXIMIZED STATE & ANIMATIONS
    -------------------------------------------------------------------------- */
 .win-window {
     --win-tx: 0px;
     --win-ty: 0px;
+    --win-scale: 1;
     background: #c0c0c0 !important;
     border: 3px solid !important;
     border-color: #ffffff #404040 #404040 #ffffff !important;
     box-shadow: 0 0 0 2px #000000, 4px 4px 0px rgba(0, 0, 0, 0.7) !important;
     box-sizing: border-box !important;
     transform: translate(var(--win-tx), var(--win-ty));
+    transition: opacity 0.18s ease, width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), top 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.win-window.desktop-boot-hidden {
+.win-window.is-resizing,
+.win-window.is-dragging {
+    transition: none !important;
+    user-select: none !important;
+}
+
+.win-window.desktop-boot-hidden,
+.win-window.win-minimized,
+.win-window.win-closed {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+}
+
+/* Ручки плавного растягивания окон */
+.win-resizer-r {
+    position: absolute;
+    top: 24px;
+    right: -4px;
+    width: 8px;
+    height: calc(100% - 34px);
+    cursor: ew-resize;
+    z-index: 40;
+}
+
+.win-resizer-b {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: calc(100% - 14px);
+    height: 8px;
+    cursor: ns-resize;
+    z-index: 40;
+}
+
+.win-resizer-br {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    width: 14px;
+    height: 14px;
+    cursor: nwse-resize;
+    z-index: 45;
+}
+
+/* Почти полноэкранный режим окна при клике на квадрат (□) */
+.win-window.win-maximized {
+    --win-tx: 0px !important;
+    --win-ty: 0px !important;
+    transform: none !important;
+    position: fixed !important;
+    top: 40px !important;
+    left: 104px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: calc(100vw - 118px) !important;
+    max-width: none !important;
+    height: calc(100vh - 52px) !important;
+    max-height: none !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.win-window.win-maximized .win-title-bar {
+    cursor: default;
+    flex-shrink: 0;
+}
+
+.win-window.win-maximized .win-window-body {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+}
+
+.win-window.win-maximized#middleblock .win-window-body,
+.win-window.win-maximized#doc-viewer-window .win-window-body {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+.win-window.win-maximized#middleblock .win-window-body > .win-sunken-panel {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+}
+
+.win-window.win-maximized #maintext {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    max-height: none !important;
+}
+
+.win-window.win-maximized .win-statusbar {
+    flex-shrink: 0;
+}
+
+/* Фуллскрин для модальных окон DuuM и Manual */
+#doom-window.win-maximized {
+    top: 38px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: min(94vw, 1380px) !important;
+    height: calc(100vh - 48px) !important;
+    max-height: none !important;
+}
+
+#doom-window.win-maximized .win-window-body {
+    flex: 1 1 auto !important;
+    max-height: none !important;
+    justify-content: center !important;
+}
+
+#doom-window.win-maximized .vhs-container {
+    max-height: calc(100vh - 115px) !important;
+    width: auto !important;
+    height: 100% !important;
 }
 
 .win-window.win-open-anim {
@@ -217,6 +490,12 @@ iframe[id=":2.container"],
     align-items: center;
     justify-content: space-between;
     user-select: none;
+    cursor: move;
+    flex-shrink: 0;
+}
+
+.win-window.win-inactive .win-title-bar {
+    background: linear-gradient(90deg, #808080 0%, #a6a6a6 100%);
 }
 
 .win-title-text {
@@ -224,7 +503,7 @@ iframe[id=":2.container"],
     font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
     font-size: 12px;
     font-weight: bold;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -237,6 +516,7 @@ iframe[id=":2.container"],
     display: flex;
     gap: 2px;
     flex-shrink: 0;
+    cursor: default;
 }
 
 .win-btn {
@@ -269,8 +549,9 @@ iframe[id=":2.container"],
     background: #c0c0c0;
     display: flex;
     gap: 4px;
-    padding: 4px 0px;
+    padding: 4px 4px;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .status-cell {
@@ -290,62 +571,37 @@ iframe[id=":2.container"],
     text-align: center;
 }
 
-.desktop-icon-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 76px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.desktop-icon-btn img {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 4px;
-    image-rendering: pixelated;
-}
-
-.desktop-icon-btn .icon-text {
-    font-family: Tahoma, sans-serif;
-    font-size: 11px;
-    color: #000000;
-    padding: 1px 3px;
-    border: 1px dotted transparent;
-    text-align: center;
-    line-height: 1.2;
-}
-
-.desktop-icon-btn:hover .icon-text {
-    background-color: #000080;
-    color: #ffffff;
-    border: 1px dotted #ffffff;
-}
-
 /* --------------------------------------------------------------------------
-   5. HEADER WINDOW & MASCOTS (DESKTOP DEFAULT > 1450px)
+   6. HEADER WINDOW & SCALABLE CONTENT
    -------------------------------------------------------------------------- */
 #header {
-    --win-tx: -80px;
+    --win-tx: 0px;
     --win-ty: 0px;
-    position: relative;
+    --win-scale: 1;
+    position: fixed;
+    top: 44px;
+    left: 110px;
     z-index: 2;
     width: min(68vw, 1180px);
-    margin: 14px auto 40px auto;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .header-body {
     display: flex;
-    padding: 15px 14px 25px 14px;
-    gap: 16px;
+    padding: calc(14px * var(--win-scale)) calc(16px * var(--win-scale));
+    gap: calc(18px * var(--win-scale));
     align-items: flex-start;
     flex-wrap: nowrap;
     background: #c0c0c0;
     box-sizing: border-box;
+    flex: 1 1 auto;
+    overflow-y: auto;
 }
 
 #photomag {
-    flex: 0 0 clamp(280px, 26vw, 440px);
+    flex: 0 0 clamp(260px, calc(340px * var(--win-scale)), 540px);
     position: relative;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
@@ -374,7 +630,7 @@ iframe[id=":2.container"],
 #headertext {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: calc(4px * var(--win-scale));
     flex: 1 1 auto;
     min-width: 0;
     overflow-wrap: break-word;
@@ -383,20 +639,21 @@ iframe[id=":2.container"],
 
 #header h1.hdr {
     text-align: left;
-    font-family: "Times New Roman", serif;
-    font-size: clamp(22px, 2.3vw, 36px);
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
+    font-weight: bold;
+    font-size: clamp(20px, calc(26px * var(--win-scale)), 40px);
     color: #000080;
     margin: 0 0 6px;
-    line-height: 1.15;
+    line-height: 1.2;
 }
 
 #header h3.hdr {
     font-family: Tahoma, Arial, sans-serif;
-    font-size: clamp(12px, 1vw, 14px);
+    font-size: clamp(12px, calc(13.5px * var(--win-scale)), 20px);
     font-weight: normal;
     color: #000000;
     margin: 0;
-    line-height: 1.35;
+    line-height: 1.38;
 }
 
 #header h3.hdr a {
@@ -427,96 +684,208 @@ iframe[id=":2.container"],
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
 }
 
-.anime-mascot-box {
+/* --------------------------------------------------------------------------
+   7. OFFICE ASSISTANT (СКРЕПКА-ПОМОЩНИК В ПРАВОМ НИЖНЕМ УГЛУ ОКНА)
+   -------------------------------------------------------------------------- */
+.clippy-assistant {
     position: absolute;
-    top: 5px;
-    left: -210px;
-    right: auto;
+    bottom: 28px;
+    right: 18px;
+    z-index: 35;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    z-index: 100;
-    pointer-events: none;
-    animation: mascotHover 2.4s ease-in-out infinite alternate;
-    transform-origin: top center;
+    align-items: flex-end;
+    pointer-events: auto;
+    animation: clippyFloat 2.6s ease-in-out infinite alternate;
+}
+
+.clippy-bubble {
+    position: relative;
+    background: #ffffcc;
+    border: 1px solid #000000;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.45);
+    padding: 6px 20px 6px 9px;
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #000000;
+    max-width: 175px;
+    text-align: left;
+    margin-bottom: 7px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.clippy-assistant.is-collapsed .clippy-bubble {
+    display: none;
+}
+
+.clippy-close-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    font-size: 9px;
+    line-height: 11px;
+    text-align: center;
+    cursor: pointer;
+    color: #000000;
+}
+
+.clippy-close-btn:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+}
+
+.clippy-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    right: 22px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000000;
+}
+
+.clippy-bubble::before {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    right: 23px;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #ffffcc;
+}
+
+.clippy-avatar {
+    width: 62px;
+    height: auto;
+    cursor: pointer;
+    filter: drop-shadow(3px 5px 4px rgba(0, 0, 0, 0.45));
+    transition: transform 0.15s ease;
+}
+
+.clippy-avatar:hover {
+    transform: scale(1.06);
 }
 
 .mascot-bubble {
     background: #ffffcc;
     border: 1px solid #000000;
-    padding: 6px 10px;
+    padding: 5px 8px;
     font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-size: 11px;
-    line-height: 1.3;
+    line-height: 1.25;
     color: #000000;
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.35);
-    max-width: 150px;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.45);
     text-align: center;
-    margin-bottom: 6px;
-    position: relative;
-    white-space: normal;
-    animation: bubbleBob 2.4s ease-in-out infinite alternate;
 }
 
-.mascot-img {
-    width: 68px;
-    height: auto;
-    filter: drop-shadow(4px 6px 4px rgba(0, 0, 0, 0.45));
-    animation: mascotSway 2.4s ease-in-out infinite alternate;
-    transform-origin: 50% 15%;
-}
-
-@keyframes mascotHover {
+@keyframes clippyFloat {
     0% { transform: translateY(0px); }
-    100% { transform: translateY(-16px); }
-}
-
-@keyframes mascotSway {
-    0% { transform: rotate(-4deg) scale(0.98); }
-    50% { transform: rotate(1deg) scale(1); }
-    100% { transform: rotate(5deg) scale(1.02); }
+    100% { transform: translateY(-7px); }
 }
 
 @keyframes bubbleBob {
     0% { transform: translateY(0px) rotate(1deg); }
-    100% { transform: translateY(-6px) rotate(-3deg); }
+    100% { transform: translateY(-3px) rotate(-2deg); }
 }
 
 /* --------------------------------------------------------------------------
-   6. MAIN PORTFOLIO WINDOW & TYPOGRAPHY
+   8. MAIN PORTFOLIO WINDOW, WIN95 PROPERTY TABS & SCALABLE TYPOGRAPHY
    -------------------------------------------------------------------------- */
 #middleblock {
-    --win-tx: 30px;
+    --win-tx: 0px;
     --win-ty: 0px;
-    position: relative;
-    z-index: 9;
-    width: min(68vw, 980px);
-    margin: -50px auto 36px auto;
-    height: fit-content;
+    --win-scale: 1;
+    position: fixed;
+    top: 315px;
+    left: 155px;
+    z-index: 6;
+    width: min(68vw, 1080px);
+    height: calc(100vh - 332px);
+    min-height: 320px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#middleblock > .win-window-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#middleblock > .win-window-body > .win-sunken-panel {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 #menu {
     text-align: left;
-    padding: 5px 8px;
+    padding: 6px 6px 0 6px;
     background: #c0c0c0;
-    border-bottom: 2px solid #808080;
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    align-items: flex-end;
+    gap: 2px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
 }
 
 .button {
     display: inline-block;
-    font-family: Tahoma, sans-serif;
-    font-size: 16px;
+    font-family: Tahoma, "MS Sans Serif", sans-serif;
+    font-size: 13px;
     font-weight: normal;
     color: #000000;
     text-decoration: none;
-    padding: 4px 12px;
+    padding: 5px 12px;
     background: #c0c0c0;
     border: 2px solid;
     border-color: #ffffff #404040 #404040 #ffffff;
     cursor: pointer;
+}
+
+#menu .button.tab-link {
+    border-bottom: none;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 5px 14px;
+    margin-bottom: -2px;
+    background: #b8b8b8;
+    color: #222222;
+}
+
+#menu .button.tab-link.color:hover {
+    background: #cecece;
+    color: #000000;
+}
+
+#menu .button.tab-link.colorfix {
+    color: #000080 !important;
+    background: #ffffff !important;
+    background-image: none !important;
+    border: 2px solid !important;
+    border-color: #ffffff #404040 #ffffff #ffffff !important;
+    padding: 7px 15px 6px 15px;
+    margin-bottom: -2px;
+    font-weight: bold;
+    position: relative;
+    z-index: 3;
+    cursor: default;
 }
 
 .color:hover {
@@ -525,17 +894,15 @@ iframe[id=":2.container"],
 
 .color:active {
     border-color: #404040 #ffffff #ffffff #404040;
-    padding-top: 5px;
+    padding-top: 6px;
     padding-left: 13px;
-    padding-bottom: 3px;
+    padding-bottom: 4px;
     padding-right: 11px;
 }
 
 .colorfix {
     color: #000000 !important;
     background-color: #dfdfdf !important;
-    background-image: radial-gradient(#9c9c9c 15%, transparent 16%) !important;
-    background-size: 3px 3px !important;
     border: 2px solid !important;
     border-color: #404040 #ffffff #ffffff #404040 !important;
     font-weight: bold;
@@ -544,57 +911,71 @@ iframe[id=":2.container"],
 
 #maintext {
     position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     background-color: #ffffff;
-    background-image: url("resorse/images/paper.webp");
+    background-image: url("images/paper.webp");
     background-repeat: repeat;
     background-size: 600px auto;
-    padding: clamp(12px, 1.8vw, 24px);
-    min-height: 450px;
+    padding: calc(18px * var(--win-scale)) calc(22px * var(--win-scale)) 75px calc(22px * var(--win-scale));
+    overflow-y: auto;
+    overflow-x: hidden;
     word-wrap: break-word;
-    overflow: visible;
     margin: 0;
-    border: none;
+    border-top: 2px solid #ffffff !important;
+    box-sizing: border-box;
 }
 
 #maintext hr {
     border: 0;
     height: 8px;
-    background-image: url("resorse/images/gif/divider.gif");
+    background-image: url("images/gif/divider.gif");
     background-repeat: repeat-x;
     margin: 14px 0;
 }
 
-h1 {
-    font-family: "Times New Roman", serif;
-    font-size: clamp(20px, 2.2vw, 26px);
+#maintext h1 {
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
+    font-weight: bold;
+    font-size: clamp(18px, calc(22px * var(--win-scale)), 32px);
     color: #000080;
     text-align: center;
     margin: 12px 0;
 }
 
 #maintext h2 {
-    font-family: "Times New Roman", serif;
-    font-size: clamp(17px, 1.7vw, 21px);
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
+    font-weight: bold;
+    font-size: clamp(15px, calc(17px * var(--win-scale)), 25px);
     color: #000080;
-    margin: 18px 10px 8px;
-    text-indent: 15px;
+    margin: 18px 8px 8px;
+    text-indent: 0;
 }
 
 #maintext h3 {
-    font-family: "Times New Roman", serif;
-    font-size: clamp(14px, 1.3vw, 17px);
+    font-family: "Tahoma", "MS Sans Serif", sans-serif;
+    font-weight: bold;
+    font-size: clamp(13px, calc(15px * var(--win-scale)), 21px);
     color: #800000;
-    margin: 12px;
+    margin: 10px 8px;
+}
+
+#maintext p,
+#maintext ul,
+#maintext ul li,
+#maintext ol,
+#maintext ol li {
+    font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+    font-size: clamp(13px, calc(14px * var(--win-scale)), 20px);
+    line-height: 1.55;
+    color: #111111;
 }
 
 p {
-    font-family: "Times New Roman", serif;
-    font-size: clamp(15px, 1.25vw, 17px);
-    line-height: 1.55;
-    margin: 10px 12px;
-    text-indent: 30px;
-    text-align: justify;
-    color: #000000;
+    margin: 10px 8px;
+    text-indent: 0;
+    text-align: left;
 }
 
 a {
@@ -610,19 +991,13 @@ img {
     max-width: 100%;
 }
 
-ul, ul li, ol, ol li {
-    font-family: "Times New Roman", serif;
-    font-size: clamp(14px, 1.2vw, 17px);
-    color: #111111;
-}
-
 ul, ol {
-    padding-left: clamp(20px, 3vw, 40px);
+    padding-left: clamp(20px, 2.5vw, 34px);
 }
 
 ul.content {
     list-style-type: none;
-    padding-left: clamp(12px, 2vw, 30px);
+    padding-left: clamp(10px, 1.5vw, 22px);
 }
 
 ul li a, ol li a {
@@ -636,11 +1011,12 @@ ul li a:hover, ol li a:hover {
 
 li.ct1 {
     border-bottom: 1px dotted #888888;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    padding-bottom: 3px;
 }
 
 ol li {
-    line-height: 1.55;
+    margin-bottom: 4px;
 }
 
 .img {
@@ -655,7 +1031,7 @@ ol li {
 }
 
 .imgcaption {
-    font: italic clamp(12px, 1vw, 15px) "Times New Roman", serif;
+    font: italic clamp(12px, calc(13px * var(--win-scale)), 18px) Tahoma, sans-serif;
     text-indent: 0;
     text-align: center;
     padding: 4px 10px;
@@ -663,53 +1039,46 @@ ol li {
 }
 
 .gif-left {
-    text-align: left;
-    margin: 15px auto;
-    width: 90%;
-    height: auto;
-}
-
-.gif-left img {
-    width: 100%;
-    max-width: 250px;
-    height: auto;
+    display: none;
 }
 
 .comment {
     background: #ffffdf;
     color: #202020;
-    font-size: clamp(13px, 1.1vw, 16px);
-    margin: 15px auto;
+    font-size: clamp(12.5px, calc(13.5px * var(--win-scale)), 19px);
+    margin: 14px auto;
     padding: 10px 14px;
     text-indent: 0;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
-    max-width: 90%;
+    max-width: 94%;
     line-height: 1.45;
     font-weight: bold;
 }
 
 /* --------------------------------------------------------------------------
-   7. TABLES & DOCUMENT VIEWERS
+   9. TABLES & DOCUMENT VIEWER WINDOW
    -------------------------------------------------------------------------- */
 table#resume,
 table.resume-table {
-    width: 95%;
+    width: 98%;
     margin: 0 auto;
     border-collapse: collapse;
-    font-size: clamp(13px, 1.1vw, 16px);
+    font-family: Tahoma, "MS Sans Serif", sans-serif;
+    font-size: clamp(12.5px, calc(13.5px * var(--win-scale)), 19px);
 }
 
 table#resume tr td,
 table.resume-table tr td {
-    padding: clamp(4px, 0.8vw, 7px) clamp(6px, 1vw, 10px);
+    padding: calc(6px * var(--win-scale)) calc(10px * var(--win-scale));
     border: 1px solid #808080;
     vertical-align: top;
+    line-height: 1.45;
 }
 
 table#resume td.c1,
 table.resume-table td.c1 {
-    width: 30%;
+    width: 28%;
     text-align: right;
     font-weight: bold;
     color: #000080;
@@ -753,15 +1122,15 @@ table#resume td ol {
 }
 
 .lib {
-    padding-bottom: 8px;
-    margin: 10px 15px 12px 20px;
-    border-bottom: 1px dotted #808080;
+    padding-bottom: 10px;
+    margin: 12px 12px 14px 12px;
+    border-bottom: 1px dotted #888888;
     transition: background-color 0.2s ease;
 }
 
 .lib p {
     text-indent: 0;
-    margin: 3px 0 0;
+    margin: 4px 0 0;
 }
 
 .lib .cat {
@@ -783,74 +1152,111 @@ li.lib.active-doc {
 
 .article-frame {
     width: 100%;
-    height: clamp(520px, 75vh, 880px);
+    height: clamp(460px, 65vh, 800px);
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     background: #525659;
     display: block;
 }
 
-#pdf-viewer-section {
-    margin-top: 12px;
-    margin-bottom: 8px;
-    padding: 8px;
+/* Отдельное окно просмотра PDF-статей */
+#doc-viewer-window {
+    --win-tx: 0px;
+    --win-ty: 0px;
+    position: fixed;
+    top: 60px;
+    left: 200px;
+    width: min(74vw, 960px);
+    height: min(82vh, 840px);
+    z-index: 50;
+    display: none;
+    flex-direction: column;
+}
+
+#doc-viewer-window .win-window-body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     background: #c0c0c0;
-    width: 100%;
+    padding: 6px;
     box-sizing: border-box;
 }
 
-#pdf-viewer-section .article-frame,
 #doc-frame {
     width: 100%;
-    height: 850px;
-    min-height: 75vh;
-    border: 1px solid #808080;
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
     background: #525659;
     display: block;
 }
 
 /* --------------------------------------------------------------------------
-   8. WIDGETS: SNAKE, CONTACTS, WEATHER & DUUM VHS
+   10. WIDGETS: SNAKE, CONTACTS, WEATHER & DUUM VHS (SCALABLE)
    -------------------------------------------------------------------------- */
 #desktop-snake-window {
     --win-tx: 0px;
     --win-ty: 0px;
-    position: absolute;
-    top: 70px;
-    right: 28px;
-    width: 280px;
-    height: 210px;
+    position: fixed;
+    top: 44px;
+    right: 18px;
+    width: 295px;
+    height: 225px;
     z-index: 5;
+    display: flex;
+    flex-direction: column;
+}
+
+#desktop-snake-window .win-window-body {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0;
+}
+
+#window-snake-container {
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-sizing: border-box;
+    background: #b6bab6;
 }
 
 #contacts-window {
     --win-tx: 0px;
-    --win-ty: -180px;
-    position: absolute;
-    z-index: 4;
-    width: min(44vw, 540px);
-    left: 50%;
+    --win-ty: 0px;
+    --win-scale: 1;
+    position: fixed;
+    bottom: 16px;
+    right: 18px;
+    z-index: 8;
+    width: min(36vw, 480px);
     margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .contacts-body {
-    padding: 10px;
+    padding: calc(10px * var(--win-scale));
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: calc(8px * var(--win-scale));
+    flex: 1 1 auto;
+    overflow-y: auto;
 }
 
 .contact-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 6px 10px;
+    gap: calc(12px * var(--win-scale));
+    padding: calc(6px * var(--win-scale)) calc(10px * var(--win-scale));
     background: #ffffff;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     color: #000000;
     font-family: Tahoma, sans-serif;
-    font-size: 13px;
+    font-size: clamp(13px, calc(13px * var(--win-scale)), 19px);
     user-select: text;
 }
 
@@ -873,8 +1279,8 @@ li.lib.active-doc {
 }
 
 .contact-icon {
-    width: 20px;
-    height: 20px;
+    width: calc(20px * var(--win-scale));
+    height: calc(20px * var(--win-scale));
     object-fit: contain;
     display: block;
 }
@@ -885,12 +1291,30 @@ li.lib.active-doc {
 }
 
 #weather-window {
-    --win-tx: -300px;
+    --win-tx: 0px;
     --win-ty: 0px;
-    position: relative;
-    z-index: 4;
-    width: min(44vw, 540px);
-    margin: 20px auto 60px auto;
+    --win-scale: 1;
+    position: fixed;
+    top: 282px;
+    right: 18px;
+    z-index: 7;
+    width: min(38vw, 520px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#weather-window .weather-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+#weather-content {
+    font-size: clamp(12px, calc(12px * var(--win-scale)), 18px) !important;
+}
+
+#weather-content table {
+    font-size: clamp(12px, calc(12px * var(--win-scale)), 18px) !important;
 }
 
 .w-temp-box {
@@ -900,14 +1324,14 @@ li.lib.active-doc {
 }
 
 .w-temp-val {
-    font-size: 34px;
+    font-size: clamp(30px, calc(34px * var(--win-scale)), 54px);
     font-weight: bold;
     color: #000000;
     line-height: 1;
 }
 
 .w-temp-divider {
-    font-size: 28px;
+    font-size: clamp(24px, calc(28px * var(--win-scale)), 44px);
     color: #777777;
     margin: 0 4px;
 }
@@ -919,7 +1343,7 @@ li.lib.active-doc {
 .w-unit-f,
 .w-unit-mini-c,
 .w-unit-mini-f {
-    background-image: url("resorse/images/wheather_ico.webp");
+    background-image: url("images/wheather_ico.webp");
     background-repeat: no-repeat;
     display: inline-block;
     flex-shrink: 0;
@@ -1025,7 +1449,7 @@ li.lib.active-doc {
 }
 
 /* --------------------------------------------------------------------------
-   9. START MENU, WIN95 BOOT SCREEN & CRT SHUTDOWN
+   11. START MENU, WIN95 BOOT SCREEN & CRT SHUTDOWN
    -------------------------------------------------------------------------- */
 #win95-boot-screen {
     position: fixed;
@@ -1069,7 +1493,7 @@ li.lib.active-doc {
     position: fixed;
     top: 32px;
     left: 6px;
-    width: 210px;
+    width: 235px;
     z-index: 100001;
     display: flex;
     flex-direction: row;
@@ -1106,7 +1530,7 @@ li.lib.active-doc {
     align-items: center;
     gap: 8px;
     width: 100%;
-    padding: 8px 10px;
+    padding: 6px 10px;
     background: transparent;
     border: none;
     font-family: Tahoma, sans-serif;
@@ -1114,11 +1538,19 @@ li.lib.active-doc {
     color: #000000;
     text-align: left;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .start-menu-item:hover {
     background-color: #000080;
     color: #ffffff;
+}
+
+.start-menu-sep {
+    height: 1px;
+    background: #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 3px 4px;
 }
 
 .power-symbol {
@@ -1227,160 +1659,179 @@ li.lib.active-doc {
 }
 
 /* --------------------------------------------------------------------------
-   10. RESPONSIVE SYSTEM (MEDIUM DESKTOP 1101px–1450px)
+   12. RESPONSIVE SYSTEM (MEDIUM DESKTOP 1101px–1450px)
    -------------------------------------------------------------------------- */
 @media screen and (min-width: 1101px) and (max-width: 1450px) {
-    #desktop-snake-window {
-        width: 250px;
-        height: 205px;
-        top: 64px;
-        right: 18px;
+    .desktop-icons-grid {
+        top: 44px;
+        left: 10px;
+        gap: 10px;
     }
 
-    /* Шапка строго ограничена слева от окна змейки (250px + отступы) */
+    .desktop-icon-btn {
+        width: 68px;
+    }
+
     #header {
-        --win-tx: 0px;
-        width: calc(100vw - 305px);
-        max-width: 1120px;
-        margin: 14px auto 34px 18px;
-    }
-
-    .header-body {
-        padding: 12px 12px 18px 12px;
-        gap: 12px;
-    }
-
-    #photomag {
-        flex: 0 0 clamp(210px, 22vw, 320px);
-        aspect-ratio: 16 / 9;
-    }
-
-    #header h1.hdr {
-        font-size: clamp(19px, 1.9vw, 27px);
-        margin-bottom: 4px;
-    }
-
-    #header h3.hdr {
-        font-size: clamp(11.5px, 1vw, 13.5px);
-        line-height: 1.28;
-    }
-
-    .anime-mascot-box {
-        left: -165px;
-    }
-
-    .mascot-bubble {
-        max-width: 125px;
-        font-size: 10px;
-        padding: 5px 7px;
-    }
-
-    .mascot-img {
-        width: 54px;
+        left: 94px;
+        width: calc(100vw - 415px);
     }
 
     #middleblock {
-        --win-tx: 35px;
-        width: min(74vw, 920px);
-        margin: -30px auto 36px auto;
+        top: 290px;
+        left: 104px;
+        width: calc(100vw - 535px);
+        height: calc(100vh - 306px);
     }
 
+    #desktop-snake-window {
+        width: 260px;
+        height: 205px;
+        right: 12px;
+    }
+
+    #weather-window,
     #contacts-window {
-        --win-tx: 0px;
-        --win-ty: -165px;
-        width: min(44vw, 480px);
-        left: 51%;
+        width: 410px;
+        right: 12px;
     }
 
     #weather-window {
-        --win-tx: -240px;
-        width: min(44vw, 480px);
+        top: 262px;
     }
 }
 
 /* --------------------------------------------------------------------------
-   11. RESPONSIVE SYSTEM (TABLET & MOBILE <= 1100px / COARSE POINTER)
+   13. SIMPLIFIED MOBILE & TABLET MODE (<= 1100px / COARSE POINTER)
+   Полное отключение эмуляции ОС и игры DuuM — только 4 чистых блока
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 1100px),
        screen and (pointer: coarse) and (max-width: 1366px) {
 
+    html, body {
+        height: auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+
     body {
-        padding-bottom: 30px;
+        padding-bottom: 24px;
     }
 
-    .anime-sitter {
+    .desktop-icons-grid,
+    .taskbar-left-group,
+    .taskbar-tray,
+    .win-controls,
+    .win-resizer-r,
+    .win-resizer-b,
+    .win-resizer-br,
+    #desktop-snake-window,
+    #doom-window,
+    #doom-guide-window,
+    #doom-launch-btn-container,
+    .anime-sitter,
+    #win-start-menu,
+    #win95-boot-screen,
+    #crt-shutdown-overlay {
         display: none !important;
+        visibility: hidden !important;
     }
 
-    .anime-mascot-box {
-        position: static;
-        display: flex;
-        flex-direction: row-reverse;
+    #topblock {
+        height: auto;
         justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin: 0 auto 14px auto;
-        padding: 8px 10px;
-        background: rgba(255, 255, 255, 0.85);
-        border: 1px dashed #808080;
-        animation: none;
-        max-width: 100%;
-        box-sizing: border-box;
+        padding: 6px;
     }
 
-    .mascot-bubble {
-        max-width: none;
-        margin-bottom: 0;
-        text-align: left;
-        animation: none;
-    }
-
-    .mascot-img {
-        width: 44px;
-        animation: none;
+    .taskbar-right-group {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
     #header,
     #middleblock,
     #contacts-window,
-    #weather-window,
-    #desktop-snake-window {
+    #weather-window {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        display: block !important;
         --win-tx: 0px !important;
         --win-ty: 0px !important;
+        --win-scale: 1 !important;
+        transform: none !important;
         width: 95% !important;
         max-width: 760px !important;
+        height: auto !important;
         margin-left: auto !important;
         margin-right: auto !important;
         position: relative !important;
         top: auto !important;
         right: auto !important;
+        bottom: auto !important;
         left: auto !important;
     }
 
-    #header {
-        margin-top: 12px !important;
-        margin-bottom: 16px !important;
+    .win-title-bar {
+        cursor: default;
     }
 
-    #desktop-snake-window {
-        display: block !important;
+    #maintext {
         height: auto !important;
-        overflow: hidden !important;
-        margin-bottom: 16px !important;
+        min-height: 200px !important;
+        max-height: none !important;
+        overflow: visible !important;
+        padding: 14px !important;
+    }
+
+    .clippy-assistant {
+        position: static;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto 12px auto;
+        padding: 8px 10px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px dashed #808080;
+        animation: none;
+    }
+
+    .clippy-bubble {
+        max-width: none;
+        margin-bottom: 0;
+    }
+
+    .clippy-bubble::before,
+    .clippy-bubble::after,
+    .clippy-close-btn {
+        display: none;
+    }
+
+    .clippy-avatar {
+        width: 44px;
+    }
+
+    #header {
+        margin-top: 10px !important;
+        margin-bottom: 14px !important;
     }
 
     #middleblock {
         margin-top: 0 !important;
-        margin-bottom: 16px !important;
+        margin-bottom: 14px !important;
     }
 
     #contacts-window {
-        margin-bottom: 16px !important;
+        margin-top: 0 !important;
+        margin-bottom: 14px !important;
     }
 
     #weather-window {
         margin-top: 0 !important;
-        margin-bottom: 24px !important;
+        margin-bottom: 20px !important;
     }
 
     .header-body {
@@ -1404,7 +1855,7 @@ li.lib.active-doc {
 
     #header h1.hdr {
         text-align: center;
-        font-size: 24px;
+        font-size: 21px;
         margin-top: 4px;
     }
 
@@ -1420,12 +1871,19 @@ li.lib.active-doc {
         padding: 6px;
     }
 
-    .button {
+    #menu .button.tab-link {
         flex: 1 1 calc(50% - 10px);
-        font-size: 14px;
+        font-size: 13px;
         padding: 7px 8px;
         text-align: center;
         box-sizing: border-box;
+        margin-bottom: 0;
+        border-bottom: 2px solid #404040;
+    }
+
+    #menu .button.tab-link.colorfix {
+        border-bottom: 2px solid #808080 !important;
+        margin-bottom: 0;
     }
 
     table#resume,
@@ -1455,59 +1913,33 @@ li.lib.active-doc {
 
     p {
         margin: 8px 4px;
-        text-indent: 16px;
+        text-indent: 0;
         text-align: left;
     }
 
-    #doom-launch-btn-container {
-        display: none !important;
-    }
-
-    .gif-left {
-        text-align: center;
-    }
-
-    .gif-left img {
-        transform: none !important;
-        max-width: 180px;
-    }
-
-    #pdf-viewer-section .article-frame,
-    #doc-frame {
-        height: 540px;
-        min-height: 60vh;
+    /* На мобильном окно просмотра PDF открывается поверх экрана */
+    #doc-viewer-window {
+        top: 5vh !important;
+        left: 2.5vw !important;
+        width: 95vw !important;
+        height: 88vh !important;
     }
 }
 
 /* --------------------------------------------------------------------------
-   12. SMALL PHONES (<= 640px)
+   14. SMALL PHONES (<= 640px)
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 640px) {
-    #topblock {
-        justify-content: center;
-        padding: 6px;
-    }
-
-    #topblock > div {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .taskbar-start {
-        display: none;
-    }
-
     #donntu a {
         font-size: 11px;
         padding: 4px 8px;
     }
 
     #header h1.hdr {
-        font-size: 20px;
+        font-size: 19px;
     }
 
-    .button {
+    #menu .button.tab-link {
         flex: 1 1 100%;
         font-size: 14px;
     }
@@ -1522,12 +1954,5 @@ li.lib.active-doc {
 
     #w-forecast-container {
         grid-template-columns: 1fr !important;
-    }
-
-    .article-frame,
-    #pdf-viewer-section .article-frame,
-    #doc-frame {
-        height: 400px;
-        min-height: 50vh;
     }
 }

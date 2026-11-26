@@ -297,12 +297,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Подсчёт количества доступных свободных клеток из точки (startX, startY)
     function countFreeSpace(startX, startY) {
         let visited = new Set();
         let queue = [{ x: startX, y: startY }];
         let occupied = new Set(snake.map(p => `${p.x},${p.y}`));
-        // Хвост освободится на следующем ходу, если змейка не ест
         const tail = snake[snake.length - 1];
         occupied.delete(`${tail.x},${tail.y}`);
 
@@ -355,7 +353,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         if (validDirs.length > 0) {
-            // До 12 клеток змейка избегает тупиков (выбирает ветку, где поместится её тело)
             if (snake.length < 12) {
                 let safeDirs = validDirs.filter(d => {
                     return countFreeSpace(head.x + d.x, head.y + d.y) >= snake.length;
@@ -363,7 +360,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (safeDirs.length > 0) {
                     validDirs = safeDirs;
                 } else {
-                    // Если все ветки тесные — выбираем самую просторную
                     validDirs.sort((a, b) => {
                         return countFreeSpace(head.x + b.x, head.y + b.y) - countFreeSpace(head.x + a.x, head.y + a.y);
                     });
@@ -373,7 +369,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            // Идём к еде по кратчайшему пути
             validDirs.sort((a, b) => {
                 let distA = Math.abs((head.x + a.x) - food.x) + Math.abs((head.y + a.y) - food.y);
                 let distB = Math.abs((head.x + b.x) - food.x) + Math.abs((head.y + b.y) - food.y);
@@ -403,7 +398,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let hitWall = (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows);
         let hitSelf = false;
         
-        // Проверяем столкновение с телом (кроме самого кончика хвоста, если не съели еду)
         let willEat = (head.x === food.x && head.y === food.y);
         let checkLimit = willEat ? snake.length : snake.length - 1;
 
@@ -414,7 +408,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        // Если врезались в стену или в себя (и наступила фаза смерти >= 12, либо безвыходный тупик)
         if (hitWall || hitSelf) {
             isDying = true;
             deathTimer = 0;
@@ -786,11 +779,24 @@ itemSprites.medkit.src = 'resorse/images/textures/items/med.png';
 itemSprites.ammo.src = 'resorse/images/textures/items/bulets.png';
 itemSprites.time.src = 'resorse/images/textures/items/tms.png';
 
-/* --- WINDOW CONTROLS --- */
+/* --- WINDOW CONTROLS (DUUM & MANUAL) --- */
+function toggleModalMaximize(id, e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.classList.toggle('win-maximized');
+    if (typeof bringWindowToFront === 'function') bringWindowToFront(win);
+}
+
 function openDoomGuide() {
+    if (typeof isMobileMode === 'function' && isMobileMode()) return;
     const win = document.getElementById('doom-guide-window');
     if (win) {
         win.style.display = 'block';
+        if (typeof bringWindowToFront === 'function') bringWindowToFront(win);
         if (document.activeElement) document.activeElement.blur();
     }
 }
@@ -801,13 +807,18 @@ function closeDoomGuide(e) {
         e.stopPropagation();
     }
     const win = document.getElementById('doom-guide-window');
-    if (win) win.style.display = 'none';
+    if (win) {
+        win.classList.remove('win-maximized');
+        win.style.display = 'none';
+    }
 }
 
 function openDoomEasterEgg() {
+    if (typeof isMobileMode === 'function' && isMobileMode()) return;
     const win = document.getElementById('doom-window');
     if (!win) return;
     win.style.display = 'block';
+    if (typeof bringWindowToFront === 'function') bringWindowToFront(win);
     doomAudio.startMusic();
     startDoomGame();
     if (document.activeElement) {
@@ -821,7 +832,10 @@ function closeDoomEasterEgg(e) {
         e.stopPropagation();
     }
     const win = document.getElementById('doom-window');
-    if (win) win.style.display = 'none';
+    if (win) {
+        win.classList.remove('win-maximized');
+        win.style.display = 'none';
+    }
     doomAudio.stopMusic();
     doomInterval = false; 
 }
@@ -927,49 +941,6 @@ function startDoomGame() {
         return dist;
     }
 
-    function tryMove(newX, newY) {
-        let radius = 0.22;
-
-        function isWalkable(x, y) {
-            let mapX = Math.floor(x);
-            let mapY = Math.floor(y);
-            if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length) return false;
-            return map[mapY][mapX] === 0;
-        }
-
-        let testX = newX;
-        let canX = true;
-        let offsetX = (testX > player.x) ? radius : -radius;
-        
-        if (!isWalkable(testX + offsetX, player.y - radius) || 
-            !isWalkable(testX + offsetX, player.y + radius)) {
-            canX = false;
-        }
-
-        if (canX) {
-            for (let en of enemies) {
-                if (en.state === 'alive' && Math.hypot(testX - en.x, player.y - en.y) < 0.35) { canX = false; break; }
-            }
-        }
-        if (canX) player.x = testX;
-
-        let testY = newY;
-        let canY = true;
-        let offsetY = (testY > player.y) ? radius : -radius;
-
-        if (!isWalkable(player.x - radius, testY + offsetY) || 
-            !isWalkable(player.x + radius, testY + offsetY)) {
-            canY = false;
-        }
-
-        if (canY) {
-            for (let en of enemies) {
-                if (en.state === 'alive' && Math.hypot(player.x - en.x, testY - en.y) < 0.35) { canY = false; break; }
-            }
-        }
-        if (canY) player.y = testY;
-    }
-
     function hasLineOfSight(x0, y0, x1, y1) {
         let dx = x1 - x0;
         let dy = y1 - y0;
@@ -985,7 +956,7 @@ function startDoomGame() {
         return true;
     }
 
-    let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets, decorations, decals, floatingTexts;
+    let player, kills, damageFlash, screenShake, bloodSplats, enemies, items, bullets, decals, floatingTexts;
     let isDead = false;
     let deathTimer = 0;
     let growlCooldown = 0;
@@ -2604,7 +2575,7 @@ document.addEventListener('pointerdown', function(e) {
     if (e.target.closest('.win-btn, .taskbar-start')) {
         playSound(STOP_SRC, SYSTEM_VOLUME);
     }
-    else if (e.target.closest('.button, button, #donntu a')) {
+    else if (e.target.closest('.button, button, #donntu a, .taskbar-tab, .start-menu-item')) {
         playSound(CLICK_SRC, CLICK_VOLUME);
     }
 });
@@ -2625,6 +2596,13 @@ function toggleMugshotBubble(event) {
     }
 }
 
+const CLIPPY_PHRASES = {
+    about: 'Рад знакомству! Это мое резюме!',
+    referat: 'Это реферат моей магистерской работы!',
+    scientific: 'Наука — это круто! Нажми на любую статью — открою её в отдельном окне!',
+    individual: 'Крути педали, пока не дали! Погнали в ПВД!'
+};
+
 function switchTab(hash) {
     const targetId = (hash && hash !== '#') ? hash.replace('#', '') : 'about';
     const targetSection = document.getElementById(targetId);
@@ -2632,6 +2610,13 @@ function switchTab(hash) {
     if (!targetSection) {
         if (targetId !== 'about') switchTab('#about');
         return;
+    }
+
+    const clippyText = document.getElementById('clippy-text');
+    const clippyBox = document.getElementById('clippy-assistant');
+    if (clippyText && CLIPPY_PHRASES[targetId]) {
+        clippyText.textContent = CLIPPY_PHRASES[targetId];
+        if (clippyBox) clippyBox.classList.remove('is-collapsed');
     }
 
     const currentActive = document.querySelector('.tab-content.active');
@@ -2676,38 +2661,41 @@ function switchTab(hash) {
     }
 }
 
+/* Открытие PDF статьи в отдельном окне #doc-viewer-window */
 function loadDocFrame(fileSource, docTitle, triggerEl) {
-    const viewerSection = document.getElementById('pdf-viewer-section');
+    const win = document.getElementById('doc-viewer-window');
     const frame = document.getElementById('doc-frame');
     const title = document.getElementById('pdf-viewer-title');
+    const status = document.getElementById('doc-viewer-status');
     const basePath = 'resorse/pdf/';
 
-    if (!viewerSection || !frame) return;
+    if (!win || !frame) return;
 
     const finalUrl = /^https?:\/\//i.test(fileSource) ? fileSource : (basePath + fileSource);
-    const parentLi = triggerEl ? triggerEl.closest('li.lib') : null;
-
-    // Если окно уже открыто именно в этой карточке и ссылка та же — сворачиваем его
-    if (parentLi && viewerSection.parentElement === parentLi && viewerSection.style.display === 'block' && frame.src === finalUrl) {
-        closeDocFrame();
-        return;
-    }
 
     document.querySelectorAll('li.lib.active-doc').forEach(el => el.classList.remove('active-doc'));
-
+    const parentLi = triggerEl ? triggerEl.closest('li.lib') : null;
     if (parentLi) {
-        parentLi.appendChild(viewerSection);
         parentLi.classList.add('active-doc');
     }
 
-    viewerSection.style.display = 'block';
+    win.style.display = 'flex';
+    win.classList.remove('win-closed', 'win-minimized');
     frame.src = finalUrl;
 
     if (title) {
-        title.innerText = 'Просмотр: ' + (docTitle || fileSource.split('/').pop());
+        title.innerText = docTitle || fileSource.split('/').pop();
+    }
+    if (status) {
+        status.innerText = 'Файл: ' + finalUrl.split('/').pop();
     }
 
-    viewerSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (!isMobileMode()) {
+        centerWindowOnScreen(win);
+        void win.offsetWidth;
+        win.classList.add('win-open-anim');
+        bringWindowToFront(win);
+    }
 }
 
 async function downloadPdfDirect(url, fileName, btnEl) {
@@ -2732,7 +2720,6 @@ async function downloadPdfDirect(url, fileName, btnEl) {
 
         setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
     } catch (err) {
-        // Если сеть или CORS вдруг заблокировали fetch, открываем стандартно
         window.open(url, '_blank');
     } finally {
         if (btnEl) {
@@ -2742,8 +2729,12 @@ async function downloadPdfDirect(url, fileName, btnEl) {
     }
 }
 
-function closeDocFrame() {
-    const viewerSection = document.getElementById('pdf-viewer-section');
+function closeDocFrame(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    const win = document.getElementById('doc-viewer-window');
     const frame = document.getElementById('doc-frame');
 
     document.querySelectorAll('li.lib.active-doc').forEach(el => el.classList.remove('active-doc'));
@@ -2751,18 +2742,11 @@ function closeDocFrame() {
     if (frame) {
         frame.src = 'about:blank';
     }
-    if (viewerSection) {
-        viewerSection.style.display = 'none';
+    if (win) {
+        win.classList.remove('win-maximized');
+        win.style.display = 'none';
     }
-}
-
-function closeDocFrame() {
-    const viewerSection = document.getElementById('pdf-viewer-section');
-    const frame = document.getElementById('doc-frame');
-    if (viewerSection && frame) {
-        frame.src = 'about:blank';
-        viewerSection.style.display = 'none';
-    }
+    renderTaskbarTabs();
 }
 
 window.addEventListener('hashchange', function() {
@@ -2787,7 +2771,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
     switchTab(window.location.hash);
 });
-
 
 
 /* ==========================================================================
@@ -2893,7 +2876,6 @@ function startBootSequence() {
         return;
     }
 
-    // Перезапускаем GIF с первого кадра через уникальный параметр
     if (bootGif) {
         bootGif.src = `${BOOT_GIF_SRC}?t=${Date.now()}`;
     }
@@ -2901,20 +2883,17 @@ function startBootSequence() {
     bootScreen.style.display = 'flex';
     bootScreen.classList.remove('boot-fade-out');
 
-    // Запускаем звук параллельно с GIF и завершаем заставку по событию ended
     currentBootAudio = new Audio(STARTUP_SOUND_SRC);
     currentBootAudio.volume = 0.6;
 
     currentBootAudio.onended = () => finishBootSequence();
     currentBootAudio.onerror = () => finishBootSequence();
 
-    // Страховочный таймер на случай, если звук не загрузится или заблокирован
     bootFallbackTimer = setTimeout(() => {
         finishBootSequence();
     }, 8000);
 
     currentBootAudio.play().catch(() => {
-        // Если автовоспроизведение звука заблокировано, закрываем через 3.5 сек
         clearTimeout(bootFallbackTimer);
         bootFallbackTimer = setTimeout(() => finishBootSequence(), 3500);
     });
@@ -2928,27 +2907,37 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleStartMenu(event) {
     if (event) event.stopPropagation();
     const menu = document.getElementById('win-start-menu');
+    const btn = document.getElementById('taskbar-start-btn');
     if (!menu) return;
-    menu.style.display = (menu.style.display === 'none' || !menu.style.display) ? 'flex' : 'none';
+    const isOpen = menu.style.display === 'flex';
+    menu.style.display = isOpen ? 'none' : 'flex';
+    if (btn) btn.classList.toggle('active', !isOpen);
+}
+
+function closeStartMenu() {
+    const menu = document.getElementById('win-start-menu');
+    const btn = document.getElementById('taskbar-start-btn');
+    if (menu) menu.style.display = 'none';
+    if (btn) btn.classList.remove('active');
 }
 
 document.addEventListener('pointerdown', function(e) {
     const menu = document.getElementById('win-start-menu');
     if (menu && menu.style.display === 'flex') {
         if (!e.target.closest('#win-start-menu') && !e.target.closest('.taskbar-start')) {
-            menu.style.display = 'none';
+            closeStartMenu();
         }
     }
 });
 
 function shutdownPC() {
-    const menu = document.getElementById('win-start-menu');
     const overlay = document.getElementById('crt-shutdown-overlay');
-    if (menu) menu.style.display = 'none';
+    closeStartMenu();
     if (!overlay) return;
 
     if (typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg();
     if (typeof closeDoomGuide === 'function') closeDoomGuide();
+    if (typeof closeDocFrame === 'function') closeDocFrame();
 
     overlay.classList.remove('is-off');
     overlay.style.display = 'flex';
@@ -2972,3 +2961,335 @@ function powerOnPC() {
 
     startBootSequence();
 }
+
+
+/* ==========================================================================
+   INTERACTIVE WINDOW MANAGER (DRAG, SMOOTH RESIZE, CONTENT SCALE, MAXIMIZE)
+   ========================================================================== */
+
+const DESKTOP_WINDOW_IDS = [
+    'header',
+    'middleblock',
+    'desktop-snake-window',
+    'contacts-window',
+    'weather-window',
+    'doc-viewer-window'
+];
+
+let topWindowZ = 30;
+let activeWindowId = 'middleblock';
+const initialWindowState = {};
+
+function isMobileMode() {
+    return window.innerWidth <= 1100 || (window.matchMedia('(pointer: coarse)').matches && window.innerWidth <= 1366);
+}
+
+function updateTrayClock() {
+    const clockEl = document.getElementById('taskbar-clock');
+    if (!clockEl) return;
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    clockEl.textContent = `${hh}:${mm}`;
+}
+
+/* Автоматическое масштабирование контента внутри окна при его растягивании */
+function updateWindowContentScale(win) {
+    if (!win || isMobileMode()) return;
+    const init = initialWindowState[win.id];
+    if (!init || !init.baseWidth) return;
+
+    const currentW = win.getBoundingClientRect().width;
+    if (currentW <= 0) return;
+
+    const ratio = currentW / init.baseWidth;
+    const clampedScale = Math.max(0.88, Math.min(1.42, ratio));
+    win.style.setProperty('--win-scale', clampedScale.toFixed(3));
+
+    if (win.id === 'desktop-snake-window') {
+        window.dispatchEvent(new Event('resize'));
+    }
+}
+
+function bringWindowToFront(win) {
+    if (!win || isMobileMode()) return;
+    const isModal = win.id === 'doom-window' || win.id === 'doom-guide-window';
+    if (!isModal) {
+        topWindowZ++;
+        win.style.zIndex = topWindowZ;
+        activeWindowId = win.id;
+    }
+
+    DESKTOP_WINDOW_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.toggle('win-inactive', el.id !== activeWindowId);
+        }
+    });
+
+    renderTaskbarTabs();
+}
+
+function renderTaskbarTabs() {
+    const container = document.getElementById('taskbar-tasks');
+    if (!container) return;
+    if (isMobileMode()) {
+        container.innerHTML = '';
+        return;
+    }
+    container.innerHTML = '';
+
+    DESKTOP_WINDOW_IDS.forEach(id => {
+        const win = document.getElementById(id);
+        if (!win || win.classList.contains('win-closed')) return;
+        if (id === 'doc-viewer-window' && win.style.display === 'none') return;
+
+        const isMin = win.classList.contains('win-minimized');
+        const isAct = !isMin && activeWindowId === id;
+        const title = win.getAttribute('data-win-title') || id;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'taskbar-tab' + (isAct ? ' is-active' : '') + (isMin ? ' is-minimized' : '');
+        btn.textContent = title;
+        btn.title = title;
+
+        btn.onclick = function() {
+            if (win.classList.contains('win-minimized')) {
+                win.classList.remove('win-minimized');
+                bringWindowToFront(win);
+            } else if (activeWindowId === id) {
+                minimizeWin(id);
+            } else {
+                bringWindowToFront(win);
+            }
+        };
+
+        container.appendChild(btn);
+    });
+}
+
+function minimizeWin(id, event) {
+    if (event) event.stopPropagation();
+    if (isMobileMode()) return;
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.classList.add('win-minimized');
+    if (activeWindowId === id) {
+        activeWindowId = null;
+    }
+    renderTaskbarTabs();
+}
+
+function closeWin(id, event) {
+    if (event) event.stopPropagation();
+    if (isMobileMode()) return;
+    if (id === 'doc-viewer-window') {
+        closeDocFrame(event);
+        return;
+    }
+    const win = document.getElementById(id);
+    if (!win) return;
+    win.classList.add('win-closed');
+    win.classList.remove('win-minimized', 'win-maximized');
+    if (activeWindowId === id) {
+        activeWindowId = null;
+    }
+    renderTaskbarTabs();
+}
+
+/* Кнопка □: разворачивает окно почти на весь рабочий стол или возвращает исходный размер */
+function resetWinPos(id, event) {
+    if (event) event.stopPropagation();
+    if (isMobileMode()) return;
+    const win = document.getElementById(id);
+    if (!win) return;
+
+    const isMax = win.classList.toggle('win-maximized');
+    if (!isMax) {
+        const init = initialWindowState[id] || {};
+        win.style.width = '';
+        win.style.height = '';
+        win.style.setProperty('--win-tx', init.tx || '0px');
+        win.style.setProperty('--win-ty', init.ty || '0px');
+    }
+
+    bringWindowToFront(win);
+    requestAnimationFrame(() => updateWindowContentScale(win));
+    setTimeout(() => updateWindowContentScale(win), 220);
+}
+
+function centerWindowOnScreen(win) {
+    if (!win || isMobileMode() || win.classList.contains('win-maximized')) return;
+    const cs = window.getComputedStyle(win);
+    const curTx = parseFloat(cs.getPropertyValue('--win-tx')) || 0;
+    const curTy = parseFloat(cs.getPropertyValue('--win-ty')) || 0;
+    const rect = win.getBoundingClientRect();
+
+    const baseLeft = rect.left - curTx;
+    const baseTop = rect.top - curTy;
+
+    const targetLeft = Math.max(105, Math.round((window.innerWidth - rect.width) / 2));
+    const targetTop = Math.max(44, Math.round((window.innerHeight - rect.height) / 2));
+
+    win.style.setProperty('--win-tx', `${targetLeft - baseLeft}px`);
+    win.style.setProperty('--win-ty', `${targetTop - baseTop}px`);
+}
+
+function openDesktopApp(id) {
+    const win = document.getElementById(id);
+    if (!win) return;
+    if (id === 'doc-viewer-window') win.style.display = 'flex';
+    win.classList.remove('win-closed', 'win-minimized', 'desktop-boot-hidden');
+    if (!isMobileMode()) {
+        centerWindowOnScreen(win);
+        void win.offsetWidth;
+        win.classList.add('win-open-anim');
+        bringWindowToFront(win);
+        updateWindowContentScale(win);
+    } else {
+        win.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+function openDesktopTab(hash) {
+    openDesktopApp('middleblock');
+    history.pushState(null, '', hash);
+    switchTab(hash);
+}
+
+function restoreAllWindows() {
+    DESKTOP_WINDOW_IDS.forEach(id => {
+        if (id === 'doc-viewer-window') return;
+        const win = document.getElementById(id);
+        if (!win) return;
+        win.classList.remove('win-closed', 'win-minimized', 'win-maximized', 'desktop-boot-hidden');
+        win.style.width = '';
+        win.style.height = '';
+        const init = initialWindowState[id] || {};
+        win.style.setProperty('--win-tx', init.tx || '0px');
+        win.style.setProperty('--win-ty', init.ty || '0px');
+        updateWindowContentScale(win);
+    });
+    const mainWin = document.getElementById('middleblock');
+    if (mainWin) bringWindowToFront(mainWin);
+    window.dispatchEvent(new Event('resize'));
+}
+
+function attachWindowResizers(win) {
+    if (!win || win.querySelector('.win-resizer-br')) return;
+
+    const edges = ['r', 'b', 'br'];
+    edges.forEach(edge => {
+        const handle = document.createElement('div');
+        handle.className = `win-resizer-${edge}`;
+        win.appendChild(handle);
+
+        handle.addEventListener('pointerdown', function(e) {
+            if (isMobileMode() || win.classList.contains('win-maximized')) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            bringWindowToFront(win);
+            win.classList.add('is-resizing');
+
+            const startRect = win.getBoundingClientRect();
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const minW = 240;
+            const minH = 160;
+
+            function onResizeMove(ev) {
+                if (edge === 'r' || edge === 'br') {
+                    const maxW = window.innerWidth - startRect.left - 8;
+                    const newW = Math.max(minW, Math.min(maxW, startRect.width + (ev.clientX - startX)));
+                    win.style.width = `${newW}px`;
+                }
+                if (edge === 'b' || edge === 'br') {
+                    const maxH = window.innerHeight - startRect.top - 8;
+                    const newH = Math.max(minH, Math.min(maxH, startRect.height + (ev.clientY - startY)));
+                    win.style.height = `${newH}px`;
+                }
+                updateWindowContentScale(win);
+            }
+
+            function onResizeUp() {
+                win.classList.remove('is-resizing');
+                document.removeEventListener('pointermove', onResizeMove);
+                document.removeEventListener('pointerup', onResizeUp);
+            }
+
+            document.addEventListener('pointermove', onResizeMove);
+            document.addEventListener('pointerup', onResizeUp);
+        });
+    });
+}
+
+function initDraggableWindows() {
+    DESKTOP_WINDOW_IDS.forEach(id => {
+        const win = document.getElementById(id);
+        if (!win) return;
+
+        const comp = window.getComputedStyle(win);
+        const rect = win.getBoundingClientRect();
+        initialWindowState[id] = {
+            tx: comp.getPropertyValue('--win-tx').trim(),
+            ty: comp.getPropertyValue('--win-ty').trim(),
+            baseWidth: rect.width || 500
+        };
+
+        attachWindowResizers(win);
+        win.addEventListener('pointerdown', () => bringWindowToFront(win));
+
+        const titleBar = win.querySelector('.win-title-bar');
+        if (!titleBar) return;
+
+        titleBar.addEventListener('pointerdown', function(e) {
+            if (e.target.closest('.win-controls')) return;
+            if (isMobileMode() || win.classList.contains('win-maximized')) return;
+
+            e.preventDefault();
+            bringWindowToFront(win);
+            win.classList.add('is-dragging');
+
+            const cs = window.getComputedStyle(win);
+            const startTx = parseFloat(cs.getPropertyValue('--win-tx')) || 0;
+            const startTy = parseFloat(cs.getPropertyValue('--win-ty')) || 0;
+            const startMouseX = e.clientX;
+            const startMouseY = e.clientY;
+            const startRect = win.getBoundingClientRect();
+
+            function onPointerMove(moveEvent) {
+                let dx = moveEvent.clientX - startMouseX;
+                let dy = moveEvent.clientY - startMouseY;
+
+                const minDy = 36 - startRect.top;
+                const maxDy = window.innerHeight - 32 - startRect.top;
+                const minDx = -startRect.left + 20 - startRect.width;
+                const maxDx = window.innerWidth - 20 - startRect.left;
+
+                dx = Math.max(minDx, Math.min(maxDx, dx));
+                dy = Math.max(minDy, Math.min(maxDy, dy));
+
+                win.style.setProperty('--win-tx', `${startTx + dx}px`);
+                win.style.setProperty('--win-ty', `${startTy + dy}px`);
+            }
+
+            function onPointerUp() {
+                win.classList.remove('is-dragging');
+                document.removeEventListener('pointermove', onPointerMove);
+                document.removeEventListener('pointerup', onPointerUp);
+            }
+
+            document.addEventListener('pointermove', onPointerMove);
+            document.addEventListener('pointerup', onPointerUp);
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateTrayClock();
+    setInterval(updateTrayClock, 15000);
+    initDraggableWindows();
+    renderTaskbarTabs();
+});
