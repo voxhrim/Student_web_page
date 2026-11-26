@@ -2788,10 +2788,10 @@ function prepareDesktopForBoot() {
     const taskbar = document.getElementById('topblock');
     const windows = [
         document.getElementById('header'),
-        document.getElementById('desktop-snake-window'),
         document.getElementById('middleblock'),
         document.getElementById('contacts-window'),
-        document.getElementById('weather-window')
+        document.getElementById('weather-window'),
+        document.getElementById('desktop-snake-widget')
     ];
 
     if (taskbar) {
@@ -2811,10 +2811,10 @@ function revealDesktopWindows() {
     const taskbar = document.getElementById('topblock');
     const windows = [
         document.getElementById('header'),
-        document.getElementById('desktop-snake-window'),
         document.getElementById('middleblock'),
         document.getElementById('contacts-window'),
-        document.getElementById('weather-window')
+        document.getElementById('weather-window'),
+        document.getElementById('desktop-snake-widget')
     ];
 
     setTimeout(() => {
@@ -2825,11 +2825,13 @@ function revealDesktopWindows() {
     }, 450);
 
     windows.forEach((win, index) => {
-        if (!win) return;
+        if (!win || win.classList.contains('win-closed')) return;
         setTimeout(() => {
             win.classList.remove('desktop-boot-hidden');
-            void win.offsetWidth;
-            win.classList.add('win-open-anim');
+            if (win.classList.contains('win-window')) {
+                void win.offsetWidth;
+                win.classList.add('win-open-anim');
+            }
         }, 700 + index * 160);
     });
 }
@@ -2970,7 +2972,6 @@ function powerOnPC() {
 const DESKTOP_WINDOW_IDS = [
     'header',
     'middleblock',
-    'desktop-snake-window',
     'contacts-window',
     'weather-window',
     'doc-viewer-window'
@@ -2993,7 +2994,6 @@ function updateTrayClock() {
     clockEl.textContent = `${hh}:${mm}`;
 }
 
-/* Автоматическое масштабирование контента внутри окна при его растягивании */
 function updateWindowContentScale(win) {
     if (!win || isMobileMode()) return;
     const init = initialWindowState[win.id];
@@ -3005,10 +3005,6 @@ function updateWindowContentScale(win) {
     const ratio = currentW / init.baseWidth;
     const clampedScale = Math.max(0.88, Math.min(1.42, ratio));
     win.style.setProperty('--win-scale', clampedScale.toFixed(3));
-
-    if (win.id === 'desktop-snake-window') {
-        window.dispatchEvent(new Event('resize'));
-    }
 }
 
 function bringWindowToFront(win) {
@@ -3098,7 +3094,6 @@ function closeWin(id, event) {
     renderTaskbarTabs();
 }
 
-/* Кнопка □: разворачивает окно почти на весь рабочий стол или возвращает исходный размер */
 function resetWinPos(id, event) {
     if (event) event.stopPropagation();
     if (isMobileMode()) return;
@@ -3110,6 +3105,10 @@ function resetWinPos(id, event) {
         const init = initialWindowState[id] || {};
         win.style.width = '';
         win.style.height = '';
+        win.style.left = '';
+        win.style.top = '';
+        win.style.right = '';
+        win.style.bottom = '';
         win.style.setProperty('--win-tx', init.tx || '0px');
         win.style.setProperty('--win-ty', init.ty || '0px');
     }
@@ -3166,6 +3165,10 @@ function restoreAllWindows() {
         win.classList.remove('win-closed', 'win-minimized', 'win-maximized', 'desktop-boot-hidden');
         win.style.width = '';
         win.style.height = '';
+        win.style.left = '';
+        win.style.top = '';
+        win.style.right = '';
+        win.style.bottom = '';
         const init = initialWindowState[id] || {};
         win.style.setProperty('--win-tx', init.tx || '0px');
         win.style.setProperty('--win-ty', init.ty || '0px');
@@ -3173,7 +3176,6 @@ function restoreAllWindows() {
     });
     const mainWin = document.getElementById('middleblock');
     if (mainWin) bringWindowToFront(mainWin);
-    window.dispatchEvent(new Event('resize'));
 }
 
 function attachWindowResizers(win) {
@@ -3193,7 +3195,15 @@ function attachWindowResizers(win) {
             bringWindowToFront(win);
             win.classList.add('is-resizing');
 
+            // Фиксируем текущую визуальную позицию через left/top, чтобы окна с right/bottom не тянулись влево
             const startRect = win.getBoundingClientRect();
+            win.style.right = 'auto';
+            win.style.bottom = 'auto';
+            win.style.left = `${startRect.left}px`;
+            win.style.top = `${startRect.top}px`;
+            win.style.setProperty('--win-tx', '0px');
+            win.style.setProperty('--win-ty', '0px');
+
             const startX = e.clientX;
             const startY = e.clientY;
             const minW = 240;

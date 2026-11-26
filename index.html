@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портал магистра - Назарюк В.Ю.</title>
     <link rel="shortcut icon" href="resorse/images/icons/master.webp" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="resorse/style.css?v=3">
+    <link rel="stylesheet" type="text/css" href="resorse/style.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
     <!-- Базовые стили отрисовки окон и системных иконок 16x16 -->
@@ -101,63 +101,78 @@
     <!-- Скрытый контейнер инициализации Google Translate -->
     <div id="google_translate_element" class="google-hidden-engine" style="display: none;"></div>
 
-    <!-- ======================================================================
-         DESKTOP SHORTCUTS (TOP-LEFT WORKSPACE)
+   <!-- ======================================================================
+         DESKTOP SHORTCUTS 
          ====================================================================== -->
     <div class="desktop-icons-grid">
-        <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('header')" title="Открыть визитку магистра">
-            <img src="resorse/images/icons/folder.png" alt="Profile" onerror="this.onerror=null; this.src='resorse/images/icons/master.webp'">
-            <div class="icon-text">Магистр.exe</div>
+
+        <div class="desktop-icons-col">
+            <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('header')" title="Открыть папку магистра">
+                <img src="resorse/images/icons/folder.png" alt="Profile" onerror="this.onerror=null; this.src='resorse/images/icons/master.webp'">
+                <div class="icon-text">Магистр</div>
+            </div>
+
+            <div class="desktop-icon-btn icon-gap-top" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#about')" title="Вкладка: О себе и резюме">
+                <img src="resorse/images/icons/doc.png" alt="About">
+                <div class="icon-text">О себе.doc</div>
+            </div>
+
+            <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#scientific')" title="Вкладка: Научные труды">
+                <img src="resorse/images/icons/doc.png" alt="Scientific">
+                <div class="icon-text">Наука.doc</div>
+            </div>
+
+            <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#referat')" title="Вкладка: Реферат">
+                <img src="resorse/images/icons/doc.png" alt="Referat">
+                <div class="icon-text">Реферат.doc</div>
+            </div>
+
+            <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#individual')" title="Вкладка: Индивидуальный раздел">
+                <img src="resorse/images/icons/doc.png" alt="Individual">
+                <div class="icon-text">В седле.doc</div>
+            </div>
+
+            <div class="desktop-icon-btn icon-gap-bottom" onclick="if(typeof openDoomGuide === 'function') openDoomGuide()" title="Руководство по DuuM">
+                <img src="resorse/images/icons/doc.png" alt="Manual"> 
+                <div class="icon-text">DuuM manual.txt</div>
+            </div>
         </div>
 
-        <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#about')" title="Открыть резюме магистра">
-            <img src="resorse/images/icons/doc.png" alt="Resume">
-            <div class="icon-text">Резюме.doc</div>
-        </div>
 
-        <div class="desktop-icon-btn" onclick="if(typeof openDesktopTab === 'function') openDesktopTab('#scientific')" title="Открыть научные труды">
-            <img src="resorse/images/icons/doc.png" alt="Library">
-            <div class="icon-text">Наука.doc</div>
-        </div>
+        <div class="desktop-icons-col">
+            <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('weather-window')" title="Метеостанция ДонНТУ">
+                <img src="resorse/images/icons/weather.png" alt="Weather">
+                <div class="icon-text">Погода.exe</div>
+            </div>
 
-        <div class="desktop-icon-btn" onclick="if(typeof openDoomGuide === 'function') openDoomGuide()" title="Руководство по DuuM">
-            <img src="resorse/images/icons/txt_icon.webp" alt="Manual" onerror="this.onerror=null; this.src='resorse/images/icons/doc.png'"> 
-            <div class="icon-text">DuuM manual.txt</div>
-        </div>
+            <div class="desktop-icon-btn icon-gap-top" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('contacts-window')" title="Адресная книга">
+                <img src="resorse/images/icons/email.webp" alt="Contacts">
+                <div class="icon-text">Контакты.exe</div>
+            </div>
 
-        <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('weather-window')" title="Метеостанция ДонНТУ">
-            <img src="resorse/images/icons/masters.png" alt="Weather">
-            <div class="icon-text">Погода.exe</div>
-        </div>
-
-        <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('contacts-window')" title="Адресная книга">
-            <img src="resorse/images/icons/email.webp" alt="Contacts">
-            <div class="icon-text">Контакты.exe</div>
+            <div class="desktop-icon-btn icon-gap-bottom" onclick="if(typeof openDoomEasterEgg === 'function') { openDoomEasterEgg(); } else { alert('Для запуска DuuM.exe требуется современный браузер с поддержкой HTML5 Canvas.'); }" title="Запустить 3D-шутер DuuM.exe">
+                <img src="resorse/images/icons/doom_icon.webp" alt="DOOM" onerror="this.onerror=null; this.src='resorse/images/icons/Duum.webp'">
+                <div class="icon-text">DuuM.exe</div>
+            </div>
         </div>
     </div>
 
     <!-- ======================================================================
-         SNAKE ARCADE WIDGET
+         SNAKE ARCADE FIXED WIDGET (BOTTOM-RIGHT + ANIME SITTER)
          ====================================================================== -->
-    <div id="desktop-snake-window" class="win-window" data-win-title="Snake_Arcade.exe">
-        <div class="win-title-bar">
-            <div class="win-title-text">
-                <span class="win-icon"></span> Snake_Arcade.exe
-            </div>
-            <div class="win-controls">
-                <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('desktop-snake-window', event)">_</button>
-                <button class="win-btn" type="button" title="Развернуть / Восстановить" onclick="if(typeof resetWinPos === 'function') resetWinPos('desktop-snake-window', event)">□</button>
-                <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeWin === 'function') closeWin('desktop-snake-window', event)">✕</button>
-            </div>
+    <div id="desktop-snake-widget" class="snake-widget-box" title="Авто-змейка">
+        <div class="anime-sitter" title="Добро пожаловать!"> 
+            <video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
         </div>
-        <div class="win-window-body" style="background: #c0c0c0; padding: 4px; height: 164px; position: relative; box-sizing: border-box;">
-            <div id="window-snake-container" class="win-sunken-panel" style="position: relative; width: 100%; height: 100%;">
-                <canvas id="snakeCanvasWindow">
-                    <div style="padding: 20px; text-align: center; color: #404040; font-family: Tahoma, sans-serif; font-size: 12px;">
-                        Виджет недоступен: браузер не поддерживает HTML5 Canvas.
-                    </div>
-                </canvas>
-            </div>
+        <div class="snake-widget-header">
+            <span> Snake_Arcade.exe</span>
+        </div>
+        <div id="window-snake-container" class="win-sunken-panel">
+            <canvas id="snakeCanvasWindow">
+                <div style="padding: 12px; text-align: center; color: #404040; font-family: Tahoma, sans-serif; font-size: 11px;">
+                    Canvas не поддерживается.
+                </div>
+            </canvas>
         </div>
     </div>
 
@@ -178,7 +193,7 @@
 
         <div class="win-window-body header-body">
             <div id="photomag" style="cursor: pointer;" onclick="if(typeof toggleMugshotBubble === 'function') toggleMugshotBubble(event)">
-                <img src="resorse/images/mugshot.webp" onerror="this.onerror=null; this.src='resorse/images/mugshot.jpg';" width="400" height="225" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
+                <img src="resorse/images/mugshot.webp" onerror="this.onerror=null; this.src='resorse/images/mugshot.jpg';" width="300" height="400" title="Магистр ДонНТУ Назарюк В.Ю." alt="Магистр ДонНТУ Назарюк В.Ю.">
                 
                 <div id="mugshot-bubble" style="display: none;" class="mascot-bubble">
                     Это я!
@@ -206,10 +221,6 @@
          MAIN PORTFOLIO WINDOW (SPA TABS)
          ====================================================================== -->
     <div id="middleblock" class="win-window window-relative" data-win-title="Master_Portfolio.doc">
-
-        <div class="anime-sitter" title="Добро пожаловать!"> 
-			<video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
-		</div>
 
         <div class="win-title-bar">
             <div class="win-title-text">
@@ -320,7 +331,7 @@
 										<li>Командная работа и координация взаимодействия между студентами и преподавателями.</li>
 										<li>Высокая обучаемость, самодисциплина и адаптивность к новым задачам.</li>
 										<li>Аналитическое и системное мышление при решении инженерных задач.</li>
-										<li>Конструктивная работа с обратной связью.</li>
+										<li>Конструктивная работа с обратной свяью.</li>
 										<li>Креативное мышление и нестандартный подход к решению задач.</li>
 									</ol>
 								</td>
@@ -664,7 +675,7 @@
     <!-- ======================================================================
          CONTACTS WINDOW
          ====================================================================== -->
-    <div id="contacts-window" class="win-window" data-win-title="Contacts_Book.exe">
+    <div id="contacts-window" class="win-window win-closed" data-win-title="Contacts_Book.exe">
         <div class="win-title-bar">
             <div class="win-title-text">
                 <span class="win-icon"></span> Contacts_Book.exe
@@ -834,28 +845,20 @@
             <span>Windows 95</span>
         </div>
         <div class="start-menu-items">
-            <button type="button" class="start-menu-item" onclick="if(typeof openDoomEasterEgg === 'function') { closeStartMenu(); openDoomEasterEgg(); }">
-                <img src="resorse/images/icons/doom_icon.webp" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Запустить DuuM.exe
-            </button>
-            <button type="button" class="start-menu-item" onclick="if(typeof openDoomGuide === 'function') { closeStartMenu(); openDoomGuide(); }">
-                <img src="resorse/images/icons/txt_icon.webp" alt="" class="win-ui-icon" onerror="this.style.display='none'"> DuuM manual.txt
-            </button>
-            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopApp === 'function') { closeStartMenu(); openDesktopApp('desktop-snake-window'); }">
-                <img src="resorse/images/icons/masters.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Snake_Arcade.exe
+            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopApp === 'function') { closeStartMenu(); openDesktopApp('header'); }">
+                <img src="resorse/images/icons/folder.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Магистр
             </button>
             <div class="start-menu-sep"></div>
             <button type="button" class="start-menu-item" onclick="if(typeof openDesktopTab === 'function') { closeStartMenu(); openDesktopTab('#about'); }">
-                <img src="resorse/images/icons/folder.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Резюме магистра
-            </button>
-            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopTab === 'function') { closeStartMenu(); openDesktopTab('#scientific'); }">
-                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Научные труды
-            </button>
-            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopTab === 'function') { closeStartMenu(); openDesktopTab('#individual'); }">
-                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Индивидуальный раздел
+                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Портфолио
             </button>
             <div class="start-menu-sep"></div>
-            <button type="button" class="start-menu-item" onclick="if(typeof restoreAllWindows === 'function') { closeStartMenu(); restoreAllWindows(); }">
-                <img src="resorse/images/icons/win_start.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Восстановить все окна
+            <button type="button" class="start-menu-item" onclick="if(typeof openDesktopApp === 'function') { closeStartMenu(); openDesktopApp('weather-window'); }">
+                <img src="resorse/images/icons/masters.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Погода
+            </button>
+            <div class="start-menu-sep"></div>
+            <button type="button" class="start-menu-item" onclick="if(typeof openDoomEasterEgg === 'function') { closeStartMenu(); openDoomEasterEgg(); }">
+                <img src="resorse/images/icons/doom_icon.webp" alt="" class="win-ui-icon" onerror="this.style.display='none'"> DuuM.exe
             </button>
             <div class="start-menu-sep"></div>
             <button type="button" class="start-menu-item" onclick="shutdownPC()">
