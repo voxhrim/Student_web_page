@@ -323,36 +323,36 @@ iframe[id=":2.container"],
 }
 
 /* --------------------------------------------------------------------------
-   5. HEADER WINDOW & MASCOTS
+   5. HEADER WINDOW & MASCOTS (DESKTOP DEFAULT > 1450px)
    -------------------------------------------------------------------------- */
 #header {
     --win-tx: -80px;
     --win-ty: 0px;
     position: relative;
     z-index: 2;
-    width: min(68vw, 1980px);
-    margin: 10px auto 40px auto;
+    width: min(68vw, 1180px);
+    margin: 14px auto 40px auto;
 }
 
 .header-body {
     display: flex;
-    padding: 15px 12px 25px 12px;
-    gap: 15px;
+    padding: 15px 14px 25px 14px;
+    gap: 16px;
     align-items: flex-start;
     flex-wrap: nowrap;
     background: #c0c0c0;
-    min-height: 290px;
+    box-sizing: border-box;
 }
 
 #photomag {
-    flex-shrink: 0;
+    flex: 0 0 clamp(280px, 26vw, 440px);
     position: relative;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     background: #000000;
     line-height: 0;
-    width: clamp(380px, 32vw, 560px);
     aspect-ratio: 16 / 9;
+    overflow: hidden;
 }
 
 #photomag img {
@@ -375,33 +375,36 @@ iframe[id=":2.container"],
     display: flex;
     flex-direction: column;
     gap: 4px;
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
-#header h1 {
+#header h1.hdr {
     text-align: left;
     font-family: "Times New Roman", serif;
-    font-size: clamp(22px, 2.6vw, 40px);
+    font-size: clamp(22px, 2.3vw, 36px);
     color: #000080;
     margin: 0 0 6px;
     line-height: 1.15;
 }
 
-#header h3 {
+#header h3.hdr {
     font-family: Tahoma, Arial, sans-serif;
-    font-size: clamp(12px, 1.1vw, 14px);
+    font-size: clamp(12px, 1vw, 14px);
     font-weight: normal;
     color: #000000;
     margin: 0;
     line-height: 1.35;
 }
 
-#header h3 a {
+#header h3.hdr a {
     color: #0000cc;
     text-decoration: underline;
 }
 
-#header h3 a:hover {
+#header h3.hdr a:hover {
     color: #cc0000;
 }
 
@@ -413,7 +416,7 @@ iframe[id=":2.container"],
     pointer-events: none;
 }
 
-anime-sitter img,
+.anime-sitter img,
 .anime-sitter video {
     width: 140px !important;
     max-width: none !important;
@@ -427,7 +430,7 @@ anime-sitter img,
 .anime-mascot-box {
     position: absolute;
     top: 5px;
-    left: -230px;
+    left: -210px;
     right: auto;
     display: flex;
     flex-direction: column;
@@ -483,12 +486,12 @@ anime-sitter img,
    6. MAIN PORTFOLIO WINDOW & TYPOGRAPHY
    -------------------------------------------------------------------------- */
 #middleblock {
-    --win-tx: 40px;
+    --win-tx: 30px;
     --win-ty: 0px;
     position: relative;
-    z-index: 3;
+    z-index: 9;
     width: min(68vw, 980px);
-    margin: -75px auto 36px auto;
+    margin: -50px auto 36px auto;
     height: fit-content;
 }
 
@@ -753,6 +756,7 @@ table#resume td ol {
     padding-bottom: 8px;
     margin: 10px 15px 12px 20px;
     border-bottom: 1px dotted #808080;
+    transition: background-color 0.2s ease;
 }
 
 .lib p {
@@ -765,6 +769,12 @@ table#resume td ol {
     font-weight: bold;
 }
 
+li.lib.active-doc {
+    background-color: #f4f7fc;
+    border-left: 3px solid #000080;
+    padding-left: 8px;
+}
+
 .article-view-box {
     margin-top: 15px;
     padding: 10px;
@@ -773,10 +783,30 @@ table#resume td ol {
 
 .article-frame {
     width: 100%;
-    height: clamp(380px, 65vh, 720px);
+    height: clamp(520px, 75vh, 880px);
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
-    background: #ffffff;
+    background: #525659;
+    display: block;
+}
+
+#pdf-viewer-section {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #c0c0c0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#pdf-viewer-section .article-frame,
+#doc-frame {
+    width: 100%;
+    height: 850px;
+    min-height: 75vh;
+    border: 1px solid #808080;
+    background: #525659;
+    display: block;
 }
 
 /* --------------------------------------------------------------------------
@@ -786,10 +816,10 @@ table#resume td ol {
     --win-tx: 0px;
     --win-ty: 0px;
     position: absolute;
-    top: 90px;
-    right: 40px;
-    width: 290px;
-    height: 220px;
+    top: 70px;
+    right: 28px;
+    width: 280px;
+    height: 210px;
     z-index: 5;
 }
 
@@ -798,7 +828,7 @@ table#resume td ol {
     --win-ty: -180px;
     position: absolute;
     z-index: 4;
-    width: min(46vw, 580px);
+    width: min(44vw, 540px);
     left: 50%;
     margin: 0;
 }
@@ -855,11 +885,11 @@ table#resume td ol {
 }
 
 #weather-window {
-    --win-tx: -320px;
+    --win-tx: -300px;
     --win-ty: 0px;
     position: relative;
     z-index: 4;
-    width: min(46vw, 580px);
+    width: min(44vw, 540px);
     margin: 20px auto 60px auto;
 }
 
@@ -1115,19 +1145,6 @@ table#resume td ol {
     overflow: hidden;
 }
 
-/* #crt-beam { */
-    /* position: absolute; */
-    /* width: 100vw; */
-    /* height: 100vh; */
-    /* background: #ffffff; */
-    /* pointer-events: none; */
-    /* opacity: 0; */
-}
-
-/* #crt-shutdown-overlay.shutting-down #crt-beam { */
-    /* animation: crtCollapse 0.65s cubic-bezier(0.23, 1, 0.32, 1) forwards; */
-/* } */
-
 @keyframes crtCollapse {
     0% {
         opacity: 0.95;
@@ -1161,12 +1178,16 @@ table#resume td ol {
     z-index: 1;
 }
 
+#crt-shutdown-overlay.shutting-down #crt-beam {
+    animation: crtCollapse 0.65s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
 #crt-power-on-btn {
     position: fixed;
     bottom: 28px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10; /* Гарантированно поверх #crt-beam и фона */
+    z-index: 10;
     width: 84px;
     height: 84px;
     padding: 0;
@@ -1205,41 +1226,81 @@ table#resume td ol {
     transform: translateX(-50%) scale(0.95);
 }
 
-.power-btn-ring {
-    font-size: 28px;
-    line-height: 1;
-}
+/* --------------------------------------------------------------------------
+   10. RESPONSIVE SYSTEM (MEDIUM DESKTOP 1101px–1450px)
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 1101px) and (max-width: 1450px) {
+    #desktop-snake-window {
+        width: 250px;
+        height: 205px;
+        top: 64px;
+        right: 18px;
+    }
 
-.power-btn-label {
-    font-family: Tahoma, sans-serif;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    /* Шапка строго ограничена слева от окна змейки (250px + отступы) */
+    #header {
+        --win-tx: 0px;
+        width: calc(100vw - 305px);
+        max-width: 1120px;
+        margin: 14px auto 34px 18px;
+    }
+
+    .header-body {
+        padding: 12px 12px 18px 12px;
+        gap: 12px;
+    }
+
+    #photomag {
+        flex: 0 0 clamp(210px, 22vw, 320px);
+        aspect-ratio: 16 / 9;
+    }
+
+    #header h1.hdr {
+        font-size: clamp(19px, 1.9vw, 27px);
+        margin-bottom: 4px;
+    }
+
+    #header h3.hdr {
+        font-size: clamp(11.5px, 1vw, 13.5px);
+        line-height: 1.28;
+    }
+
+    .anime-mascot-box {
+        left: -165px;
+    }
+
+    .mascot-bubble {
+        max-width: 125px;
+        font-size: 10px;
+        padding: 5px 7px;
+    }
+
+    .mascot-img {
+        width: 54px;
+    }
+
+    #middleblock {
+        --win-tx: 35px;
+        width: min(74vw, 920px);
+        margin: -30px auto 36px auto;
+    }
+
+    #contacts-window {
+        --win-tx: 0px;
+        --win-ty: -165px;
+        width: min(44vw, 480px);
+        left: 51%;
+    }
+
+    #weather-window {
+        --win-tx: -240px;
+        width: min(44vw, 480px);
+    }
 }
 
 /* --------------------------------------------------------------------------
-   10. RESPONSIVE SYSTEM (HYBRID VIEWPORT + POINTER TRIGGERS)
+   11. RESPONSIVE SYSTEM (TABLET & MOBILE <= 1100px / COARSE POINTER)
    -------------------------------------------------------------------------- */
-@media screen and (max-width: 1320px) and (min-width: 1101px) and (hover: hover) and (pointer: fine) {
-    #header {
-        --win-tx: -15px;
-        width: min(72vw, 900px);
-    }
-    #middleblock {
-        --win-tx: 35px;
-        width: min(72vw, 900px);
-    }
-    #contacts-window {
-        --win-tx: -220px;
-        --win-ty: -180px;
-        width: min(50vw, 500px);
-    }
-    #desktop-snake-window {
-        width: 240px;
-        right: 15px;
-    }
-}
-
 @media screen and (max-width: 1100px),
        screen and (pointer: coarse) and (max-width: 1366px) {
 
@@ -1247,8 +1308,8 @@ table#resume td ol {
         padding-bottom: 30px;
     }
 
-    .anime-sitter { 
-        display: none !important; 
+    .anime-sitter {
+        display: none !important;
     }
 
     .anime-mascot-box {
@@ -1283,10 +1344,10 @@ table#resume td ol {
     #middleblock,
     #contacts-window,
     #weather-window,
-    #desktop-snake-window { 
+    #desktop-snake-window {
         --win-tx: 0px !important;
         --win-ty: 0px !important;
-        width: 95% !important; 
+        width: 95% !important;
         max-width: 760px !important;
         margin-left: auto !important;
         margin-right: auto !important;
@@ -1322,30 +1383,32 @@ table#resume td ol {
         margin-bottom: 24px !important;
     }
 
-    .header-body { 
-        flex-direction: column; 
-        align-items: center; 
-        text-align: center; 
+    .header-body {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
         padding: 12px;
-        min-height: auto;
+        gap: 12px;
     }
-    
+
     #photomag {
+        flex: none;
         width: 100%;
-        max-width: 340px;
+        max-width: 360px;
+        aspect-ratio: 16 / 9;
     }
-    
+
     #headertext {
         width: 100%;
     }
 
-    #header h1 { 
+    #header h1.hdr {
         text-align: center;
         font-size: 24px;
-        margin-top: 6px;
+        margin-top: 4px;
     }
 
-    #header h3 {
+    #header h3.hdr {
         text-align: left;
         font-size: 13px;
         line-height: 1.45;
@@ -1357,7 +1420,7 @@ table#resume td ol {
         padding: 6px;
     }
 
-    .button { 
+    .button {
         flex: 1 1 calc(50% - 10px);
         font-size: 14px;
         padding: 7px 8px;
@@ -1373,15 +1436,15 @@ table#resume td ol {
     table#resume td.c1,
     table#resume td.c2,
     table.resume-table td.c1,
-    table.resume-table td.c2 { 
-        display: block; 
-        width: 100%; 
-        box-sizing: border-box; 
-        text-align: left; 
+    table.resume-table td.c2 {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
     }
 
     table#resume td.c1,
-    table.resume-table td.c1 { 
+    table.resume-table td.c1 {
         background: #d8d8f0;
         border-bottom: none;
     }
@@ -1390,8 +1453,8 @@ table#resume td ol {
         margin: 10px 6px 12px 6px;
     }
 
-    p { 
-        margin: 8px 4px; 
+    p {
+        margin: 8px 4px;
         text-indent: 16px;
         text-align: left;
     }
@@ -1408,8 +1471,17 @@ table#resume td ol {
         transform: none !important;
         max-width: 180px;
     }
+
+    #pdf-viewer-section .article-frame,
+    #doc-frame {
+        height: 540px;
+        min-height: 60vh;
+    }
 }
 
+/* --------------------------------------------------------------------------
+   12. SMALL PHONES (<= 640px)
+   -------------------------------------------------------------------------- */
 @media screen and (max-width: 640px) {
     #topblock {
         justify-content: center;
@@ -1431,7 +1503,7 @@ table#resume td ol {
         padding: 4px 8px;
     }
 
-    #header h1 {
+    #header h1.hdr {
         font-size: 20px;
     }
 
@@ -1452,7 +1524,10 @@ table#resume td ol {
         grid-template-columns: 1fr !important;
     }
 
-    .article-frame {
-        height: 360px;
+    .article-frame,
+    #pdf-viewer-section .article-frame,
+    #doc-frame {
+        height: 400px;
+        min-height: 50vh;
     }
 }

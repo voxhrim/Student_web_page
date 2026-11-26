@@ -707,7 +707,7 @@ wallTextures[4].src = TEXTURE_PATH + 'CRATE_1D.PNG';
 wallTextures[5].src = TEXTURE_PATH + 'CONSOLE_1B.PNG';
 wallTextures[6].src = TEXTURE_PATH + 'BRICK_1B.PNG';
 wallTextures[7].src = TEXTURE_PATH + 'BRICK_2B.PNG';
-wallTextures[8].src = TEXTURE_PATH + 'CRATE_1С.PNG';
+wallTextures[8].src = TEXTURE_PATH + 'CRATE_1C.PNG';
 wallTextures[9].src = TEXTURE_PATH + 'TECH_4E.PNG';
 wallTextures[10].src = TEXTURE_PATH + 'BRICK_3D.PNG';
 
@@ -2676,17 +2676,83 @@ function switchTab(hash) {
     }
 }
 
-function loadDocFrame(fileName) {
+function loadDocFrame(fileSource, docTitle, triggerEl) {
     const viewerSection = document.getElementById('pdf-viewer-section');
     const frame = document.getElementById('doc-frame');
     const title = document.getElementById('pdf-viewer-title');
     const basePath = 'resorse/pdf/';
-    
-    if (viewerSection && frame) {
-        viewerSection.style.display = 'block';
-        frame.src = basePath + fileName;
-        if (title) title.innerText = 'Просмотр документа: ' + fileName;
-        viewerSection.scrollIntoView({ behavior: 'smooth' });
+
+    if (!viewerSection || !frame) return;
+
+    const finalUrl = /^https?:\/\//i.test(fileSource) ? fileSource : (basePath + fileSource);
+    const parentLi = triggerEl ? triggerEl.closest('li.lib') : null;
+
+    // Если окно уже открыто именно в этой карточке и ссылка та же — сворачиваем его
+    if (parentLi && viewerSection.parentElement === parentLi && viewerSection.style.display === 'block' && frame.src === finalUrl) {
+        closeDocFrame();
+        return;
+    }
+
+    document.querySelectorAll('li.lib.active-doc').forEach(el => el.classList.remove('active-doc'));
+
+    if (parentLi) {
+        parentLi.appendChild(viewerSection);
+        parentLi.classList.add('active-doc');
+    }
+
+    viewerSection.style.display = 'block';
+    frame.src = finalUrl;
+
+    if (title) {
+        title.innerText = 'Просмотр: ' + (docTitle || fileSource.split('/').pop());
+    }
+
+    viewerSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+async function downloadPdfDirect(url, fileName, btnEl) {
+    const origText = btnEl ? btnEl.textContent : '';
+    if (btnEl) {
+        btnEl.textContent = '[Скачивание...]';
+        btnEl.style.pointerEvents = 'none';
+    }
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = fileName || url.split('/').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    } catch (err) {
+        // Если сеть или CORS вдруг заблокировали fetch, открываем стандартно
+        window.open(url, '_blank');
+    } finally {
+        if (btnEl) {
+            btnEl.textContent = origText;
+            btnEl.style.pointerEvents = '';
+        }
+    }
+}
+
+function closeDocFrame() {
+    const viewerSection = document.getElementById('pdf-viewer-section');
+    const frame = document.getElementById('doc-frame');
+
+    document.querySelectorAll('li.lib.active-doc').forEach(el => el.classList.remove('active-doc'));
+
+    if (frame) {
+        frame.src = 'about:blank';
+    }
+    if (viewerSection) {
+        viewerSection.style.display = 'none';
     }
 }
 
