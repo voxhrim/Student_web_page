@@ -101,8 +101,8 @@
     <!-- Скрытый контейнер инициализации Google Translate -->
     <div id="google_translate_element" class="google-hidden-engine" style="display: none;"></div>
 
-   <!-- ======================================================================
-         DESKTOP SHORTCUTS 
+    <!-- ======================================================================
+         DESKTOP SHORTCUTS
          ====================================================================== -->
     <div class="desktop-icons-grid">
 
@@ -138,7 +138,6 @@
             </div>
         </div>
 
-
         <div class="desktop-icons-col">
             <div class="desktop-icon-btn" onclick="if(typeof openDesktopApp === 'function') openDesktopApp('weather-window')" title="Метеостанция ДонНТУ">
                 <img src="resorse/images/icons/weather.png" alt="Weather">
@@ -160,26 +159,32 @@
     <!-- ======================================================================
          SNAKE ARCADE FIXED WIDGET (BOTTOM-RIGHT + ANIME SITTER)
          ====================================================================== -->
-    <div id="desktop-snake-widget" class="snake-widget-box" title="Авто-змейка">
-        <div class="anime-sitter" title="Добро пожаловать!"> 
-            <video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
-        </div>
-        <div class="snake-widget-header">
-            <span> Snake_Arcade.exe</span>
-        </div>
-        <div id="window-snake-container" class="win-sunken-panel">
-            <canvas id="snakeCanvasWindow">
-                <div style="padding: 12px; text-align: center; color: #404040; font-family: Tahoma, sans-serif; font-size: 11px;">
-                    Canvas не поддерживается.
-                </div>
-            </canvas>
-        </div>
-    </div>
+		<div id="desktop-snake-widget" class="snake-widget-box" title="Авто-змейка">
+		<div class="anime-sitter" title="Добро пожаловать!">
+			<video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
+		</div>
+		<div class="snake-widget-header">
+			<span>Snake_Arcade.exe</span>
+		</div>
+		<div id="window-snake-container" class="win-sunken-panel">
+			<canvas id="snakeCanvasWindow">
+				<div style="padding: 12px; text-align: center; color: #404040; font-family: Tahoma, sans-serif; font-size: 11px;">
+					Canvas не поддерживается.
+				</div>
+			</canvas>
+		</div>
+	</div>
 
     <!-- ======================================================================
          PROFILE HEADER WINDOW
          ====================================================================== -->
     <div id="header" class="win-window" data-win-title="Nazaryuk_V_Yu.exe">
+		<div class="anime-sitter anime-sitter-mobile" title="Добро пожаловать!">
+            <video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
+        </div>
+        <div class="anime-sitter anime-sitter-desktop" title="Добро пожаловать!">
+            <video src="resorse/images/gif/1anime5.webm" autoplay loop muted playsinline aria-label="Сидящий персонаж"></video>
+        </div>
         <div class="win-title-bar">
             <div class="win-title-text">
                 <img src="resorse/images/icons/folder.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> C:\DonNTU\Masters\Nazaryuk_V_Yu.exe
@@ -204,16 +209,16 @@
                 <h3 class="hdr"><a href="https://donntu.ru/fmt" target="_blank">Факультет металлургии и теплоэнергетики</a></h3>
                 <h3 class="hdr"><a href="https://kmtm.fmt.donntu.ru/" target="_blank">Кафедра металлургических технологий и материаловедения</a></h3>
                 <h3 class="hdr">Направление: 22.04.02 &laquo;Металлургия&raquo;</h3>
-                <h3 class="hdr">Профиль: &laquo;металлургия черных металлов&raquo;</h3>
+                <h3 class="hdr">Профиль: &laquo;Металлургия черных металлов&raquo;</h3>
                 <h3 class="hdr">Тема выпускной квалификационной работы магистра: &laquo;Исследование влияния технологических параметров выплавки хромистых чугунов в индукционных печах на качество литых изделий&raquo;</h3>
                 <h3 class="hdr">Руководитель ВКР: д.т.н., проф. В.И. Заика</h3>
             </div>
         </div>
 		
-		<div class="win-statusbar">
+        <div class="win-statusbar">
             <div class="status-cell">Профиль: Магистр ДонНТУ (гр. ЭМСм-25)</div>
             <div class="status-cell">Кафедра МТМ</div>
-            <div class="status-cell fit">2025–2027</div>
+            <div class="status-cell fit">2025-2027</div>
         </div>
     </div>
 
@@ -224,7 +229,7 @@
 
         <div class="win-title-bar">
             <div class="win-title-text">
-                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Master_Portfolio.doc — Microsoft WordPad
+                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> Master_Portfolio.doc - Microsoft WordPad
             </div>
             <div class="win-controls">
                 <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('middleblock', event)">_</button>
@@ -253,7 +258,7 @@
                         <h2>Обо мне</h2>
                         <p>
                             Я выбрал эту специальность потому, что в старшей школе увлекся кузнечным делом. Мне понравилось, как выглядит горячий металл. Я пришел в ДонНТУ (лучший технический вуз
-                            моего региона) и нашел там специальность, связанную с металлом — металлургия черных металлов.<br>
+                            моего региона) и нашел там специальность, связанную с металлом - металлургия черных металлов.<br>
                             Обучение в университете проходило по множеству дисциплин, всесторонне раскрывая возможности моей специальности: от азов доменного производства до современных 
                             технологий, например аддитивных технологий и подготовки материалов для них.
                             После окончания учебы в магистратуре планирую поступить в аспирантуру. Хочу заниматься научной деятельностью и работать в университете.
@@ -264,94 +269,94 @@
                         <hr>
 
                         <table id="resume">
-							<tr class="even">
-								<td class="c1">ФИО</td>
-								<td class="c2">Назарюк Владимир Юрьевич</td>
-							</tr>
-							<tr class="odd">
-								<td class="c1">Дата рождения</td>
-								<td class="c2">30 марта 2004 г.</td>
-							</tr>
-							<tr class="even">
-								<td class="c1">Место рождения</td>
-								<td class="c2">г. Донецк, Украина</td>
-							</tr>
-							<tr class="odd">
-								<td class="c1">Школа(ы)</td>
-								<td class="c2">МБОУ СШ № 7 г. Харцызск</td>
-							</tr>
-							<tr class="even">
-								<td class="c1">ВУЗ</td>
-								<td class="c2">
-									Бакалавриат: ДонНТУ, 2021 – 2025 гг. (направление 22.03.02 «Металлургия»)<br>
-									Магистратура: ДонНТУ, 2025 – 2027 гг. (направление 22.04.02 «Металлургия»)
-								</td>
-							</tr>
-							<tr class="even">
-								<td class="c1">Знание языков</td>
-								<td class="c2">Русский — родной; Украинский — B1; Английский — A2–B1.</td>
-							</tr>
-							<tr class="odd">
-								<td class="c1">Увлечения</td>
-								<td class="c2">Спортивный туризм (велосипедный туризм, байкпакинг, пешие и водные походы), легкая атлетика, спортивное ориентирование, компьютерные игры.</td>
-							</tr>
-							<tr class="even">
-								<td class="c1">Общие навыки</td>
-								<td class="c2">
-									<ol>
-										<li>Чтение и ведение конструкторской и технологической документации, чертежей.</li>
-										<li>Продвинутые навыки владения ПК и офисным ПО (Microsoft Excel, Word, PowerPoint).</li>
-										<li>Применение нейросетей и ИИ-инструментов для анализа данных, программирования и подготовки материалов.</li>
-										<li>Поиск, систематизация и критический анализ научно-технической информации.</li>
-										<li>Организация и координация групповой работы (опыт старосты студенческой группы).</li>
-										<li>Настройка и эксплуатация звукового и мультимедийного оборудования для проведения мероприятий.</li>
-									</ol>
-								</td>
-							</tr>
-							<tr class="odd">
-								<td class="c1">Профессиональные навыки</td>
-								<td class="c2">
-									<ol>
-										<li>Создание, обработка и статистический анализ экспериментальных баз данных в Microsoft Excel (регрессионный анализ, оптимизация).</li>
-										<li>Проведение научно-исследовательских работ и лабораторных испытаний материалов (испытания на абразивный износ, металлография).</li>
-										<li>Анализ влияния химического состава и технологических параметров выплавки в индукционных печах на свойства сталей и высокохромистых чугунов.</li>
-										<li>Проведение тепловых и технологических расчетов параметров металлургического оборудования (ДСП, индукционные печи, установки внепечной обработки).</li>
-										<li>Моделирование металлургических и литейных процессов.</li>
-										<li>Подготовка и оформление научных статей, отчетов, курсовых и дипломных работ по стандартам ГОСТ.</li>
-										<li>Веб-разработка и программирование прикладных проектов (HTML, CSS, JavaScript, Python, С++, С#).</li>
-									</ol>
-								</td>
-							</tr>
-							<tr class="even">
-								<td class="c1">Надпрофессиональные навыки</td>
-								<td class="c2">
-									<ol>
-										<li>Коммуникативная грамотность и деловая переписка.</li>
-										<li>Уверенное выступление перед аудиторией и защита научных докладов.</li>
-										<li>Командная работа и координация взаимодействия между студентами и преподавателями.</li>
-										<li>Высокая обучаемость, самодисциплина и адаптивность к новым задачам.</li>
-										<li>Аналитическое и системное мышление при решении инженерных задач.</li>
-										<li>Конструктивная работа с обратной свяью.</li>
-										<li>Креативное мышление и нестандартный подход к решению задач.</li>
-									</ol>
-								</td>
-							</tr>
-							<tr class="odd">
-								<td class="c1">Личные достижения</td>
-								<td class="c2">
-									<ol>
-										<li>Призер (3-е место) Межрегиональной олимпиады по направлению «Металлургия» среди студентов высших образовательных учреждений (2026 г.).</li>
-										<li>Автор и соавтор 4 научных публикаций, в том числе материалов научно-практических конференций («Металлургия XXI столетия глазами молодых»).</li>
-										<li>Успешное выполнение и защита выпускной квалификационной работы бакалавра с отличием.</li>
-										<li>Участие в многодневных автономных спортивно-туристических маршрутах, походах.</li>
-									</ol>
-								</td>
-							</tr>
-							<tr class="even">
-								<td class="c1">Планы на будущее</td>
-								<td class="c2">Успешная защита магистерской диссертации, поступление в аспирантуру, продолжение научно-исследовательской деятельности в области металлургии черных металлов и материаловедения, развитие в качестве востребованного инженера-исследователя.</td>
-							</tr>
-						</table>
+                            <tr class="even">
+                                <td class="c1">ФИО</td>
+                                <td class="c2">Назарюк Владимир Юрьевич</td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="c1">Дата рождения</td>
+                                <td class="c2">30 марта 2004 г.</td>
+                            </tr>
+                            <tr class="even">
+                                <td class="c1">Место рождения</td>
+                                <td class="c2">г. Донецк, Украина</td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="c1">Школа(ы)</td>
+                                <td class="c2">МБОУ СШ № 7 г. Харцызск</td>
+                            </tr>
+                            <tr class="even">
+                                <td class="c1">ВУЗ</td>
+                                <td class="c2">
+                                    Бакалавриат: ДонНТУ, 2021-2025 гг. (направление 22.03.02 &laquo;Металлургия&raquo;)<br>
+                                    Магистратура: ДонНТУ, 2025-2027 гг. (направление 22.04.02 &laquo;Металлургия&raquo;)
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="c1">Знание языков</td>
+                                <td class="c2">Русский - родной; Украинский - B1; Английский - A2-B1.</td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="c1">Увлечения</td>
+                                <td class="c2">Спортивный туризм (велосипедный туризм, байкпакинг, пешие и водные походы), легкая атлетика, спортивное ориентирование, компьютерные игры.</td>
+                            </tr>
+                            <tr class="even">
+                                <td class="c1">Общие навыки</td>
+                                <td class="c2">
+                                    <ol>
+                                        <li>Чтение и ведение конструкторской и технологической документации, чертежей.</li>
+                                        <li>Продвинутые навыки владения ПК и офисным ПО (Microsoft Excel, Word, PowerPoint).</li>
+                                        <li>Применение нейросетей и ИИ-инструментов для анализа данных, программирования и подготовки материалов.</li>
+                                        <li>Поиск, систематизация и критический анализ научно-технической информации.</li>
+                                        <li>Организация и координация групповой работы (опыт старосты студенческой группы).</li>
+                                        <li>Настройка и эксплуатация звукового и мультимедийного оборудования для проведения мероприятий.</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="c1">Профессиональные навыки</td>
+                                <td class="c2">
+                                    <ol>
+                                        <li>Создание, обработка и статистический анализ экспериментальных баз данных в Microsoft Excel (регрессионный анализ, оптимизация).</li>
+                                        <li>Проведение научно-исследовательских работ и лабораторных испытаний материалов (испытания на абразивный износ, металлография).</li>
+                                        <li>Анализ влияния химического состава и технологических параметров выплавки в индукционных печах на свойства сталей и высокохромистых чугунов.</li>
+                                        <li>Проведение тепловых и технологических расчетов параметров металлургического оборудования (ДСП, индукционные печи, установки внепечной обработки).</li>
+                                        <li>Моделирование металлургических и литейных процессов.</li>
+                                        <li>Подготовка и оформление научных статей, отчетов, курсовых и дипломных работ по стандартам ГОСТ.</li>
+                                        <li>Веб-разработка и программирование прикладных проектов (HTML, CSS, JavaScript, Python, С++, С#).</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="c1">Надпрофессиональные навыки</td>
+                                <td class="c2">
+                                    <ol>
+                                        <li>Коммуникативная грамотность и деловая переписка.</li>
+                                        <li>Уверенное выступление перед аудиторией и защита научных докладов.</li>
+                                        <li>Командная работа и координация взаимодействия между студентами и преподавателями.</li>
+                                        <li>Высокая обучаемость, самодисциплина и адаптивность к новым задачам.</li>
+                                        <li>Аналитическое и системное мышление при решении инженерных задач.</li>
+                                        <li>Конструктивная работа с обратной связью.</li>
+                                        <li>Креативное мышление и нестандартный подход к решению задач.</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr class="odd">
+                                <td class="c1">Личные достижения</td>
+                                <td class="c2">
+                                    <ol>
+                                        <li>Призер (3-е место) Межрегиональной олимпиады по направлению &laquo;Металлургия&raquo; среди студентов высших образовательных учреждений (2026 г.).</li>
+                                        <li>Автор и соавтор 4 научных публикаций, в том числе материалов научно-практических конференций (&laquo;Металлургия XXI столетия глазами молодых&raquo;).</li>
+                                        <li>Успешное выполнение и защита выпускной квалификационной работы бакалавра с отличием.</li>
+                                        <li>Участие в многодневных автономных спортивно-туристических маршрутах и походах.</li>
+                                    </ol>
+                                </td>
+                            </tr>
+                            <tr class="even">
+                                <td class="c1">Планы на будущее</td>
+                                <td class="c2">Успешная защита магистерской диссертации, поступление в аспирантуру, продолжение научно-исследовательской деятельности в области металлургии черных металлов и материаловедения, развитие в качестве востребованного инженера-исследователя.</td>
+                            </tr>
+                        </table>
                     </div>
 
                     <!-- TAB 2: MASTER THESIS ABSTRACT -->
@@ -360,7 +365,7 @@
                         <hr>
 
                         <p class="comment">
-                            Сейчас тут бак. работа, маг. пока нету
+                            Сейчас тут бак. работа, маг. пока нету.
                         </p>
 
                         <!-- Встроенный просмотрщик PDF -->
@@ -385,43 +390,52 @@
                         </p>
 
                         <h2>Собственные публикации и доклады</h2>
-							<ol>
-								<li class="lib">
-									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю. — Создание прогнозной модели износостойкости литых чугунов (2026)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
-										Назарюк, В. Ю. Создание прогнозной модели износостойкости литых чугунов / В. Ю. Назарюк // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2026.
-									</a>
-									<p><span class="cat">Авторы:</span> В. Ю. Назарюк</p>
-									<p><span class="cat">Описание:</span> Разработка прогнозной модели абразивной износостойкости отливок из высокохромистых чугунов.</p>
-									<p><span class="cat">Действие:</span> 
-										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
-										<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSPMELCh2026.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
-									</p>
-								</li>
+                        <ol>
+                            <li class="lib">
+                                <a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю. - Создание прогнозной модели износостойкости литых чугунов (2026)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
+                                    Назарюк, В. Ю. Создание прогнозной модели износостойкости литых чугунов / В. Ю. Назарюк // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. - Донецк: Донецкий национальный технический университет, 2026.
+                                </a>
+                                <p><span class="cat">Авторы:</span> В. Ю. Назарюк</p>
+                                <p><span class="cat">Описание:</span> Разработка прогнозной модели абразивной износостойкости отливок из высокохромистых чугунов.</p>
+                                <p><span class="cat">Действие:</span> 
+                                    <button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
+                                    <a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSPMELCh2026.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSPMELCh2026.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
+                                </p>
+                            </li>
 
-								<li class="lib">
-									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. — Сравнительные испытания материала отливок колес шламовых насосов (2025)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
-										Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2025. – С. 14-15.
-									</a>
-									<p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
-									<p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
-									<p><span class="cat">Действие:</span> 
-										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
-										<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSEMOKShNAE2025.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
-									</p>
-								</li>
+                            <li class="lib">
+                                <a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. - Сравнительные испытания материала отливок колес шламовых насосов (2025)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
+                                    Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. - Донецк: Донецкий национальный технический университет, 2025. - С. 14-15.
+                                </a>
+                                <p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
+                                <p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
+                                <p><span class="cat">Действие:</span> 
+                                    <button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
+                                    <a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2025.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSEMOKShNAE2025.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
+                                </p>
+                            </li>
 
-								<li class="lib">
-									<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. — Сравнительные испытания материала отливок колес шламовых насосов (2024)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
-										Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. – Донецк: Донецкий национальный технический университет, 2024. – С. 14-15.
-									</a>
-									<p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
-									<p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
-									<p><span class="cat">Действие:</span> 
-										<button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
-										<a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSEMOKShNAE2024.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
-									</p>
-								</li>
-							</ol>
+                            <li class="lib">
+                                <a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" target="_blank" onclick="if(typeof loadDocFrame === 'function') { loadDocFrame(this.href, 'Назарюк В. Ю., Симоненко В. И. - Сравнительные испытания материала отливок колес шламовых насосов (2024)', this); return false; }" style="color: #0000CD; font-weight: 700; font-size: 16px;">
+                                    Назарюк, В. Ю. Сравнительные испытания материала отливок колес шламовых насосов на абразивный износ / В. Ю. Назарюк, В. И. Симоненко // Металлургия XXI столетия глазами молодых : Материалы Всероссийской научно-практической конференции молодых ученых и студентов. - Донецк: Донецкий национальный технический университет, 2024. - С. 14-15.
+                                </a>
+                                <p><span class="cat">Авторы:</span> В. Ю. Назарюк, В. И. Симоненко</p>
+                                <p><span class="cat">Описание:</span> Результаты испытания отлитых образцов из высокохромистого чугуна.</p>
+                                <p><span class="cat">Действие:</span> 
+                                    <button class="button color" onclick="var a = this.closest('li').querySelector('a'); if(typeof loadDocFrame === 'function') loadDocFrame(a.href, a.textContent.trim(), this);" style="font-size: 12px; padding: 4px 10px;">Просмотреть PDF в окне</button> 
+                                    <a href="https://cdn.jsdelivr.net/gh/voxhrim/Library-for-Student_web_page@main/NVYuSEMOKShNAE2024.pdf" onclick="if(typeof downloadPdfDirect === 'function') { downloadPdfDirect(this.href, 'NVYuSEMOKShNAE2024.pdf', this); return false; }" style="margin-left: 10px;">[Скачать PDF]</a>
+                                </p>
+                            </li>
+                        </ol>
+
+                        <!-- Простой встроенный просмотрщик PDF только для мобильной версии -->
+                        <div id="mobile-pdf-box" class="mobile-pdf-box" style="display: none;">
+                            <div class="mobile-pdf-bar">
+                                <strong id="mobile-pdf-title">Документ</strong>
+                                <button type="button" class="button color" onclick="if(typeof closeMobilePdf === 'function') closeMobilePdf(event)">Закрыть</button>
+                            </div>
+                            <iframe id="mobile-pdf-frame" src="about:blank"></iframe>
+                        </div>
                     </div>
 
                     <!-- TAB 4: INDIVIDUAL SECTION -->
@@ -430,15 +444,15 @@
                         <hr>
 
                         <p class="comment">
-                            &laquo;Жизнь — как вождение велосипеда: чтобы сохранить равновесие, ты должен двигаться.&raquo; (Альберт Эйнштейн)
+                            &laquo;Жизнь - как вождение велосипеда: чтобы сохранить равновесие, ты должен двигаться.&raquo; (Альберт Эйнштейн)
                         </p>
 
-                        <h2>В неучебное время я занимаюсь туризмом, а в особенности люблю — велосипедный туризм</h2>
+                        <h2>В неучебное время я занимаюсь туризмом, а в особенности люблю - велосипедный туризм</h2>
                         <p>
                             Для инженера крайне важно находить время для перезагрузки, находить баланс между работой и отдыхом. Моим главным источником вдохновения и объектом мечтаний является <strong>спортивный велосипедный туризм</strong>.
                         </p>
                         <p>
-                            Велотуризм объединяет в себе всё лучшее: непрерывную физическую активность, автономность, знакомство с дикой природой и проверку техники на прочность.
+                            Велотуризм объединяет в себе все лучшее: непрерывную физическую активность, автономность, знакомство с дикой природой и проверку техники на прочность.
                             Путешествие на велосипеде дарит ни с чем не сравнимое ощущение свободы:
                             скорость достаточно высока, чтобы преодолевать десятки и сотни километров в день,
                             но в то же время ты не отделен от окружающего мира стеклом автомобиля.
@@ -450,15 +464,15 @@
                             В поездках я отдаю предпочтение формату автономных путешествий:
                         </p>
                         <ul>
-                            <li><strong>ПВД (Походы выходного дня):</strong> радиальные и линейные выезды на дистанции 80–150 км по родному краю. В современных условиях такие походы проходят без ночевок.</li>
-                            <li><strong>Многодневный байкпакинг:</strong> походы с палаткой или гамачной системой, походной кухней и запасами еды, где всё необходимое крепится прямо на раму и руль велосипеда. 
+                            <li><strong>ПВД (Походы выходного дня):</strong> радиальные и линейные выезды на дистанции 80-150 км по родному краю. В современных условиях такие походы проходят без ночевок.</li>
+                            <li><strong>Многодневный байкпакинг:</strong> походы с палаткой или гамачной системой, походной кухней и запасами еды, где все необходимое крепится прямо на раму и руль велосипеда. 
                             Такие походы позволяют почувствовать весь вкус путешествия по своей родине.</li>
                         </ul>
 
                         <h2>Почему велосипед?</h2>
                         <ol>
                             <li><strong>Выносливость и самодисциплина.</strong> Многочасовое кручение педалей в гору воспитывает упорство, которое здорово помогает доводить до конца сложные инженерные задачи и научные исследования.</li>
-                            <li><strong>Умение ориентироваться и планировать.</strong> Составление трека по топографическим картам, расчет высотного профиля и запасов воды — отличный практический навык.</li>
+                            <li><strong>Умение ориентироваться и планировать.</strong> Составление трека по топографическим картам, расчет высотного профиля и запасов воды - отличный практический навык.</li>
                             <li><strong>Техническая грамотность.</strong> В полевых условиях нужно уметь быстро исправить восьмерку, отрегулировать трансмиссию или заклеить пробитую камеру подручными средствами.</li>
                         </ol>
                         
@@ -528,10 +542,10 @@
                         <h2>Тематические ссылки</h2>
                         <ul class="content">
                             <li class="ct1">
-                                <a href="https://nakarte.me/" target="_blank">Сервис Nakarte.me</a> — основной инструмент для планирования туристических маршрутов по топографическим картам и спутниковым снимкам.
+                                <a href="https://nakarte.me/" target="_blank">Сервис Nakarte.me</a> - основной инструмент для планирования туристических маршрутов по топографическим картам и спутниковым снимкам.
                             </li>
                             <li class="ct1">
-                                <a href="http://masters.donntu.ru" target="_blank">Портал магистров ДонНТУ</a> — раздел индивидуальных тем выпускников прошлых лет.
+                                <a href="http://masters.donntu.ru" target="_blank">Портал магистров ДонНТУ</a> - раздел индивидуальных тем выпускников прошлых лет.
                             </li>
                         </ul>
                     </div>
@@ -582,10 +596,10 @@
     <!-- ======================================================================
          DUUM MANUAL MODAL WINDOW
          ====================================================================== -->
-    <div id="doom-guide-window" class="win-window" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100000; width: 750px; max-width: 90vw; height: 800px; max-height: 85vh;">
+    <div id="doom-guide-window" class="win-window" style="display: none;">
         <div class="win-title-bar">
             <div class="win-title-text">
-                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> DuuM manual.txt — Блокнот
+                <img src="resorse/images/icons/doc.png" alt="" class="win-ui-icon" onerror="this.style.display='none'"> DuuM manual.txt - Блокнот
             </div>
             <div class="win-controls">
                 <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof closeDoomGuide === 'function') closeDoomGuide(event)">_</button>
@@ -594,8 +608,8 @@
             </div>
         </div>
         
-        <div class="win-window-body" style="background: #c0c0c0; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; height: calc(100% - 28px);">
-            <div style="font-family: Tahoma, sans-serif; font-size: 11px; padding: 2px 0 6px 0; border-bottom: 1px solid #808080; margin-bottom: 6px; color: #000;">
+        <div class="win-window-body">
+            <div style="font-family: Tahoma, sans-serif; font-size: 11px; padding: 2px 0 6px 0; border-bottom: 1px solid #808080; margin-bottom: 6px; color: #000; flex-shrink: 0;">
                 <span style="margin-right: 10px;"><u>Ф</u>айл</span>
                 <span style="margin-right: 10px;"><u>П</u>равка</span>
                 <span style="margin-right: 10px;">Ф<u>о</u>рмат</span>
@@ -603,7 +617,7 @@
                 <span style="margin-right: 10px;">С<u>п</u>равка</span>
             </div>
             
-            <div class="win-sunken-panel mag-layout" style="background: #fdfdfc; padding: 20px 25px; overflow-y: auto; height: 100%; color: #1a1a1a; cursor: text; text-align: left;">
+            <div class="win-sunken-panel mag-layout">
                 <style type="text/css">
                     .mag-layout { font-family: 'Georgia', 'Times New Roman', serif; }
                     .mag-header { border-bottom: 3px solid #b71c1c; padding-bottom: 8px; margin-bottom: 15px; }
@@ -624,7 +638,7 @@
 
                 <div class="mag-header">
                     <h1 class="mag-title">DuuM: Анатомия выживания</h1>
-                    <p class="mag-subtitle">Спецпроект • Руководство по тактике • Журнал "Игрожурия"</p>
+                    <p class="mag-subtitle">Спецпроект - Руководство по тактике - Журнал "Игрожурия"</p>
                 </div>
 
                 <p class="mag-lead">
@@ -642,15 +656,15 @@
                     <h3>Тактическое управление</h3>
                     <ul>
                         <li><span class="mag-highlight">W, A, S, D</span> - Перемещение и стрейф</li>
-                        <li><span class="mag-highlight">Стрелки (← →) </span> - Поворот камеры</li>
-                        <li><span class="mag-highlight">Пробел</span> - Огонь </li>
+                        <li><span class="mag-highlight">Стрелки (&larr; &rarr;)</span> - Поворот камеры</li>
+                        <li><span class="mag-highlight">Пробел</span> - Огонь</li>
                         <li><span class="mag-highlight">M</span> - Отключить миникарту</li>
                     </ul>
                 </div>
 
                 <h2 class="mag-h2">Тайм-менеджмент и ресурсы</h2>
                 <p class="mag-text">
-                    В основе геймплея лежит жесткий таймер. Выживание напрямую зависит от агрессивности вашей игры: каждая уничтоженная рядовая цель пополняет запас на 1 секунду, а ликвидация босса дарит сразу 10. Периодически генератор уровня подкидывает бонусы: карманные часы (+10 секунд), аптечки (восстанавливают 25% здоровья) и коробки с боеприпасами (+5 патронов). Коробки с боеприпасами могут выпасть при уничтожения цели. Контроль инвентаря критичен — герой способен унести не более 40 патронов одновременно.
+                    В основе геймплея лежит жесткий таймер. Выживание напрямую зависит от агрессивности вашей игры: каждая уничтоженная рядовая цель пополняет запас на 1 секунду, а ликвидация босса дарит сразу 10. Периодически генератор уровня подкидывает бонусы: карманные часы (+10 секунд), аптечки (восстанавливают 25% здоровья) и коробки с боеприпасами (+5 патронов). Коробки с боеприпасами могут выпасть при уничтожении цели. Контроль инвентаря критичен - герой способен унести не более 40 патронов одновременно.
                 </p>
 
                 <h2 class="mag-h2">Оружейная философия</h2>
@@ -658,7 +672,7 @@
                     Базовым аргументом в спорах с местной, весьма не привлекательной, фауной выступают спаренные пистолеты. Оружие обладает отличной убойной силой, однако имеет фатальный недостаток: акустический след. Звук выстрела демаскирует вашу позицию, стягивая монстров из соседних коридоров. 
                 </p>
                 <p class="mag-text">
-                    Как только обойма пустеет, протагонист автоматически переключается на армейский нож. Ближний бой требует идеального позиционирования и выверенной дистанции, но взамен предлагает бесшумное устранение целей. Идеальный инструмент для аккуратной зачистки комнат когда опустели магазины пистолетов.
+                    Как только обойма пустеет, протагонист автоматически переключается на армейский нож. Ближний бой требует идеального позиционирования и выверенной дистанции, но взамен предлагает бесшумное устранение целей. Идеальный инструмент для аккуратной зачистки комнат, когда опустели магазины пистолетов.
                 </p>
 
                 <h2 class="mag-h2">Искусственный интеллект</h2>
@@ -666,7 +680,7 @@
                     Поведение противников подчинено не сложным паттернам. Обнаружив цель, они переходят в режим преследования. Разорвав визуальный контакт на достаточное время, вы заставите монстров потерять интерес и вернуться к патрулированию сектора. 
                 </p>
                 <p class="mag-text">
-                    Особую угрозу представляет алгоритм эскалации: каждые 50 фрагов игра наказывает расслабившегося бойца спавном Брутального Босса. Эта особь отличается увеличенными габаритами и повышенной живучестью, однако её устранение окупается гарантированным выпадением ценного лута. Держите дистанцию и контролируйте периметр.
+                    Особую угрозу представляет алгоритм эскалации: каждые 50 фрагов игра наказывает расслабившегося бойца спавном Брутального Босса. Эта особь отличается увеличенными габаритами и повышенной живучестью, однако ее устранение окупается гарантированным выпадением ценного лута. Держите дистанцию и контролируйте периметр.
                 </p>
             </div>
         </div>
@@ -726,7 +740,7 @@
     <div id="weather-window" class="win-window" data-win-title="Weather_Station.exe">
         <div class="win-title-bar">
             <div class="win-title-text">
-                <span class="win-icon"></span> Weather_Station.exe — Погода онлайн
+                <span class="win-icon"></span> Weather_Station.exe - Погода онлайн
             </div>
             <div class="win-controls">
                 <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof minimizeWin === 'function') minimizeWin('weather-window', event)">_</button>
@@ -803,19 +817,18 @@
     <!-- ======================================================================
          DUUM RAYCASTER MODAL WINDOW
          ====================================================================== -->
-    <div id="doom-window" class="win-window" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; width: 85vw; max-width: 1020px; height: auto; max-height: 88vh;">
+    <div id="doom-window" class="win-window" style="display: none;">
         <div class="win-title-bar">
             <div class="win-title-text">
                 <span class="win-icon"></span> DuuM
             </div>
             <div class="win-controls">
                 <button class="win-btn" type="button" title="Свернуть" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg(event)">_</button>
-                <button class="win-btn" type="button" title="На весь экран" onclick="if(typeof toggleModalMaximize === 'function') toggleModalMaximize('doom-window', event)">□</button>
                 <button class="win-btn close" type="button" title="Закрыть" onclick="if(typeof closeDoomEasterEgg === 'function') closeDoomEasterEgg(event)">✕</button>
             </div>
         </div>
         
-        <div class="win-window-body" style="background: #000; padding: 6px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; max-height: calc(88vh - 35px); overflow: hidden; position: relative;">
+        <div class="win-window-body">
             <div class="vhs-container" style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5); background: #000; transform: translateZ(0);">
                 <canvas id="doomCanvas" width="720" height="460" style="display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; object-fit: contain;"></canvas>
                 <div class="vhs-scanlines" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
@@ -826,8 +839,8 @@
             
             <canvas id="minimapCanvas" width="180" height="180" style="position: absolute; top: 35px; right: 10px; border: 2px solid #555; background: rgba(0, 0, 0, 0.7); display: none; image-rendering: pixelated; z-index: 10;"></canvas>
             
-            <div style="font-family: Tahoma, sans-serif; font-size: clamp(11px, 1.2vw, 14px); color: #B53B3B; margin-top: 4px; padding-bottom: 2px; text-align: center; flex-shrink: 0;">
-                Управление: WASD - движение, Стрелки — поворот камеры, ПРОБЕЛ — огонь.
+            <div style="font-family: Tahoma, sans-serif; font-size: clamp(11px, 1.2vw, 14px); color: #B53B3B; margin-top: 6px; padding-bottom: 2px; text-align: center; flex-shrink: 0;">
+                Управление: WASD - движение, Стрелки - поворот камеры, ПРОБЕЛ - огонь.
             </div>
         </div>
     </div>

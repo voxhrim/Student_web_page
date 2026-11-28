@@ -779,6 +779,7 @@ itemSprites.medkit.src = 'resorse/images/textures/items/med.png';
 itemSprites.ammo.src = 'resorse/images/textures/items/bulets.png';
 itemSprites.time.src = 'resorse/images/textures/items/tms.png';
 
+
 /* --- WINDOW CONTROLS (DUUM & MANUAL) --- */
 function toggleModalMaximize(id, e) {
     if (e) {
@@ -795,7 +796,7 @@ function openDoomGuide() {
     if (typeof isMobileMode === 'function' && isMobileMode()) return;
     const win = document.getElementById('doom-guide-window');
     if (win) {
-        win.style.display = 'block';
+        win.style.display = 'flex';
         if (typeof bringWindowToFront === 'function') bringWindowToFront(win);
         if (document.activeElement) document.activeElement.blur();
     }
@@ -817,7 +818,7 @@ function openDoomEasterEgg() {
     if (typeof isMobileMode === 'function' && isMobileMode()) return;
     const win = document.getElementById('doom-window');
     if (!win) return;
-    win.style.display = 'block';
+    win.style.display = 'flex';
     if (typeof bringWindowToFront === 'function') bringWindowToFront(win);
     doomAudio.startMusic();
     startDoomGame();
@@ -833,11 +834,10 @@ function closeDoomEasterEgg(e) {
     }
     const win = document.getElementById('doom-window');
     if (win) {
-        win.classList.remove('win-maximized');
         win.style.display = 'none';
     }
     doomAudio.stopMusic();
-    doomInterval = false; 
+    doomInterval = false;
 }
 
 /* --- MAIN GAME LOOP --- */
@@ -1055,7 +1055,7 @@ function startDoomGame() {
         let code = e.code === 'Space' ? 'Space' : e.code;
         if (keys.hasOwnProperty(code)) {
             keys[code] = true;
-            if (document.getElementById('doom-window').style.display === 'block') {
+            if (document.getElementById('doom-window').style.display !== 'none') {
                 e.preventDefault();
             }
         }
@@ -1815,7 +1815,7 @@ function startDoomGame() {
                     flashAddB = flashInt * 0.3;
                 }
 
-                let ceilY = viewportHeight - y;
+                let ceilY = viewportHeight - y - 1;
                 let cR = Math.floor(15 * rowLight);
                 let cG = Math.floor(15 * rowLight);
                 let cB = Math.floor(20 * rowLight);
@@ -2661,17 +2661,10 @@ function switchTab(hash) {
     }
 }
 
-/* Открытие PDF статьи в отдельном окне #doc-viewer-window */
+/* Открытие PDF  */
 function loadDocFrame(fileSource, docTitle, triggerEl) {
-    const win = document.getElementById('doc-viewer-window');
-    const frame = document.getElementById('doc-frame');
-    const title = document.getElementById('pdf-viewer-title');
-    const status = document.getElementById('doc-viewer-status');
-    const basePath = 'resorse/pdf/';
-
-    if (!win || !frame) return;
-
-    const finalUrl = /^https?:\/\//i.test(fileSource) ? fileSource : (basePath + fileSource);
+    const finalUrl = /^https?:\/\//i.test(fileSource) ? fileSource : ('resorse/pdf/' + fileSource);
+    const resolvedTitle = docTitle || fileSource.split('/').pop();
 
     document.querySelectorAll('li.lib.active-doc').forEach(el => el.classList.remove('active-doc'));
     const parentLi = triggerEl ? triggerEl.closest('li.lib') : null;
@@ -2679,22 +2672,57 @@ function loadDocFrame(fileSource, docTitle, triggerEl) {
         parentLi.classList.add('active-doc');
     }
 
+    if (typeof isMobileMode === 'function' && isMobileMode()) {
+        const mBox = document.getElementById('mobile-pdf-box');
+        const mFrame = document.getElementById('mobile-pdf-frame');
+        const mTitle = document.getElementById('mobile-pdf-title');
+        if (mBox && mFrame) {
+            mBox.style.display = 'block';
+            mFrame.src = finalUrl;
+            if (mTitle) {
+                mTitle.textContent = resolvedTitle;
+            }
+            mBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        return;
+    }
+
+    const win = document.getElementById('doc-viewer-window');
+    const frame = document.getElementById('doc-frame');
+    const title = document.getElementById('pdf-viewer-title');
+    const status = document.getElementById('doc-viewer-status');
+
+    if (!win || !frame) return;
+
     win.style.display = 'flex';
     win.classList.remove('win-closed', 'win-minimized');
     frame.src = finalUrl;
 
     if (title) {
-        title.innerText = docTitle || fileSource.split('/').pop();
+        title.innerText = resolvedTitle;
     }
     if (status) {
         status.innerText = 'Файл: ' + finalUrl.split('/').pop();
     }
 
-    if (!isMobileMode()) {
-        centerWindowOnScreen(win);
-        void win.offsetWidth;
-        win.classList.add('win-open-anim');
-        bringWindowToFront(win);
+    if (typeof centerWindowOnScreen === 'function') centerWindowOnScreen(win);
+    void win.offsetWidth;
+    win.classList.add('win-open-anim');
+    if (typeof bringWindowToFront === 'function') bringWindowToFront(win);
+}
+
+function closeMobilePdf(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    const mBox = document.getElementById('mobile-pdf-box');
+    const mFrame = document.getElementById('mobile-pdf-frame');
+    if (mFrame) {
+        mFrame.src = 'about:blank';
+    }
+    if (mBox) {
+        mBox.style.display = 'none';
     }
 }
 
@@ -2966,7 +2994,7 @@ function powerOnPC() {
 
 
 /* ==========================================================================
-   INTERACTIVE WINDOW MANAGER (DRAG, SMOOTH RESIZE, CONTENT SCALE, MAXIMIZE)
+   INTERACTIVE WINDOW MANAGER (DRAG, SMOOTH RESIZE, MEDIA SCALE, MAXIMIZE)
    ========================================================================== */
 
 const DESKTOP_WINDOW_IDS = [
@@ -2974,7 +3002,8 @@ const DESKTOP_WINDOW_IDS = [
     'middleblock',
     'contacts-window',
     'weather-window',
-    'doc-viewer-window'
+    'doc-viewer-window',
+    'doom-guide-window'
 ];
 
 let topWindowZ = 30;
@@ -2994,7 +3023,7 @@ function updateTrayClock() {
     clockEl.textContent = `${hh}:${mm}`;
 }
 
-function updateWindowContentScale(win) {
+function updateWindowMediaScale(win) {
     if (!win || isMobileMode()) return;
     const init = initialWindowState[win.id];
     if (!init || !init.baseWidth) return;
@@ -3003,13 +3032,13 @@ function updateWindowContentScale(win) {
     if (currentW <= 0) return;
 
     const ratio = currentW / init.baseWidth;
-    const clampedScale = Math.max(0.88, Math.min(1.42, ratio));
-    win.style.setProperty('--win-scale', clampedScale.toFixed(3));
+    const clampedScale = Math.max(0.85, Math.min(1.65, ratio));
+    win.style.setProperty('--win-media-scale', clampedScale.toFixed(3));
 }
 
 function bringWindowToFront(win) {
     if (!win || isMobileMode()) return;
-    const isModal = win.id === 'doom-window' || win.id === 'doom-guide-window';
+    const isModal = win.id === 'doom-window';
     if (!isModal) {
         topWindowZ++;
         win.style.zIndex = topWindowZ;
@@ -3038,11 +3067,11 @@ function renderTaskbarTabs() {
     DESKTOP_WINDOW_IDS.forEach(id => {
         const win = document.getElementById(id);
         if (!win || win.classList.contains('win-closed')) return;
-        if (id === 'doc-viewer-window' && win.style.display === 'none') return;
+        if ((id === 'doc-viewer-window' || id === 'doom-guide-window') && win.style.display === 'none') return;
 
         const isMin = win.classList.contains('win-minimized');
         const isAct = !isMin && activeWindowId === id;
-        const title = win.getAttribute('data-win-title') || id;
+        const title = win.getAttribute('data-win-title') || (id === 'doom-guide-window' ? 'DuuM manual.txt' : id);
 
         const btn = document.createElement('button');
         btn.type = 'button';
@@ -3094,45 +3123,86 @@ function closeWin(id, event) {
     renderTaskbarTabs();
 }
 
+function applyWindowCustomGeometry(win, geom) {
+    if (!win || !geom) return;
+    win.style.left = `${geom.left}px`;
+    win.style.top = `${geom.top}px`;
+    win.style.right = 'auto';
+    win.style.bottom = 'auto';
+    win.style.maxWidth = 'none';
+    win.style.maxHeight = 'none';
+    if (geom.width) win.style.width = `${geom.width}px`;
+    if (geom.height) win.style.height = `${geom.height}px`;
+    win.style.setProperty('--win-tx', '0px');
+    win.style.setProperty('--win-ty', '0px');
+}
+
 function resetWinPos(id, event) {
     if (event) event.stopPropagation();
     if (isMobileMode()) return;
     const win = document.getElementById(id);
     if (!win) return;
 
-    const isMax = win.classList.toggle('win-maximized');
-    if (!isMax) {
-        const init = initialWindowState[id] || {};
+    const init = initialWindowState[id];
+    const willMaximize = !win.classList.contains('win-maximized');
+
+    win.classList.remove('win-open-anim');
+
+    if (willMaximize) {
+        const curRect = win.getBoundingClientRect();
+        if (init) {
+            init.savedGeom = {
+                left: Math.round(curRect.left),
+                top: Math.round(curRect.top),
+                width: Math.round(curRect.width),
+                height: Math.round(curRect.height)
+            };
+        }
         win.style.width = '';
         win.style.height = '';
         win.style.left = '';
         win.style.top = '';
         win.style.right = '';
         win.style.bottom = '';
-        win.style.setProperty('--win-tx', init.tx || '0px');
-        win.style.setProperty('--win-ty', init.ty || '0px');
+        win.style.maxWidth = '';
+        win.style.maxHeight = '';
+        win.style.setProperty('--win-tx', '0px');
+        win.style.setProperty('--win-ty', '0px');
+        win.classList.add('win-maximized');
+    } else {
+        win.classList.remove('win-maximized');
+        if (init && init.savedGeom) {
+            applyWindowCustomGeometry(win, init.savedGeom);
+        } else {
+            win.style.width = '';
+            win.style.height = '';
+            win.style.left = '';
+            win.style.top = '';
+            win.style.right = '';
+            win.style.bottom = '';
+            win.style.maxWidth = '';
+            win.style.maxHeight = '';
+            win.style.setProperty('--win-tx', '0px');
+            win.style.setProperty('--win-ty', '0px');
+        }
     }
 
     bringWindowToFront(win);
-    requestAnimationFrame(() => updateWindowContentScale(win));
-    setTimeout(() => updateWindowContentScale(win), 220);
+    requestAnimationFrame(() => updateWindowMediaScale(win));
 }
 
 function centerWindowOnScreen(win) {
     if (!win || isMobileMode() || win.classList.contains('win-maximized')) return;
-    const cs = window.getComputedStyle(win);
-    const curTx = parseFloat(cs.getPropertyValue('--win-tx')) || 0;
-    const curTy = parseFloat(cs.getPropertyValue('--win-ty')) || 0;
     const rect = win.getBoundingClientRect();
-
-    const baseLeft = rect.left - curTx;
-    const baseTop = rect.top - curTy;
-
-    const targetLeft = Math.max(105, Math.round((window.innerWidth - rect.width) / 2));
+    const targetLeft = Math.max(210, Math.round((window.innerWidth - rect.width) / 2));
     const targetTop = Math.max(44, Math.round((window.innerHeight - rect.height) / 2));
 
-    win.style.setProperty('--win-tx', `${targetLeft - baseLeft}px`);
-    win.style.setProperty('--win-ty', `${targetTop - baseTop}px`);
+    win.style.right = 'auto';
+    win.style.bottom = 'auto';
+    win.style.left = `${targetLeft}px`;
+    win.style.top = `${targetTop}px`;
+    win.style.setProperty('--win-tx', '0px');
+    win.style.setProperty('--win-ty', '0px');
 }
 
 function openDesktopApp(id) {
@@ -3145,7 +3215,7 @@ function openDesktopApp(id) {
         void win.offsetWidth;
         win.classList.add('win-open-anim');
         bringWindowToFront(win);
-        updateWindowContentScale(win);
+        updateWindowMediaScale(win);
     } else {
         win.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
@@ -3169,10 +3239,13 @@ function restoreAllWindows() {
         win.style.top = '';
         win.style.right = '';
         win.style.bottom = '';
-        const init = initialWindowState[id] || {};
-        win.style.setProperty('--win-tx', init.tx || '0px');
-        win.style.setProperty('--win-ty', init.ty || '0px');
-        updateWindowContentScale(win);
+        win.style.maxWidth = '';
+        win.style.maxHeight = '';
+        win.style.setProperty('--win-tx', '0px');
+        win.style.setProperty('--win-ty', '0px');
+        const init = initialWindowState[id];
+        if (init) init.savedGeom = null;
+        updateWindowMediaScale(win);
     });
     const mainWin = document.getElementById('middleblock');
     if (mainWin) bringWindowToFront(mainWin);
@@ -3195,36 +3268,50 @@ function attachWindowResizers(win) {
             bringWindowToFront(win);
             win.classList.add('is-resizing');
 
-            // Фиксируем текущую визуальную позицию через left/top, чтобы окна с right/bottom не тянулись влево
             const startRect = win.getBoundingClientRect();
-            win.style.right = 'auto';
-            win.style.bottom = 'auto';
-            win.style.left = `${startRect.left}px`;
-            win.style.top = `${startRect.top}px`;
-            win.style.setProperty('--win-tx', '0px');
-            win.style.setProperty('--win-ty', '0px');
+            const startLeft = startRect.left;
+            const startTop = startRect.top;
+            const startWidth = startRect.width;
+            const startHeight = startRect.height;
+
+            applyWindowCustomGeometry(win, {
+                left: startLeft,
+                top: startTop,
+                width: startWidth,
+                height: startHeight
+            });
 
             const startX = e.clientX;
             const startY = e.clientY;
-            const minW = 240;
+            const minW = 260;
             const minH = 160;
 
             function onResizeMove(ev) {
                 if (edge === 'r' || edge === 'br') {
-                    const maxW = window.innerWidth - startRect.left - 8;
-                    const newW = Math.max(minW, Math.min(maxW, startRect.width + (ev.clientX - startX)));
-                    win.style.width = `${newW}px`;
+                    const maxW = Math.max(minW, window.innerWidth - startLeft - 8);
+                    const newW = Math.max(minW, Math.min(maxW, startWidth + (ev.clientX - startX)));
+                    win.style.width = `${Math.round(newW)}px`;
                 }
                 if (edge === 'b' || edge === 'br') {
-                    const maxH = window.innerHeight - startRect.top - 8;
-                    const newH = Math.max(minH, Math.min(maxH, startRect.height + (ev.clientY - startY)));
-                    win.style.height = `${newH}px`;
+                    const maxH = Math.max(minH, window.innerHeight - startTop - 8);
+                    const newH = Math.max(minH, Math.min(maxH, startHeight + (ev.clientY - startY)));
+                    win.style.height = `${Math.round(newH)}px`;
                 }
-                updateWindowContentScale(win);
+                updateWindowMediaScale(win);
             }
 
             function onResizeUp() {
                 win.classList.remove('is-resizing');
+                const finalRect = win.getBoundingClientRect();
+                const init = initialWindowState[win.id];
+                if (init) {
+                    init.savedGeom = {
+                        left: Math.round(finalRect.left),
+                        top: Math.round(finalRect.top),
+                        width: Math.round(finalRect.width),
+                        height: Math.round(finalRect.height)
+                    };
+                }
                 document.removeEventListener('pointermove', onResizeMove);
                 document.removeEventListener('pointerup', onResizeUp);
             }
@@ -3240,12 +3327,10 @@ function initDraggableWindows() {
         const win = document.getElementById(id);
         if (!win) return;
 
-        const comp = window.getComputedStyle(win);
         const rect = win.getBoundingClientRect();
         initialWindowState[id] = {
-            tx: comp.getPropertyValue('--win-tx').trim(),
-            ty: comp.getPropertyValue('--win-ty').trim(),
-            baseWidth: rect.width || 500
+            baseWidth: rect.width || 500,
+            savedGeom: null
         };
 
         attachWindowResizers(win);
@@ -3262,31 +3347,50 @@ function initDraggableWindows() {
             bringWindowToFront(win);
             win.classList.add('is-dragging');
 
-            const cs = window.getComputedStyle(win);
-            const startTx = parseFloat(cs.getPropertyValue('--win-tx')) || 0;
-            const startTy = parseFloat(cs.getPropertyValue('--win-ty')) || 0;
+            const startRect = win.getBoundingClientRect();
+            const startLeft = startRect.left;
+            const startTop = startRect.top;
+            const startWidth = startRect.width;
+            const startHeight = startRect.height;
+
+            applyWindowCustomGeometry(win, {
+                left: startLeft,
+                top: startTop,
+                width: startWidth,
+                height: startHeight
+            });
+
             const startMouseX = e.clientX;
             const startMouseY = e.clientY;
-            const startRect = win.getBoundingClientRect();
 
             function onPointerMove(moveEvent) {
-                let dx = moveEvent.clientX - startMouseX;
-                let dy = moveEvent.clientY - startMouseY;
+                const dx = moveEvent.clientX - startMouseX;
+                const dy = moveEvent.clientY - startMouseY;
 
-                const minDy = 36 - startRect.top;
-                const maxDy = window.innerHeight - 32 - startRect.top;
-                const minDx = -startRect.left + 20 - startRect.width;
-                const maxDx = window.innerWidth - 20 - startRect.left;
+                const minLeft = 20 - startWidth;
+                const maxLeft = window.innerWidth - 40;
+                const minTop = 36;
+                const maxTop = window.innerHeight - 36;
 
-                dx = Math.max(minDx, Math.min(maxDx, dx));
-                dy = Math.max(minDy, Math.min(maxDy, dy));
+                const nextLeft = Math.max(minLeft, Math.min(maxLeft, startLeft + dx));
+                const nextTop = Math.max(minTop, Math.min(maxTop, startTop + dy));
 
-                win.style.setProperty('--win-tx', `${startTx + dx}px`);
-                win.style.setProperty('--win-ty', `${startTy + dy}px`);
+                win.style.left = `${Math.round(nextLeft)}px`;
+                win.style.top = `${Math.round(nextTop)}px`;
             }
 
             function onPointerUp() {
                 win.classList.remove('is-dragging');
+                const finalRect = win.getBoundingClientRect();
+                const init = initialWindowState[win.id];
+                if (init) {
+                    init.savedGeom = {
+                        left: Math.round(finalRect.left),
+                        top: Math.round(finalRect.top),
+                        width: Math.round(finalRect.width),
+                        height: Math.round(finalRect.height)
+                    };
+                }
                 document.removeEventListener('pointermove', onPointerMove);
                 document.removeEventListener('pointerup', onPointerUp);
             }

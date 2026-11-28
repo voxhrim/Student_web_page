@@ -1,9 +1,10 @@
-/* --------------------------------------------------------------------------
-   1. BASE & LAYOUT
-   -------------------------------------------------------------------------- */
-html, body {
-    top: 0px !important;
-    margin-top: 0px !important;
+/* ==========================================================================
+   1. BASE & PAGE LAYOUT
+   ========================================================================== */
+html,
+body {
+    top: 0 !important;
+    margin-top: 0 !important;
 }
 
 body {
@@ -14,18 +15,18 @@ body {
 }
 
 @media screen and (min-width: 1101px) {
-    html, body {
+    html,
+    body {
         height: 100vh;
         overflow: hidden;
     }
 }
 
-/* --------------------------------------------------------------------------
-   2. SPA TAB MECHANICS
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   2. SPA TAB PANELS
+   ========================================================================== */
 .tab-content {
     display: none;
-    opacity: 1;
     width: 100%;
     position: relative;
 }
@@ -34,13 +35,9 @@ body {
     display: block;
 }
 
-.tab-content.tab-leaving {
-    display: none;
-}
-
-/* --------------------------------------------------------------------------
+/* ==========================================================================
    3. TASKBAR, SYSTEM TRAY & GOOGLE TRANSLATE OVERRIDES
-   -------------------------------------------------------------------------- */
+   ========================================================================== */
 #topblock {
     height: 32px;
     background: #c0c0c0;
@@ -96,10 +93,7 @@ body {
 .taskbar-start:active,
 .taskbar-start.active {
     border-color: #404040 #ffffff #ffffff #404040;
-    padding-top: 3px;
-    padding-left: 9px;
-    padding-bottom: 1px;
-    padding-right: 7px;
+    padding: 3px 7px 1px 9px;
 }
 
 .taskbar-divider {
@@ -237,7 +231,7 @@ body {
     border: 1px solid;
     border-color: #404040 #d4d0c8 #d4d0c8 #404040;
     outline: none;
-    padding: 0px 2px;
+    padding: 0 2px;
     cursor: pointer;
 }
 
@@ -273,9 +267,9 @@ iframe[id=":2.container"],
     box-shadow: none !important;
 }
 
-/* --------------------------------------------------------------------------
-   4. DESKTOP ICONS GRID (2 COLUMNS, 2X LARGER ICONS, CLEAN SPACERS)
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   4. DESKTOP SHORTCUTS GRID
+   ========================================================================== */
 .desktop-icons-grid {
     position: fixed;
     top: 44px;
@@ -309,12 +303,10 @@ iframe[id=":2.container"],
     pointer-events: auto;
 }
 
-/* Пробел после верхнего ряда (Магистр / Погода) */
 .desktop-icon-btn.icon-gap-top {
     margin-top: 22px;
 }
 
-/* Прижимает нижнюю пару (DuuM manual.txt и DuuM.exe) к низу рабочего стола на одном уровне */
 .desktop-icon-btn.icon-gap-bottom {
     margin-top: auto;
 }
@@ -347,82 +339,92 @@ iframe[id=":2.container"],
     border: 1px dotted #ffff00;
 }
 
-/* --------------------------------------------------------------------------
-   5. WINDOWS UI COMPONENTS, RESIZERS, MAXIMIZED STATE & ANIMATIONS
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   5. WINDOW CHROME, RESIZE HANDLES, MAXIMIZE & ANIMATIONS
+   ========================================================================== */
 .win-window {
     --win-tx: 0px;
     --win-ty: 0px;
-    --win-scale: 1;
-    background: #c0c0c0 !important;
-    border: 3px solid !important;
-    border-color: #ffffff #404040 #404040 #ffffff !important;
-    box-shadow: 0 0 0 2px #000000, 4px 4px 0px rgba(0, 0, 0, 0.7) !important;
-    box-sizing: border-box !important;
+    --win-media-scale: 1;
+    position: fixed;
+    background: #c0c0c0;
+    border: 3px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    box-shadow: 0 0 0 2px #000000, 4px 4px 0 rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
     transform: translate(var(--win-tx), var(--win-ty));
-    transition: opacity 0.18s ease, width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), top 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.18s ease;
 }
 
 .win-window.is-resizing,
 .win-window.is-dragging {
-    transition: none !important;
-    user-select: none !important;
+    transition: none;
+    user-select: none;
 }
 
 .win-window.desktop-boot-hidden,
 .win-window.win-minimized,
 .win-window.win-closed {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .win-resizer-r {
     position: absolute;
     top: 24px;
-    right: -4px;
-    width: 8px;
+    right: -5px;
+    width: 10px;
     height: calc(100% - 34px);
     cursor: ew-resize;
-    z-index: 40;
+    z-index: 60;
 }
 
 .win-resizer-b {
     position: absolute;
-    bottom: -4px;
+    bottom: -5px;
     left: 0;
     width: calc(100% - 14px);
-    height: 8px;
+    height: 10px;
     cursor: ns-resize;
-    z-index: 40;
+    z-index: 60;
 }
 
 .win-resizer-br {
     position: absolute;
-    bottom: -4px;
-    right: -4px;
-    width: 14px;
-    height: 14px;
+    bottom: -5px;
+    right: -5px;
+    width: 16px;
+    height: 16px;
     cursor: nwse-resize;
-    z-index: 45;
+    z-index: 65;
 }
 
-.win-window.win-maximized {
-    --win-tx: 0px !important;
-    --win-ty: 0px !important;
-    transform: none !important;
-    position: fixed !important;
-    top: 40px !important;
-    left: 222px !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: calc(100vw - 236px) !important;
-    max-width: none !important;
-    height: calc(100vh - 52px) !important;
-    max-height: none !important;
-    margin: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
+/* Разворачивание всех рабочих окон (ID-селекторы перебивают базовые размеры) */
+.win-window.win-maximized,
+.win-window.win-maximized.win-open-anim,
+#header.win-maximized,
+#middleblock.win-maximized,
+#contacts-window.win-maximized,
+#weather-window.win-maximized,
+#doc-viewer-window.win-maximized,
+#doom-guide-window.win-maximized {
+    animation: none;
+    --win-tx: 0px;
+    --win-ty: 0px;
+    transform: none;
+    position: fixed;
+    top: 40px;
+    left: 226px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .win-window.win-maximized .win-title-bar {
@@ -431,65 +433,127 @@ iframe[id=":2.container"],
 }
 
 .win-window.win-maximized .win-window-body {
-    flex: 1 1 auto !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: auto !important;
+    flex: 1 1 auto;
+    height: auto;
+    max-height: none;
+    overflow-y: auto;
 }
 
 .win-window.win-maximized#middleblock .win-window-body,
 .win-window.win-maximized#doc-viewer-window .win-window-body {
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.win-window.win-maximized#middleblock .win-window-body > .win-sunken-panel {
-    flex: 1 1 auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 0 !important;
+.win-window.win-maximized#middleblock .win-window-body > .win-sunken-panel,
+.win-window.win-maximized#doc-viewer-window .win-window-body > .win-sunken-panel {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
 .win-window.win-maximized #maintext {
-    flex: 1 1 auto !important;
-    height: auto !important;
-    max-height: none !important;
+    flex: 1 1 auto;
+    height: auto;
+    max-height: none;
 }
 
 .win-window.win-maximized .win-statusbar {
     flex-shrink: 0;
 }
 
-#doom-window.win-maximized {
-    top: 38px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: min(94vw, 1380px) !important;
-    height: calc(100vh - 48px) !important;
-    max-height: none !important;
+/* --- DUUM MANUAL (масштабируемое окно с сохранением журнальной верстки) --- */
+#doom-guide-window {
+    position: fixed;
+    top: 56px;
+    left: 260px;
+    z-index: 60;
+    width: 740px;
+    height: 760px;
+    max-width: 92vw;
+    max-height: 85vh;
+    min-width: 320px;
+    min-height: 240px;
+    flex-direction: column;
 }
 
-#doom-window.win-maximized .win-window-body {
-    flex: 1 1 auto !important;
-    max-height: none !important;
-    justify-content: center !important;
+#doom-guide-window .win-window-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: #c0c0c0;
+    padding: 6px;
+    box-sizing: border-box;
+    overflow: auto;
 }
 
-#doom-window.win-maximized .vhs-container {
-    max-height: calc(100vh - 115px) !important;
-    width: auto !important;
-    height: 100% !important;
+#doom-guide-window .mag-layout {
+    flex: 1 0 auto;
+    width: 680px;
+    min-width: 680px;
+    max-width: 680px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: #fdfdfc;
+    padding: 20px 25px;
+    overflow-y: auto;
+    color: #1a1a1a;
+    cursor: text;
+    text-align: left;
+}
+/* --- DUUM.EXE (сразу на весь экран без изменения размера) --- */
+#doom-window {
+    position: fixed;
+    top: 38px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    transform: none;
+    z-index: 99999;
+    flex-direction: column;
+}
+
+#doom-window .win-title-bar {
+    cursor: default;
+}
+
+#doom-window .win-window-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    background: #000000;
+    padding: 8px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#doom-window .vhs-container {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 110px);
+    aspect-ratio: 720 / 460;
 }
 
 .win-window.win-open-anim {
-    animation: modernWinOpen 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: modernWinOpen 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes modernWinOpen {
     0% {
         opacity: 0;
-        transform: translate(var(--win-tx), calc(var(--win-ty) + 18px)) scale(0.93);
+        transform: translate(var(--win-tx), calc(var(--win-ty) + 16px)) scale(0.95);
     }
     100% {
         opacity: 1;
@@ -498,7 +562,7 @@ iframe[id=":2.container"],
 }
 
 .window-relative {
-    position: relative;
+    position: fixed;
 }
 
 .win-title-bar {
@@ -555,20 +619,19 @@ iframe[id=":2.container"],
 
 .win-btn:active {
     border-color: #404040 #ffffff #ffffff #404040;
-    padding-top: 1px;
-    padding-left: 1px;
+    padding: 1px 0 0 1px;
 }
 
 .win-sunken-panel {
     border: 2px solid;
-    border-color: #808080 #dfdfdf #dfdfdf #808080 !important;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
 }
 
 .win-statusbar {
     background: #c0c0c0;
     display: flex;
     gap: 4px;
-    padding: 4px 4px;
+    padding: 4px;
     box-sizing: border-box;
     flex-shrink: 0;
 }
@@ -590,39 +653,36 @@ iframe[id=":2.container"],
     text-align: center;
 }
 
-/* --------------------------------------------------------------------------
-   6. HEADER WINDOW (БОЛЕЕ КВАДРАТНОЕ ОКНО ПОД ПАСПОРТНОЕ ФОТО 3x4)
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   6. PROFILE HEADER WINDOW & ANIME SITTER POSITIONING
+   ========================================================================== */
 #header {
-    --win-tx: 0px;
-    --win-ty: 0px;
-    --win-scale: 1;
-    position: fixed;
     top: 44px;
     left: 224px;
     z-index: 2;
     width: min(44vw, 680px);
-    min-height: 315px;
+    min-width: 320px;
+    min-height: 260px;
     margin: 0;
     display: flex;
     flex-direction: column;
+    overflow: visible;
 }
 
 .header-body {
     display: flex;
-    padding: calc(16px * var(--win-scale)) calc(18px * var(--win-scale));
-    gap: calc(18px * var(--win-scale));
+    padding: 14px 16px;
+    gap: 16px;
     align-items: center;
     flex-wrap: nowrap;
     background: #c0c0c0;
     box-sizing: border-box;
     flex: 1 1 auto;
-    overflow-y: auto;
+    overflow: auto;
 }
 
-/* Паспортное соотношение сторон 3:4 */
 #photomag {
-    flex: 0 0 clamp(155px, calc(185px * var(--win-scale)), 300px);
+    flex: 0 0 clamp(135px, calc(165px * var(--win-media-scale)), 320px);
     position: relative;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
@@ -646,24 +706,22 @@ iframe[id=":2.container"],
     left: 12px;
     z-index: 50;
     margin: 0;
-    animation: bubbleBob 1.4s ease-in-out infinite alternate !important;
+    animation: bubbleBob 1.4s ease-in-out infinite alternate;
 }
 
 #headertext {
     display: flex;
     flex-direction: column;
-    gap: calc(5px * var(--win-scale));
+    gap: 5px;
     flex: 1 1 auto;
     min-width: 0;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
 }
 
 #header h1.hdr {
     text-align: left;
     font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-weight: bold;
-    font-size: clamp(19px, calc(23px * var(--win-scale)), 36px);
+    font-size: 22px;
     color: #000080;
     margin: 0 0 6px;
     line-height: 1.2;
@@ -671,7 +729,7 @@ iframe[id=":2.container"],
 
 #header h3.hdr {
     font-family: Tahoma, Arial, sans-serif;
-    font-size: clamp(12px, calc(13px * var(--win-scale)), 19px);
+    font-size: 13px;
     font-weight: normal;
     color: #000000;
     margin: 0;
@@ -687,28 +745,33 @@ iframe[id=":2.container"],
     color: #cc0000;
 }
 
-.anime-sitter {
+#header .anime-sitter {
+    display: none;
+}
+
+#desktop-snake-widget .anime-sitter {
+    display: block;
     position: absolute;
-    top: -62px;
-    right: 50px;
-    z-index: 20;
+    top: -120px;
+    right: 12px;
+    z-index: 40;
     pointer-events: none;
 }
 
 .anime-sitter img,
 .anime-sitter video {
-    width: 140px !important;
-    max-width: none !important;
-    height: auto !important;
+    width: 120px;
+    max-width: none;
+    height: auto;
     display: block;
     background: transparent;
     pointer-events: none;
     filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
 }
 
-/* --------------------------------------------------------------------------
-   7. OFFICE ASSISTANT (СКРЕПКА-ПОМОЩНИК В ПРАВОМ НИЖНЕМ УГЛУ ОКНА)
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   7. OFFICE ASSISTANT OVERLAY
+   ========================================================================== */
 .clippy-assistant {
     position: absolute;
     bottom: 28px;
@@ -725,7 +788,7 @@ iframe[id=":2.container"],
     position: relative;
     background: #ffffcc;
     border: 1px solid #000000;
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.45);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
     padding: 6px 20px 6px 9px;
     font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-size: 11px;
@@ -734,7 +797,6 @@ iframe[id=":2.container"],
     max-width: 175px;
     text-align: left;
     margin-bottom: 7px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .clippy-assistant.is-collapsed .clippy-bubble {
@@ -807,34 +869,31 @@ iframe[id=":2.container"],
     font-size: 11px;
     line-height: 1.25;
     color: #000000;
-    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.45);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
     text-align: center;
 }
 
 @keyframes clippyFloat {
-    0% { transform: translateY(0px); }
+    0% { transform: translateY(0); }
     100% { transform: translateY(-7px); }
 }
 
 @keyframes bubbleBob {
-    0% { transform: translateY(0px) rotate(1deg); }
+    0% { transform: translateY(0) rotate(1deg); }
     100% { transform: translateY(-3px) rotate(-2deg); }
 }
 
-/* --------------------------------------------------------------------------
-   8. MAIN PORTFOLIO WINDOW, WIN95 PROPERTY TABS & SCALABLE TYPOGRAPHY
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   8. MAIN PORTFOLIO WINDOW, TABS & NON-SCALING TEXT FLOW
+   ========================================================================== */
 #middleblock {
-    --win-tx: 0px;
-    --win-ty: 0px;
-    --win-scale: 1;
-    position: fixed;
     top: 345px;
     left: 244px;
     z-index: 6;
     width: min(50vw, 860px);
     height: calc(100vh - 362px);
-    min-height: 300px;
+    min-width: 300px;
+    min-height: 220px;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -897,11 +956,11 @@ iframe[id=":2.container"],
 }
 
 #menu .button.tab-link.colorfix {
-    color: #000080 !important;
-    background: #ffffff !important;
-    background-image: none !important;
-    border: 2px solid !important;
-    border-color: #ffffff #404040 #ffffff #ffffff !important;
+    color: #000080;
+    background: #ffffff;
+    background-image: none;
+    border: 2px solid;
+    border-color: #ffffff #404040 #ffffff #ffffff;
     padding: 7px 15px 6px 15px;
     margin-bottom: -2px;
     font-weight: bold;
@@ -916,19 +975,7 @@ iframe[id=":2.container"],
 
 .color:active {
     border-color: #404040 #ffffff #ffffff #404040;
-    padding-top: 6px;
-    padding-left: 13px;
-    padding-bottom: 4px;
-    padding-right: 11px;
-}
-
-.colorfix {
-    color: #000000 !important;
-    background-color: #dfdfdf !important;
-    border: 2px solid !important;
-    border-color: #404040 #ffffff #ffffff #404040 !important;
-    font-weight: bold;
-    cursor: default;
+    padding: 6px 11px 4px 13px;
 }
 
 #maintext {
@@ -940,12 +987,11 @@ iframe[id=":2.container"],
     background-image: url("images/paper.webp");
     background-repeat: repeat;
     background-size: 600px auto;
-    padding: calc(16px * var(--win-scale)) calc(20px * var(--win-scale)) 75px calc(20px * var(--win-scale));
-    overflow-y: auto;
-    overflow-x: hidden;
+    padding: 16px 20px 75px 20px;
+    overflow: auto;
     word-wrap: break-word;
     margin: 0;
-    border-top: 2px solid #ffffff !important;
+    border-top: 2px solid #ffffff;
     box-sizing: border-box;
 }
 
@@ -960,7 +1006,7 @@ iframe[id=":2.container"],
 #maintext h1 {
     font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-weight: bold;
-    font-size: clamp(18px, calc(22px * var(--win-scale)), 32px);
+    font-size: 21px;
     color: #000080;
     text-align: center;
     margin: 12px 0;
@@ -969,16 +1015,15 @@ iframe[id=":2.container"],
 #maintext h2 {
     font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-weight: bold;
-    font-size: clamp(15px, calc(17px * var(--win-scale)), 25px);
+    font-size: 17px;
     color: #000080;
     margin: 18px 8px 8px;
-    text-indent: 0;
 }
 
 #maintext h3 {
     font-family: "Tahoma", "MS Sans Serif", sans-serif;
     font-weight: bold;
-    font-size: clamp(13px, calc(15px * var(--win-scale)), 21px);
+    font-size: 15px;
     color: #800000;
     margin: 10px 8px;
 }
@@ -989,14 +1034,13 @@ iframe[id=":2.container"],
 #maintext ol,
 #maintext ol li {
     font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
-    font-size: clamp(13px, calc(14px * var(--win-scale)), 20px);
+    font-size: 14px;
     line-height: 1.55;
     color: #111111;
 }
 
 p {
     margin: 10px 8px;
-    text-indent: 0;
     text-align: left;
 }
 
@@ -1013,21 +1057,24 @@ img {
     max-width: 100%;
 }
 
-ul, ol {
-    padding-left: clamp(20px, 2.5vw, 34px);
+ul,
+ol {
+    padding-left: 26px;
 }
 
 ul.content {
     list-style-type: none;
-    padding-left: clamp(10px, 1.5vw, 22px);
+    padding-left: 14px;
 }
 
-ul li a, ol li a {
+ul li a,
+ol li a {
     color: #0000cc;
     text-decoration: underline;
 }
 
-ul li a:hover, ol li a:hover {
+ul li a:hover,
+ol li a:hover {
     color: #cc0000;
 }
 
@@ -1047,14 +1094,14 @@ ol li {
 }
 
 .img img {
-    max-width: 90%;
+    width: clamp(220px, calc(360px * var(--win-media-scale)), 92%);
+    max-width: 95%;
     height: auto;
     border: 1px solid #808080;
 }
 
 .imgcaption {
-    font: italic clamp(12px, calc(13px * var(--win-scale)), 18px) Tahoma, sans-serif;
-    text-indent: 0;
+    font: italic 13px Tahoma, sans-serif;
     text-align: center;
     padding: 4px 10px;
     color: #333333;
@@ -1067,10 +1114,9 @@ ol li {
 .comment {
     background: #ffffdf;
     color: #202020;
-    font-size: clamp(12.5px, calc(13.5px * var(--win-scale)), 19px);
+    font-size: 13.5px;
     margin: 14px auto;
     padding: 10px 14px;
-    text-indent: 0;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     max-width: 94%;
@@ -1078,21 +1124,21 @@ ol li {
     font-weight: bold;
 }
 
-/* --------------------------------------------------------------------------
-   9. TABLES & DOCUMENT VIEWER WINDOW
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   9. TABLES & DOCUMENT VIEWERS
+   ========================================================================== */
 table#resume,
 table.resume-table {
     width: 98%;
     margin: 0 auto;
     border-collapse: collapse;
     font-family: Tahoma, "MS Sans Serif", sans-serif;
-    font-size: clamp(12.5px, calc(13.5px * var(--win-scale)), 19px);
+    font-size: 13.5px;
 }
 
 table#resume tr td,
 table.resume-table tr td {
-    padding: calc(6px * var(--win-scale)) calc(10px * var(--win-scale));
+    padding: 6px 10px;
     border: 1px solid #808080;
     vertical-align: top;
     line-height: 1.45;
@@ -1151,7 +1197,6 @@ table#resume td ol {
 }
 
 .lib p {
-    text-indent: 0;
     margin: 4px 0 0;
 }
 
@@ -1182,13 +1227,12 @@ li.lib.active-doc {
 }
 
 #doc-viewer-window {
-    --win-tx: 0px;
-    --win-ty: 0px;
-    position: fixed;
     top: 60px;
     left: 200px;
     width: min(74vw, 960px);
     height: min(82vh, 840px);
+    min-width: 300px;
+    min-height: 220px;
     z-index: 50;
     display: none;
     flex-direction: column;
@@ -1215,9 +1259,13 @@ li.lib.active-doc {
     display: block;
 }
 
-/* --------------------------------------------------------------------------
-   10. WIDGETS: SNAKE WIDGET, CONTACTS, WEATHER (НИЖЕ КОНТАКТОВ) & DUUM VHS
-   -------------------------------------------------------------------------- */
+.mobile-pdf-box {
+    display: none;
+}
+
+/* ==========================================================================
+   10. DESKTOP WIDGETS: SNAKE, CONTACTS, WEATHER & DUUM VHS
+   ========================================================================== */
 #desktop-snake-widget {
     position: fixed;
     right: 16px;
@@ -1228,33 +1276,21 @@ li.lib.active-doc {
     background: #c0c0c0;
     border: 2px solid;
     border-color: #ffffff #404040 #404040 #ffffff;
-    box-shadow: 0 0 0 1px #000000, 3px 3px 0px rgba(0, 0, 0, 0.65);
+    box-shadow: 0 0 0 1px #000000, 3px 3px 0 rgba(0, 0, 0, 0.65);
     padding: 4px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 4px;
     user-select: none;
+    overflow: visible;
     transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-#desktop-snake-widget .anime-sitter {
-    position: absolute;
-    top: -120px;
-    right: 5px;
-    z-index: 30;
+#desktop-snake-widget.desktop-boot-hidden {
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-}
-
-#desktop-snake-widget .anime-sitter img,
-#desktop-snake-widget .anime-sitter video {
-    width: 120px !important;
-    max-width: none !important;
-    height: auto !important;
-    display: block;
-    background: transparent;
-    pointer-events: none;
-    filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.7));
 }
 
 .snake-widget-header {
@@ -1271,14 +1307,6 @@ li.lib.active-doc {
     flex-shrink: 0;
 }
 
-.snake-widget-badge {
-    background: #000080;
-    color: #ffff00;
-    font-size: 9px;
-    padding: 0 4px;
-    border: 1px solid #dfdfdf;
-}
-
 #window-snake-container {
     flex: 1 1 auto;
     width: 100%;
@@ -1292,24 +1320,22 @@ li.lib.active-doc {
 }
 
 #contacts-window {
-    --win-tx: 0px;
-    --win-ty: 0px;
-    --win-scale: 1;
-    position: fixed;
     top: 318px;
     right: 18px;
     z-index: 7;
     width: min(33vw, 440px);
+    min-width: 260px;
+    min-height: 160px;
     margin: 0;
     display: flex;
     flex-direction: column;
 }
 
 .contacts-body {
-    padding: calc(8px * var(--win-scale)) calc(10px * var(--win-scale));
+    padding: 8px 10px;
     display: flex;
     flex-direction: column;
-    gap: calc(6px * var(--win-scale));
+    gap: 6px;
     flex: 1 1 auto;
     overflow-y: auto;
 }
@@ -1317,14 +1343,14 @@ li.lib.active-doc {
 .contact-item {
     display: flex;
     align-items: center;
-    gap: calc(10px * var(--win-scale));
-    padding: calc(5px * var(--win-scale)) calc(8px * var(--win-scale));
+    gap: 10px;
+    padding: 5px 8px;
     background: #ffffff;
     border: 2px solid;
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     color: #000000;
     font-family: Tahoma, sans-serif;
-    font-size: clamp(12.5px, calc(13px * var(--win-scale)), 19px);
+    font-size: 13px;
     user-select: text;
 }
 
@@ -1342,13 +1368,12 @@ li.lib.active-doc {
 
 .contact-icon-link:active {
     border-color: #404040 #ffffff #ffffff #404040;
-    padding-top: 4px;
-    padding-left: 4px;
+    padding: 4px 2px 2px 4px;
 }
 
 .contact-icon {
-    width: calc(18px * var(--win-scale));
-    height: calc(18px * var(--win-scale));
+    width: 18px;
+    height: 18px;
     object-fit: contain;
     display: block;
 }
@@ -1358,16 +1383,13 @@ li.lib.active-doc {
     word-break: break-all;
 }
 
-/* Погода опущена ниже окна контактов */
 #weather-window {
-    --win-tx: 0px;
-    --win-ty: 0px;
-    --win-scale: 1;
-    position: fixed;
     top: 44px;
     right: 18px;
     z-index: 8;
     width: min(35vw, 470px);
+    min-width: 260px;
+    min-height: 180px;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -1375,17 +1397,17 @@ li.lib.active-doc {
 
 #weather-window .weather-body {
     flex: 1 1 auto;
-    overflow-y: auto;
-    padding: 8px !important;
+    overflow: auto;
+    padding: 8px;
 }
 
 #weather-content {
-    font-size: clamp(12px, calc(12px * var(--win-scale)), 18px) !important;
-    padding: 8px !important;
+    font-size: 12px;
+    padding: 8px;
 }
 
 #weather-content table {
-    font-size: clamp(12px, calc(12px * var(--win-scale)), 18px) !important;
+    font-size: 12px;
 }
 
 .w-temp-box {
@@ -1395,14 +1417,14 @@ li.lib.active-doc {
 }
 
 .w-temp-val {
-    font-size: clamp(28px, calc(32px * var(--win-scale)), 52px);
+    font-size: 30px;
     font-weight: bold;
     color: #000000;
     line-height: 1;
 }
 
 .w-temp-divider {
-    font-size: clamp(22px, calc(26px * var(--win-scale)), 42px);
+    font-size: 24px;
     color: #777777;
     margin: 0 4px;
 }
@@ -1423,7 +1445,7 @@ li.lib.active-doc {
 #w-icon {
     width: 60px;
     height: 52px;
-    background-size: 720px 900px !important;
+    background-size: 720px 900px;
     vertical-align: middle;
     margin-right: 12px;
 }
@@ -1431,15 +1453,15 @@ li.lib.active-doc {
 .w-forecast-icon {
     width: 44px;
     height: 38px;
-    background-size: 520px 650px !important;
+    background-size: 520px 650px;
     margin: 2px auto;
 }
 
 .w-wind-arrow {
     width: 20px;
     height: 20px;
-    background-size: 400px 500px !important;
-    background-position: -40px -426px !important;
+    background-size: 400px 500px;
+    background-position: -40px -426px;
     vertical-align: -4px;
     margin-right: 5px;
     transform-origin: center center;
@@ -1449,8 +1471,8 @@ li.lib.active-doc {
 .w-unit-c {
     width: 20px;
     height: 20px;
-    background-size: 440px 550px !important;
-    background-position: -309px -330px !important;
+    background-size: 440px 550px;
+    background-position: -309px -330px;
     vertical-align: middle;
     margin-left: 2px;
 }
@@ -1458,8 +1480,8 @@ li.lib.active-doc {
 .w-unit-f {
     width: 20px;
     height: 20px;
-    background-size: 440px 550px !important;
-    background-position: -375px -330px !important;
+    background-size: 440px 550px;
+    background-position: -375px -330px;
     vertical-align: middle;
     margin-left: 2px;
 }
@@ -1467,16 +1489,16 @@ li.lib.active-doc {
 .w-unit-mini-c {
     width: 14px;
     height: 14px;
-    background-size: 300px 375px !important;
-    background-position: -210px -225px !important;
+    background-size: 300px 375px;
+    background-position: -210px -225px;
     vertical-align: -1px;
 }
 
 .w-unit-mini-f {
     width: 14px;
     height: 14px;
-    background-size: 300px 375px !important;
-    background-position: -255px -225px !important;
+    background-size: 300px 375px;
+    background-position: -255px -225px;
     vertical-align: -1px;
 }
 
@@ -1501,11 +1523,11 @@ li.lib.active-doc {
     height: 100%;
     pointer-events: none;
     z-index: 5;
-    background: 
-        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%), 
+    background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%),
         linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     background-size: 100% 4px, 3px 100%;
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35); 
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.35);
 }
 
 @keyframes vhs-jitter {
@@ -1519,9 +1541,9 @@ li.lib.active-doc {
     95% { transform: translate(-1px, 0); }
 }
 
-/* --------------------------------------------------------------------------
-   11. START MENU, WIN95 BOOT SCREEN & CRT SHUTDOWN
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   11. START MENU, BOOT SCREEN & CRT SHUTDOWN
+   ========================================================================== */
 #win95-boot-screen {
     position: fixed;
     inset: 0;
@@ -1559,9 +1581,6 @@ li.lib.active-doc {
 }
 
 #win-start-menu {
-    --win-tx: 0px;
-    --win-ty: 0px;
-    position: fixed;
     top: 32px;
     left: 6px;
     width: 235px;
@@ -1708,8 +1727,8 @@ li.lib.active-doc {
 }
 
 #crt-shutdown-overlay.is-off #crt-power-on-btn {
-    opacity: 1 !important;
-    pointer-events: auto !important;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 #crt-power-on-btn img {
@@ -1729,17 +1748,17 @@ li.lib.active-doc {
     transform: translateX(-50%) scale(0.95);
 }
 
-/* --------------------------------------------------------------------------
-   12. RESPONSIVE SYSTEM (MEDIUM DESKTOP 1101px–1450px)
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   12. RESPONSIVE: MEDIUM DESKTOP (1101px - 1450px)
+   ========================================================================== */
 @media screen and (min-width: 1101px) and (max-width: 1450px) {
     .desktop-icons-grid {
         top: 42px;
         left: 10px;
-        grid-template-columns: repeat(2, 84px);
-        gap: 8px 6px;
+        gap: 8px;
     }
 
+    .desktop-icons-col,
     .desktop-icon-btn {
         width: 84px;
     }
@@ -1752,7 +1771,7 @@ li.lib.active-doc {
     #header {
         left: 194px;
         width: min(42vw, 580px);
-        min-height: 285px;
+        min-height: 260px;
     }
 
     #middleblock {
@@ -1775,16 +1794,17 @@ li.lib.active-doc {
     }
 }
 
-/* --------------------------------------------------------------------------
-   13. SIMPLIFIED MOBILE & TABLET MODE 
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   13. RESPONSIVE: MOBILE & TOUCH DEVICES (<= 1100px)
+   ========================================================================== */
 @media screen and (max-width: 1100px),
        screen and (pointer: coarse) and (max-width: 1366px) {
 
-    html, body {
-        height: auto !important;
-        overflow-y: auto !important;
-        overflow-x: hidden !important;
+    html,
+    body {
+        height: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     body {
@@ -1793,7 +1813,6 @@ li.lib.active-doc {
         padding-bottom: 24px;
     }
 
-    /* Скрываем десктопные элементы ОС и игру DuuM */
     .desktop-icons-grid,
     .taskbar-left-group,
     .taskbar-tray,
@@ -1801,15 +1820,16 @@ li.lib.active-doc {
     .win-resizer-r,
     .win-resizer-b,
     .win-resizer-br,
+    #doc-viewer-window,
     #doom-window,
     #doom-guide-window,
     #doom-launch-btn-container,
-    .anime-sitter,
+    #desktop-snake-widget .anime-sitter,
     #win-start-menu,
     #win95-boot-screen,
     #crt-shutdown-overlay {
-        display: none !important;
-        visibility: hidden !important;
+        display: none;
+        visibility: hidden;
     }
 
     #topblock {
@@ -1826,87 +1846,116 @@ li.lib.active-doc {
         gap: 6px;
     }
 
-    /* Мелкое плоское окно змейки сверху в потоке (не приклеено к экрану) */
     #desktop-snake-widget {
         order: 1;
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        position: relative !important;
-        top: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        left: auto !important;
-        width: 95% !important;
-        max-width: 760px !important;
-        height: 280px !important;
-        margin: 10px auto 0 auto !important;
-        padding: 4px !important;
-        gap: 4px !important;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        width: 95%;
+        max-width: 760px;
+        height: 280px;
+        margin: 10px auto 0 auto;
+        padding: 4px;
+        gap: 4px;
     }
 
-    #desktop-snake-widget .snake-widget-header {
-        writing-mode: horizontal-tb !important;
-        transform: none !important;
-        padding: 2px 6px !important;
-        font-size: 11px !important;
-        justify-content: space-between !important;
-    }
-
-    #desktop-snake-widget .snake-widget-badge {
-        display: none;
+    .snake-widget-header {
+        padding: 2px 6px;
+        font-size: 11px;
+        justify-content: space-between;
     }
 
     #header,
     #middleblock,
     #contacts-window,
     #weather-window {
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: auto !important;
-        display: block !important;
-        --win-tx: 0px !important;
-        --win-ty: 0px !important;
-        --win-scale: 1 !important;
-        transform: none !important;
-        width: 95% !important;
-        max-width: 760px !important;
-        height: auto !important;
-        min-height: 0 !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        position: relative !important;
-        top: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        left: auto !important;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: block;
+        --win-tx: 0px;
+        --win-ty: 0px;
+        --win-media-scale: 1;
+        transform: none;
+        width: 95%;
+        max-width: 760px;
+        height: auto;
+        min-height: 0;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+    }
+
+    #header {
+        order: 2;
+        margin-top: 44px;
+        margin-bottom: 14px;
+    }
+
+    #header .anime-sitter {
+        display: block;
+        position: absolute;
+        top: -54px;
+        right: 16px;
+        z-index: 30;
+        pointer-events: none;
+    }
+
+    #header .anime-sitter img,
+    #header .anime-sitter video {
+        width: 96px;
     }
 
     .win-title-bar {
         cursor: default;
     }
 
-    #maintext {
-        height: auto !important;
-        min-height: 200px !important;
-        max-height: none !important;
-        overflow: visible !important;
-        padding: 14px !important;
+    #middleblock > .win-window-body > .win-sunken-panel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #menu {
+        order: 1;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px;
     }
 
     .clippy-assistant {
+        order: 2;
         position: static;
         flex-direction: row-reverse;
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin: 0 auto 12px auto;
+        margin: 8px auto 6px auto;
         padding: 8px 10px;
-        background: rgba(255, 255, 255, 0.9);
+        width: calc(100% - 12px);
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.92);
         border: 1px dashed #808080;
         animation: none;
+    }
+
+    #maintext {
+        order: 3;
+        height: auto;
+        min-height: 200px;
+        max-height: none;
+        overflow: visible;
+        padding: 14px;
     }
 
     .clippy-bubble {
@@ -1924,28 +1973,22 @@ li.lib.active-doc {
         width: 44px;
     }
 
-    #header {
-        order: 2;
-        margin-top: 10px !important;
-        margin-bottom: 14px !important;
-    }
-
     #middleblock {
         order: 3;
-        margin-top: 0 !important;
-        margin-bottom: 14px !important;
+        margin-top: 0;
+        margin-bottom: 14px;
     }
 
     #contacts-window {
         order: 4;
-        margin-top: 0 !important;
-        margin-bottom: 14px !important;
+        margin-top: 0;
+        margin-bottom: 14px;
     }
 
     #weather-window {
         order: 5;
-        margin-top: 0 !important;
-        margin-bottom: 20px !important;
+        margin-top: 0;
+        margin-bottom: 20px;
     }
 
     .header-body {
@@ -1979,12 +2022,6 @@ li.lib.active-doc {
         line-height: 1.45;
     }
 
-    #menu {
-        justify-content: center;
-        gap: 6px;
-        padding: 6px;
-    }
-
     #menu .button.tab-link {
         flex: 1 1 calc(50% - 10px);
         font-size: 13px;
@@ -1996,7 +2033,7 @@ li.lib.active-doc {
     }
 
     #menu .button.tab-link.colorfix {
-        border-bottom: 2px solid #808080 !important;
+        border-bottom: 2px solid #808080;
         margin-bottom: 0;
     }
 
@@ -2027,21 +2064,41 @@ li.lib.active-doc {
 
     p {
         margin: 8px 4px;
-        text-indent: 0;
         text-align: left;
     }
 
-    #doc-viewer-window {
-        top: 5vh !important;
-        left: 2.5vw !important;
-        width: 95vw !important;
-        height: 88vh !important;
+    .mobile-pdf-box {
+        margin-top: 12px;
+        padding: 8px;
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #808080 #dfdfdf #dfdfdf #808080;
+    }
+
+    .mobile-pdf-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: #000080;
+    }
+
+    #mobile-pdf-frame {
+        width: 100%;
+        height: auto;
+        min-height: 440px;
+        aspect-ratio: 210 / 297;
+        border: 1px solid #808080;
+        background: #525659;
+        display: block;
     }
 }
 
-/* --------------------------------------------------------------------------
-   14. SMALL PHONES (<= 640px)
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   14. RESPONSIVE: SMALL PHONES (<= 640px)
+   ========================================================================== */
 @media screen and (max-width: 640px) {
     #donntu a {
         font-size: 11px;
@@ -2066,6 +2123,6 @@ li.lib.active-doc {
     }
 
     #w-forecast-container {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
     }
 }
